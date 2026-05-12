@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html data-theme="system" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Informe ATC — Abril 2026 · YiQi ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0c0c0e; --bg-elev:#111114; --bg-elev-2:#18181c;
+  --bg-soft:rgba(255,255,255,.04);
+  --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.14);
+  --text:#f0f1f3; --muted:#8a8d94; --muted-2:#5a5d66;
+  --text-cyan-muted:rgba(0,195,240,.45);
+  --cyan:#00ccff; --cyan-soft:rgba(0,204,255,.12); --cyan-soft-2:rgba(0,204,255,.18);
+  --cyan-label:rgba(0,204,255,.52);
+  --green:#00c48c; --green-soft:rgba(0,196,140,.12);
+  --amber:#f6a623; --amber-soft:rgba(246,166,35,.12);
+  --red:#f25f5c; --red-soft:rgba(242,95,92,.12);
+  --blue:#7ab7ff; --purple:#a78bfa; --purple-soft:rgba(167,139,250,.12);
+  --warm:#b5a090; --warm-soft:rgba(181,160,144,.10);
+  --glow:0 0 0 3px rgba(0,204,255,.22);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+  --shadow-md:0 4px 16px rgba(0,0,0,.28);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.36);
+  --sans:"Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --topbar-h:56px; --sidebar-w:240px;
+  --radius-xs:5px; --radius-sm:7px; --radius:10px;
+  --radius-md:12px; --radius-lg:16px; --radius-xl:20px; --radius-pill:999px;
+  --tr:180ms ease;
+}
+html[data-theme="light"] {
+  --bg:#f5f4f0; --bg-elev:#eeece7; --bg-elev-2:#e6e4df;
+  --bg-soft:rgba(0,0,0,.04);
+  --line:rgba(0,0,0,.08); --line-strong:rgba(0,0,0,.13);
+  --text:#17191c; --muted:#586170; --muted-2:#7f8896;
+  --text-cyan-muted:rgba(0,140,175,.48);
+  --cyan:#009fc7; --cyan-soft:rgba(0,159,199,.12); --cyan-soft-2:rgba(0,159,199,.18);
+  --cyan-label:rgba(0,159,199,.52);
+  --green:#0c9b6d; --green-soft:rgba(12,155,109,.12);
+  --amber:#c78000; --amber-soft:rgba(199,128,0,.12);
+  --red:#d4485e; --red-soft:rgba(212,72,94,.12);
+  --blue:#347de6; --purple:#7c3aed;
+  --glow:0 0 0 3px rgba(0,159,199,.22);
+  --shadow-sm:0 2px 8px rgba(16,36,54,.08);
+  --shadow-md:0 8px 24px rgba(16,36,54,.12);
+  --shadow-lg:0 16px 32px rgba(16,36,54,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:
+    radial-gradient(circle at 72% 8%,rgba(0,204,255,.07),transparent 28%),
+    radial-gradient(circle at 12% 60%,rgba(0,204,255,.04),transparent 22%),
+    var(--bg);
+  color:var(--text);overflow-x:clip;transition:background .25s,color .25s
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(circle at 72% 8%,rgba(0,159,199,.06),transparent 28%),
+    radial-gradient(circle at 12% 60%,rgba(0,159,199,.04),transparent 22%),
+    var(--bg);
+}
+.yql{fill:var(--text)}.yqs{fill:var(--cyan)}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;background:rgba(12,12,14,.82);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+html[data-theme="light"] .topbar{background:rgba(238,236,231,.88);}
+.topbar-left{display:flex;align-items:center;gap:14px}
+.topbar-logo svg{height:36px;width:auto}
+.topbar-sep{width:1px;height:20px;background:var(--line-strong)}
+.client-badge{
+  font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);padding:3px 8px;border:1px solid var(--line);
+  border-radius:var(--radius-pill);background:var(--bg-soft)
+}
+.topbar-period{font:500 11px var(--mono);color:var(--cyan);letter-spacing:.06em}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.theme-switch{display:flex;align-items:center;border-radius:var(--radius-pill);padding:3px;gap:1px}
+.theme-opt{width:28px;height:26px;border-radius:var(--radius-pill);display:grid;place-items:center;color:var(--muted-2);background:none;border:none;cursor:pointer;transition:color var(--tr),background var(--tr)}
+.theme-opt:hover{color:var(--text)}
+.theme-opt.active{background:var(--bg-elev-2);color:var(--text)}
+.mobile-menu-btn{display:none;width:34px;height:34px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--bg-elev-2);cursor:pointer;align-items:center;justify-content:center;color:var(--muted);}
+.layout{display:flex;min-height:100vh}
+.sidebar{
+  position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));
+  width:var(--sidebar-w);overflow-y:auto;
+  background:linear-gradient(180deg,rgba(24,24,28,.96),rgba(17,17,20,.92));
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-right:1px solid var(--line);padding:24px 0;z-index:50;
+  transition:transform .28s ease;flex-shrink:0;scrollbar-width:none;
+}
+.sidebar::-webkit-scrollbar{display:none;}
+html[data-theme="light"] .sidebar{background:var(--bg-elev);backdrop-filter:none;}
+.nav-section{padding:0 12px 16px}
+.nav-label{font:600 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);padding:0 8px 8px;display:block}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-sm);color:var(--muted);font:500 13px var(--sans);cursor:pointer;transition:color var(--tr),background var(--tr);text-decoration:none;border:none;}
+.nav-item:hover{background:var(--bg-soft);color:var(--text);}
+.nav-item.active{background:var(--cyan-soft);color:var(--text-cyan-muted);}
+.nav-item svg{width:15px;height:15px;flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--muted-2);flex-shrink:0;margin-left:auto}
+.nav-item.active .nav-dot{background:var(--cyan)}
+.sidebar-metric{padding:0 8px;display:flex;flex-direction:column;gap:10px}
+.sb-row{display:flex;justify-content:space-between;align-items:center}
+.sb-lbl{font:400 12px var(--sans);color:var(--muted)}
+.sb-val{font:600 12px var(--mono)}
+.sb-bar{height:4px;background:var(--bg-soft);border-radius:2px;overflow:hidden}
+.sb-fill{height:100%;border-radius:2px}
+.main{flex:1;min-width:0;padding:40px 40px 80px}
+.hero{
+  background:linear-gradient(135deg,var(--bg-elev-2) 0%,var(--bg-elev) 100%);
+  border:none;border-radius:var(--radius-lg);box-shadow:var(--shadow-md);
+  padding:48px 56px;margin-bottom:40px;position:relative;overflow:hidden;
+}
+html[data-theme="light"] .hero{background:linear-gradient(135deg,var(--bg-elev) 0%,var(--bg) 100%);}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(0,204,255,.06),transparent 55%);pointer-events:none}
+.hero-kicker{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.hero-title{font:700 32px var(--sans);color:var(--text);line-height:1.2;margin-bottom:8px}
+.hero-sub{font:400 15px var(--sans);color:var(--muted);line-height:1.6;max-width:560px;margin-bottom:28px}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.hero-meta-item label{font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);display:block;margin-bottom:3px}
+.hero-meta-item span{font:600 13px var(--sans);color:var(--text)}
+.section{margin-bottom:48px;scroll-margin-top:calc(var(--topbar-h) + 20px)}
+.section-header{margin-bottom:24px}
+.section-kicker{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.section-title{font:700 20px var(--sans);color:var(--text);margin-bottom:6px}
+.section-sub{font:400 13px var(--sans);color:var(--muted);line-height:1.6}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.kpi-card{background:var(--bg-elev-2);border:none;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:20px;transition:box-shadow .18s;position:relative;overflow:hidden}
+.kpi-card:hover{box-shadow:var(--shadow-md)}
+.kpi-card.accent-cyan{box-shadow:var(--shadow-sm),0 0 0 1px rgba(0,204,255,.14) inset}
+.kpi-card.accent-green{box-shadow:var(--shadow-sm),0 0 0 1px rgba(0,196,140,.14) inset}
+.kpi-card.accent-amber{box-shadow:var(--shadow-sm),0 0 0 1px rgba(246,166,35,.14) inset}
+.kpi-card.accent-red{box-shadow:var(--shadow-sm),0 0 0 1px rgba(242,95,92,.14) inset}
+.kpi-icon{width:32px;height:32px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.cyan-bg{background:var(--cyan-soft)}.green-bg{background:var(--green-soft)}.amber-bg{background:var(--amber-soft)}.red-bg{background:var(--red-soft)}.muted-bg{background:var(--bg-soft)}
+.kpi-value{font-size:30px;font-weight:700;letter-spacing:-.04em;color:var(--text);line-height:1;margin-top:10px}
+.kpi-label{font:500 12px var(--sans);color:var(--muted);margin-top:4px}
+.kpi-sub{font:500 11px var(--mono);margin-top:6px}
+.card{background:var(--bg-elev);border:none;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:24px;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card-title{font:600 14px var(--sans);color:var(--text);margin-bottom:8px}
+.card-body{font:400 13px var(--sans);color:var(--muted);line-height:1.65}
+.card ul{padding-left:16px}.card li{margin-bottom:6px;font:400 13px var(--sans);color:var(--muted)}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:var(--radius-pill);font:600 10px var(--mono);letter-spacing:.06em;white-space:nowrap;margin-bottom:10px}
+.badge-cyan{background:var(--cyan-soft);color:var(--cyan);border:1px solid var(--cyan-soft-2)}
+.badge-green{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,196,140,.2)}
+.badge-amber{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(246,166,35,.2)}
+.badge-red{background:var(--red-soft);color:var(--red);border:1px solid rgba(242,95,92,.2)}
+.badge-muted{background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.table-wrap{background:var(--bg-elev);border:none;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.table-search{flex:1;min-width:180px;padding:7px 12px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-sm);font:400 12px var(--sans);color:var(--text);outline:none;transition:border-color .15s}
+.table-search:focus{border-color:var(--cyan)}
+.table-search::placeholder{color:var(--muted-2)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 14px;background:var(--bg-elev);font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);text-align:left;white-space:nowrap;border-bottom:1px solid var(--line);cursor:pointer;}
+thead th:hover{color:var(--text)}
+.table-sortable th{position:relative;padding-right:28px!important;user-select:none}
+.table-sortable th::after{content:"↕";position:absolute;right:10px;top:50%;transform:translateY(-50%);font:700 11px var(--mono);color:var(--muted-2);opacity:.5}
+.table-sortable th.sorted-asc::after{content:"↑";color:var(--cyan);opacity:1}
+.table-sortable th.sorted-desc::after{content:"↓";color:var(--cyan);opacity:1}
+tbody tr{border-bottom:1px solid var(--line);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--bg-soft)}
+tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
+.table-empty{display:none;padding:18px 16px;color:var(--muted);font:500 12px var(--sans);text-align:center;}
+.table-empty.show{display:block}
+.chip{display:inline-flex;padding:2px 8px;border-radius:var(--radius-xs);font:600 10px var(--mono)}
+.chip-high{color:var(--red);background:var(--red-soft)}
+.chip-medium{color:var(--amber);background:var(--amber-soft)}
+.chip-low{color:var(--green);background:var(--green-soft)}
+.section-divider{height:1px;background:var(--line);margin:40px 0}
+.footer .yql{fill:rgba(255,255,255,.75)}
+.footer{background:#000;border-top:1px solid var(--line);padding:32px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-brand svg{height:18px;width:auto}
+.footer-text{font:400 12px var(--sans);color:rgba(255,255,255,.4)}
+.footer-meta{font:400 11px var(--mono);color:rgba(255,255,255,.4)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:49;backdrop-filter:blur(3px)}
+@media(max-width:980px){
+  .mobile-menu-btn{display:flex}
+  .sidebar{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%);z-index:98;}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{padding:24px 20px 60px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:32px 28px}
+  .hero-title{font-size:24px}
+  .footer{flex-direction:column;align-items:flex-start;padding:24px 20px}
+}
+@media(max-width:520px){.kpi-grid{grid-template-columns:1fr 1fr}.hero-meta{gap:16px}.table-header{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">
+      <svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi">
+        <rect fill="none" height="65" width="100"/>
+        <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+        <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+        <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      </svg>
+    </div>
+    <div class="topbar-sep"></div>
+    <div style="display:flex;align-items:center;gap:7px">
+      <span class="client-badge">ATC</span>
+      <span class="topbar-period">Abril 2026</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="theme-switch" role="group" aria-label="Tema">
+      <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" aria-label="Oscuro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="theme-opt" data-val="system" onclick="setTheme('system')" aria-label="Sistema">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </button>
+      <button class="theme-opt" data-val="light" onclick="setTheme('light')" aria-label="Claro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Menú">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav>
+      <div class="nav-section">
+        <span class="nav-label">Informe · Abr 2026</span>
+        <a href="#kpis" class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/></svg>KPIs del mes<span class="nav-dot"></span></a>
+        <a href="#objetivo" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>Objetivo<span class="nav-dot"></span></a>
+        <a href="#resumen" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Resumen ejecutivo<span class="nav-dot"></span></a>
+        <a href="#clusters" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Clusters operativos<span class="nav-dot"></span></a>
+        <a href="#clientes" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Clientes críticos<span class="nav-dot"></span></a>
+        <a href="#riesgos" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Riesgos<span class="nav-dot"></span></a>
+        <a href="#focos" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Focos estratégicos<span class="nav-dot"></span></a>
+        <a href="#oportunidades" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 3.5 2 6.5 5 8l1 3h4l1-3c3-1.5 5-4.5 5-8a8 8 0 0 0-8-8z"/></svg>Oportunidades<span class="nav-dot"></span></a>
+        <a href="#quickwins" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Quick wins<span class="nav-dot"></span></a>
+        <a href="#priorizacion" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Priorización mayo<span class="nav-dot"></span></a>
+        <a href="#roadmap" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>Roadmap<span class="nav-dot"></span></a>
+        <a href="#indicadores" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Indicadores<span class="nav-dot"></span></a>
+        <a href="#conclusion" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Conclusión<span class="nav-dot"></span></a>
+      </div>
+
+      <div class="nav-section" style="border-top:1px solid var(--line);padding-top:16px;margin-top:4px">
+        <span class="nav-label">Métricas clave</span>
+        <div class="sidebar-metric">
+          <div class="sb-row"><span class="sb-lbl">Tickets cerrados</span><span class="sb-val" style="color:var(--green)">63%</span></div>
+          <div class="sb-bar"><div class="sb-fill" style="width:63%;background:var(--green)"></div></div>
+          <div class="sb-row"><span class="sb-lbl">Satisfacción</span><span class="sb-val" style="color:var(--amber)">4,29/5</span></div>
+          <div class="sb-bar"><div class="sb-fill" style="width:85%;background:var(--amber)"></div></div>
+          <div class="sb-row"><span class="sb-lbl">Dentro de SLA</span><span class="sb-val" style="color:var(--cyan)">77%</span></div>
+          <div class="sb-bar"><div class="sb-fill" style="width:77%;background:var(--cyan)"></div></div>
+        </div>
+      </div>
+
+      <div class="nav-section" style="border-top:1px solid var(--line);padding-top:16px;margin-top:auto">
+        <a class="nav-item" href="https://apidoc.yiqi.com.ar" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>API Docs</a>
+        <a class="nav-item" href="https://sites.google.com/yiqi.com.ar/ayudaerp" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>Soporte</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="hero" id="hero">
+      <div class="hero-kicker">Informe operacional · Abril 2026</div>
+      <h1 class="hero-title">Atención al Cliente, Ingeniería y Producto</h1>
+      <p class="hero-sub">Análisis de 332 tickets con enfoque de inteligencia operacional: detección de patrones, clusters semánticos, recurrencias, riesgos y acciones concretas para mayo.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><label>Período</label><span>1/4/2026 – 30/4/2026</span></div>
+        <div class="hero-meta-item"><label>Tickets analizados</label><span>332</span></div>
+        <div class="hero-meta-item"><label>Empresas</label><span>39 esquemas</span></div>
+        <div class="hero-meta-item"><label>Satisfacción</label><span>4,29 / 5</span></div>
+      </div>
+    </div>
+
+    <section class="section" id="kpis">
+      <div class="section-header">
+        <div class="section-kicker">01 · Métricas</div>
+        <h2 class="section-title">KPIs del mes</h2>
+        <p class="section-sub">Resumen cuantitativo del período abril 2026.</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card accent-cyan">
+          <div class="kpi-icon cyan-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="kpi-value">332</div><div class="kpi-label">Tickets analizados</div><div class="kpi-sub" style="color:var(--muted-2)">Total abril 2026</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon muted-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="kpi-value">39</div><div class="kpi-label">Empresas activas</div><div class="kpi-sub" style="color:var(--muted-2)">Esquemas con tickets</div>
+        </div>
+        <div class="kpi-card accent-green">
+          <div class="kpi-icon green-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="kpi-value">210</div><div class="kpi-label">Tickets cerrados</div><div class="kpi-sub" style="color:var(--green)">63,2 % del total</div>
+        </div>
+        <div class="kpi-card accent-green">
+          <div class="kpi-icon green-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="kpi-value">161</div><div class="kpi-label">Dentro de SLA</div><div class="kpi-sub" style="color:var(--green)">76,7 % de cerrados</div>
+        </div>
+        <div class="kpi-card accent-red">
+          <div class="kpi-icon red-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="kpi-value">71</div><div class="kpi-label">Fuera de SLA</div><div class="kpi-sub" style="color:var(--red)">33,8 % de cerrados</div>
+        </div>
+        <div class="kpi-card accent-amber">
+          <div class="kpi-icon amber-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="kpi-value">4,29</div><div class="kpi-label">Satisfacción promedio</div><div class="kpi-sub" style="color:var(--amber)">Sobre escala de 5</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="objetivo">
+      <div class="section-header"><div class="section-kicker">02 · Contexto</div><h2 class="section-title">Objetivo del informe</h2></div>
+      <div class="card">
+        <p class="card-body">Transformar los tickets de soporte de abril en inteligencia operacional: identificar patrones recurrentes, focos de carga operativa, problemas sistémicos, oportunidades de mejora, riesgos operativos, necesidades de Producto e Ingeniería, y oportunidades de documentación y capacitación.</p>
+        <p class="card-body" style="margin-top:12px">Para este análisis se utilizó un enfoque basado en análisis semántico, agrupación de tickets similares, lógica de embeddings, clustering tipo K-Means y detección de recurrencias operativas.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="resumen">
+      <div class="section-header"><div class="section-kicker">03 · Resumen</div><h2 class="section-title">Resumen ejecutivo</h2><p class="section-sub">Tres focos principales identificados en el período.</p></div>
+      <div class="cards-grid">
+        <div class="card"><span class="badge badge-amber">Principal foco</span><div class="card-title">Facturación / ARCA</div><p class="card-body">Concentra el mayor volumen del mes y combina errores, consultas funcionales, validaciones fiscales, percepciones, NC/ND y emisión de comprobantes.</p></div>
+        <div class="card"><span class="badge badge-red">Alta recurrencia</span><div class="card-title">Pedidos / reservas</div><p class="card-body">Aparecen pedidos trabados, estados intermedios, redisparos y procesos que requieren intervención manual.</p></div>
+        <div class="card"><span class="badge badge-cyan">Alto impacto</span><div class="card-title">Clientes recurrentes</div><p class="card-body">ArphGroup, Febo, Mutis, DX, Metroblanc y otros concentran volumen o recurrencias que requieren seguimiento proactivo.</p></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="clusters">
+      <div class="section-header"><div class="section-kicker">04 · Análisis</div><h2 class="section-title">Clusters operativos detectados</h2><p class="section-sub">Agrupación semántica de los 332 tickets del período.</p></div>
+      <div class="table-wrap">
+        <div class="table-header"><input class="table-search" id="search-clusters" placeholder="Buscar cluster…"></div>
+        <table class="table-sortable" id="tabla-clusters">
+          <thead><tr><th onclick="sortTable('tabla-clusters',0)">Cluster</th><th onclick="sortTable('tabla-clusters',1)">Tickets</th><th onclick="sortTable('tabla-clusters',2)">Impacto</th><th>Lectura</th></tr></thead>
+          <tbody>
+            <tr><td>Facturación / ARCA / comprobantes</td><td>139</td><td><span class="chip chip-high">Alto</span></td><td>Principal carga operativa del mes.</td></tr>
+            <tr><td>Pedidos / reservas / workflow</td><td>83</td><td><span class="chip chip-high">Alto</span></td><td>Procesos trabados y operaciones incompletas.</td></tr>
+            <tr><td>Cobros / pagos / bancos</td><td>29</td><td><span class="chip chip-medium">Medio</span></td><td>Consultas y reglas funcionales repetitivas.</td></tr>
+            <tr><td>Stock / remitos / logística</td><td>21</td><td><span class="chip chip-high">Alto</span></td><td>Impacto operativo y logístico.</td></tr>
+            <tr><td>Otros / no clasificado</td><td>21</td><td><span class="chip chip-medium">Medio</span></td><td>Oportunidad de mejorar clasificación inicial.</td></tr>
+            <tr><td>Listas de precios / costos / márgenes</td><td>16</td><td><span class="chip chip-high">Alto</span></td><td>Bajo volumen relativo, impacto comercial crítico.</td></tr>
+            <tr><td>Compras / proveedores / OCR</td><td>7</td><td><span class="chip chip-medium">Medio</span></td><td>Casos funcionales y de procesamiento.</td></tr>
+            <tr><td>Usuarios / permisos / accesos</td><td>6</td><td><span class="chip chip-medium">Medio</span></td><td>Riesgo operativo y control interno.</td></tr>
+            <tr><td>Reportes / Smartie / exportaciones</td><td>5</td><td><span class="chip chip-medium">Medio</span></td><td>Necesidad de visibilidad e información.</td></tr>
+            <tr><td>Performance / lentitud / procesos</td><td>3</td><td><span class="chip chip-high">Alto</span></td><td>Bajo volumen, impacto sensible.</td></tr>
+          </tbody>
+        </table>
+        <div class="table-empty" id="empty-clusters">Sin resultados</div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="clientes">
+      <div class="section-header"><div class="section-kicker">05 · Clientes</div><h2 class="section-title">Clientes con mayor atención requerida</h2><p class="section-sub">Esquemas con mayor volumen o recurrencia en el período.</p></div>
+      <div class="table-wrap">
+        <div class="table-header"><input class="table-search" id="search-clientes" placeholder="Buscar cliente…"></div>
+        <table class="table-sortable" id="tabla-clientes">
+          <thead><tr><th onclick="sortTable('tabla-clientes',0)">Cliente / Esquema</th><th onclick="sortTable('tabla-clientes',1)">Tickets</th><th>Lectura</th></tr></thead>
+          <tbody>
+            <tr><td>INDEPENDENT AGENTS SA / ArphGroup</td><td>41</td><td>Alta recurrencia e impacto operativo.</td></tr>
+            <tr><td>Zapatería Febo</td><td>33</td><td>Facturación, POS y operación comercial.</td></tr>
+            <tr><td>Mutis Agencia</td><td>28</td><td>Alto volumen funcional.</td></tr>
+            <tr><td>DX Electrónica</td><td>20</td><td>Procesos comerciales y márgenes.</td></tr>
+            <tr><td>Espacio Marketing</td><td>20</td><td>Seguimiento recomendado.</td></tr>
+            <tr><td>LATCAU</td><td>15</td><td>Casos operativos abiertos.</td></tr>
+            <tr><td>Metroblanc</td><td>14</td><td>Costos, listas de precios y BOM.</td></tr>
+            <tr><td>Centro de Distribución Sur</td><td>13</td><td>Logística y stock.</td></tr>
+          </tbody>
+        </table>
+        <div class="table-empty" id="empty-clientes">Sin resultados</div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="riesgos">
+      <div class="section-header"><div class="section-kicker">06 · Riesgos</div><h2 class="section-title">Riesgos detectados</h2><p class="section-sub">Factores que pueden escalar si no se abordan en mayo.</p></div>
+      <div class="table-wrap"><table><thead><tr><th>Riesgo</th><th>Impacto operativo</th></tr></thead><tbody>
+        <tr><td>Recurrencias operativas</td><td>Alta carga repetitiva sobre Atención e Ingeniería.</td></tr>
+        <tr><td>Dependencia de intervención manual</td><td>Baja escalabilidad y mayor riesgo de error.</td></tr>
+        <tr><td>Procesos sin trazabilidad clara</td><td>Dificultad de diagnóstico y mayor tiempo de resolución.</td></tr>
+        <tr><td>Clientes con desgaste operativo</td><td>Riesgo de percepción negativa del servicio.</td></tr>
+        <tr><td>Procesos técnicos recurrentes</td><td>Incremento de tickets repetitivos y derivaciones.</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="focos">
+      <div class="section-header"><div class="section-kicker">07 · Acción</div><h2 class="section-title">Focos estratégicos para mayo</h2><p class="section-sub">Iniciativas prioritarias derivadas del análisis del período.</p></div>
+      <div class="cards-grid">
+        <div class="card"><span class="badge badge-cyan">Foco 1</span><div class="card-title">Facturación / ARCA / comprobantes</div><ul><li>Crear guías rápidas de resolución.</li><li>Definir checklist de validaciones previas.</li><li>Mejorar criterios de derivación.</li><li>Separar consulta, configuración, error funcional y error técnico.</li></ul></div>
+        <div class="card"><span class="badge badge-cyan">Foco 2</span><div class="card-title">Pedidos / reservas / workflow operativo</div><ul><li>Crear tablero de seguimiento de procesos trabados.</li><li>Revisar workflows asincrónicos.</li><li>Mejorar trazabilidad de estados.</li><li>Detectar procesos recurrentes que requieren intervención manual.</li></ul></div>
+        <div class="card"><span class="badge badge-amber">Foco 3</span><div class="card-title">Clientes con recurrencia alta</div><ul><li>Implementar seguimiento mensual.</li><li>Separar recurrencia por cliente y módulo.</li><li>Priorizar clientes con alto volumen o impacto.</li></ul></div>
+        <div class="card"><span class="badge badge-amber">Foco 4</span><div class="card-title">Procesos técnicos y redisparos</div><ul><li>Revisar procesos asincrónicos.</li><li>Mejorar monitoreo técnico.</li><li>Incorporar alertas y estados visibles.</li><li>Detectar patrones repetitivos por módulo.</li></ul></div>
+        <div class="card"><span class="badge badge-green">Foco 5</span><div class="card-title">Documentación y capacitación</div><ul><li>Crear FAQs por módulo.</li><li>Armar instructivos y videos cortos.</li><li>Definir checklists operativos.</li><li>Reducir consultas repetitivas.</li></ul></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="oportunidades">
+      <div class="section-header"><div class="section-kicker">08 · Oportunidades</div><h2 class="section-title">Oportunidades detectadas</h2><p class="section-sub">Áreas con potencial de mejora inmediata.</p></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-title">Atención al Cliente</div><ul><li>Mejor clasificación inicial de tickets.</li><li>Detección temprana de recurrencias.</li><li>Seguimiento proactivo por cliente.</li><li>Mayor documentación operativa.</li></ul></div>
+        <div class="card"><div class="card-title">Ingeniería</div><ul><li>Revisar procesos asincrónicos.</li><li>Detectar redisparos frecuentes.</li><li>Mejorar monitoreo técnico.</li><li>Incorporar trazabilidad de estados.</li></ul></div>
+        <div class="card"><div class="card-title">Producto</div><ul><li>Mejorar mensajes de error y ayuda.</li><li>Estados más visibles en el flujo.</li><li>Validaciones preventivas.</li><li>Alertas operativas proactivas.</li></ul></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="quickwins">
+      <div class="section-header"><div class="section-kicker">09 · Quick wins</div><h2 class="section-title">Acciones de alto impacto inmediato</h2><p class="section-sub">Ejecutables esta semana con retorno rápido.</p></div>
+      <div class="table-wrap">
+        <div class="table-header"><input class="table-search" id="search-qw" placeholder="Buscar acción…"></div>
+        <table class="table-sortable" id="tabla-qw">
+          <thead><tr><th onclick="sortTable('tabla-qw',0)">Acción</th><th onclick="sortTable('tabla-qw',1)">Área</th><th onclick="sortTable('tabla-qw',2)">Impacto</th></tr></thead>
+          <tbody>
+            <tr><td>Crear FAQ de facturación</td><td>Atención</td><td><span class="chip chip-high">Alto</span></td></tr>
+            <tr><td>Checklist para derivación a Ingeniería</td><td>Atención</td><td><span class="chip chip-high">Alto</span></td></tr>
+            <tr><td>Tablero de procesos trabados</td><td>Ingeniería</td><td><span class="chip chip-high">Alto</span></td></tr>
+            <tr><td>Identificar top tickets repetitivos</td><td>Atención</td><td><span class="chip chip-medium">Medio</span></td></tr>
+            <tr><td>Revisión semanal de clientes recurrentes</td><td>Jefatura</td><td><span class="chip chip-high">Alto</span></td></tr>
+          </tbody>
+        </table>
+        <div class="table-empty" id="empty-qw">Sin resultados</div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="priorizacion">
+      <div class="section-header"><div class="section-kicker">10 · Prioridades</div><h2 class="section-title">Priorización mayo 2026</h2><p class="section-sub">Distribución de esfuerzo recomendada para el próximo período.</p></div>
+      <div class="cards-grid">
+        <div class="card"><span class="badge badge-red">Prioridad alta</span><ul><li>Facturación / ARCA.</li><li>Pedidos y reservas.</li><li>Procesos trabados.</li><li>Clientes recurrentes.</li><li>Listas de precios y costos.</li></ul></div>
+        <div class="card"><span class="badge badge-amber">Prioridad media</span><ul><li>Cobros y pagos.</li><li>Stock y remitos.</li><li>Capacitación funcional.</li><li>Reportes / Smartie.</li></ul></div>
+        <div class="card"><span class="badge badge-green">Prioridad baja</span><ul><li>Mejoras menores.</li><li>Ajustes visuales.</li><li>Backlog funcional.</li></ul></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="roadmap">
+      <div class="section-header"><div class="section-kicker">11 · Roadmap</div><h2 class="section-title">Plan de acción sugerido</h2><p class="section-sub">Hoja de ruta con horizonte de 30 días.</p></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-title">Próximas 48 hs</div><ul><li>Revisar tickets críticos abiertos.</li><li>Revisar clientes prioritarios.</li><li>Consolidar casos recurrentes.</li></ul></div>
+        <div class="card"><div class="card-title">Próximos 7 días</div><ul><li>Crear tablero mensual por cluster.</li><li>Definir criterios de derivación.</li><li>Crear primeros instructivos prioritarios.</li></ul></div>
+        <div class="card"><div class="card-title">Próximos 30 días</div><ul><li>Implementar análisis mensual recurrente.</li><li>Medir KPIs por cluster.</li><li>Reducir tickets repetitivos.</li><li>Consolidar base de conocimiento.</li></ul></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="indicadores">
+      <div class="section-header"><div class="section-kicker">12 · Indicadores</div><h2 class="section-title">Indicadores sugeridos</h2><p class="section-sub">KPIs recomendados para el seguimiento mensual.</p></div>
+      <div class="table-wrap"><table><thead><tr><th>Indicador</th><th>Objetivo</th></tr></thead><tbody>
+        <tr><td>Tiempo promedio de respuesta</td><td>Reducir tiempos de primera respuesta.</td></tr>
+        <tr><td>% tickets derivados correctamente</td><td>Mejorar calidad de escalamiento.</td></tr>
+        <tr><td>% tickets cerrados en SLA</td><td>Medir cumplimiento operativo.</td></tr>
+        <tr><td>Tickets reabiertos</td><td>Detectar recurrencias o resolución incompleta.</td></tr>
+        <tr><td>Tickets por cluster</td><td>Detectar focos operativos mensuales.</td></tr>
+        <tr><td>Clientes con recurrencia</td><td>Hacer seguimiento preventivo.</td></tr>
+        <tr><td>Tickets repetitivos</td><td>Reducir carga operativa.</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="conclusion">
+      <div class="section-header"><div class="section-kicker">13 · Conclusión</div><h2 class="section-title">Conclusión</h2></div>
+      <div class="card">
+        <p class="card-body">Abril evidencia una operación con buena capacidad de respuesta, pero también con recurrencias claras sobre determinados módulos y procesos.</p>
+        <p class="card-body" style="margin-top:12px">El objetivo es evolucionar desde soporte reactivo hacia inteligencia operacional basada en patrones, impacto y mejora continua.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi">
+      <rect fill="none" height="65" width="100"/>
+      <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+      <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+      <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+    </svg>
+    <span class="footer-text">ERP · Atención al Cliente</span>
+  </div>
+  <span class="footer-meta">© 2026 YiQi S.A. · DS v1.2.5</span>
+</footer>
+
+<script>
+const _mq=window.matchMedia('(prefers-color-scheme: dark)');
+function resolveTheme(v){return v==='system'?(_mq.matches?'dark':'light'):v}
+function applyTheme(v){document.documentElement.dataset.theme=resolveTheme(v)}
+function setTheme(v){localStorage.setItem('yiqi-theme',v);applyTheme(v);document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.val===v));}
+_mq.addEventListener('change',()=>{if((localStorage.getItem('yiqi-theme')||'system')==='system')applyTheme('system');});
+(function(){const s=localStorage.getItem('yiqi-theme')||'system';applyTheme(s);document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.val===s)));})();
+const menuBtn=document.getElementById('menuBtn'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('sidebarOverlay');
+menuBtn?.addEventListener('click',()=>{sidebar.classList.toggle('open');overlay.classList.toggle('open');});
+overlay?.addEventListener('click',()=>{sidebar.classList.remove('open');overlay.classList.remove('open');});
+document.addEventListener('DOMContentLoaded',()=>{
+  /* Scroll-spy */
+  const links=document.querySelectorAll('.nav-item[href^="#"]');
+  const topH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topbar-h'))||56;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector('.nav-item[href="#'+e.target.id+'"]');
+        if(a){a.classList.add('active');a.scrollIntoView({block:'nearest'});}
+      }
+    });
+  },{rootMargin:'-'+topH+'px 0px -55% 0px'});
+  document.querySelectorAll('.section[id]').forEach(s=>obs.observe(s));
+
+  /* En mobile cerrar sidebar al tocar un link — el scroll lo maneja el browser via CSS */
+  if(window.innerWidth<980){
+    document.querySelectorAll('.nav-item[href^="#"]').forEach(a=>{
+      a.addEventListener('click',()=>{
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      });
+    });
+  }
+});
+function sortTable(tableId,colIdx){
+  const table=document.getElementById(tableId);if(!table)return;
+  const tbody=table.querySelector('tbody');const ths=table.querySelectorAll('thead th');const th=ths[colIdx];
+  const isAsc=th.classList.contains('sorted-asc');
+  ths.forEach(t=>t.classList.remove('sorted-asc','sorted-desc'));th.classList.add(isAsc?'sorted-desc':'sorted-asc');
+  const rows=[...tbody.querySelectorAll('tr')];
+  rows.sort((a,b)=>{const aT=a.cells[colIdx]?.textContent.trim()||'';const bT=b.cells[colIdx]?.textContent.trim()||'';const aN=parseFloat(aT.replace(/[^0-9.-]/g,''));const bN=parseFloat(bT.replace(/[^0-9.-]/g,''));if(!isNaN(aN)&&!isNaN(bN))return isAsc?bN-aN:aN-bN;return isAsc?bT.localeCompare(aT,'es'):aT.localeCompare(bT,'es');});
+  rows.forEach(r=>tbody.appendChild(r));
+}
+function setupSearch(inputId,tableId,emptyId){document.getElementById(inputId)?.addEventListener('input',function(){const q=this.value.toLowerCase();const rows=document.querySelectorAll(`#${tableId} tbody tr`);let v=0;rows.forEach(r=>{const m=r.textContent.toLowerCase().includes(q);r.style.display=m?'':'none';if(m)v++;});const empty=document.getElementById(emptyId);if(empty)empty.classList.toggle('show',v===0);});}
+setupSearch('search-clusters','tabla-clusters','empty-clusters');
+setupSearch('search-clientes','tabla-clientes','empty-clientes');
+setupSearch('search-qw','tabla-qw','empty-qw');
+</script>
+</body>
+</html>
