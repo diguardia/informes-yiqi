@@ -414,7 +414,7 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
             <div style="width:85%;height:100%;background:var(--green);border-radius:2px"></div>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font:400 12px var(--sans);color:var(--muted)">Sprint completado</span>
+            <span style="font:400 12px var(--sans);color:var(--muted)">Avance tratados</span>
             <span style="font:600 12px var(--mono);color:var(--cyan)">100%</span>
           </div>
           <div style="height:4px;background:var(--bg-soft);border-radius:2px;overflow:hidden">
@@ -458,13 +458,13 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
           </svg>
           <span style="font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);margin-left:6px">ERP</span>
         </div>
-        <div class="hero-badge">Sprint completado · 100%</div>
+        <div class="hero-badge">Tickets tratados · 100% avance</div>
       </div>
       <div class="hero-meta">
         <div class="hero-meta-item"><label>Período</label><span>1/4/2026 – 30/4/2026</span></div>
-        <div class="hero-meta-item"><label>Tickets del sprint</label><span>6 planificados</span></div>
+        <div class="hero-meta-item"><label>Tickets del sprint</label><span>Sin planificación formal</span></div>
         <div class="hero-meta-item"><label>Reuniones</label><span>2 realizadas</span></div>
-        <div class="hero-meta-item"><label>Versión informe</label><span>v1.1.0</span></div>
+        <div class="hero-meta-item"><label>Versión informe</label><span>v1.2.0</span></div>
       </div>
     </div>
 
@@ -476,7 +476,10 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
         <p class="section-sub">Resumen narrativo de las iniciativas trabajadas durante el período.</p>
       </div>
       <div style="background:var(--bg-elev);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:28px 32px">
-        <p style="font:400 14px var(--sans);color:var(--text);line-height:1.75;margin-bottom:20px">Durante el período se trabajó en ajustes normativos, conciliación financiera con proveedores y mejoras en la capa de geolocalización del sistema.</p>
+        <p style="font:400 14px var(--sans);color:var(--text);line-height:1.75;margin-bottom:14px">Durante el período se trabajó en ajustes normativos, conciliación financiera con proveedores y mejoras en la capa de geolocalización del sistema.</p>
+        <div style="padding:12px 16px;background:var(--amber-soft);border-radius:var(--radius-sm);border:1px solid rgba(246,166,35,.2);margin-bottom:20px">
+          <p style="font:italic 400 13px var(--sans);color:var(--muted);line-height:1.65"><strong style="color:var(--amber);font-style:normal;font-weight:600">Nota:</strong> las tareas desarrolladas durante este período respondieron principalmente a necesidades operativas y requerimientos emergentes del negocio, por lo que <strong style="color:var(--text);font-weight:600;font-style:normal">no existió una planificación previa formal del sprint</strong>.</p>
+        </div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div style="display:flex;gap:12px;padding:14px 16px;background:var(--cyan-soft);border-radius:var(--radius-sm);border:1px solid var(--cyan-soft-2)">
             <div style="width:6px;height:6px;border-radius:50%;background:var(--cyan);margin-top:6px;flex-shrink:0"></div>
@@ -512,13 +515,13 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
           <div class="kpi-icon green-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
           <div class="kpi-value">18 <span>85%</span></div><div class="kpi-label">Tickets resueltos</div><div class="kpi-sub" style="color:var(--green)">Tasa de resolución</div>
         </div>
-        <div class="kpi-card accent-amber">
-          <div class="kpi-icon amber-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div class="kpi-value">6</div><div class="kpi-label">Tickets del sprint</div><div class="kpi-sub" style="color:var(--amber)">100% completados</div>
+        <div class="kpi-card">
+          <div class="kpi-icon muted-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="kpi-value" style="color:var(--muted)">—</div><div class="kpi-label">Tickets del sprint</div><div class="kpi-sub" style="color:var(--muted-2)">Sin planificación formal</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-icon muted-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div class="kpi-value">2</div><div class="kpi-label">Reuniones</div><div class="kpi-sub" style="color:var(--muted-2)">+ 8 tickets soporte</div>
+          <div class="kpi-value">2</div><div class="kpi-label">Reuniones</div><div class="kpi-sub" style="color:var(--muted-2)">+ 7 tickets de soporte</div>
         </div>
       </div>
       <div style="background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:32px">
@@ -527,9 +530,9 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
             <div style="font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px">Resumen de tickets</div>
             <table style="width:100%;border-collapse:collapse">
               <tbody>
-                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets del sprint</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">6</td><td style="padding:8px 0;text-align:right;padding-left:8px"><span class="badge badge-sprint">100%</span></td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets del sprint</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--muted-2);text-align:right">—</td><td style="padding:8px 0;text-align:right;padding-left:8px;font:600 11px var(--mono);color:var(--muted-2)">—</td></tr>
                 <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets creados</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">21</td><td></td></tr>
-                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets tratados</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">18</td><td style="padding:8px 0;text-align:right;padding-left:8px"><span class="badge badge-correccion">85%</span></td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets tratados</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">18</td><td style="padding:8px 0;text-align:right;padding-left:8px"><span class="badge badge-sprint">100%</span></td></tr>
                 <tr><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Ingeniería (fuera soporte)</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">10</td><td></td></tr>
               </tbody>
             </table>
@@ -553,7 +556,7 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
           <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Fecha desde: <strong style="color:var(--text)">1/4/2026</strong></span></div>
           <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Fecha hasta: <strong style="color:var(--text)">30/4/2026</strong></span></div>
           <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Reuniones: <strong style="color:var(--text)">2</strong></span></div>
-          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Tickets de soporte: <strong style="color:var(--text)">8</strong></span></div>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Tickets de soporte: <strong style="color:var(--text)">7</strong></span></div>
         </div>
       </div>
     </section>
@@ -579,7 +582,7 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
           <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span style="font:400 13px var(--sans);color:var(--muted)">Mandos medios crean tickets funcionales</span><span class="badge badge-sprint" style="flex-shrink:0">✓</span></div>
           <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span style="font:400 13px var(--sans);color:var(--muted)">Usuarios finales solo reportan errores</span><span class="badge badge-sprint" style="flex-shrink:0">✓</span></div>
           <div style="display:flex;justify-content:space-between;padding:10px 0"><span style="font:400 13px var(--sans);color:var(--muted)">Evidencia obligatoria en errores</span><span class="badge badge-sprint" style="flex-shrink:0">✓</span></div>
-          <div style="padding:12px;background:var(--amber-soft);border-radius:var(--radius-sm);border:1px solid rgba(246,166,35,.2)"><p style="font:400 11px var(--sans);color:var(--muted);line-height:1.4">La reducción progresiva de tickets refleja una mejora en el modelo de gestión, priorizando requerimientos mejor definidos y alineados con la operación.</p></div>
+          <div style="padding:12px;background:var(--amber-soft);border-radius:var(--radius-sm);border:1px solid rgba(246,166,35,.2)"><p style="font:400 11px var(--sans);color:var(--muted);line-height:1.4">Período sin planificación previa formal del sprint: las tareas respondieron a necesidades operativas y requerimientos emergentes del negocio.</p></div>
         </div>
       </div>
     </section>
@@ -647,31 +650,31 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
         <div class="table-header">
           <input class="table-search" id="tableSearch" type="text" placeholder="Buscar por título, sector, tipo…" />
           <button class="filter-btn active" data-filter="all">Todos (18)</button>
-          <button class="filter-btn" data-filter="sprint">Sprint (6)</button>
+          <button class="filter-btn" data-filter="ingenieria">Ingeniería (10)</button>
           <button class="filter-btn" data-filter="soporte">Soporte (8)</button>
         </div>
         <div style="overflow-x:auto">
           <table id="sprintTable" class="table-sortable">
             <thead><tr><th>Título</th><th>Sprint</th><th>BL</th><th>Sector</th><th>Ticket</th><th>Tipo</th><th>Avance</th><th>Esfuerzo</th></tr></thead>
             <tbody>
-              <tr data-type="sprint"><td>Actualización urgente de YiQi por cambio de diseño ARBA – Retenciones y Percepciones</td><td><span class="badge badge-sprint">SI</span></td><td class="td-ticket">1</td><td>Administración</td><td class="td-ticket">33673</td><td><span class="badge badge-mejora">Mejora</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-alta">Alta</span></td></tr>
-              <tr data-type="sprint"><td>DTO COMPRAS – Agregar columna en detalle de solicitud de material</td><td><span class="badge badge-sprint">SI</span></td><td class="td-ticket">2</td><td>Compras</td><td class="td-ticket">29434</td><td><span class="badge badge-desarrollo">Desarrollo</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="sprint"><td>CBR ** Factura en estado cobrada con pendiente de cobro (parcial mínimo)</td><td><span class="badge badge-sprint">SI</span></td><td class="td-ticket">3</td><td>Cobranzas</td><td class="td-ticket">29862</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="sprint"><td>Total moneda default en notas de crédito</td><td><span class="badge badge-sprint">SI</span></td><td class="td-ticket">4</td><td>Facturación</td><td class="td-ticket">30028</td><td><span class="badge badge-desarrollo">Desarrollo</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="sprint"><td>CTA CTE Proveedor</td><td><span class="badge badge-sprint">SI</span></td><td class="td-ticket">5</td><td>Administración</td><td class="td-ticket">31863</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="sprint"><td>Mejora lógica pedido de retiro</td><td><span class="badge badge-sprint">SI</span></td><td class="td-ticket">6</td><td>Externo</td><td class="td-ticket">34134</td><td><span class="badge badge-desarrollo">Desarrollo</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>Mis comprobantes sin creación de facturas</td><td>—</td><td>—</td><td>Administración</td><td class="td-ticket">30737</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="otro"><td>Modificación de tipo de OTI</td><td>—</td><td>—</td><td>Comercial</td><td class="td-ticket">31954</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>No se puede ver los cheques en las OP</td><td>—</td><td>—</td><td>Administración</td><td class="td-ticket">32167</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="otro"><td>Error OT 639 Esquema Opciones en Servicios</td><td>—</td><td>—</td><td>Sucursales</td><td class="td-ticket">33699</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>N/C de Ventas, no detalla IVA en PDF</td><td>—</td><td>—</td><td>Administración</td><td class="td-ticket">33931</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>No me emite factura</td><td>—</td><td>—</td><td>Sucursales</td><td class="td-ticket">33940</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Desconfirmar entrega OT 108961</td><td>—</td><td>—</td><td>Servicios</td><td class="td-ticket">33950</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Factura 17820 sin sucursal</td><td>—</td><td>—</td><td>Sucursales</td><td class="td-ticket">34044</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Error en reporte detalle factura</td><td>—</td><td>—</td><td>Facturación</td><td class="td-ticket">34087</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Error en anular OP</td><td>—</td><td>—</td><td>Administración</td><td class="td-ticket">34108</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="otro"><td>Pasar a prod el ticket 29.434</td><td>—</td><td>—</td><td>Compras</td><td class="td-ticket">34118</td><td><span class="badge badge-implementacion">Implementación</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="otro"><td>Desvincular Det. Soli. de compra a Orden de Compra</td><td>—</td><td>—</td><td>Compras</td><td class="td-ticket">34165</td><td><span class="badge badge-mejora">Mejora</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>DTO COMPRAS – Agregar columna en detalle de solicitud de material</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Compras</td><td class="td-ticket">29434</td><td><span class="badge badge-desarrollo">Desarrollo</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>CBR ** Factura en estado cobrada con pendiente de cobro (parcial mínimo)</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Cobranzas</td><td class="td-ticket">29862</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>Total moneda default en notas de crédito</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Facturación</td><td class="td-ticket">30028</td><td><span class="badge badge-desarrollo">Desarrollo</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Mis comprobantes sin creación de facturas</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">30737</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>CTA CTE Proveedor</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">31863</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>Modificación de tipo de OTI</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Comercial</td><td class="td-ticket">31954</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>No se puede ver los cheques en las OP</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">32167</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>Actualización urgente de YiQi por cambio de diseño ARBA – Retenciones y Percepciones</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">33673</td><td><span class="badge badge-mejora">Mejora</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-alta">Alta</span></td></tr>
+              <tr data-type="ingenieria"><td>Error OT 639 Esquema Opciones en Servicios</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">33699</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>N/C de Ventas, no detalla IVA en PDF</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">33931</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>No me emite factura</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">33940</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Desconfirmar entrega OT 108961</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Servicios</td><td class="td-ticket">33950</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Factura 17820 sin sucursal</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34044</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Error en reporte detalle factura</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Facturación</td><td class="td-ticket">34087</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Error en anular OP</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34108</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>Pasar a prod el ticket 29.434</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Compras</td><td class="td-ticket">34118</td><td><span class="badge badge-implementacion">Implementación</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>Mejora lógica pedido de retiro</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Externo</td><td class="td-ticket">34134</td><td><span class="badge badge-desarrollo">Desarrollo</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>Desvincular Det. Soli. de compra a Orden de Compra</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Compras</td><td class="td-ticket">34165</td><td><span class="badge badge-mejora">Mejora</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
             </tbody>
           </table>
           <div class="table-empty" id="tableEmpty">No se encontraron tickets con ese criterio.</div>
@@ -749,7 +752,7 @@ function applyFilter() {
     const type = row.getAttribute('data-type');
     const matchSearch = text.includes(q);
     const matchFilter = currentFilter === 'all'
-      || (currentFilter === 'sprint' && type === 'sprint')
+      || (currentFilter === 'ingenieria' && type === 'ingenieria')
       || (currentFilter === 'soporte' && type === 'soporte');
     const show = matchSearch && matchFilter;
     row.style.display = show ? '' : 'none';
@@ -813,8 +816,9 @@ function renderAllCharts() {
   const dT={l:['Soporte','Desarrollo','Corrección','Edición de datos','Mejora','Implementación'],d:[8,3,2,2,2,1],c:[c.muted,c.cyan,c.amber,c.blue,c.green,c.purple]};
   // Esfuerzo: Baja 61.1% ≈ 11, Media 33.3% ≈ 6, Alta 5.6% ≈ 1
   const dF={l:['Baja','Media','Alta'],d:[11,6,1],c:[c.muted2,c.cyan,c.amber]};
-  // Sectores del PDF: Administración 33.3%, Compras 16.7%, Sucursales 16.7%, Facturación 11.1%, Comercial 5.6%, Externo 5.6%, Servicios 5.6%, Cobranzas 5.6%
-  const dS={l:['Administración','Compras','Sucursales','Facturación','Comercial','Externo','Servicios','Cobranzas'],d:[6,3,3,2,1,1,1,1],c:[c.cyan,c.purple,c.green,c.amber,c.blue,c.muted2,c.red,c.muted]};
+  // Sectores del PDF (base 27 = 18 tratados + 7 soporte + 2 reuniones):
+  // Sucursales 25.9%, Administración 22.2%, Compras 11.1%, RRHH 11.1%, Servicios 11.1%, Facturación 7.4%, Externo 3.7%, Cobranzas 3.7%, Comercial 3.7%
+  const dS={l:['Sucursales','Administración','Compras','RRHH','Servicios','Facturación','Externo','Cobranzas','Comercial'],d:[7,6,3,3,3,2,1,1,1],c:[c.green,c.cyan,c.purple,c.amber,c.red,c.blue,c.muted2,c.muted,c.muted2]};
 
   makeDonut('chartEstado',dE.l,dE.d,dE.c);
   makeDonut('chartTipo',dT.l,dT.d,dT.c);
