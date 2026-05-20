@@ -374,6 +374,8 @@
     }
     .field-input:focus { border-color: rgba(0,204,255,.30); box-shadow: var(--glow); }
     .field-inputs-stack { display: flex; flex-direction: column; gap: 14px; }
+    .field-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .field-sub-label { font: 400 10px var(--mono); color: var(--muted-2); margin-bottom: 4px; }
 
     .card-subtitle {
       font: 600 10px var(--mono); letter-spacing: .1em; text-transform: uppercase;
@@ -724,20 +726,34 @@
           <div class="card-subtitle">Ingresar datos</div>
           <div class="field-inputs-stack">
             <div class="field-group">
-              <label class="field-label" for="leads">Leads potables</label>
-              <input class="field-input" id="leads" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Cantidad de leads potables">
+              <label class="field-label" for="ons-nuevas">ONs nuevas del período</label>
+              <input class="field-input" id="ons-nuevas" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="ONs nuevas del período">
             </div>
             <div class="field-group">
-              <label class="field-label" for="ons">ONs realizadas</label>
-              <input class="field-input" id="ons" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Cantidad de ONs realizadas">
+              <label class="field-label">Cotizaciones enviadas</label>
+              <div class="field-dual">
+                <div>
+                  <div class="field-sub-label">Cant.</div>
+                  <input class="field-input" id="cot-env" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Cantidad de cotizaciones enviadas">
+                </div>
+                <div>
+                  <div class="field-sub-label">Monto ARS</div>
+                  <input class="field-input" id="cot-env-ars" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Monto en ARS de cotizaciones enviadas">
+                </div>
+              </div>
             </div>
             <div class="field-group">
-              <label class="field-label" for="cotizaciones">Cotizaciones enviadas</label>
-              <input class="field-input" id="cotizaciones" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Cantidad de cotizaciones enviadas">
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="aprobadas">Cotizaciones aprobadas</label>
-              <input class="field-input" id="aprobadas" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Cantidad de cotizaciones aprobadas">
+              <label class="field-label">Cotizaciones aprobadas</label>
+              <div class="field-dual">
+                <div>
+                  <div class="field-sub-label">Cant.</div>
+                  <input class="field-input" id="cot-apr-cant" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Cantidad de cotizaciones aprobadas">
+                </div>
+                <div>
+                  <div class="field-sub-label">Monto ARS</div>
+                  <input class="field-input" id="cot-apr-ars" type="number" min="0" placeholder="0" oninput="calcFunnel()" aria-label="Monto en ARS de cotizaciones aprobadas">
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -752,29 +768,34 @@
               <div class="rate-sub" id="s-alc-cont">143 / 121.200</div>
             </div>
             <div class="rate-card">
-              <div class="rate-label">Contacto → Lead</div>
+              <div class="rate-label">Contacto → ON</div>
               <div class="rate-value" id="r-cont-lead">—</div>
-              <div class="rate-sub" id="s-cont-lead">Ingresar leads</div>
-            </div>
-            <div class="rate-card">
-              <div class="rate-label">Lead → ON</div>
-              <div class="rate-value" id="r-lead-on">—</div>
-              <div class="rate-sub" id="s-lead-on">Ingresar leads y ONs</div>
+              <div class="rate-sub" id="s-cont-lead">Ingresar ONs</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">ON → Cotización</div>
-              <div class="rate-value" id="r-on-cot">—</div>
-              <div class="rate-sub" id="s-on-cot">Ingresar ONs y cotizaciones</div>
+              <div class="rate-value" id="r-lead-on">—</div>
+              <div class="rate-sub" id="s-lead-on">Ingresar cotizaciones</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">Cotización → Cierre</div>
-              <div class="rate-value" id="r-cot-cierr">—</div>
-              <div class="rate-sub" id="s-cot-cierr">Ingresar cot. y aprobadas</div>
+              <div class="rate-value" id="r-on-cot">—</div>
+              <div class="rate-sub" id="s-on-cot">Ingresar aprobadas</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">Costo por ON</div>
               <div class="rate-value" id="r-costo-on">—</div>
               <div class="rate-sub" id="s-costo-on">$497.060 / ONs</div>
+            </div>
+            <div class="rate-card">
+              <div class="rate-label">Ticket promedio enviado</div>
+              <div class="rate-value" id="r-ticket-env">—</div>
+              <div class="rate-sub" id="s-ticket-env">ARS / cot. enviadas</div>
+            </div>
+            <div class="rate-card">
+              <div class="rate-label">Ticket promedio aprobado</div>
+              <div class="rate-value" id="r-cot-cierr">—</div>
+              <div class="rate-sub" id="s-cot-cierr">ARS / cot. aprobadas</div>
             </div>
           </div>
         </div>
@@ -952,53 +973,49 @@ function set(id, txt) {
   if (el) el.textContent = txt;
 }
 
-function calcFunnel() {
-  const CONTACTOS = 143;
-  const ALCANCE   = 121200;
-  const GASTO     = 497060;
+function valF(id) {
+  return parseFloat(document.getElementById(id)?.value) || 0;
+}
 
-  const leads     = val('leads');
-  const ons       = val('ons');
-  const cotiz     = val('cotizaciones');
-  const aprobadas = val('aprobadas');
+function calcFunnel() {
+  const CONTACTOS  = 143;
+  const ALCANCE    = 121200;
+  const GASTO      = 497060;
+
+  const ons        = val('ons-nuevas');
+  const cotEnv     = val('cot-env');
+  const cotEnvArs  = valF('cot-env-ars');
+  const cotAprCant = val('cot-apr-cant');
+  const cotAprArs  = valF('cot-apr-ars');
 
   /* Alcance → Contacto (fijo) */
   set('r-alc-cont', fmtPct((CONTACTOS / ALCANCE) * 100));
 
-  /* Contacto → Lead */
-  if (leads > 0) {
-    set('r-cont-lead', fmtPct((leads / CONTACTOS) * 100));
-    set('s-cont-lead', `${leads} / ${CONTACTOS}`);
+  /* Contacto → ON */
+  if (ons > 0) {
+    set('r-cont-lead', fmtPct((ons / CONTACTOS) * 100));
+    set('s-cont-lead', `${ons} / ${CONTACTOS}`);
   } else {
     set('r-cont-lead', '—');
-    set('s-cont-lead', 'Ingresar leads');
-  }
-
-  /* Lead → ON */
-  if (leads > 0 && ons > 0) {
-    set('r-lead-on', fmtPct((ons / leads) * 100));
-    set('s-lead-on', `${ons} / ${leads}`);
-  } else {
-    set('r-lead-on', '—');
-    set('s-lead-on', 'Ingresar leads y ONs');
+    set('s-cont-lead', 'Ingresar ONs');
   }
 
   /* ON → Cotización */
-  if (ons > 0 && cotiz > 0) {
-    set('r-on-cot', fmtPct((cotiz / ons) * 100));
-    set('s-on-cot', `${cotiz} / ${ons}`);
+  if (ons > 0 && cotEnv > 0) {
+    set('r-lead-on', fmtPct((cotEnv / ons) * 100));
+    set('s-lead-on', `${cotEnv} / ${ons}`);
   } else {
-    set('r-on-cot', '—');
-    set('s-on-cot', 'Ingresar ONs y cotizaciones');
+    set('r-lead-on', '—');
+    set('s-lead-on', 'Ingresar cotizaciones');
   }
 
   /* Cotización → Cierre */
-  if (cotiz > 0 && aprobadas > 0) {
-    set('r-cot-cierr', fmtPct((aprobadas / cotiz) * 100));
-    set('s-cot-cierr', `${aprobadas} / ${cotiz}`);
+  if (cotEnv > 0 && cotAprCant > 0) {
+    set('r-on-cot', fmtPct((cotAprCant / cotEnv) * 100));
+    set('s-on-cot', `${cotAprCant} / ${cotEnv}`);
   } else {
-    set('r-cot-cierr', '—');
-    set('s-cot-cierr', 'Ingresar cot. y aprobadas');
+    set('r-on-cot', '—');
+    set('s-on-cot', 'Ingresar aprobadas');
   }
 
   /* Costo por ON */
@@ -1008,6 +1025,24 @@ function calcFunnel() {
   } else {
     set('r-costo-on', '—');
     set('s-costo-on', '$497.060 / ONs');
+  }
+
+  /* Ticket promedio enviado */
+  if (cotEnv > 0 && cotEnvArs > 0) {
+    set('r-ticket-env', fmtCurrency(cotEnvArs / cotEnv));
+    set('s-ticket-env', `$${Math.round(cotEnvArs).toLocaleString('es-AR')} / ${cotEnv}`);
+  } else {
+    set('r-ticket-env', '—');
+    set('s-ticket-env', 'ARS / cot. enviadas');
+  }
+
+  /* Ticket promedio aprobado */
+  if (cotAprCant > 0 && cotAprArs > 0) {
+    set('r-cot-cierr', fmtCurrency(cotAprArs / cotAprCant));
+    set('s-cot-cierr', `$${Math.round(cotAprArs).toLocaleString('es-AR')} / ${cotAprCant}`);
+  } else {
+    set('r-cot-cierr', '—');
+    set('s-cot-cierr', 'ARS / cot. aprobadas');
   }
 }
 
