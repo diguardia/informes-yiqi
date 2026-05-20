@@ -915,7 +915,42 @@
     <!-- ── SECCIÓN 3: FUNNEL CRM ───────────────────────────────── -->
     <section id="funnel">
       <div class="section-title">Funnel CRM</div>
-      <div class="section-sub">Completar los campos para calcular las tasas automáticamente</div>
+      <div class="section-sub" id="funnel-period-sub">Seleccioná un período para cargar los datos de cotizaciones automáticamente</div>
+
+      <!-- Period pills -->
+      <div class="month-filter" style="margin-bottom:14px">
+        <span style="font:500 11px var(--mono);color:var(--muted-2);margin-right:4px">Período:</span>
+        <button class="month-pill funnel-pill active" onclick="setFunnelPeriod('ytd')">Todo 2026</button>
+        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('ene')">Ene</button>
+        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('feb')">Feb</button>
+        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('mar')">Mar</button>
+        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('abr')">Abr</button>
+        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('may')">May</button>
+      </div>
+
+      <!-- KPI ONs por estado -->
+      <div class="kpi-grid" style="margin-bottom:18px">
+        <div class="kpi-card kpi-muted card-reveal">
+          <div class="kpi-label">ONs nuevas</div>
+          <div class="kpi-value" id="cotiz-v-ons">48</div>
+          <div class="kpi-delta neutral" id="cotiz-d-ons">48 ONs registradas en 2026</div>
+        </div>
+        <div class="kpi-card kpi-cyan card-reveal">
+          <div class="kpi-label">Presupuesto enviado</div>
+          <div class="kpi-value" id="cotiz-v-env">7</div>
+          <div class="kpi-delta neutral" id="cotiz-d-env">7 pendientes de confirmación</div>
+        </div>
+        <div class="kpi-card kpi-green card-reveal">
+          <div class="kpi-label">ONs ganadas</div>
+          <div class="kpi-value" id="cotiz-v-gan">9</div>
+          <div class="kpi-delta positive" id="cotiz-d-gan">1 Confirmada + 8 Concretadas</div>
+        </div>
+        <div class="kpi-card kpi-amber card-reveal">
+          <div class="kpi-label">Tasa de conversión</div>
+          <div class="kpi-value" id="cotiz-v-tasa">18,8%</div>
+          <div class="kpi-delta neutral" id="cotiz-d-tasa">18,8% de conversión ON → ganada</div>
+        </div>
+      </div>
 
       <div class="two-col">
         <!-- Inputs -->
@@ -1374,6 +1409,106 @@ const META_DATA = {
   },
 };
 
+// ─── DATOS DE ONs POR PERÍODO ─────────────────────────────────
+// Fuente: Export CRM (default)_639148865283124372.xlsx · 4.381 registros totales
+// Estado ONs: En Curso / Presupuesto enviado / Confirmada / Concretada / Vencida / Desestimada
+// enviadas  = "Presupuesto enviado" (cotización enviada, esperando respuesta)
+// ganadas   = "Confirmada" + "Concretada" (aprobadas + proyectos iniciados)
+// enCurso   = "En Curso" (aún en progreso, sin cotización enviada aún)
+// vencidas  = "Vencida" + "Desestimada" (no ganadas)
+const COTIZ_DATA = {
+  ytd: {
+    period:   '1 ene – 20 may 2026 · 48 ONs nuevas',
+    ons:       48,  enCurso: 13, enviadas: 7, ganadas: 9,  vencidas: 18,
+    dOns:  '48 ONs nuevas registradas en 2026',
+    dEnv:  '7 pendientes de confirmación',
+    dGan:  '1 Confirmada + 8 Concretadas',
+    dTasa: '18,8% de conversión ON → ganada',
+  },
+  ene: {
+    period:   'Enero 2026 · 6 ONs nuevas',
+    ons:       6,   enCurso: 1,  enviadas: 0, ganadas: 1,  vencidas: 4,
+    dOns:  '6 ONs creadas en enero',
+    dEnv:  'sin cotizaciones enviadas pendientes',
+    dGan:  '1 Concretada (Ene)',
+    dTasa: '16,7% de conversión',
+  },
+  feb: {
+    period:   'Febrero 2026 · 6 ONs nuevas',
+    ons:       6,   enCurso: 0,  enviadas: 0, ganadas: 3,  vencidas: 2,
+    dOns:  '6 ONs creadas en febrero',
+    dEnv:  'sin cotizaciones enviadas pendientes',
+    dGan:  '3 Concretadas (Feb)',
+    dTasa: '50,0% de conversión',
+  },
+  mar: {
+    period:   'Marzo 2026 · 23 ONs nuevas',
+    ons:       23,  enCurso: 8,  enviadas: 5, ganadas: 3,  vencidas: 7,
+    dOns:  '23 ONs creadas en marzo',
+    dEnv:  '5 con presupuesto enviado · pendientes',
+    dGan:  '3 Concretadas (Mar)',
+    dTasa: '13,0% de conversión',
+  },
+  abr: {
+    period:   'Abril 2026 · 11 ONs nuevas',
+    ons:       11,  enCurso: 4,  enviadas: 1, ganadas: 1,  vencidas: 5,
+    dOns:  '11 ONs creadas en abril',
+    dEnv:  '1 con presupuesto enviado · pendiente',
+    dGan:  '1 Concretada (Abr)',
+    dTasa: '9,1% de conversión',
+  },
+  may: {
+    period:   'Mayo 2026 · 2 ONs nuevas (parcial)',
+    ons:       2,   enCurso: 0,  enviadas: 1, ganadas: 1,  vencidas: 0,
+    dOns:  'Adsmartm · LATCAU S.A.',
+    dEnv:  '1 presupuesto enviado · Adsmartm',
+    dGan:  '1 Confirmada · LATCAU S.A.',
+    dTasa: '50,0% de conversión (parcial)',
+  },
+};
+
+function setFunnelPeriod(key) {
+  const d = COTIZ_DATA[key];
+  if (!d) return;
+
+  // Actualizar pills
+  document.querySelectorAll('.funnel-pill').forEach(p => {
+    p.classList.toggle('active', p.getAttribute('onclick').includes(`'${key}'`));
+  });
+
+  // Subtítulo
+  const sub = document.getElementById('funnel-period-sub');
+  if (sub) sub.textContent = d.period;
+
+  // KPI cards
+  const v = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val != null ? val : '—'; };
+  const dt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+  v('cotiz-v-ons', d.ons);
+  v('cotiz-v-env', d.enviadas);
+  v('cotiz-v-gan', d.ganadas);
+  // Tasa de conversión
+  const tasa = d.ons > 0 ? fmtPct((d.ganadas / d.ons) * 100) : '—';
+  v('cotiz-v-tasa', tasa);
+
+  dt('cotiz-d-ons',  d.dOns);
+  dt('cotiz-d-env',  d.dEnv);
+  dt('cotiz-d-gan',  d.dGan);
+  dt('cotiz-d-tasa', d.dTasa);
+
+  // Pre-llenar inputs del calculador
+  const setInput = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val != null) el.value = val;
+    else if (el) el.value = '';
+  };
+  setInput('ons-nuevas',   d.ons);
+  setInput('cot-env',      d.enviadas);
+  setInput('cot-apr-cant', d.ganadas);
+  // Los montos ARS se dejan para ingreso manual
+  calcFunnel();
+}
+
 // Colores automáticos según valor del delta
 const KPI_COLORS = {
   alcance: { positive: 'kpi-green', negative: 'kpi-red',   neutral: 'kpi-muted' },
@@ -1758,7 +1893,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollSpy();
   initReveal();
   renderOrigenChart();
-  calcFunnel();
+  setFunnelPeriod('ytd');
 });
 </script>
 </body>
