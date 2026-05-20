@@ -718,6 +718,23 @@
           <div class="kpi-delta" id="d-seg">↑ 30,2% vs 2025</div>
         </div>
       </div>
+
+      <!-- Gráfico evolución mensual -->
+      <div class="card card-reveal" style="margin-top:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+          <div class="card-subtitle" style="margin:0">Evolución mensual · Ene–May 2026</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button class="month-pill active" data-meta-metric="cont"    onclick="toggleMetaLine('cont')">Contactos</button>
+            <button class="month-pill active" data-meta-metric="conv"    onclick="toggleMetaLine('conv')">Conversaciones</button>
+            <button class="month-pill"        data-meta-metric="inter"   onclick="toggleMetaLine('inter')">Interacciones</button>
+            <button class="month-pill"        data-meta-metric="clics"   onclick="toggleMetaLine('clics')">Clics</button>
+            <button class="month-pill"        data-meta-metric="alcance" onclick="toggleMetaLine('alcance')">Alcance</button>
+          </div>
+        </div>
+        <div style="position:relative;height:230px">
+          <canvas id="meta-line-chart" aria-label="Gráfico de evolución mensual de métricas Meta"></canvas>
+        </div>
+      </div>
     </section>
 
     <!-- ── SECCIÓN 2: ANUNCIOS ─────────────────────────────────── -->
@@ -1596,6 +1613,112 @@ function ORIGEN_COLORS() {
 }
 
 /* ─── ORIGEN CHART ──────────────────────────────────────────── */
+/* ─── META LINE CHART ───────────────────────────────────────── */
+const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May'];
+
+const META_SERIES = {
+  cont:    { label: 'Contactos',      data: [3,    105,  201,  191,  79],   color: '--cyan',   right: false },
+  conv:    { label: 'Conversaciones', data: [15,   107,  211,  212,  120],  color: '--green',  right: false },
+  inter:   { label: 'Interacciones',  data: [76,   494,  1300, 1100, 530],  color: '--blue',   right: false },
+  clics:   { label: 'Clics',          data: [718,  1100, 2000, 5000, 3482], color: '--purple', right: false },
+  alcance: { label: 'Alcance',        data: [32.7, 36.1, 72.4, 134.9, 25.7], color: '--amber', right: true, suffix: 'k' },
+};
+
+const META_VISIBLE = new Set(['cont', 'conv']);
+
+function toggleMetaLine(metric) {
+  if (META_VISIBLE.has(metric)) {
+    if (META_VISIBLE.size > 1) META_VISIBLE.delete(metric);
+  } else {
+    META_VISIBLE.add(metric);
+  }
+  document.querySelectorAll('[data-meta-metric]').forEach(p => {
+    p.classList.toggle('active', META_VISIBLE.has(p.dataset.metaMetric));
+  });
+  renderMetaChart();
+}
+
+function renderMetaChart() {
+  if (_charts.metaLine) { _charts.metaLine.destroy(); delete _charts.metaLine; }
+
+  const visibleKeys = [...META_VISIBLE];
+  const hasRight = visibleKeys.some(k => META_SERIES[k].right);
+  const hasLeft  = visibleKeys.some(k => !META_SERIES[k].right);
+
+  const datasets = visibleKeys.map(key => {
+    const s = META_SERIES[key];
+    return {
+      label:                s.label + (s.suffix ? ` (${s.suffix})` : ''),
+      data:                 s.data,
+      borderColor:          getCSSVar(s.color),
+      backgroundColor:      getCSSVar(s.color),
+      pointBackgroundColor: getCSSVar(s.color),
+      borderWidth:          2,
+      pointRadius:          4,
+      pointHoverRadius:     6,
+      tension:              0.4,
+      fill:                 false,
+      yAxisID:              s.right ? 'yR' : 'yL',
+    };
+  });
+
+  const scales = {
+    x: {
+      grid:  { color: getCSSVar('--line') },
+      ticks: { color: getCSSVar('--muted-2'), font: { family: getCSSVar('--mono'), size: 10 } },
+    },
+  };
+  if (hasLeft) {
+    scales.yL = {
+      type: 'linear', position: 'left',
+      beginAtZero: true,
+      grid:  { color: getCSSVar('--line') },
+      ticks: { color: getCSSVar('--muted-2'), font: { family: getCSSVar('--mono'), size: 10 } },
+    };
+  }
+  if (hasRight) {
+    scales.yR = {
+      type: 'linear', position: 'right',
+      beginAtZero: true,
+      grid: { drawOnChartArea: !hasLeft, color: getCSSVar('--line') },
+      ticks: {
+        color: getCSSVar('--amber'),
+        font:  { family: getCSSVar('--mono'), size: 10 },
+        callback: v => v + 'k',
+      },
+    };
+  }
+
+  _charts.metaLine = new Chart(document.getElementById('meta-line-chart'), {
+    type: 'line',
+    data: { labels: META_MONTHS, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: {
+            color:           getCSSVar('--muted'),
+            font:            { family: getCSSVar('--mono'), size: 10 },
+            usePointStyle:   true,
+            pointStyleWidth: 8,
+          }
+        },
+        tooltip: {
+          backgroundColor: getCSSVar('--bg-elev-2'),
+          borderColor:     getCSSVar('--line'),
+          borderWidth:     1,
+          titleColor:      getCSSVar('--text'),
+          bodyColor:       getCSSVar('--muted'),
+          padding:         10,
+        },
+      },
+      scales,
+    },
+  });
+}
+
 function renderOrigenChart() {
   const raw = [val('o-clientes'), val('o-recom'), val('o-meta')];
   const labels = ['Clientes', 'Recomendación', 'Meta/IG'];
@@ -1813,11 +1936,11 @@ function setTheme(v) {
   localStorage.setItem('yiqi-theme', v);
   applyTheme(v);
   updateSwitch(v);
-  setTimeout(() => renderOrigenChart(), 50);
+  setTimeout(() => { renderOrigenChart(); renderMetaChart(); }, 50);
 }
 _mq.addEventListener('change', () => {
   const stored = localStorage.getItem('yiqi-theme') || 'system';
-  if (stored === 'system') { applyTheme('system'); setTimeout(() => renderOrigenChart(), 50); }
+  if (stored === 'system') { applyTheme('system'); setTimeout(() => { renderOrigenChart(); renderMetaChart(); }, 50); }
 });
 
 /* ─── MOBILE NAV ────────────────────────────────────────────── */
@@ -1893,6 +2016,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollSpy();
   initReveal();
   renderOrigenChart();
+  renderMetaChart();
   setFunnelPeriod('ytd');
 });
 </script>
