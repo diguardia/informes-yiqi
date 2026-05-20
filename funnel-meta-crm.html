@@ -101,8 +101,8 @@
 
     /* ── RESET ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: clip; }
-    body { overflow-x: hidden; }
+    /* clip no crea scroll container → sticky funciona en todos los browsers */
+    html, body { overflow-x: clip; }
 
     body {
       font: 14px var(--sans);
@@ -173,6 +173,7 @@
     .ds-layout {
       display: grid;
       grid-template-columns: var(--sidebar-w) 1fr;
+      align-items: start;          /* cada columna crece por su propio contenido */
       min-height: calc(100dvh - var(--topbar-h));
     }
 
@@ -180,7 +181,7 @@
     .sidebar {
       position: sticky; top: var(--topbar-h);
       height: calc(100dvh - var(--topbar-h));
-      overflow-y: auto; overflow-x: hidden;
+      overflow-y: auto; overflow-x: clip;
       background: linear-gradient(180deg, rgba(24,24,28,.96), rgba(17,17,20,.92));
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
@@ -188,6 +189,9 @@
       display: flex; flex-direction: column;
       padding: 16px 12px;
       scrollbar-width: none;
+    }
+    html[data-theme="light"] .sidebar {
+      background: linear-gradient(180deg, rgba(238,236,231,.97), rgba(230,228,223,.95));
     }
     .sidebar::-webkit-scrollbar { display: none; }
 
