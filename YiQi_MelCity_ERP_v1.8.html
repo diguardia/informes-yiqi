@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)https://mel-city-sa.netlify.app/ -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>YiQi_MelCity_ERP_v1.8</title>
+<link href="https://fonts.googleapis.com/" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect">
+<link href="./YiQi_MelCity_ERP_v1.8_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-elev:#0f1013;
+    --bg-elev-2:#14161b;
+    --bg-soft:#181b21;
+    --line:rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.14);
+    --text:#f3f5f7;
+    --muted:#98a2b3;
+    --muted-2:#6f7785;
+    --cyan:#00ccff;
+    --cyan-soft:rgba(0,204,255,.10);
+    --cyan-soft-2:rgba(0,204,255,.16);
+    --green:#15d49c;
+    --amber:#ffb020;
+    --red:#ff637d;
+    --pink:#F7CEEA;
+    --pink-soft:rgba(247,206,234,.12);
+    --purple:#a78bfa;
+    --glow:0 0 0 1px rgba(0,204,255,.14) inset;
+    --shadow-soft:0 18px 48px rgba(0,0,0,.26);
+    --radius-sm:10px;
+    --radius:14px;
+    --radius-md:16px;
+    --radius-lg:18px;
+    --radius-xl:24px;
+    --radius-2xl:28px;
+    --radius-pill:999px;
+    --max:1180px;
+    --sans:'Inter',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --title:'Montserrat',var(--sans);
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--text);
+    background:
+      radial-gradient(circle at top right, rgba(0,204,255,.06), transparent 24%),
+      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+      var(--bg);
+    background-size:auto, 56px 56px, 56px 56px, auto;
+    overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit}
+  img{max-width:100%;display:block}
+  button{font:inherit}
+
+  .progress{
+    position:fixed;top:0;left:0;height:2px;width:0;
+    background:var(--cyan);z-index:999;
+  }
+
+  .container{width:min(calc(100% - 32px), var(--max));margin:0 auto}
+
+  .topbar{
+    position:sticky;top:0;z-index:90;
+    height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:0 16px;background:rgba(15,16,19,.84);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    transition:transform .28s ease, opacity .22s ease;
+  }
+  .topbar.is-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}
+  .topbar-inner{width:min(calc(100% - 0px), var(--max));margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:14px}
+  .brand{display:flex;align-items:center;gap:14px;min-width:0}
+  .brand svg{width:94px;height:auto;display:block;color:var(--text)}
+  .version-pill{
+    display:inline-flex;align-items:center;gap:8px;padding:5px 10px;border-radius:var(--radius-pill);
+    border:1px solid var(--line);background:var(--bg-elev-2);font:700 10px var(--mono);
+    letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(21,212,156,.10);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+  .topbar-actions{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+  }
+  .hero-wrap{
+    isolation:isolate;
+  }
+  .hero-wrap::after{
+    content:"";
+    position:absolute;
+    inset:auto auto -20% -6%;
+    width:280px;
+    height:280px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.05), transparent 62%);
+    pointer-events:none;
+    filter:blur(2px);
+    animation:heroPulse 10s ease-in-out infinite;
+    z-index:0;
+  }
+  .hero-grid,.hero-copy,.hero-card{position:relative;z-index:1}
+  .hero-card{
+    animation:heroCardFloat 8s ease-in-out infinite;
+  }
+  .hero-copy .kicker,
+  .hero-copy h1,
+  .hero-copy p,
+  .hero-cta{
+    animation:heroFadeUp .9s ease both;
+  }
+  .hero-copy h1{animation-delay:.08s}
+  .hero-copy p{animation-delay:.16s}
+  .hero-cta{animation-delay:.24s}
+  .compare-card{
+    opacity:0;
+    transform:translateY(12px);
+    animation:compareFade .7s ease forwards;
+  }
+  .compare-card.danger{animation-delay:.06s}
+  .compare-card.success{animation-delay:.18s}
+  .compare-card.danger span{color:#ff6f8d;}
+  .compare-card.success span{color:#20dfb6;}
+  .api-shell{
+    position:relative;
+    overflow:hidden;
+    border-color:rgba(255,176,32,.18);
+    background:
+      linear-gradient(180deg, rgba(255,176,32,.03), rgba(255,255,255,.02)),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));
+    background-size:auto, 24px 24px, 24px 24px, auto;
+  }
+  .api-shell::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 18% 28%, rgba(255,176,32,.14) 0 2px, transparent 3px),
+      radial-gradient(circle at 50% 48%, rgba(255,176,32,.14) 0 2px, transparent 3px),
+      radial-gradient(circle at 82% 34%, rgba(255,176,32,.14) 0 2px, transparent 3px),
+      radial-gradient(circle at 72% 74%, rgba(255,176,32,.14) 0 2px, transparent 3px),
+      linear-gradient(120deg, transparent 18%, rgba(255,176,32,.18) 18.4%, rgba(255,176,32,.18) 18.9%, transparent 19.3%, transparent 49%, rgba(255,176,32,.16) 49.4%, rgba(255,176,32,.16) 49.9%, transparent 50.3%, transparent 76%, rgba(255,176,32,.14) 76.4%, rgba(255,176,32,.14) 76.9%, transparent 77.3%);
+    opacity:.7;
+    pointer-events:none;
+  }
+  .api-blueprint{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+    margin-top:18px;
+  }
+  .api-node{
+    min-height:84px;
+    padding:16px 14px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(20,22,27,.72);
+    backdrop-filter:blur(10px);
+    box-shadow:inset 0 0 0 1px rgba(255,176,32,.06);
+  }
+  .api-node strong{
+    display:block;
+    font-size:13px;
+    color:#f3f5f7;
+    margin-bottom:6px;
+  }
+  .api-node span{
+    display:block;
+    font-size:12px;
+    line-height:1.55;
+    color:var(--muted);
+  }
+  .api-head-soft{
+    filter:saturate(.92);
+  }
+  .news-pill{
+    display:inline-flex;
+    align-items:center;
+    min-height:28px;
+    padding:0 10px;
+    border-radius:999px;
+    border:1px solid rgba(167,139,250,.24);
+    background:rgba(167,139,250,.10);
+    color:#cbb7ff;
+    font:700 9px var(--mono);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  @keyframes heroPulse{
+    0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.72}
+    50%{transform:translate3d(10px,-8px,0) scale(1.05);opacity:1}
+  }
+  @keyframes heroCardFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-4px)}
+  }
+  @keyframes heroFadeUp{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes compareFade{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  .top-link{
+    display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 12px;
+    border:1px solid var(--line);border-radius:12px;background:var(--bg-elev-2);
+    color:var(--muted);font:700 11px var(--mono);letter-spacing:.04em;transition:.18s ease;
+  }
+  .top-link:hover{border-color:var(--line-strong);background:var(--bg-soft);color:var(--text)}
+
+  .hero-band{
+    padding:58px 0 36px;
+  }
+  .hero-wrap{
+    border:1px solid rgba(0,204,255,.16);
+    background:linear-gradient(180deg, rgba(0,204,255,.08), rgba(0,204,255,.02));
+    border-radius:30px;padding:34px 34px 28px;box-shadow:var(--glow), var(--shadow-soft);
+    position:relative;overflow:hidden;
+  }
+  .hero-wrap:before{
+    content:"";position:absolute;inset:auto -8% -48% auto;width:360px;height:360px;
+    background:radial-gradient(circle, rgba(0,204,255,.12), transparent 60%);pointer-events:none;
+  }
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;padding:5px 11px;border-radius:var(--radius-pill);
+    border:1px solid rgba(0,204,255,.22);background:var(--cyan-soft);
+    color:var(--cyan);font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  }
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:24px;align-items:center}
+  .hero-copy h1{
+    margin:18px 0 0;font-family:var(--title);font-size:clamp(34px,4.5vw,58px);line-height:.98;letter-spacing:-.05em;
+  }
+  .hero-copy h1 span{color:var(--cyan)}
+  .hero-copy p{
+    margin:16px 0 0;max-width:720px;font-size:16px;line-height:1.68;color:var(--muted);
+  }
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:14px;
+    border:1px solid var(--line);background:var(--bg-elev-2);color:var(--text);
+    font-weight:700;font-size:14px;transition:.18s ease;
+  }
+  .btn:hover{transform:translateY(-1px);border-color:var(--line-strong)}
+
+  .btn-amber{
+    background:linear-gradient(180deg, #ffb020, #d89200) !important;
+    border-color:rgba(255,176,32,.34) !important;
+    color:#1a1200 !important;
+    box-shadow:0 10px 26px rgba(255,176,32,.20) !important;
+  }
+  .btn-amber:hover{
+    background:linear-gradient(180deg, #ffc14a, #e29a00) !important;
+    border-color:rgba(255,176,32,.44) !important;
+    color:#1a1200 !important;
+    box-shadow:0 14px 34px rgba(255,176,32,.28) !important;
+  }
+
+  .btn-ghost{background:rgba(255,255,255,.02)}
+  .hero-card{
+    border:1px solid var(--line);background:var(--bg-elev-2);border-radius:24px;padding:18px;box-shadow:var(--shadow-soft)
+  }
+  .hero-card-head{font:700 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px}
+  .hero-card-list{display:grid;gap:10px}
+  .hero-card-item{
+    display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);background:var(--bg-soft);border-radius:14px
+  }
+  .hero-card-item i{width:8px;height:8px;border-radius:50%;background:var(--cyan);margin-top:7px;flex:none}
+  .hero-card-item strong{display:block;font-size:13px}
+  .hero-card-item span{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+
+  .section{padding:34px 0}
+  .section-head{text-align:center;max-width:840px;margin:0 auto 28px}
+  .section-head .section-kicker{font:700 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+  .section-head h2{margin:0;font-family:var(--title);font-size:clamp(26px,3.2vw,40px);line-height:1.04;letter-spacing:-.04em}
+  .section-head p{margin:12px auto 0;max-width:720px;color:var(--muted);font-size:15px;line-height:1.68}
+  .accent-pink{color:var(--pink)}
+
+  .value-band{
+    border:1px solid var(--line);border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));
+    padding:26px 24px;box-shadow:var(--shadow-soft);text-align:center
+  }
+  .value-band h2{margin:0;font-family:var(--title);font-size:clamp(24px,3vw,36px);line-height:1.06;letter-spacing:-.04em}
+  .value-band p{max-width:820px;margin:14px auto 0;color:var(--muted);font-size:16px;line-height:1.72}
+
+  .module-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:20px}
+  .module-pill{
+    border:1px solid var(--line);background:var(--bg-elev-2);color:var(--muted);
+    min-height:40px;padding:0 14px;border-radius:var(--radius-pill);font:700 11px var(--mono);cursor:pointer;transition:.18s ease
+  }
+  .module-pill:hover,.module-pill.active{color:var(--cyan);background:var(--cyan-soft);border-color:rgba(0,204,255,.22)}
+  .module-panel-wrap{max-width:980px;margin:0 auto;position:relative;min-height:220px}
+  .module-panel{
+    position:absolute;inset:0;opacity:0;pointer-events:none;transform:translateY(10px);
+    border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));
+    border-radius:24px;padding:24px;box-shadow:var(--shadow-soft);transition:.22s ease;text-align:left
+  }
+  .module-panel.active{opacity:1;pointer-events:auto;transform:translateY(0);position:relative;border-color:rgba(0,204,255,.22);box-shadow:var(--glow), var(--shadow-soft)}
+  .module-panel h3{margin:0;font-size:24px;letter-spacing:-.03em}
+  .module-panel p{margin:12px 0 0;color:var(--muted);line-height:1.68}
+  .module-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .module-meta span{display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg-soft);font:600 11px var(--mono);color:var(--text)}
+
+  .compare-shell{
+    border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(247,206,234,.05),rgba(255,255,255,.015));
+    padding:24px;box-shadow:var(--shadow-soft)
+  }
+  .compare-intro{text-align:center;margin-bottom:18px;color:var(--muted);font-size:15px}
+  .compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .compare-card{padding:22px;border-radius:22px;border:1px solid var(--line);background:var(--bg-elev-2)}
+  .compare-card h3{margin:0 0 14px;font-family:var(--title);font-size:24px;letter-spacing:-.03em}
+  .compare-card ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  .compare-card li{display:flex;gap:10px;color:var(--muted);font-size:14px;line-height:1.6}
+  .compare-card li i{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:none}
+  .compare-card.danger{border-color:rgba(255,99,125,.18);background:rgba(255,99,125,.05)}
+  .compare-card.danger h3{color:var(--red)}
+  .compare-card.danger li i{background:var(--red)}
+  .compare-card.success{border-color:rgba(21,212,156,.18);background:rgba(21,212,156,.05)}
+  .compare-card.success h3{color:var(--green)}
+  .compare-card.success li i{background:var(--green)}
+  .compare-card.danger span{color:#ff6f8d;}
+  .compare-card.success span{color:#20dfb6;}
+
+  .steps-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .step-card{padding:20px;border-radius:20px;border:1px solid var(--line);background:var(--bg-elev-2);box-shadow:var(--shadow-soft)}
+  .step-num{font:700 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+  .step-card h3{margin:0 0 10px;font-size:18px;letter-spacing:-.02em}
+  .step-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.62}
+
+  .onboarding-shell{
+    border:1px solid rgba(247,206,234,.18);background:radial-gradient(80% 120% at 50% 0%, var(--pink-soft), rgba(10,10,11,1) 70%);
+    border-radius:28px;padding:24px;box-shadow:var(--shadow-soft)
+  }
+  .onboarding-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .onboarding-item{display:flex;gap:12px;padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+  .onboarding-check{width:28px;height:28px;border-radius:50%;background:rgba(247,206,234,.15);border:1px solid rgba(247,206,234,.34);position:relative;flex:none}
+  .onboarding-check:after{content:"";position:absolute;top:7px;left:9px;width:6px;height:10px;border:2px solid var(--pink);border-top:none;border-left:none;transform:rotate(45deg)}
+  .onboarding-item h3{margin:0;font-size:16px}
+  .onboarding-item p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.56}
+
+  .integrations-shell{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .integration-card{padding:20px;border-radius:22px;border:1px solid var(--line);background:var(--bg-elev-2);box-shadow:var(--shadow-soft)}
+  .integration-card h3{margin:0 0 10px;font-size:19px;letter-spacing:-.03em;color:var(--cyan)}
+  .integration-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+  .integration-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .integration-pills span{display:inline-flex;align-items:center;min-height:34px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg-soft);font:600 11px var(--mono);color:var(--text)}
+
+  .api-shell,.closing-shell{border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));padding:26px;box-shadow:var(--shadow-soft)}
+  .api-pills,.closing-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
+  .api-pills span,.closing-pills span{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg-soft);font:600 11px var(--mono);color:var(--text)}
+  .center-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
+
+  h1,h2,h3{ text-wrap:balance }
+  .module-pills{max-width:980px;margin:0 auto 20px;justify-content:flex-start}
+  .module-panel-wrap{max-width:980px}
+  .integration-card .integration-pills button{
+    display:inline-flex;align-items:center;min-height:34px;padding:0 11px;border-radius:999px;border:1px solid var(--line);
+    background:var(--bg-soft);font:600 11px var(--mono);color:var(--text);cursor:pointer;transition:.18s ease
+  }
+  .integration-card .integration-pills button:hover,
+  .integration-card .integration-pills button.active{color:var(--cyan);background:var(--cyan-soft);border-color:rgba(0,204,255,.22)}
+  .integration-detail{
+    margin-top:16px;border:1px solid rgba(0,204,255,.18);border-radius:22px;padding:20px;background:linear-gradient(180deg, rgba(0,204,255,.08), rgba(255,255,255,.02));
+    box-shadow:var(--glow), var(--shadow-soft)
+  }
+  .integration-detail-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .integration-detail-badge{
+    display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;border:1px solid rgba(0,204,255,.22);
+    background:var(--cyan-soft);color:var(--cyan);font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase
+  }
+  .integration-detail h3{margin:0;font-size:22px;letter-spacing:-.03em}
+  .integration-detail p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
+  .campaign-banner{
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(167,139,250,.28);
+    border-radius:var(--radius-xl);
+    padding:26px;
+    background:
+      radial-gradient(circle at top left, rgba(167,139,250,.16), transparent 34%),
+      linear-gradient(135deg, rgba(91,33,182,.18), rgba(139,92,246,.08) 52%, rgba(30,41,59,.18));
+    box-shadow:0 24px 80px rgba(91,33,182,.16);
+  }
+  .campaign-banner::before{
+    content:"";
+    position:absolute;inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:38px 38px;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.45), transparent 78%);
+    opacity:.24;
+  }
+  .campaign-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:18px;align-items:start}
+  .campaign-banner .section-kicker{color:var(--purple)}
+  .campaign-banner h2{margin:0;font-family:var(--title);font-size:clamp(28px,3.4vw,42px);line-height:1.04;letter-spacing:-.04em;max-width:16ch;color:#efe7ff}
+  .campaign-banner p{margin:12px 0 0;color:rgba(243,245,247,.92);max-width:62ch;line-height:1.72}
+  .campaign-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .campaign-card{padding:18px;border-radius:18px;border:1px solid rgba(196,181,253,.16);background:rgba(255,255,255,.05);backdrop-filter:blur(10px)}
+  .campaign-card:nth-child(1){background:rgba(139,92,246,.08)}
+  .campaign-card:nth-child(2){background:rgba(139,92,246,.12)}
+  .campaign-card:nth-child(3){background:rgba(139,92,246,.16)}
+  .campaign-card:nth-child(4){background:rgba(139,92,246,.20)}
+  .campaign-card strong{display:block;font-size:14px;color:#f3f5f7}
+  .campaign-card span{display:block;margin-top:6px;color:rgba(243,245,247,.76);font-size:13px;line-height:1.55}
+
+  .footer{padding:26px 0 56px}
+  .footer-shell{border-top:1px solid var(--line);padding-top:28px;text-align:center}
+  .footer-kicker{font:700 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px}
+  .footer h2{margin:0;font-family:var(--title);font-size:30px;letter-spacing:-.04em}
+  .footer-logo{display:flex;justify-content:center;margin:22px 0}
+  .footer-logo svg{width:108px;height:auto;color:var(--text)}
+  .footer-contact{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;color:var(--muted);font-size:14px}
+  .footer-contact a:hover{color:var(--text)}
+  .footer-access{margin-top:22px}
+  .footer-access-title{font:700 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:10px}
+  .footer-access-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:880px;margin:0 auto}
+  .footer-access-pill{
+    display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border-radius:999px;
+    border:1px solid var(--line);background:var(--bg-elev-2);color:var(--muted);
+    font:600 11px var(--mono);transition:.18s ease
+  }
+  .footer-access-pill:hover{color:var(--text);border-color:rgba(0,204,255,.22);background:var(--bg-soft)}
+  .footer-access-pill.primary{color:var(--amber);border-color:rgba(255,176,32,.24);background:rgba(255,176,32,.08)}
+  .footer-access-pill.primary:hover{border-color:rgba(255,176,32,.34);background:rgba(255,176,32,.14)}
+  .footer-social{display:flex;justify-content:center;gap:14px;margin-top:18px}
+  .social-icon{
+    width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg-elev-2);display:grid;place-items:center;color:var(--muted);transition:.18s ease
+  }
+  .social-icon:hover{color:var(--cyan);border-color:rgba(0,204,255,.22);background:var(--cyan-soft)}
+  .social-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .footer-bottom{margin-top:18px;color:var(--muted-2);font:600 11px var(--mono)}
+
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .45s ease, transform .45s ease}
+  .reveal.show{opacity:1;transform:translateY(0)}
+
+  @media (max-width:1100px){
+    .hero-grid,.integrations-shell,.steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:900px){
+    .topbar-actions .top-link:not(.login-link):last-child{display:none}
+    .hero-wrap{padding:24px 20px}
+    .hero-grid,.compare-grid,.onboarding-grid,.integrations-shell,.steps-grid{grid-template-columns:1fr}
+    .module-panel-wrap{min-height:280px}
+  }
+  @media (max-width:760px){
+    .container{width:min(calc(100% - 20px), var(--max))}
+    .hero-band{padding:24px 0 24px}
+    .hero-copy h1{font-size:34px}
+    .hero-copy p,.section-head p,.value-band p{font-size:14px}
+    .btn{width:100%}
+    .hero-cta,.center-cta{flex-direction:column}
+    .topbar{height:auto;padding:10px 12px}
+    .topbar-inner{flex-direction:column;align-items:flex-start;max-width:100%;overflow:hidden}
+    .topbar-actions{
+      width:100%;
+      flex-wrap:nowrap;
+      overflow-x:auto;
+      overscroll-behavior-x:contain;
+      -ms-overflow-style:none;
+      scrollbar-width:none
+    }
+    .topbar-actions::-webkit-scrollbar{display:none}
+    .top-link{flex:0 0 auto}
+    .footer-contact{flex-direction:column;gap:6px}
+  }
+
+  .module-panel h3,.module-panel .brand-title{color:var(--cyan)}
+  .module-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .module-chip{
+    display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line);
+    background:var(--bg-soft);font:600 11px var(--mono);color:var(--text);cursor:pointer;transition:.18s ease
+  }
+  .module-chip:hover,.module-chip.active{color:var(--cyan);border-color:rgba(0,204,255,.22);background:var(--cyan-soft)}
+  .module-chip-detail{margin-top:12px;color:var(--muted);font-size:13px;line-height:1.55}
+  .step-card{position:relative;overflow:hidden}
+  .step-glow-1{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02))}
+  .step-glow-2{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,204,255,.025))}
+  .step-glow-3{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,204,255,.05))}
+  .step-glow-4{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,204,255,.08))}
+  .step-glow-2,.step-glow-3,.step-glow-4{border-color:rgba(0,204,255,.10)}
+  .step-glow-4{box-shadow:var(--glow), var(--shadow-soft)}
+  .footer-contact-clean{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 22px;color:var(--muted);font-size:14px}
+  .footer-contact-clean a:hover{color:var(--text)}
+  .whatsapp-link,.footer-access-pill.whatsapp{color:var(--green)!important}
+  .footer-access-pill.brand{color:var(--cyan);border-color:rgba(0,204,255,.24);background:rgba(0,204,255,.08)}
+  .footer-access-pill.brand:hover{border-color:rgba(0,204,255,.34);background:rgba(0,204,255,.14)}
+
+  .compare-card.danger span{color:#ff8fa3 !important;}
+  .compare-card.success span{color:#3ee6c2 !important;}
+  .compare-card.danger li{color:#ffffff !important;}
+  .compare-card.success li{color:#ffffff !important;}
+  .compare-card.danger li i{background:#ff6b85;box-shadow:0 0 10px rgba(255,107,133,.35);}
+  .compare-card.success li i{background:#2ee6b8;box-shadow:0 0 10px rgba(46,230,184,.35);}
+  .compare-card.danger h3{color:#ff5f7a;}
+  .compare-card.success h3{color:#2ee6b8 !important;}
+  .compare-card.danger{background:rgba(255,80,110,.06);border-color:rgba(255,80,110,.22);}
+  .compare-card.success{background:rgba(30,230,180,.06);border-color:rgba(30,230,180,.22);}
+
+  .api-cta-only{margin-top:24px;display:flex;justify-content:center;}
+  .api-docs-btn{
+    display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:14px;
+    font-size:14px;font-weight:700;text-decoration:none;
+    background:linear-gradient(180deg, #ffb020, #d89200) !important;
+    border:1px solid rgba(255,176,32,.34) !important;
+    color:#1a1200 !important;
+    box-shadow:0 10px 26px rgba(255,176,32,.20) !important;
+  }
+  .api-docs-btn:hover{
+    transform:translateY(-1px);
+    background:linear-gradient(180deg, #ffc14a, #e29a00) !important;
+    border-color:rgba(255,176,32,.44) !important;
+    color:#1a1200 !important;
+    box-shadow:0 14px 34px rgba(255,176,32,.28) !important;
+  }
+
+  /* PROPOSAL CARD */
+  .pricing-grid-wrap{display:flex;justify-content:center;margin-top:28px;}
+  .pricing-card-yiqi{
+    width:100%;max-width:460px;padding:30px;border-radius:28px;
+    border:1px solid rgba(255,255,255,.10);
+    background:
+      radial-gradient(620px 220px at 50% -10%, rgba(247,206,234,.12), transparent 58%),
+      linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
+    box-shadow:var(--shadow-soft);position:relative;overflow:hidden;
+  }
+  .pricing-card-yiqi::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(247,206,234,.03), transparent 42%);opacity:.9;}
+  .pricing-card-yiqi > *{position:relative;z-index:1}
+  .pricing-card-yiqi h3{margin:0 0 12px;font-family:var(--title);font-size:30px;line-height:1.05;letter-spacing:-.04em;max-width:11ch;}
+  .pricing-desc{margin:0;color:var(--muted);font-size:15px;line-height:1.65;}
+  .pricing-highlight{margin-top:18px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);color:var(--text);font-size:14px;line-height:1.6;}
+  .pricing-cta{
+    display:block;width:100%;margin-top:22px;padding:16px 18px;border-radius:14px;text-align:center;text-decoration:none;
+    background:linear-gradient(180deg, #ffb020, #d89200) !important;border:1px solid rgba(255,176,32,.36) !important;
+    color:#1a1200 !important;font-weight:800;font-size:15px;line-height:1.2;letter-spacing:.01em;
+    box-shadow:0 10px 24px rgba(255,176,32,.20) !important;transition:.18s ease;
+  }
+  .pricing-cta:hover{transform:translateY(-1px);background:linear-gradient(180deg, #ffc14a, #e29a00) !important;border-color:rgba(255,176,32,.46) !important;color:#1a1200 !important;box-shadow:0 14px 30px rgba(255,176,32,.28) !important;}
+  .pricing-divider{margin:22px 0 12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.42);}
+  .pricing-features{list-style:none;padding:0;margin:0;display:grid;gap:12px;}
+  .pricing-features li{position:relative;padding-left:30px;color:#ffffff;font-size:14px;line-height:1.55;}
+  .pricing-features li::before{content:"";position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;background:rgba(247,206,234,.10);border:1px solid rgba(247,206,234,.28);}
+  .pricing-features li::after{content:"";position:absolute;left:5px;top:8px;width:6px;height:3px;border-left:2px solid #e9bdd8;border-bottom:2px solid #e9bdd8;transform:rotate(-45deg);}
+
+  /* Propuesta modules — amber accent */
+  .mod-caption-amber{color:var(--amber) !important}
+  .mod-card.mod-propuesta{border-color:rgba(255,176,32,.28);background:rgba(255,176,32,.04);}
+  .mod-card.mod-propuesta .mod-icon{background:rgba(255,176,32,.12);color:var(--amber);}
+  .mod-card.mod-propuesta .mod-name{color:var(--text)}
+  .mod-card.mod-propuesta.is-open{border-color:rgba(255,176,32,.42);box-shadow:0 0 0 1px rgba(255,176,32,.12) inset;}
+  .mod-card.mod-propuesta.is-open .mod-chev{color:var(--amber)}
+  .mod-prop-badge{
+    display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;
+    font:700 9px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+    background:rgba(255,176,32,.14);color:var(--amber);border:1px solid rgba(255,176,32,.28);
+    margin-left:8px;vertical-align:middle;position:relative;top:-1px;
+  }
+
+  .mod-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .mod-section-caption{grid-column:1/-1}
+  @media(max-width:900px){.mod-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:480px){.mod-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .mod-section-caption{padding:6px 4px 2px;font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)}
+  .mod-card{border:1px solid var(--line);border-radius:16px;background:rgba(20,22,27,.7);overflow:hidden;transition:.18s ease}
+  .mod-card:hover{border-color:var(--line-strong)}
+  .mod-card.is-open{border-color:rgba(0,204,255,.22);box-shadow:0 0 0 1px rgba(0,204,255,.10) inset}
+  .mod-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;}
+  .mod-icon{width:32px;height:32px;border-radius:10px;background:var(--cyan-soft);display:grid;place-items:center;color:var(--cyan);flex:none;}
+  .mod-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .mod-copy{flex:1;min-width:0}
+  .mod-name{font:600 14px var(--sans);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mod-meta{font:400 11px var(--sans);color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mod-chev{width:20px;height:20px;display:grid;place-items:center;color:var(--muted-2);transition:transform .2s ease;flex:none}
+  .mod-chev svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .mod-card.is-open .mod-chev{transform:rotate(90deg);color:var(--cyan)}
+  .mod-body{display:none;padding:0 16px 14px 60px;border-top:1px solid var(--line)}
+  .mod-card.is-open .mod-body{display:block;padding-top:14px}
+  .mod-subitems{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+  .mod-subitem{padding:5px 11px;border-radius:999px;font:500 11px var(--mono);border:1px solid var(--line);background:var(--bg-elev-2);color:var(--muted);letter-spacing:.02em;transition:.14s ease;}
+  .mod-subitem:hover{border-color:rgba(0,204,255,.22);color:var(--cyan)}
+  .mod-groups{display:flex;flex-wrap:wrap;gap:6px}
+  .mod-group-tag{padding:3px 9px;border-radius:6px;font:600 10px var(--sans);background:var(--cyan-soft);color:var(--cyan);border:1px solid rgba(0,204,255,.18);letter-spacing:.05em;text-transform:uppercase;}
+  @media(max-width:640px){
+    .mod-head{padding:12px 14px}
+    .mod-icon{width:28px;height:28px}
+    .mod-icon svg{width:14px;height:14px}
+    .mod-body{padding-left:14px}
+    .mod-card.is-open .mod-body{padding-top:12px}
+  }
+
+  .kicker-iaready-wrap{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .kicker-iaready-badge{display:inline-flex;align-items:center;gap:10px;padding:6px 12px 6px 8px;border-radius:999px;border:1px solid rgba(0,204,255,.22);background:#000;text-decoration:none;transition:.18s ease;cursor:default;}
+  .iaready-badge-logo{display:flex;align-items:center;padding:4px 6px;background:rgba(255,255,255,.04);border-radius:6px;}
+  .iaready-badge-logo svg{height:22px;width:auto;display:block;}
+  .iaready-badge-claim{font:600 11px var(--mono);color:var(--cyan);letter-spacing:.04em;white-space:nowrap;}
+
+  .section{margin-top:120px;}
+  @media (max-width:768px){.section{margin-top:80px;}}
+
+  .fade-up{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.2,.8,.2,1);}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" style="width: 63.2175%;"></div>
+<header class="topbar">
+<div class="topbar-inner">
+<div class="brand">
+<a aria-label="Ir al inicio" href="https://mel-city-sa.netlify.app/#inicio">
+<svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg">
+<rect fill="none" height="65" width="100"></rect>
+<g>
+<path d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z" fill="currentColor"></path>
+<path d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z" fill="currentColor"></path>
+<path d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z" fill="#00ccff"></path>
+<path d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z" fill="currentColor"></path>
+</g>
+</svg>
+</a>
+</div>
+</div>
+</header>
+<main class="container">
+<section class="hero-band reveal show" id="inicio">
+<div class="hero-wrap">
+<div class="hero-grid">
+<div class="hero-copy">
+<div class="kicker-iaready-wrap">
+<a class="kicker-iaready-badge" href="https://mel-city-sa.netlify.app/#" tabindex="-1">
+<span class="iaready-badge-logo"><svg width="256" height="68" viewBox="-12 -10 280 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="iAready"><path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="#F3F5F7"></path><path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="#F3F5F7"></path><path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="#F3F5F7"></path><path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="#F3F5F7"></path><path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="#F3F5F7"></path><path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="#00CCFF"></path><path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="#F3F5F7"></path></svg></span>
+<span class="iaready-badge-claim">ERP · 15 años de experiencia</span>
+</a>
+<div class="kicker"><span class="live-dot"></span> Mel City S.A. · Higiene profesional · Argentina</div>
+</div>
+<h1>Mel City, esto es<br>para tu operación.</h1>
+<p>Mel City opera con una base B2B consolidada en higiene profesional, distribución propia, 4 sucursales y 6 franquicias — y busca escalar hacia B2C con franquicias, integrando canales online y logística de ruteo. Es una operación con complejidad real. YiQi está diseñado exactamente para esto: B2B y B2C desde un solo sistema, stock centralizado, integraciones nativas con Tienda Nube, WooCommerce y logística, y trazabilidad completa sobre cada unidad de negocio.</p>
+<div class="hero-cta">
+<a class="btn btn-amber" href="https://calendly.com/javierperez/meet-30-demo" rel="noopener" target="_blank">Agenda un nuevo encuentro</a>
+</div>
+</div>
+<aside class="hero-card">
+<div class="hero-card-head">Los 5 puntos críticos de tu operación</div>
+<div class="hero-card-list">
+<div class="hero-card-item"><i></i><div><strong>Stock unificado B2B y B2C</strong><span>Un solo inventario que se descuenta en tiempo real sin importar si el pedido viene del canal institucional, la tienda online, una sucursal o una franquicia.</span></div></div>
+<div class="hero-card-item"><i></i><div><strong>Precios y condiciones por canal</strong><span>Tarifas institucionales, listas mayoristas y precios minoristas gestionados desde el mismo lugar, con reglas diferenciadas por unidad de negocio.</span></div></div>
+<div class="hero-card-item"><i></i><div><strong>Integración logística y ruteo</strong><span>Conexión con apps de despacho para planificar entregas, trazabilidad de envíos y distribución planificada desde el ERP.</span></div></div>
+<div class="hero-card-item"><i></i><div><strong>Canales online unificados</strong><span>Tienda Nube, WordPress/WooCommerce y marketplaces operando sobre una sola base de gestión, sin duplicar catálogo ni stock.</span></div></div>
+<div class="hero-card-item"><i></i><div><strong>Trazabilidad operativa completa</strong><span>Visibilidad de pedidos, remitos, facturas y movimientos de stock a través de toda la operación, con reporting consolidado por unidad.</span></div></div>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<section class="section reveal show">
+<div class="value-band">
+<h2 style="color:#00ccff;">B2B y B2C desde un solo sistema. Franquicias, ruteo, marketplaces y WooCommerce integrados.</h2>
+</div>
+</section>
+<section class="section reveal show" id="modulos">
+<div class="section-head">
+<div class="section-kicker">Módulos</div>
+<h2>Una estructura completa para gestionar toda la operación.</h2>
+<p>Los módulos se conectan entre sí para que cada proceso impacte donde corresponde, sin perder contexto operativo entre B2B, B2C y logística.</p>
+</div>
+
+<div class="mod-list" id="modList"><div class="mod-section-caption mod-caption-amber">Tu propuesta · 8 módulos activos</div>
+      <article class="mod-card is-open mod-propuesta" data-id="ventas">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;ventas&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;ventas&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Ventas <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Pedidos · facturación · cobros · e-commerce</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Control Facturas Online</span><span class="mod-subitem">Factura</span><span class="mod-subitem">Recibo</span><span class="mod-subitem">Pedido</span><span class="mod-subitem">Liq. de comisiones</span><span class="mod-subitem">Notas de Venta</span><span class="mod-subitem">Carga resumida</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Reportes</span><span class="mod-group-tag">Precios</span><span class="mod-group-tag">Cobros</span><span class="mod-group-tag">Integraciones</span></div>
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="stock">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;stock&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;stock&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="m7.5 4.21 9 5.19"></path><path d="M3.27 6.96 12 12.01l8.73-5.05"></path><path d="M12 22.08V12"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Stock <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Inventario · artículos · remitos · alertas</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Relación</span><span class="mod-subitem">Punto de Pedido por Ubicación</span><span class="mod-subitem">Alta de producción</span><span class="mod-subitem">Artículo Base</span><span class="mod-subitem">Artículo</span><span class="mod-subitem">Stock</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Remitos</span><span class="mod-group-tag">Movimientos</span><span class="mod-group-tag">Reportes</span><span class="mod-group-tag">Integraciones</span></div>
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="compras">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;compras&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;compras&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Compras <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Proveedores · órdenes · abastecimiento</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Generador de Orden de compra</span><span class="mod-subitem">Factura de compra</span><span class="mod-subitem">Solicitud de compra</span><span class="mod-subitem">Orden de Compra</span><span class="mod-subitem">Despacho</span><span class="mod-subitem">Orden de pago</span><span class="mod-subitem">Notas de Compra</span><span class="mod-subitem">Carga resumida</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Reportes</span><span class="mod-group-tag">Precios</span><span class="mod-group-tag">Pagos</span><span class="mod-group-tag">Integraciones</span></div>
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="clientes">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;clientes&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;clientes&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Clientes y Proveedores <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Empresas · contactos · docs legales</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Empresa Alícuota</span><span class="mod-subitem">Información del Proveedor</span><span class="mod-subitem">Empresa</span><span class="mod-subitem">Contacto</span><span class="mod-subitem">Doc. Legal</span><span class="mod-subitem">Sucursal</span><span class="mod-subitem">Alícuotas por CUIT</span><span class="mod-subitem">Detalle del cliente</span><span class="mod-subitem">Unificar cliente</span><span class="mod-subitem">Evaluación proveedor</span></div>
+          
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="finanzas">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;finanzas&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;finanzas&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 18V6"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Finanzas <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Indicadores · caja · movimientos · proyección</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Indicadores financieros</span><span class="mod-subitem">Det. Indicadores Financieros</span><span class="mod-subitem">Inversión</span><span class="mod-subitem">Proyección financiera</span><span class="mod-subitem">Reporte de caja y cuenta</span><span class="mod-subitem">Movimientos E/Cajas o Cuentas</span><span class="mod-subitem">Liquidación de Cobro electrónico</span><span class="mod-subitem">Concepto de cobro electrónico</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Reportes</span><span class="mod-group-tag">Bancos</span><span class="mod-group-tag">Cajas</span></div>
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="contabilidad">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;contabilidad&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;contabilidad&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Contabilidad <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Asientos · retenciones · impuestos</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Liq. Retenciones y Percepciones recibidas</span><span class="mod-subitem">Liq. Retenciones y Percepciones emitidas</span><span class="mod-subitem">Ajuste por Tenencia</span><span class="mod-subitem">Mov. Cont. por Ejercicio</span><span class="mod-subitem">Generador de Template</span><span class="mod-subitem">Validador Administrativo</span><span class="mod-subitem">Asiento</span><span class="mod-subitem">Movimiento Contable</span><span class="mod-subitem">Liquidación de impuestos</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Libros contables</span><span class="mod-group-tag">Retenciones</span><span class="mod-group-tag">Percepciones</span><span class="mod-group-tag">Reportes</span></div>
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="parametros">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;parametros&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;parametros&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Parámetros <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Config base · reglas · subparámetros</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Temporada</span><span class="mod-subitem">Comportamiento Lote/Despacho</span><span class="mod-subitem">Tipo de Publicación</span><span class="mod-subitem">Categoría de Origen de Pedido</span><span class="mod-subitem">Nro por entidad</span><span class="mod-subitem">Parámetro</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">RRHH</span><span class="mod-group-tag">Contabilidad</span><span class="mod-group-tag">Finanzas</span><span class="mod-group-tag">Clientes y Proveedores</span><span class="mod-group-tag">POS</span><span class="mod-group-tag">Calidad</span><span class="mod-group-tag">Compras</span><span class="mod-group-tag">Stock</span><span class="mod-group-tag">Ventas</span><span class="mod-group-tag">Seguridad</span><span class="mod-group-tag">YiQi Services</span><span class="mod-group-tag">Gestión</span><span class="mod-group-tag">Comercial/CRM</span><span class="mod-group-tag">Producción</span></div>
+        </div>
+      </article>
+      <article class="mod-card is-open mod-propuesta" data-id="pos">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="true" onclick="yiqiToggleMod(&#39;pos&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;pos&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 7h.01"></path><path d="M11 7h.01"></path><path d="M15 7h.01"></path><path d="M7 11h.01"></path><path d="M11 11h.01"></path><path d="M15 11h.01"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">POS <span class="mod-prop-badge">En tu propuesta</span></div>
+            <div class="mod-meta">Caja · ventas presenciales · cierre</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Control POS</span><span class="mod-subitem">Orden de venta</span><span class="mod-subitem">POS Log Entry</span><span class="mod-subitem">Depósito o Retiro</span><span class="mod-subitem">Artículo POS</span><span class="mod-subitem">Cliente POS</span><span class="mod-subitem">Cierre de caja POS</span></div>
+          
+        </div>
+      </article><div class="mod-section-caption" style="margin-top:16px">Módulos adicionales disponibles</div>
+      <article class="mod-card" data-id="crm">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="false" onclick="yiqiToggleMod(&#39;crm&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;crm&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Comercial / CRM</div>
+            <div class="mod-meta">Oportunidades · campañas · tarifas</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Análisis de gestión</span><span class="mod-subitem">Conducta de Compra</span><span class="mod-subitem">Acción comercial</span><span class="mod-subitem">Campaña</span><span class="mod-subitem">Consulta comercial</span><span class="mod-subitem">Oportunidad de Negocio</span><span class="mod-subitem">Cotización comercial</span><span class="mod-subitem">Tarifa</span><span class="mod-subitem">Ajuste masivo de tarifas</span></div>
+          
+        </div>
+      </article>
+      <article class="mod-card" data-id="rrhh">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="false" onclick="yiqiToggleMod(&#39;rrhh&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;rrhh&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M19 8v6"></path><path d="M22 11h-6"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">RRHH</div>
+            <div class="mod-meta">Empleados · sueldos · herramientas</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Notificación</span><span class="mod-subitem">Registro mensual EMP</span><span class="mod-subitem">Det. Gestión de Herramientas</span><span class="mod-subitem">Gestión de Herramientas</span><span class="mod-subitem">Empleado</span><span class="mod-subitem">Usuario de notif.</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Capacitaciones</span><span class="mod-group-tag">Sueldos</span><span class="mod-group-tag">Empleados</span><span class="mod-group-tag">Búsquedas</span><span class="mod-group-tag">Config</span><span class="mod-group-tag">Gestión de RRHH</span></div>
+        </div>
+      </article>
+      <article class="mod-card" data-id="gestion">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="false" onclick="yiqiToggleMod(&#39;gestion&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;gestion&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="m9 16 2 2 4-4"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Gestión</div>
+            <div class="mod-meta">Tickets · órdenes de servicio · proyectos</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Clasificación de Ticket</span><span class="mod-subitem">Mantenimiento</span><span class="mod-subitem">Clasificación Causa Ticket</span><span class="mod-subitem">Actividad</span><span class="mod-subitem">Presupuesto Pedido</span><span class="mod-subitem">Orden de Servicio</span><span class="mod-subitem">Dedicación diaria</span><span class="mod-subitem">Ticket</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Proyectos</span><span class="mod-group-tag">Reunión</span></div>
+        </div>
+      </article>
+      <article class="mod-card" data-id="produccion">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="false" onclick="yiqiToggleMod(&#39;produccion&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;produccion&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Producción</div>
+            <div class="mod-meta">Órdenes · BOMs · planificación</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Modelo OP</span><span class="mod-subitem">Orden de producción</span><span class="mod-subitem">Operación de O. Prod.</span><span class="mod-subitem">Art. Req. OP</span><span class="mod-subitem">PMP</span><span class="mod-subitem">Ajuste de artículos requeridos</span></div>
+          <div class="mod-groups"><span class="mod-group-tag">Reportes</span><span class="mod-group-tag">BOMs</span></div>
+        </div>
+      </article>
+      <article class="mod-card" data-id="calidad">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="false" onclick="yiqiToggleMod(&#39;calidad&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;calidad&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Calidad</div>
+            <div class="mod-meta">Controles · no conformidades · riesgos</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Comunicación</span><span class="mod-subitem">No conformidades</span><span class="mod-subitem">Objetivos</span><span class="mod-subitem">Calidad</span><span class="mod-subitem">Aviso de Riesgo</span></div>
+          
+        </div>
+      </article>
+      <article class="mod-card" data-id="editorial">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="false" onclick="yiqiToggleMod(&#39;editorial&#39;)" onkeydown="if(event.key===&#39;Enter&#39;||event.key===&#39; &#39;){event.preventDefault();yiqiToggleMod(&#39;editorial&#39;)}">
+          <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+          <div class="mod-copy">
+            <div class="mod-name">Editorial</div>
+            <div class="mod-meta">Derechos de autor · comisiones · liquidaciones</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems"><span class="mod-subitem">Comisión por artículo</span><span class="mod-subitem">Registro comisión por autor</span><span class="mod-subitem">Det. Liq. Derechos de Autor</span><span class="mod-subitem">Liq. Derechos de Autor</span></div>
+          
+        </div>
+      </article></div>
+
+<script>
+(function(){
+  const iconSet = {
+    clientes:`<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    ventas:`<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+    compras:`<svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+    finanzas:`<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>`,
+    contabilidad:`<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`,
+    rrhh:`<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>`,
+    crm:`<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+    gestion:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>`,
+    stock:`<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m7.5 4.21 9 5.19"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg>`,
+    produccion:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+    calidad:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`,
+    parametros:`<svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
+    pos:`<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 7h.01"/><path d="M11 7h.01"/><path d="M15 7h.01"/><path d="M7 11h.01"/><path d="M11 11h.01"/><path d="M15 11h.01"/></svg>`,
+    services:`<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v7a3 3 0 0 0 3 3h1"/><path d="M14 18h1a3 3 0 0 0 3-3V8"/><circle cx="12" cy="20" r="2"/></svg>`,
+    editorial:`<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`
+  };
+
+  const modules = [
+    {id:'ventas', name:'Ventas', meta:'Pedidos · facturación · cobros · e-commerce', items:['Control Facturas Online','Factura','Recibo','Pedido','Liq. de comisiones','Notas de Venta','Carga resumida'], groups:['Reportes','Precios','Cobros','Integraciones']},
+    {id:'stock', name:'Stock', meta:'Inventario · artículos · remitos · alertas', items:['Relación','Punto de Pedido por Ubicación','Alta de producción','Artículo Base','Artículo','Stock'], groups:['Remitos','Movimientos','Reportes','Integraciones']},
+    {id:'compras', name:'Compras', meta:'Proveedores · órdenes · abastecimiento', items:['Generador de Orden de compra','Factura de compra','Solicitud de compra','Orden de Compra','Despacho','Orden de pago','Notas de Compra','Carga resumida'], groups:['Reportes','Precios','Pagos','Integraciones']},
+    {id:'crm', name:'Comercial / CRM', meta:'Oportunidades · campañas · tarifas', items:['Análisis de gestión','Conducta de Compra','Acción comercial','Campaña','Consulta comercial','Oportunidad de Negocio','Cotización comercial','Tarifa','Ajuste masivo de tarifas'], groups:[]},
+    {id:'clientes', name:'Clientes y Proveedores', meta:'Empresas · contactos · docs legales', items:['Empresa Alícuota','Información del Proveedor','Empresa','Contacto','Doc. Legal','Sucursal','Alícuotas por CUIT','Detalle del cliente','Unificar cliente','Evaluación proveedor'], groups:[]},
+    {id:'finanzas', name:'Finanzas', meta:'Indicadores · caja · movimientos · proyección', items:['Indicadores financieros','Det. Indicadores Financieros','Inversión','Proyección financiera','Reporte de caja y cuenta','Movimientos E/Cajas o Cuentas','Liquidación de Cobro electrónico','Concepto de cobro electrónico'], groups:['Reportes','Bancos','Cajas']},
+    {id:'contabilidad', name:'Contabilidad', meta:'Asientos · retenciones · impuestos', items:['Liq. Retenciones y Percepciones recibidas','Liq. Retenciones y Percepciones emitidas','Ajuste por Tenencia','Mov. Cont. por Ejercicio','Generador de Template','Validador Administrativo','Asiento','Movimiento Contable','Liquidación de impuestos'], groups:['Libros contables','Retenciones','Percepciones','Reportes']},
+    {id:'rrhh', name:'RRHH', meta:'Empleados · sueldos · herramientas', items:['Notificación','Registro mensual EMP','Det. Gestión de Herramientas','Gestión de Herramientas','Empleado','Usuario de notif.'], groups:['Capacitaciones','Sueldos','Empleados','Búsquedas','Config','Gestión de RRHH']},
+    {id:'gestion', name:'Gestión', meta:'Tickets · órdenes de servicio · proyectos', items:['Clasificación de Ticket','Mantenimiento','Clasificación Causa Ticket','Actividad','Presupuesto Pedido','Orden de Servicio','Dedicación diaria','Ticket'], groups:['Proyectos','Reunión']},
+    {id:'produccion', name:'Producción', meta:'Órdenes · BOMs · planificación', items:['Modelo OP','Orden de producción','Operación de O. Prod.','Art. Req. OP','PMP','Ajuste de artículos requeridos'], groups:['Reportes','BOMs']},
+    {id:'calidad', name:'Calidad', meta:'Controles · no conformidades · riesgos', items:['Comunicación','No conformidades','Objetivos','Calidad','Aviso de Riesgo'], groups:[]},
+    {id:'parametros', name:'Parámetros', meta:'Config base · reglas · subparámetros', items:['Temporada','Comportamiento Lote/Despacho','Tipo de Publicación','Categoría de Origen de Pedido','Nro por entidad','Parámetro'], groups:['RRHH','Contabilidad','Finanzas','Clientes y Proveedores','POS','Calidad','Compras','Stock','Ventas','Seguridad','YiQi Services','Gestión','Comercial/CRM','Producción']},
+    {id:'pos', name:'POS', meta:'Caja · ventas presenciales · cierre', items:['Control POS','Orden de venta','POS Log Entry','Depósito o Retiro','Artículo POS','Cliente POS','Cierre de caja POS'], groups:[]},
+    {id:'editorial', name:'Editorial', meta:'Derechos de autor · comisiones · liquidaciones', items:['Comisión por artículo','Registro comisión por autor','Det. Liq. Derechos de Autor','Liq. Derechos de Autor'], groups:[]}
+  ];
+
+  const propuestaIds = new Set(['ventas','compras','finanzas','stock','pos','contabilidad','clientes','parametros']);
+  const openIds = new Set(['ventas','compras','finanzas','stock','pos','contabilidad','clientes','parametros']);
+
+  function subItem(label){ return `<span class="mod-subitem">${label}</span>`; }
+  function groupTag(label){ return `<span class="mod-group-tag">${label}</span>`; }
+
+  function cardHTML(mod){
+    const isOpen = openIds.has(mod.id);
+    const isProp = propuestaIds.has(mod.id);
+    return `
+      <article class="mod-card${isOpen ? ' is-open' : ''}${isProp ? ' mod-propuesta' : ''}" data-id="${mod.id}">
+        <div class="mod-head" role="button" tabindex="0" aria-expanded="${isOpen}" onclick="yiqiToggleMod('${mod.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();yiqiToggleMod('${mod.id}')}">
+          <div class="mod-icon">${iconSet[mod.id] || iconSet.parametros}</div>
+          <div class="mod-copy">
+            <div class="mod-name">${mod.name}${isProp ? ' <span class="mod-prop-badge">En tu propuesta</span>' : ''}</div>
+            <div class="mod-meta">${mod.meta}</div>
+          </div>
+          <div class="mod-chev"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+        <div class="mod-body">
+          <div class="mod-subitems">${mod.items.map(subItem).join('')}</div>
+          ${mod.groups.length ? `<div class="mod-groups">${mod.groups.map(groupTag).join('')}</div>` : ''}
+        </div>
+      </article>`;
+  }
+
+  window.yiqiToggleMod = function(id){
+    const card = document.querySelector(`[data-id="${id}"]`);
+    if(!card) return;
+    const willOpen = !card.classList.contains('is-open');
+    card.classList.toggle('is-open', willOpen);
+    card.querySelector('.mod-head').setAttribute('aria-expanded', String(willOpen));
+    if(willOpen){
+      const topbarH = 74;
+      const rect = card.getBoundingClientRect();
+      if(rect.top < topbarH || rect.bottom > window.innerHeight){
+        const target = card.getBoundingClientRect().top + window.scrollY - topbarH - 16;
+        window.scrollTo({top: target, behavior:'smooth'});
+      }
+    }
+  };
+
+  const propuesta = modules.filter(m => propuestaIds.has(m.id));
+  const resto = modules.filter(m => !propuestaIds.has(m.id));
+
+  document.getElementById('modList').innerHTML =
+    `<div class="mod-section-caption mod-caption-amber">Tu propuesta · 8 módulos activos</div>` +
+    propuesta.map(cardHTML).join('') +
+    `<div class="mod-section-caption" style="margin-top:16px">Módulos adicionales disponibles</div>` +
+    resto.map(cardHTML).join('');
+})();
+</script>
+</section>
+<section class="section reveal show" id="beneficios">
+<div class="section-head">
+<div class="section-kicker accent-pink">Beneficios</div>
+<h2>De operación fragmentada a gestión integrada</h2>
+<p>Esto es lo que cambia cuando centralizas B2B, B2C, logística y canales en una sola base de trabajo.</p>
+</div>
+<div class="compare-shell">
+<div class="compare-grid">
+<article class="compare-card danger">
+<h3>Antes.</h3>
+<ul>
+<li><i></i><span>B2B y B2C operados en sistemas separados, sin visibilidad cruzada</span></li>
+<li><i></i><span>Stock desincronizado entre canales físicos, tiendas online y distribución</span></li>
+<li><i></i><span>Logística y ruteo gestionados fuera del sistema central, con procesos manuales</span></li>
+<li><i></i><span>Integración manual entre Tango, tiendas online y marketplaces</span></li>
+</ul>
+</article>
+<article class="compare-card success">
+<h3>Con YiQi.</h3>
+<ul>
+<li><i></i><span>B2B institucional y B2C minorista unificados desde una sola base de gestión</span></li>
+<li><i></i><span>Stock centralizado que se descuenta en tiempo real en todos los canales</span></li>
+<li><i></i><span>Logística y ruteo integrados con pedidos, remitos y trazabilidad en el ERP</span></li>
+<li><i></i><span>Tienda Nube, WooCommerce y marketplaces sincronizados automáticamente</span></li>
+</ul>
+</article>
+</div>
+</div>
+</section>
+<section class="section reveal show" id="implementacion">
+<div class="section-head">
+<div class="section-kicker">Implementación</div>
+<h2>No es solo un sistema.<br>Es una implementación guiada.</h2>
+<p>Un proceso ordenado para adaptar YiQi a la operación real, conectar lo que ya usas y salir a trabajar con más confianza.</p>
+</div>
+<div class="steps-grid">
+<article class="step-card step-glow-1"><div class="step-num">01</div><h3>Entendemos tu operación real</h3><p>Revisamos estructura B2B, B2C, logística, canales y sistemas actuales para definir una base de trabajo clara y sin fricciones.</p></article>
+<article class="step-card step-glow-2"><div class="step-num">02</div><h3>Adaptamos YiQi a tu estructura</h3><p>Configuramos módulos, tarifas diferenciadas, depósitos y circuitos según la forma real en la que opera Mel City.</p></article>
+<article class="step-card step-glow-3"><div class="step-num">03</div><h3>Conectamos lo que ya usas</h3><p>Integramos Tienda Nube, WooCommerce, marketplaces, apps de logística/ruteo y conectores financieros para ordenar el ecosistema actual.</p></article>
+<article class="step-card step-glow-4"><div class="step-num">04</div><h3>Sales a operar con acompañamiento</h3><p>La puesta en marcha se hace con seguimiento para asegurar adopción, consistencia y buen uso del sistema en ambas unidades de negocio.</p></article>
+</div>
+</section>
+
+<section class="section reveal show" id="integraciones">
+<div class="section-head">
+<div class="section-kicker">Múltiples integraciones</div>
+<h2>Todo lo que ya usas, conectado en un solo lugar</h2>
+<p>YiQi no reemplaza tu ecosistema. Lo ordena para que canales, logística y conectores trabajen con más consistencia y control.</p>
+</div>
+<div class="integrations-shell">
+<article class="integration-card">
+<h3>Marketplaces.</h3>
+<p>Sincroniza canales de venta con stock, pedidos y gestión comercial conectada.</p>
+<div class="integration-pills" data-group="marketplaces">
+<button>Mercado Libre</button>
+<button>OnCity</button>
+<button>Frávega</button>
+<button>Megatone</button>
+<button>Provincia Compras</button>
+</div>
+</article>
+<article class="integration-card">
+<h3>E-commerce.</h3>
+<p>Conecta tiendas online para unificar catálogo, pedidos y disponibilidad.</p>
+<div class="integration-pills" data-group="ecommerce">
+<button class="active">Tienda Nube</button>
+<button class="active">WooCommerce</button>
+<button>Shopify</button>
+<button>VTEX</button>
+<button>Magento</button>
+</div>
+</article>
+<article class="integration-card">
+<h3>Logística.</h3>
+<p>Integra despachos, trazabilidad y automatización del envío con apps de ruteo.</p>
+<div class="integration-pills" data-group="logistica">
+<button>Persat</button>
+<button>Mercado Envíos</button>
+<button>Enviopack</button>
+<button>Sell2Ship</button>
+<button>Pulpo</button>
+</div>
+</article>
+<article class="integration-card">
+<h3>Conectores.</h3>
+<p>Automatiza flujos e intercambio de información con servicios y organismos.</p>
+<div class="integration-pills" data-group="conectores">
+<button>Interbanking</button>
+<button>AnyMarket</button>
+<button>Zapier</button>
+<button>ARCA</button>
+</div>
+</article>
+</div>
+<div class="integration-detail">
+<div class="integration-detail-head">
+<span class="integration-detail-badge" id="integrationGroup">E-commerce</span>
+<h3 id="integrationTitle">Tienda Nube + WooCommerce</h3>
+</div>
+<p id="integrationDescription">Mel City opera con ambas plataformas: Tienda Nube para el canal B2C y WooCommerce para el B2B. YiQi las conecta desde una sola base — catálogo, stock y pedidos sincronizados en tiempo real, sin duplicar gestión entre canales.</p>
+</div>
+</section>
+
+<section class="section reveal show" id="api">
+  <div class="section-head api-head-soft">
+    <div class="section-kicker">API</div>
+    <h2 style="color:#ffffff">Conecta YiQi con tu ecosistema y automatiza procesos clave.</h2>
+    <p>APIs listas para integrar ventas, stock, finanzas y más, según la necesidad de cada operación.</p>
+  </div>
+  <div style="display:flex;justify-content:center;margin-bottom:22px">
+    <div style="display:inline-flex;align-items:center;gap:16px;padding:18px 24px;border-radius:20px;border:1px solid rgba(0,204,255,.16);background:linear-gradient(180deg,rgba(0,204,255,.06),rgba(0,204,255,.02));box-shadow:0 0 0 1px rgba(0,204,255,.08) inset;">
+      <svg width="110" height="30" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="#F3F5F7"></path><path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="#F3F5F7"></path><path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="#F3F5F7"></path><path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="#F3F5F7"></path><path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="#F3F5F7"></path><path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="#00CCFF"></path><path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="#F3F5F7"></path></svg>
+      <div style="width:1px;height:32px;background:rgba(255,255,255,.1)"></div>
+      <div>
+        <div style="font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px">Certificado</div>
+        <div style="font:600 13px var(--sans);color:var(--text)">IA Ready · Listo para integraciones con IA</div>
+      </div>
+    </div>
+  </div>
+  <div class="center-cta api-cta-only">
+    <a class="btn btn-amber api-docs-btn" href="https://apidoc.yiqi.com.ar/" target="_blank" rel="noopener">Ver API Docs</a>
+  </div>
+</section>
+
+<section class="section reveal show" id="onboarding">
+<div class="section-head">
+<div class="section-kicker accent-pink">Inicio</div>
+<h2 style="color:#ffffff">Qué necesitas para empezar.</h2>
+<p>Información base para avanzar más rápido en la implementación, con mejor contexto operativo desde el primer día.</p>
+</div>
+<div class="onboarding-shell">
+<div class="onboarding-grid">
+<article class="onboarding-item"><div class="onboarding-check"></div><div><h3>Listas de precios por canal</h3><p>Tarifas institucionales B2B, listas mayoristas y precios minoristas B2C actualizados para operar desde el primer día.</p></div></article>
+<article class="onboarding-item"><div class="onboarding-check"></div><div><h3>Estructura de depósitos, sucursales y franquicias</h3><p>Organización logística, depósitos, centros de distribución, 4 sucursales propias y 6 franquicias a contemplar en la operación.</p></div></article>
+<article class="onboarding-item"><div class="onboarding-check"></div><div><h3>Catálogo de productos</h3><p>Productos, variantes, marcas y estructura comercial disponible para la configuración inicial.</p></div></article>
+<article class="onboarding-item"><div class="onboarding-check"></div><div><h3>Accesos a cuentas externas</h3><p>Tienda Nube, WooCommerce, Mercado Libre, apps de logística/ruteo y demás plataformas a integrar.</p></div></article>
+<article class="onboarding-item"><div class="onboarding-check"></div><div><h3>Datos impositivos y contables</h3><p>Información fiscal y contable necesaria para configurar la operación, incluyendo estructura de franquicias si aplica.</p></div></article>
+<article class="onboarding-item"><div class="onboarding-check"></div><div><h3>Usuarios y roles</h3><p>Personas que utilizarán YiQi en ambas unidades de negocio y nivel de acceso requerido por rol.</p></div></article>
+</div>
+</div>
+</section>
+
+<section class="section reveal" id="campana">
+<div class="campaign-banner">
+<div class="campaign-grid" style="grid-template-columns:1fr;">
+<div>
+<h2>YiQi + Interbanking.</h2>
+<p style="max-width:60ch">
+YiQi integra Interbanking y consolida una nueva etapa en la conexión entre operación y sistema financiero. No anunciamos una integración. Consolidamos arquitectura.
+</p>
+<details style="margin-top:12px">
+<summary style="cursor:pointer;color:var(--purple)">Ver más</summary>
+<div style="margin-top:12px;max-width:60ch;color:rgba(243,245,247,.9);line-height:1.72">
+<p>En YiQi entendemos el ERP como infraestructura estratégica: operación, tesorería y finanzas bajo una misma lógica, sin fricciones ni información fragmentada. Esta alianza con Interbanking refuerza esa visión.</p>
+<p>Elegimos trabajar con equipos que comparten nuestra manera de construir tecnología: con estándares altos, foco en la calidad de gestión y compromiso real con la eficiencia empresarial. Cada integración que sumamos debe elevar el sistema completo.</p>
+<p>Gracias al equipo de Interbanking por el trabajo conjunto y la profesionalidad en todo el proceso. Y gracias a nuestro equipo, que sostiene este estándar todos los días. Seguimos construyendo un ERP para empresas que gestionan con criterio.</p>
+</div>
+</details>
+</div>
+<div style="margin-top:18px">
+<a href="https://www.interbanking.com.ar/" target="_blank" style="display:block;padding:22px;border-radius:18px;border:1px solid rgba(139,92,246,.25);background:rgba(139,92,246,.10);text-decoration:none;transition:.2s;">
+<strong style="display:block;font-size:16px;color:#f3f5f7">Interbanking</strong>
+<span style="display:block;margin-top:6px;color:rgba(243,245,247,.8);font-size:14px">Conectividad bancaria para empresas que buscan integrar operación financiera con su sistema de gestión.</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section reveal" id="propuesta">
+  <div class="section-head">
+    <div class="section-kicker">Propuesta comercial</div>
+    <h2>Una solución definida según tu operación.</h2>
+    <p>No trabajamos con planes fijos. La propuesta se construye en función de tus procesos, integraciones y nivel de complejidad.</p>
+  </div>
+  <div class="pricing-grid-wrap">
+    <article class="pricing-card-yiqi">
+      <h3>Implementación personalizada.</h3>
+      <p class="pricing-desc">
+        Analizamos el alcance y complejidad de tu operación — B2B, B2C, franquicias, logística e integraciones — para definir una propuesta coherente con tus procesos y necesidades reales.
+      </p>
+      <div class="pricing-highlight">
+        Sin tarifas ocultas y con la flexibilidad de ajustar el servicio cuando lo necesites.
+      </div>
+      <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" class="pricing-cta">Agenda un nuevo encuentro</a>
+      <div class="pricing-divider">Incluye</div>
+      <ul class="pricing-features">
+        <li>Configuración según tu operación B2B y B2C</li>
+        <li>Integraciones de logística, canales y marketplaces</li>
+        <li>Usuarios y permisos definidos por unidad de negocio</li>
+        <li>Implementación guiada</li>
+        <li>Soporte especializado</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<footer class="footer reveal">
+<div class="footer-shell">
+<div class="footer-kicker">YiQi ERP</div>
+<h2>El ERP más completo del mercado.</h2>
+<div class="footer-logo">
+<svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg">
+<rect fill="none" height="65" width="100"></rect>
+<g>
+<path d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z" fill="currentColor"></path>
+<path d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z" fill="currentColor"></path>
+<path d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z" fill="#00ccff"></path>
+<path d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z" fill="currentColor"></path>
+</g>
+</svg>
+</div>
+<div class="footer-contact footer-contact-clean">
+<a href="https://yiqi.com.ar/" rel="noopener" target="_blank">yiqi.com.ar</a>
+<a href="mailto:comercial@yiqi.com.ar" rel="noopener" target="_blank">comercial@yiqi.com.ar</a>
+<a href="https://wa.me/5491123727422" rel="noopener" target="_blank">WhatsApp · +54 11 2372 7422</a>
+</div>
+<div aria-label="Redes sociales" class="footer-social">
+<a aria-label="LinkedIn" class="social-icon" href="https://www.linkedin.com/company/yiqi-sa" rel="noopener" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect height="12" width="4" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+</a>
+<a aria-label="Instagram" class="social-icon" href="https://instagram.com/yiqisa" rel="noopener" target="_blank">
+<svg viewBox="0 0 24 24"><rect height="20" rx="5" ry="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+</a>
+<a aria-label="Facebook" class="social-icon" href="https://facebook.com/yiqi.com.ar" rel="noopener" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+</a>
+<a aria-label="YouTube" class="social-icon" href="https://youtube.com/@yiqi3369" rel="noopener" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 1.96C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon></svg>
+</a>
+</div>
+<div class="footer-bottom">© 2026 YiQi S.A. · YiQi_MelCity_ERP_v1.8 · DS v1.2.4</div>
+</div>
+</footer>
+</main>
+<script>
+  const progress = document.getElementById('progress');
+  const setProgress = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progress.style.width = ratio + '%';
+  };
+  window.addEventListener('scroll', setProgress);
+  setProgress();
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const integrationContent = {
+    marketplaces: {
+      "Mercado Libre":"Canal clave para sincronizar publicaciones, stock, pedidos y operación comercial en un solo flujo.",
+      "OnCity":"Marketplace integrado para sostener consistencia entre catálogo, disponibilidad y gestión comercial.",
+      "Frávega":"Integración orientada a mantener continuidad operativa en uno de los canales de venta más relevantes.",
+      "Megatone":"Conexión útil para alinear catálogo, stock y pedidos dentro de una misma estructura operativa.",
+      "Provincia Compras":"Marketplace que amplía alcance comercial con una operación más conectada."
+    },
+    ecommerce: {
+      "Tienda Nube":"Integración ideal para unificar ecommerce y ERP sin dispersar la operación: catálogo, stock y pedidos sincronizados en tiempo real.",
+      "WooCommerce":"Conecta tiendas basadas en WordPress con gestión de pedidos, stock y facturación directamente en YiQi.",
+      "Shopify":"Conexión valiosa para trabajar catálogo, pedidos y stock en tiempo real.",
+      "VTEX":"Plataforma robusta para ecommerce con integración útil para operaciones de mayor escala.",
+      "Magento":"Opción potente para estructuras más avanzadas y flujos personalizados."
+    },
+    logistica: {
+      "Persat":"Integración nativa con la herramienta de ruteo y logística que ya usa Mel City. YiQi genera los pedidos y Persat toma el control del despacho — sin carga manual, sin doble entrada.",
+      "Mercado Envíos":"Integra despacho y trazabilidad con más continuidad entre venta y entrega.",
+      "Enviopack":"Conecta servicios de despacho para mejorar seguimiento y coordinación de envíos.",
+      "Sell2Ship":"Permite ordenar procesos logísticos y de envío dentro del circuito operativo.",
+      "Pulpo":"Integra gestión logística para sostener una operación de envíos y ruteo más clara."
+    },
+    conectores: {
+      "Interbanking":"Integración relevante para ordenar tesorería, conciliación y flujos bancarios dentro de una operación más conectada.",
+      "AnyMarket":"Conector orientado a ampliar la operación omnicanal y sostener sincronización con plataformas comerciales.",
+      "Zapier":"Puente útil para automatizar tareas y eventos entre YiQi y múltiples aplicaciones externas.",
+      "ARCA":"Conexión vinculada a procesos específicos de gestión y cumplimiento dentro del sistema."
+    }
+  };
+
+  const integrationTitles = {
+    marketplaces: 'Marketplaces',
+    ecommerce: 'E-commerce',
+    logistica: 'Logística',
+    conectores: 'Conectores'
+  };
+
+  const groupEl = document.getElementById('integrationGroup');
+  const titleEl = document.getElementById('integrationTitle');
+  const descEl = document.getElementById('integrationDescription');
+
+  document.querySelectorAll('.integration-pills').forEach(group => {
+    group.querySelectorAll('button').forEach((btn, idx) => {
+      if(group.dataset.group === 'ecommerce' && (idx === 0 || idx === 1)){ btn.classList.add('active'); }
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = group.dataset.group;
+        groupEl.textContent = integrationTitles[key];
+        titleEl.textContent = btn.textContent;
+        descEl.textContent = integrationContent[key][btn.textContent];
+      });
+    });
+  });
+
+  const topbar = document.querySelector('.topbar');
+  let lastScrollY = window.scrollY;
+  const toggleTopbar = () => {
+    const currentY = window.scrollY;
+    if(!topbar) return;
+    if(currentY <= 8){ topbar.classList.remove('is-hidden'); }
+    else if(currentY > lastScrollY && currentY > 120){ topbar.classList.add('is-hidden'); }
+    else{ topbar.classList.remove('is-hidden'); }
+    lastScrollY = currentY;
+  };
+  window.addEventListener('scroll', toggleTopbar, { passive:true });
+  toggleTopbar();
+</script>
+<script>
+const items = document.querySelectorAll('.fade-up');
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+},{threshold:.2});
+items.forEach(i=>obs.observe(i));
+</script>
+
+
+</body></html>
