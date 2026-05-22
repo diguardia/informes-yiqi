@@ -337,17 +337,17 @@
   }
   .btn:hover{transform:translateY(-1px);border-color:var(--line-strong)}
 
-  .btn-amber{
-    background:linear-gradient(180deg, #f6a623, #c87800) !important;
-    border-color:rgba(246,166,35,.34) !important;
-    color:#1a0e00 !important;
-    box-shadow:0 10px 26px rgba(246,166,35,.20) !important;
+  /* DS v1.2.5 — CTA primary */
+  .btn-primary{
+    background:var(--cyan-soft-2);
+    border:1px solid rgba(0,204,255,.28);
+    color:var(--cyan);
+    font-weight:700;
   }
-  .btn-amber:hover{
-    background:linear-gradient(180deg, #ffb840, #d98600) !important;
-    border-color:rgba(246,166,35,.44) !important;
-    color:#1a0e00 !important;
-    box-shadow:0 14px 34px rgba(246,166,35,.28) !important;
+  .btn-primary:hover{
+    background:var(--cyan-soft);
+    border-color:rgba(0,204,255,.38);
+    box-shadow:var(--glow);
   }
 
   .btn-ghost{background:rgba(255,255,255,.02)}
@@ -594,21 +594,7 @@
   .compare-card.success{background:rgba(0,196,140,.06);border-color:rgba(0,196,140,.22);}
 
   .api-cta-only{margin-top:24px;display:flex;justify-content:center;}
-  .api-docs-btn{
-    display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:var(--radius-md);
-    font-size:14px;font-weight:700;text-decoration:none;
-    background:linear-gradient(180deg, #f6a623, #c87800) !important;
-    border:1px solid rgba(246,166,35,.34) !important;
-    color:#1a1200 !important;
-    box-shadow:0 10px 26px rgba(246,166,35,.20) !important;
-  }
-  .api-docs-btn:hover{
-    transform:translateY(-1px);
-    background:linear-gradient(180deg, #ffb840, #d98600) !important;
-    border-color:rgba(246,166,35,.44) !important;
-    color:#1a1200 !important;
-    box-shadow:0 14px 34px rgba(246,166,35,.28) !important;
-  }
+  .api-docs-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:var(--radius-md);font-size:14px;font-weight:700;text-decoration:none;}
 
   /* PROPOSAL CARD */
   .pricing-grid-wrap{display:flex;justify-content:center;margin-top:28px;}
@@ -627,11 +613,16 @@
   .pricing-highlight{margin-top:18px;padding:16px;border-radius:var(--radius-lg);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);color:var(--text);font-size:14px;line-height:1.6;}
   .pricing-cta{
     display:block;width:100%;margin-top:22px;padding:16px 18px;border-radius:var(--radius-md);text-align:center;text-decoration:none;
-    background:linear-gradient(180deg, #f6a623, #c87800) !important;border:1px solid rgba(246,166,35,.36) !important;
-    color:#1a1200 !important;font-weight:800;font-size:15px;line-height:1.2;letter-spacing:.01em;
-    box-shadow:0 10px 24px rgba(246,166,35,.20) !important;transition:.18s ease;
+    background:var(--cyan-soft-2);border:1px solid rgba(0,204,255,.28);
+    color:var(--cyan);font-weight:800;font-size:15px;line-height:1.2;letter-spacing:.01em;
+    transition:all var(--tr);
   }
-  .pricing-cta:hover{transform:translateY(-1px);background:linear-gradient(180deg, #ffb840, #d98600) !important;border-color:rgba(246,166,35,.46) !important;color:#1a1200 !important;box-shadow:0 14px 30px rgba(246,166,35,.28) !important;}
+  .pricing-cta:hover{
+    transform:translateY(-1px);
+    background:var(--cyan-soft);
+    border-color:rgba(0,204,255,.38);
+    box-shadow:var(--glow);
+  }
   .pricing-divider{margin:22px 0 12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.42);}
   .pricing-features{list-style:none;padding:0;margin:0;display:grid;gap:12px;}
   .pricing-features li{position:relative;padding-left:30px;color:#ffffff;font-size:14px;line-height:1.55;}
@@ -756,7 +747,7 @@
 <h1>Mel City, esto es<br>para tu operación.</h1>
 <p>Mel City opera con una base B2B consolidada en higiene profesional, distribución propia, 4 sucursales y 6 franquicias — y busca escalar hacia B2C con franquicias, integrando canales online y logística de ruteo. Es una operación con complejidad real. YiQi está diseñado exactamente para esto: B2B y B2C desde un solo sistema, stock centralizado, integraciones nativas con Tienda Nube, WooCommerce y logística, y trazabilidad completa sobre cada unidad de negocio.</p>
 <div class="hero-cta">
-<a class="btn btn-amber" href="https://calendly.com/javierperez/meet-30-demo" rel="noopener" target="_blank">Agenda un nuevo encuentro</a>
+<a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" rel="noopener" target="_blank">Agenda un nuevo encuentro</a>
 </div>
 </div>
 <aside class="hero-card">
@@ -1192,7 +1183,7 @@
     </div>
   </div>
   <div class="center-cta api-cta-only">
-    <a class="btn btn-amber api-docs-btn" href="https://apidoc.yiqi.com.ar/" target="_blank" rel="noopener">Ver API Docs</a>
+    <a class="btn btn-primary api-docs-btn" href="https://apidoc.yiqi.com.ar/" target="_blank" rel="noopener">Ver API Docs</a>
   </div>
 </section>
 
