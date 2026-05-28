@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="system">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YiQi + Tienda Nube — el ERP que opera mientras tú decides</title>
+  <meta name="description" content="YiQi se integra con Tienda Nube y sincroniza stock, pedidos y facturación. Multi-ubicación, operación automática, acompañamiento real.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── DS v1.2.5 TOKENS ────────────────────────────────────── */
+    :root {
+      --bg:              #0c0c0e;
+      --bg-elev:         #111114;
+      --bg-elev-2:       #18181c;
+      --bg-soft:         rgba(255,255,255,.04);
+
+      --line:            rgba(255,255,255,.08);
+      --line-strong:     rgba(255,255,255,.14);
+
+      --text:            #f0f1f3;
+      --muted:           #8a8d94;
+      --muted-2:         #5a5d66;
+
+      --cyan:            #00ccff;
+      --cyan-soft:       rgba(0,204,255,.12);
+      --cyan-soft-2:     rgba(0,204,255,.18);
+      --cyan-label:      rgba(0,204,255,.52);
+
+      --text-cyan-muted: rgba(0,195,240,.45);
+
+      --green:           #00c48c;
+      --green-soft:      rgba(0,196,140,.12);
+      --amber:           #f6a623;
+      --amber-soft:      rgba(246,166,35,.12);
+      --red:             #f25f5c;
+      --red-soft:        rgba(242,95,92,.12);
+      --blue:            #7ab7ff;
+      --purple:          #a78bfa;
+      --purple-soft:     rgba(167,139,250,.12);
+      --warm:            #b5a090;
+      --warm-soft:       rgba(181,160,144,.10);
+
+      --glow:            0 0 0 3px rgba(0,204,255,.22);
+      --shadow-sm:       0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+      --shadow-md:       0 4px 16px rgba(0,0,0,.28);
+      --shadow-lg:       0 8px 32px rgba(0,0,0,.36);
+
+      --sans:            "Inter", ui-sans-serif, system-ui, sans-serif;
+      --mono:            "IBM Plex Mono", ui-monospace, monospace;
+      --display:         "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+      --topbar-h:        56px;
+
+      --radius-xs:       5px;
+      --radius-sm:       7px;
+      --radius:          10px;
+      --radius-md:       12px;
+      --radius-lg:       16px;
+      --radius-xl:       20px;
+      --radius-pill:     999px;
+      --tr:              180ms ease;
+    }
+
+    html[data-theme="light"] {
+      --bg:              #f5f4f0;
+      --bg-elev:         #eeece7;
+      --bg-elev-2:       #e6e4df;
+      --bg-soft:         rgba(0,0,0,.04);
+
+      --line:            rgba(0,0,0,.08);
+      --line-strong:     rgba(0,0,0,.13);
+
+      --text:            #17191c;
+      --muted:           #586170;
+      --muted-2:         #7f8896;
+
+      --text-cyan-muted: rgba(0,140,175,.48);
+
+      --cyan:            #009fc7;
+      --cyan-soft:       rgba(0,159,199,.12);
+      --cyan-soft-2:     rgba(0,159,199,.18);
+      --cyan-label:      rgba(0,159,199,.52);
+
+      --green:           #0c9b6d;
+      --green-soft:      rgba(12,155,109,.12);
+      --amber:           #c78000;
+      --amber-soft:      rgba(199,128,0,.12);
+      --red:             #d4485e;
+      --red-soft:        rgba(212,72,94,.12);
+      --blue:            #347de6;
+      --purple:          #7c3aed;
+      --purple-soft:     rgba(124,58,237,.12);
+
+      --glow:            0 0 0 3px rgba(0,159,199,.22);
+      --shadow-sm:       0 2px 8px rgba(16,36,54,.08);
+      --shadow-md:       0 8px 24px rgba(16,36,54,.12);
+      --shadow-lg:       0 16px 32px rgba(16,36,54,.16);
+    }
+
+    /* ── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; overflow-x: clip; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    body {
+      font: 16px/1.55 var(--sans);
+      color: var(--text);
+      min-height: 100vh;
+      /* Variante B — landing: radiales + grilla */
+      background:
+        radial-gradient(circle at 72% 8%,  rgba(0,204,255,.07), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
+    }
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 72% 8%,  rgba(0,159,199,.06), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),
+        linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
+    }
+
+    /* ── TOPBAR ──────────────────────────────────────────────── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      height: var(--topbar-h);
+      display: flex; align-items: center;
+      padding: 0 28px; gap: 16px;
+      background: rgba(12,12,14,.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    html[data-theme="light"] .topbar { background: rgba(238,236,231,.88); }
+    .topbar-brand { display: flex; align-items: center; gap: 14px; flex: 1; }
+    .topbar-divider {
+      width: 1px; height: 20px; background: var(--line);
+    }
+    .topbar-title {
+      font: 600 13px var(--sans); color: var(--text); letter-spacing: -.01em;
+    }
+    .topbar-sub {
+      font: 500 12px var(--mono); color: var(--muted);
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+    /* Theme toggle */
+    .theme-toggle {
+      display: inline-flex; gap: 2px; padding: 3px;
+      background: var(--bg-elev-2);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-sm);
+    }
+    .theme-opt {
+      width: 26px; height: 26px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; background: transparent; color: var(--muted);
+      cursor: pointer; border-radius: 50%;
+      transition: background var(--tr), color var(--tr);
+    }
+    .theme-opt:hover { color: var(--text); }
+    .theme-opt.active { background: var(--cyan-soft-2); color: var(--cyan); }
+
+    /* CTA topbar */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: var(--radius);
+      font: 500 13px var(--sans); cursor: pointer;
+      border: 1px solid transparent;
+      transition: all var(--tr);
+    }
+    .btn-primary {
+      background: var(--cyan-soft-2);
+      color: var(--cyan);
+    }
+    .btn-primary:hover { background: var(--cyan-soft); box-shadow: var(--shadow-sm); }
+    .btn-ghost {
+      background: transparent; color: var(--muted);
+    }
+    .btn-ghost:hover { background: var(--bg-soft); color: var(--text); }
+
+    /* ── LAYOUT ──────────────────────────────────────────────── */
+    main { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+    section { padding: 96px 0; }
+    section + section { border-top: 0; }
+    @media (max-width: 720px) { section { padding: 64px 0; } main { padding: 0 20px; } }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero { padding: 120px 0 96px; text-align: left; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 12px;
+      background: var(--cyan-soft); color: var(--cyan);
+      font: 600 11px var(--mono); letter-spacing: .04em;
+      border-radius: var(--radius-pill);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--cyan); animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(.85); }
+    }
+    .hero-title {
+      font: 800 56px/1.05 var(--display); letter-spacing: -.025em;
+      color: var(--text); margin: 0 0 20px;
+      max-width: 780px;
+    }
+    .hero-title .hl { color: var(--cyan); }
+    .hero-title .hl-soft { color: var(--text-cyan-muted); }
+    .hero-lead {
+      font: 400 18px/1.55 var(--sans); color: var(--muted);
+      max-width: 620px; margin: 0 0 36px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-lg {
+      padding: 14px 22px;
+      font: 600 14px var(--sans);
+      border-radius: var(--radius-md);
+    }
+    @media (max-width: 720px) {
+      .hero { padding: 72px 0 56px; }
+      .hero-title { font-size: 36px; }
+      .hero-lead { font-size: 16px; }
+    }
+
+    /* ── BLOQUE: por qué integrar ────────────────────────────── */
+    .section-eyebrow {
+      font: 600 11px var(--mono); letter-spacing: .08em;
+      color: var(--cyan-label); text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font: 700 36px/1.15 var(--display); letter-spacing: -.02em;
+      color: var(--text); margin: 0 0 16px; max-width: 760px;
+    }
+    .section-lead {
+      font: 400 17px/1.55 var(--sans); color: var(--muted);
+      max-width: 640px; margin: 0 0 48px;
+    }
+    @media (max-width: 720px) { .section-title { font-size: 28px; } }
+
+    .grid-features {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 720px) { .grid-features { grid-template-columns: 1fr; } }
+    .feature-card {
+      padding: 24px;
+      background: var(--bg-elev);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--tr), transform var(--tr);
+    }
+    .feature-card:hover {
+      box-shadow: 0 0 0 1px rgba(0,204,255,.12) inset, var(--shadow-md);
+      transform: translateY(-1px);
+    }
+    .feature-icon {
+      width: 36px; height: 36px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--cyan-soft); color: var(--cyan);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+    }
+    .feature-title {
+      font: 600 16px var(--sans); color: var(--text);
+      margin: 0 0 8px;
+    }
+    .feature-text {
+      font: 400 14px/1.55 var(--sans); color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── BLOQUE DESTACADO: multi-ubicación ───────────────────── */
+    .highlight-card {
+      background: var(--bg-elev-2);
+      border-radius: var(--radius-xl);
+      padding: 56px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-card::before {
+      content: '';
+      position: absolute;
+      top: -40%; right: -10%;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, var(--cyan-soft), transparent 70%);
+      pointer-events: none;
+    }
+    .highlight-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    @media (max-width: 880px) {
+      .highlight-card { padding: 36px 28px; }
+      .highlight-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    .highlight-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      background: var(--cyan-soft); color: var(--cyan);
+      font: 600 11px var(--mono);
+      border-radius: var(--radius-pill);
+      margin-bottom: 16px; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .highlight-title {
+      font: 700 32px/1.2 var(--display); letter-spacing: -.02em;
+      color: var(--text); margin: 0 0 16px;
+    }
+    .highlight-text {
+      font: 400 16px/1.6 var(--sans); color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .highlight-text strong { color: var(--text); font-weight: 600; }
+
+    /* Mockup visual del bloque destacado */
+    .mockup {
+      background: var(--bg-elev);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      font: 500 13px var(--mono);
+      color: var(--text);
+    }
+    .mockup-row {
+      display: grid; grid-template-columns: 1fr auto auto;
+      gap: 12px; align-items: center;
+      padding: 12px 14px;
+      background: var(--bg-elev-2);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+    }
+    .mockup-row:last-child { margin-bottom: 0; }
+    .mockup-label { font: 500 12px var(--mono); color: var(--muted-2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .06em; }
+    .mockup-loc { color: var(--text); }
+    .mockup-qty {
+      font: 600 13px var(--mono); color: var(--cyan);
+      padding: 2px 8px; background: var(--cyan-soft);
+      border-radius: var(--radius-pill);
+    }
+    .mockup-status {
+      font: 600 11px var(--mono); color: var(--green);
+      padding: 2px 8px; background: var(--green-soft);
+      border-radius: var(--radius-pill);
+    }
+
+    /* ── BLOQUE: cómo funciona ───────────────────────────────── */
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      counter-reset: step;
+    }
+    @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+    .step {
+      padding: 24px;
+      background: var(--bg-elev);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--cyan-soft); color: var(--cyan);
+      font: 700 14px var(--mono);
+      border-radius: 50%;
+      margin-bottom: 16px;
+    }
+    .step-title {
+      font: 600 17px var(--sans); color: var(--text);
+      margin: 0 0 8px;
+    }
+    .step-text {
+      font: 400 14px/1.55 var(--sans); color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── BLOQUE: pilares ─────────────────────────────────────── */
+    .pillars {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 880px) { .pillars { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .pillars { grid-template-columns: 1fr; } }
+    .pillar {
+      padding: 24px;
+      background: var(--bg-elev);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .pillar-verb {
+      font: 800 28px/1 var(--display); letter-spacing: -.02em;
+      color: var(--cyan); margin-bottom: 8px;
+    }
+    .pillar-text {
+      font: 400 14px/1.55 var(--sans); color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── QUOTE ──────────────────────────────────────────────── */
+    .quote-block {
+      padding: 48px;
+      background: var(--bg-elev-2);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .quote-block::before {
+      content: '"';
+      position: absolute; top: -20px; left: 24px;
+      font: 800 120px var(--display); color: var(--cyan-soft-2);
+      line-height: 1; pointer-events: none;
+    }
+    .quote-text {
+      font: 500 24px/1.45 var(--display); color: var(--text);
+      max-width: 720px; margin: 0 auto 24px;
+      position: relative; z-index: 1;
+      letter-spacing: -.01em;
+    }
+    .quote-source {
+      font: 500 12px var(--mono); color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    @media (max-width: 720px) {
+      .quote-block { padding: 32px 24px; }
+      .quote-text { font-size: 19px; }
+    }
+
+    /* ── CTA FINAL ──────────────────────────────────────────── */
+    .cta-final {
+      padding: 64px 48px;
+      background: linear-gradient(135deg, var(--cyan-soft-2), var(--cyan-soft));
+      border-radius: var(--radius-xl);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    .cta-final-title {
+      font: 800 40px/1.15 var(--display); letter-spacing: -.025em;
+      color: var(--text); margin: 0 0 16px;
+    }
+    .cta-final-lead {
+      font: 400 17px/1.55 var(--sans); color: var(--muted);
+      max-width: 580px; margin: 0 auto 32px;
+    }
+    @media (max-width: 720px) {
+      .cta-final { padding: 48px 24px; }
+      .cta-final-title { font-size: 28px; }
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    .page-footer {
+      padding: 32px 28px;
+      border-top: 1px solid var(--line);
+      font: 500 12px var(--mono); color: var(--muted-2);
+      text-align: center;
+    }
+    .page-footer a { color: var(--cyan); }
+    .page-footer a:hover { color: var(--text); }
+
+    /* ── REVEAL ──────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1),
+                  transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Skip-link accesibilidad */
+    .skip-link {
+      position: absolute; left: -9999px; top: auto;
+      padding: 8px 12px; background: var(--cyan); color: var(--bg);
+      border-radius: var(--radius);
+      font: 600 13px var(--sans);
+    }
+    .skip-link:focus { left: 16px; top: 16px; z-index: 999; }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Saltar al contenido</a>
+
+<!-- ── TOPBAR ─────────────────────────────────────────────── -->
+<header class="topbar" role="banner">
+  <div class="topbar-brand">
+    <a href="https://yiqi.com.ar" aria-label="YiQi" style="display:inline-flex">
+      <svg viewBox="15 14 75 36" width="60" height="39" xmlns="http://www.w3.org/2000/svg"
+           aria-label="YiQi" role="img" style="flex-shrink:0;display:block"
+           preserveAspectRatio="xMidYMid meet">
+        <path style="fill:var(--text)" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+        <path style="fill:var(--text)" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+        <path style="fill:var(--text)" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      </svg>
+    </a>
+    <div class="topbar-divider" aria-hidden="true"></div>
+    <span class="topbar-title">YiQi + Tienda Nube</span>
+    <div class="topbar-divider" aria-hidden="true"></div>
+    <span class="topbar-sub">Integración oficial · 2026</span>
+  </div>
+  <div class="topbar-actions">
+    <div class="theme-toggle" role="group" aria-label="Tema">
+      <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="theme-opt" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+      </button>
+      <button class="theme-opt" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+    <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── HERO ────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-eyebrow"><span class="dot"></span>Homologación Tienda Nube · junio 2026</div>
+    <h1 class="hero-title">
+      Tu tienda en Tienda Nube,<br>
+      conectada a un ERP <span class="hl">que opera</span><br>
+      <span class="hl-soft">mientras tú decides.</span>
+    </h1>
+    <p class="hero-lead">
+      YiQi sincroniza tu catálogo, stock y pedidos con Tienda Nube. Trabaja con
+      múltiples ubicaciones de stock, factura sin intervención y deja tu tiempo libre
+      para lo que solo tú puedes hacer: decidir.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+      <a class="btn btn-ghost btn-lg" href="#integracion">Ver cómo funciona</a>
+    </div>
+  </section>
+
+  <!-- ── POR QUÉ INTEGRAR ────────────────────────────────────── -->
+  <section id="integracion" class="reveal">
+    <div class="section-eyebrow">Integración</div>
+    <h2 class="section-title">Todo tu negocio sincronizado con Tienda Nube.</h2>
+    <p class="section-lead">
+      Lo que entra por tu tienda, sale automático al ERP. Stock, pedidos, facturación
+      y cobranza dejan de ser tareas separadas: son un mismo flujo continuo.
+    </p>
+    <div class="grid-features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2z"/><path d="M20 12V6a2 2 0 0 0-2-2h-7"/><path d="M9 12h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9z"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Stock vivo</h3>
+        <p class="feature-text">
+          El inventario de YiQi y el de Tienda Nube quedan en línea. Cuando vendes
+          en la tienda, el stock baja en el ERP. Cuando ingresas mercadería, se publica
+          actualizada en segundos.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Pedidos automáticos</h3>
+        <p class="feature-text">
+          Cada compra en Tienda Nube llega al ERP como un pedido de venta. Sin cargar
+          a mano, sin esperar al cierre del día. Tu equipo recibe la orden lista para armar.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Facturación centralizada</h3>
+        <p class="feature-text">
+          Las ventas de Tienda Nube se facturan en YiQi con tus puntos de venta,
+          alícuotas y condiciones fiscales. Una sola fuente de verdad para AFIP y
+          para tu contador.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Sin trabajo manual</h3>
+        <p class="feature-text">
+          La integración no es un cron que corre cada hora: es flujo en vivo. Cuando algo
+          cambia, ya está cambiado. Cuando algo entra, ya está procesado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DESTACADO: MÚLTIPLES UBICACIONES ────────────────────── -->
+  <section class="reveal">
+    <div class="highlight-card">
+      <div class="highlight-grid">
+        <div>
+          <span class="highlight-tag">Diferenciador</span>
+          <h2 class="highlight-title">Múltiples ubicaciones de stock, con lógica de Tienda Nube.</h2>
+          <p class="highlight-text">
+            Si vendes desde varios depósitos o locales, Tienda Nube puede decirle
+            al comprador <strong>desde dónde sale el producto</strong> según la lógica
+            que tú definas. Pero esa funcionalidad solo se activa si tu ERP la entiende
+            del otro lado.
+          </p>
+          <p class="highlight-text">
+            <strong>YiQi la maneja nativamente.</strong> Tu stock por ubicación, los
+            traslados, las reservas y los puntos de venta físicos se sincronizan con
+            Tienda Nube. Pocos ERPs en el mercado pueden hacerlo.
+          </p>
+          <p class="highlight-text" style="font-size:14px;color:var(--muted-2);margin-bottom:0">
+            Ideal para retailers con red de locales, e-commerce con varios depósitos,
+            franquicias y tiendas multicanal.
+          </p>
+        </div>
+        <div>
+          <div class="mockup" aria-label="Ejemplo de stock por ubicación">
+            <div class="mockup-label">Stock — Buzo polar negro · talle M</div>
+            <div class="mockup-row">
+              <span class="mockup-loc">Depósito Central</span>
+              <span class="mockup-qty">42</span>
+              <span class="mockup-status">Disponible</span>
+            </div>
+            <div class="mockup-row">
+              <span class="mockup-loc">Local Palermo</span>
+              <span class="mockup-qty">8</span>
+              <span class="mockup-status">Disponible</span>
+            </div>
+            <div class="mockup-row">
+              <span class="mockup-loc">Local Córdoba</span>
+              <span class="mockup-qty">3</span>
+              <span class="mockup-status">Disponible</span>
+            </div>
+            <div class="mockup-row" style="opacity:.55">
+              <span class="mockup-loc">Depósito Norte</span>
+              <span class="mockup-qty" style="background:var(--bg-soft);color:var(--muted-2)">0</span>
+              <span class="mockup-status" style="background:var(--bg-soft);color:var(--muted-2)">Sin stock</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CÓMO FUNCIONA ───────────────────────────────────────── -->
+  <section class="reveal">
+    <div class="section-eyebrow">Cómo funciona</div>
+    <h2 class="section-title">Tres pasos, sin código.</h2>
+    <p class="section-lead">
+      Te acompañamos en cada uno. La integración técnica corre por nuestra cuenta.
+      Tu equipo solo necesita revisar y aprobar.
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Conectas tu tienda</h3>
+        <p class="step-text">
+          Autorizas el acceso de YiQi a tu cuenta de Tienda Nube en un clic. No hay
+          API keys que copiar, no hay configuraciones técnicas que entender.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Mapeamos tu catálogo</h3>
+        <p class="step-text">
+          Cruzamos tus productos, ubicaciones y precios entre los dos sistemas.
+          Te mostramos el resultado para que tú confirmes antes de prender la sincronización.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3 class="step-title">Empieza a vender</h3>
+        <p class="step-text">
+          A partir de ahí YiQi sincroniza stock en vivo, recibe pedidos, factura y
+          arma la trazabilidad. Tú revisas resultados.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PILARES YiQi ────────────────────────────────────────── -->
+  <section class="reveal">
+    <div class="section-eyebrow">YiQi en cuatro verbos</div>
+    <h2 class="section-title">No es solo una integración. Es un ERP completo.</h2>
+    <p class="section-lead">
+      Cuando conectas Tienda Nube con YiQi, no sumas un plugin. Conectas
+      tu tienda con un sistema que cubre toda la operación del negocio.
+    </p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-verb">Opera.</div>
+        <p class="pillar-text">
+          El sistema corre la operación: pedidos, stock, facturación, cobranza.
+          Tú no tienes que estar arriba.
+        </p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-verb">Adapta.</div>
+        <p class="pillar-text">
+          Si tu negocio tiene un proceso único, el ERP se ajusta. No al revés.
+          Eso lo construimos en cada implementación.
+        </p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-verb">Acompaña.</div>
+        <p class="pillar-text">
+          15 años haciendo esto. Si aparece algo que el sistema no contempla,
+          estamos del otro lado para resolverlo.
+        </p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-verb">Decide.</div>
+        <p class="pillar-text">
+          Tu tiempo y tu energía quedan libres para mirar márgenes, abrir mercados,
+          atender clientes. Para decidir.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────── -->
+  <section class="reveal">
+    <div class="cta-final">
+      <h2 class="cta-final-title">¿Hablamos cómo se ve YiQi en tu tienda?</h2>
+      <p class="cta-final-lead">
+        Reserva una demo. Te mostramos en tu propio rubro cómo se sincroniza
+        Tienda Nube con YiQi y qué se libera cuando el sistema opera por ti.
+      </p>
+      <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  © 2026 YiQi S.A. · Integración Tienda Nube · <a href="https://yiqi.com.ar/yiqi-design-system.html" target="_blank" rel="noopener">DS v1.2.5</a>
+</footer>
+
+<script>
+/* ─── THEME (DS v1.2.5) ─────────────────────────────────────── */
+const _mq = window.matchMedia('(prefers-color-scheme: dark)');
+function resolveTheme(v) { return v === 'system' ? (_mq.matches ? 'dark' : 'light') : v; }
+function applyTheme(v)   { document.documentElement.dataset.theme = resolveTheme(v); }
+function setTheme(v) {
+  localStorage.setItem('yiqi-theme', v);
+  applyTheme(v);
+  document.querySelectorAll('.theme-opt').forEach(b =>
+    b.classList.toggle('active', b.dataset.val === v));
+}
+_mq.addEventListener('change', () => {
+  if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') applyTheme('system');
+});
+(function() {
+  const s = localStorage.getItem('yiqi-theme') || 'system';
+  applyTheme(s);
+  document.addEventListener('DOMContentLoaded', () =>
+    document.querySelectorAll('.theme-opt').forEach(b =>
+      b.classList.toggle('active', b.dataset.val === s)));
+})();
+
+/* ─── REVEAL ON SCROLL ──────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+});
+
+/* ─── SMOOTH SCROLL ─────────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const offset = document.querySelector('.topbar')?.offsetHeight || 56;
+    window.scrollTo({
+      top: target.getBoundingClientRect().top + window.scrollY - offset - 12,
+      behavior: 'smooth'
+    });
+  });
+});
+</script>
+</body>
+</html>
