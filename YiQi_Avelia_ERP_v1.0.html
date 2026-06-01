@@ -355,7 +355,10 @@ html[data-theme="light"] .tl-node{box-shadow:var(--shadow-sm),0 0 0 5px var(--bg
 .plazos-phase-label.c2{color:var(--green)}
 .plazos-phase-label.c3{color:var(--amber)}
 .plazos-phase-desc{font-size:12px;color:var(--muted);line-height:1.5}
-.plazos-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;align-items:flex-start;gap:8px}
+.plazos-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;align-items:flex-start;gap:12px}
+.plazos-note ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.plazos-note ul li{display:flex;align-items:baseline;gap:8px}
+.plazos-note ul li::before{content:"›";color:var(--cyan);font-weight:700;font-size:14px;flex-shrink:0}
 .plazos-note svg{flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;align-self:flex-start}
 @media(max-width:600px){
   .plazos-phases{grid-template-columns:1fr}
@@ -983,8 +986,12 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
       </div>
     </div>
     <div class="plazos-note">
-      <svg width="20" height="20" viewBox="0 0 24 24" style="margin-top:1px;flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-      <span>Los procesos simples se pueden habilitar antes. El plazo final depende de la cantidad de módulos y la complejidad de los datos. El plan de implementación específico de cada cliente se construye en las primeras reuniones.</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" style="margin-top:2px;flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+      <ul>
+        <li>Los procesos simples se pueden habilitar antes.</li>
+        <li>El plazo final depende de la cantidad de módulos y la complejidad de los datos.</li>
+        <li>El plan de implementación específico de cada cliente se construye en las primeras reuniones.</li>
+      </ul>
     </div>
   </div>
 </section>
