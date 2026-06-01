@@ -244,8 +244,10 @@ html[data-theme="light"] .mod-filter-btn.active{border-color:rgba(0,159,199,.3)}
 .mod-tag.t-amber{color:var(--amber);background:var(--amber-soft)}
 .mod-tag.t-blue{color:var(--blue);background:rgba(122,183,255,.12)}
 /* available: ocultar features/tags en collapsed, mostrar en hover */
-.mod-card.available .mod-features,.mod-card.available .mod-tags{max-height:0;overflow:hidden;opacity:0;transition:max-height .28s ease,opacity .22s ease,margin-top .22s ease;margin-top:0}
-.mod-card.available:hover .mod-features,.mod-card.available:hover .mod-tags{max-height:200px;opacity:1;margin-top:10px}
+.mod-card.available .mod-features,.mod-card.available .mod-tags,
+.mod-card.in-prop .mod-features,.mod-card.in-prop .mod-tags{max-height:0;overflow:hidden;opacity:0;transition:max-height .28s ease,opacity .22s ease,margin-top .22s ease;margin-top:0}
+.mod-card.available:hover .mod-features,.mod-card.available:hover .mod-tags,
+.mod-card.in-prop:hover .mod-features,.mod-card.in-prop:hover .mod-tags{max-height:200px;opacity:1;margin-top:10px}
 /* available colapsado en desktop */
 .mod-card.available{padding:14px 18px}
 .mod-card.available .mod-ico{width:30px;height:30px;margin-bottom:0;flex-shrink:0}
@@ -353,8 +355,8 @@ html[data-theme="light"] .tl-node{box-shadow:var(--shadow-sm),0 0 0 5px var(--bg
 .plazos-phase-label.c2{color:var(--green)}
 .plazos-phase-label.c3{color:var(--amber)}
 .plazos-phase-desc{font-size:12px;color:var(--muted);line-height:1.5}
-.plazos-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.plazos-note svg{flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.plazos-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;align-items:flex-start;gap:8px}
+.plazos-note svg{flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;align-self:flex-start}
 @media(max-width:600px){
   .plazos-phases{grid-template-columns:1fr}
   .plazos-ph span{font-size:10px;padding:0 7px}
@@ -981,8 +983,8 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
       </div>
     </div>
     <div class="plazos-note">
-      <svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Los procesos simples se pueden habilitar antes. El plazo final depende de la cantidad de módulos y la complejidad de los datos.
+      <svg width="20" height="20" viewBox="0 0 24 24" style="margin-top:1px;flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+      <span>Los procesos simples se pueden habilitar antes. El plazo final depende de la cantidad de módulos y la complejidad de los datos. El plan de implementación específico de cada cliente se construye en las primeras reuniones.</span>
     </div>
   </div>
 </section>
