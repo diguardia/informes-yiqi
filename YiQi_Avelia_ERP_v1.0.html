@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YiQi para Avelia — Propuesta ERP</title>
-<meta name="description" content="Propuesta YiQi ERP para Avelia (JRS Comercio Exterior): integraciones Mercado Libre y Tienda Nube, compras, stock unificado y automatización multicanal.">
+<meta name="description" content="Propuesta YiQi ERP para Avelia: integraciones Mercado Libre y Tienda Nube, compras, stock unificado y automatización multicanal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -136,8 +136,8 @@ html[data-theme="light"] .topbar{background:rgba(238,236,231,.88)}
 .theme-opt:hover:not(.active){color:var(--text)}
 
 /* layout */
-.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
-.section{padding:clamp(52px,9vw,100px) 0;position:relative}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,5vw,28px)}
+.section{padding-top:clamp(52px,9vw,100px);padding-bottom:clamp(52px,9vw,100px);position:relative}
 .section-kicker{display:inline-block;font:600 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
 .section h2{font:700 clamp(24px,4vw,40px)/1.14 var(--display);letter-spacing:-.03em;margin-bottom:16px;color:var(--text)}
 .section .lead{color:var(--muted);font-size:clamp(14px,1.6vw,16px);max-width:680px;line-height:1.7}
@@ -154,7 +154,7 @@ html[data-theme="light"] .btn-primary{border-color:rgba(0,159,199,.32)}
 @media(max-width:520px){.btn-mini{display:none}}
 
 /* hero */
-.hero{padding:clamp(44px,7vw,80px) 0 clamp(36px,6vw,64px)}
+.hero{padding-top:clamp(44px,7vw,80px);padding-bottom:clamp(36px,6vw,64px)}
 .hero-grid{display:grid;grid-template-columns:1fr .9fr;gap:48px;align-items:center}
 .badge-row{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:var(--radius-pill);font:600 11px var(--mono);border:1px solid transparent}
@@ -191,32 +191,33 @@ html[data-theme="light"] .badge-cyan{border-color:rgba(0,159,199,.22)}
 /* antes / después */
 .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
 .ba-card{background:var(--bg-elev-2);border-radius:var(--radius-lg);padding:30px;box-shadow:var(--shadow-sm)}
-.ba-card.after{box-shadow:0 0 0 1px rgba(0,204,255,.12) inset, var(--shadow-md)}
+.ba-card.before{box-shadow:0 0 0 1px rgba(242,95,92,.18) inset, var(--shadow-sm)}
+.ba-card.after{box-shadow:0 0 0 1px rgba(0,196,140,.22) inset, var(--shadow-md)}
 .ba-card h3{font:600 13px var(--mono);letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:8px}
-.ba-card.before h3{color:var(--muted-2)}
-.ba-card.after h3{color:var(--text-cyan-muted)}
+.ba-card.before h3{color:var(--red)}
+.ba-card.after h3{color:var(--green)}
 .ba-list{list-style:none;display:flex;flex-direction:column;gap:12px}
 .ba-list li{display:flex;gap:11px;font-size:14px;color:var(--muted);line-height:1.55}
-.ba-list li::before{content:"";flex-shrink:0;width:16px;height:16px;border-radius:50%;margin-top:3px;background:var(--bg-soft)}
-.ba-card.after .ba-list li::before{background:var(--cyan-soft-2)}
+.ba-list li .ba-icon{flex-shrink:0;width:18px;height:18px;margin-top:2px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:11px;font-weight:700;line-height:1}
+.ba-card.before .ba-list li .ba-icon{background:var(--red-soft);color:var(--red)}
+.ba-card.after .ba-list li .ba-icon{background:var(--green-soft);color:var(--green)}
 .ba-card.after .ba-list li{color:var(--text)}
 @media(max-width:760px){.ba-grid{grid-template-columns:1fr}}
 
 /* módulos */
-.mod-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:28px;align-items:center}
-.mod-legend-item{display:inline-flex;align-items:center;gap:8px;font:500 12px var(--sans);color:var(--muted)}
-.mod-legend-key{width:13px;height:13px;border-radius:var(--radius-xs)}
-.mod-legend-key.prop{background:var(--cyan)}
-.mod-legend-key.avail{background:var(--bg-soft);box-shadow:inset 0 0 0 1px var(--line-strong)}
-.mod-subhead{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin:34px 0 14px}
-.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px}
+.mod-filter{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
+.mod-filter-btn{font:600 12px var(--mono);padding:7px 16px;border-radius:var(--radius-pill);border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all var(--tr)}
+.mod-filter-btn.active{background:var(--cyan-soft);border-color:rgba(0,204,255,.28);color:var(--cyan)}
+.mod-filter-btn:hover:not(.active){background:var(--bg-soft);color:var(--text)}
+html[data-theme="light"] .mod-filter-btn.active{border-color:rgba(0,159,199,.3)}
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px;margin-top:20px}
 .mod-card{position:relative;background:var(--bg-elev-2);border-radius:var(--radius-md);padding:22px;box-shadow:var(--shadow-sm);transition:box-shadow var(--tr),transform var(--tr)}
-.mod-card:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(0,204,255,.12) inset, var(--shadow-md)}
-.mod-card.in-prop{box-shadow:0 0 0 1px rgba(0,204,255,.18) inset, var(--shadow-sm)}
-.mod-card.available{opacity:.62}
-.mod-card.available:hover{opacity:1}
+.mod-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.mod-card.in-prop{box-shadow:0 0 0 1px rgba(0,204,255,.10) inset, var(--shadow-sm)}
+.mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,204,255,.18) inset, var(--shadow-md)}
 .mod-card.available .mod-ico{background:var(--bg-soft)}
 .mod-card.available .mod-ico svg{stroke:var(--muted)}
+.mod-card.mod-hidden{display:none}
 .mod-ico{width:38px;height:38px;border-radius:var(--radius);background:var(--cyan-soft);display:flex;align-items:center;justify-content:center;margin-bottom:15px}
 .mod-ico svg{width:19px;height:19px;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .mod-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
@@ -259,7 +260,7 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
 .step p{font-size:13px;color:var(--muted);line-height:1.55}
 
 /* necesitamos */
-.need-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:34px}
+.need-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:14px;margin-top:34px}
 .need-item{display:flex;gap:13px;background:var(--bg-elev-2);border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm)}
 .need-item .chk{flex-shrink:0;width:22px;height:22px;border-radius:var(--radius-xs);background:var(--cyan-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-weight:700;font-size:12px}
 .need-item h4{font:600 14px var(--sans);margin-bottom:3px;color:var(--text)}
@@ -273,7 +274,7 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
 .prop-item p b{color:var(--text);font-weight:600}
 
 /* cta final */
-.cta-final{text-align:center;padding:clamp(56px,9vw,104px) 0}
+.cta-final{text-align:center;padding-top:clamp(56px,9vw,104px);padding-bottom:clamp(56px,9vw,104px)}
 .cta-final h2{font:800 clamp(26px,4.4vw,44px)/1.12 var(--display);letter-spacing:-.03em;margin-bottom:15px;color:var(--text)}
 .cta-final p{color:var(--muted);max-width:560px;margin:0 auto 30px;font-size:15px;line-height:1.7}
 .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -286,6 +287,34 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
 .reveal.show{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.orbit-ring{animation:none}}
+@media(max-width:600px){
+  .hero-grid{gap:20px}
+  .avelia-hero-logo,.avelia-hero-fallback{max-width:100%;padding:28px 24px}
+  .ba-card{padding:20px 16px}
+  .ba-grid{gap:14px}
+  /* módulos compactos: 2 columnas, layout horizontal */
+  .mod-filter{gap:6px}
+  .mod-filter-btn{font-size:11px;padding:6px 11px}
+  .mod-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .mod-card{padding:14px;display:flex;flex-direction:row;align-items:center;gap:12px}
+  .mod-ico{width:30px;height:30px;margin-bottom:0;flex-shrink:0}
+  .mod-ico svg{width:15px;height:15px}
+  .mod-head{flex-direction:column;gap:4px;margin-bottom:0;align-items:flex-start;min-width:0}
+  .mod-card h3{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mod-card > p{display:none}
+  .mod-card.mod-expanded{flex-direction:column;align-items:flex-start;gap:10px}
+  .mod-card.mod-expanded .mod-ico{margin-bottom:0}
+  .mod-card.mod-expanded > p{display:block;font-size:12px;color:var(--muted);line-height:1.5;margin-top:2px}
+  .mod-card{cursor:pointer}
+  /* hl-banner, steps, grids */
+  .hl-banner{padding:22px 18px}
+  .steps{grid-template-columns:1fr}
+  .prop-grid{grid-template-columns:1fr}
+  .hero-meta{flex-direction:column;gap:6px}
+  .cta-final p{font-size:14px}
+  .footer-in{flex-direction:column;text-align:center;gap:8px}
+  .topbar{padding:0 16px;gap:10px}
+}
 </style>
 </head>
 <body>
@@ -321,10 +350,7 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
     <div>
       <div class="badge-row">
         <span class="badge badge-cyan">Propuesta YiQi ERP</span>
-        <span class="badge-avelia">
-          <img src="https://acdn-us.mitiendanube.com/stores/007/018/833/themes/common/logo-506259183-1764869838-863eb5e74a3bc392498d3cf080d34b391764869838-480-0.webp" alt="Avelia" onerror="this.parentNode.innerHTML='<span style=&quot;color:#17191c&quot;>AVELIA</span>'">
-          <span>JRS Comercio Exterior</span>
-        </span>
+
       </div>
       <h1>Avelia, esto es <span class="hl">para tu operación</span> multicanal.</h1>
       <p class="intro">Avelia importa directo desde China y vende por Mercado Libre y Tienda Nube, con planes de sumar Frávega, Tienda Macro e ICBC. Ese crecimiento trae un desafío real: listas de precios, stock e impuestos en varios canales a la vez. YiQi centraliza todo en un solo sistema en la nube, con integraciones nativas y automatización punta a punta — y escala junto con el negocio a medida que se suman canales.</p>
@@ -358,23 +384,23 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <p class="lead">El crecimiento rápido por importación directa multiplica los canales — y con ellos, el trabajo manual de mantener precios, stock e impuestos sincronizados. YiQi ordena ese ecosistema desde un único lugar.</p>
   <div class="ba-grid">
     <div class="ba-card before">
-      <h3>● Hoy, sin sistema integrado</h3>
+      <h3>✕ Hoy, sin sistema integrado</h3>
       <ul class="ba-list">
-        <li>Listas de precios actualizadas a mano, canal por canal.</li>
-        <li>Stock desincronizado entre Mercado Libre, Tienda Nube y depósito.</li>
-        <li>Facturación, remitos y asientos contables cargados manualmente.</li>
-        <li>Sin visibilidad consolidada de ventas, márgenes ni reposición.</li>
-        <li>Sumar un canal nuevo (Frávega, Macro, ICBC) multiplica el trabajo.</li>
+        <li><span class="ba-icon">✕</span>Listas de precios actualizadas a mano, canal por canal.</li>
+        <li><span class="ba-icon">✕</span>Stock desincronizado entre Mercado Libre, Tienda Nube y depósito.</li>
+        <li><span class="ba-icon">✕</span>Facturación, remitos y asientos contables cargados manualmente.</li>
+        <li><span class="ba-icon">✕</span>Sin visibilidad consolidada de ventas, márgenes ni reposición.</li>
+        <li><span class="ba-icon">✕</span>Sumar un canal nuevo (Frávega, Macro, ICBC) multiplica el trabajo.</li>
       </ul>
     </div>
     <div class="ba-card after">
-      <h3>● Con YiQi</h3>
+      <h3>✓ Con YiQi</h3>
       <ul class="ba-list">
-        <li>Una lista maestra de precios que se propaga a todos los canales.</li>
-        <li>Stock unificado: cada venta descuenta inventario en tiempo real.</li>
-        <li>Factura, remito y asiento contable generados automáticamente.</li>
-        <li>Paneles (Smarties) con ventas, márgenes y alertas de stock.</li>
-        <li>Sumar un canal nuevo es conectar, no rehacer la operación.</li>
+        <li><span class="ba-icon">✓</span>Una lista maestra de precios que se propaga a todos los canales.</li>
+        <li><span class="ba-icon">✓</span>Stock unificado: cada venta descuenta inventario en tiempo real.</li>
+        <li><span class="ba-icon">✓</span>Factura, remito y asiento contable generados automáticamente.</li>
+        <li><span class="ba-icon">✓</span>Paneles (Smarties) con ventas, márgenes y alertas de stock.</li>
+        <li><span class="ba-icon">✓</span>Sumar un canal nuevo es conectar, no rehacer la operación.</li>
       </ul>
     </div>
   </div>
@@ -384,74 +410,88 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
 <section class="section wrap reveal" id="modulos">
   <span class="section-kicker">Módulos YiQi</span>
   <h2>El ERP completo — y qué entra en la propuesta de Avelia.</h2>
-  <p class="lead">YiQi cubre toda la operación de una empresa. Para Avelia seleccionamos el núcleo que resuelve hoy la venta multicanal, las compras de importación y el backoffice. El resto queda disponible para activar cuando el negocio lo necesite — sin cambiar de sistema.</p>
-  <div class="mod-legend">
-    <span class="mod-legend-item"><span class="mod-legend-key prop"></span>En la propuesta</span>
-    <span class="mod-legend-item"><span class="mod-legend-key avail"></span>Disponible para sumar</span>
+  <p class="lead">YiQi cubre toda la operación de una empresa con 14 módulos que se conectan entre sí. Para Avelia seleccionamos el núcleo que resuelve hoy la venta multicanal, las compras de importación y el backoffice. El resto del sistema queda disponible para activar cuando el negocio lo necesite — sin cambiar de plataforma.</p>
+
+  <div class="mod-filter" role="group" aria-label="Filtrar módulos">
+    <button class="mod-filter-btn active" onclick="filterMods(this,'all')">Todos · 14</button>
+    <button class="mod-filter-btn" onclick="filterMods(this,'prop')">En la propuesta · 7</button>
+    <button class="mod-filter-btn" onclick="filterMods(this,'avail')">Disponibles · 7</button>
   </div>
 
-  <div class="mod-subhead">Núcleo de la propuesta · 5 módulos</div>
-  <div class="mod-grid">
-    <div class="mod-card in-prop">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+  <div class="mod-grid" id="modGrid">
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
       <div class="mod-head"><h3>Ventas</h3><span class="mod-badge prop">En la propuesta</span></div>
       <p>Pedidos de todos los canales en un solo flujo: facturación, remitos, cobros y e-commerce, con reglas configurables por canal.</p>
     </div>
-    <div class="mod-card in-prop">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></div>
       <div class="mod-head"><h3>Stock</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Inventario unificado por depósito, reserva automática, control de mínimos, remitos y alertas de reposición.</p>
+      <p>Inventario unificado por depósito, reserva automática, punto de pedido, remitos y alertas de reposición.</p>
     </div>
-    <div class="mod-card in-prop">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg></div>
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
       <div class="mod-head"><h3>Compras</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Circuito de compra e importación: solicitudes, órdenes, despacho, recepción, costos y reposición conectada al stock real.</p>
+      <p>Circuito de compra e importación: solicitudes, órdenes, despacho, recepción, costos y reposición conectada al stock.</p>
     </div>
-    <div class="mod-card in-prop">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 18V6"/></svg></div>
       <div class="mod-head"><h3>Finanzas</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Cajas, bancos y conciliación bancaria. Con Interbanking, descarga y conciliación de extractos de forma automática.</p>
+      <p>Cajas, bancos, movimientos y proyección. Con Interbanking, descarga y conciliación de extractos de forma automática.</p>
     </div>
-    <div class="mod-card in-prop">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg></div>
-      <div class="mod-head"><h3>Contabilidad e impuestos</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Asientos automáticos desde la operación y control impositivo, clave para una importadora en crecimiento.</p>
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <div class="mod-head"><h3>Contabilidad</h3><span class="mod-badge prop">En la propuesta</span></div>
+      <p>Asientos automáticos desde la operación, retenciones, percepciones y liquidación de impuestos. Clave para una importadora.</p>
+    </div>
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div class="mod-head"><h3>Clientes y Proveedores</h3><span class="mod-badge prop">En la propuesta</span></div>
+      <p>Empresas, contactos, documentación legal, alícuotas por CUIT y datos fiscales. La base de toda la operación comercial.</p>
+    </div>
+    <div class="mod-card in-prop" data-status="prop">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
+      <div class="mod-head"><h3>Parámetros</h3><span class="mod-badge prop">Base</span></div>
+      <p>Configuración base del sistema: reglas, comportamientos de despacho, tipos de publicación y parámetros por área.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <div class="mod-head"><h3>Comercial / CRM</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Oportunidades, campañas, cotizaciones y tarifas. Ideal para venta consultiva o mayorista con seguimiento.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <div class="mod-head"><h3>Producción</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Órdenes de producción, BOMs y planificación. Maneja combos y productos compuestos ajustando el stock de materias primas.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div>
+      <div class="mod-head"><h3>RRHH</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Empleados, legajos, sueldos y herramientas. YiQi escala desde pymes hasta empresas con cientos de empleados.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M7 7h.01M11 7h.01M15 7h.01"/></svg></div>
+      <div class="mod-head"><h3>POS</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Punto de venta presencial: caja, órdenes de venta y cierre, conectado al mismo stock y facturación si sumás local físico.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg></div>
+      <div class="mod-head"><h3>Gestión</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Tickets, órdenes de servicio y proyectos. Orientado a empresas de servicios y soporte interno.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <div class="mod-head"><h3>Calidad</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Controles, no conformidades, objetivos y avisos de riesgo para procesos con normas de calidad.</p>
+    </div>
+    <div class="mod-card available" data-status="avail">
+      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+      <div class="mod-head"><h3>Editorial</h3><span class="mod-badge avail">Disponible</span></div>
+      <p>Derechos de autor, comisiones por artículo y liquidaciones. Especializado para el rubro editorial.</p>
     </div>
   </div>
 
-  <div class="mod-subhead">El resto del ERP · disponible para sumar</div>
-  <div class="mod-grid">
-    <div class="mod-card available">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-      <div class="mod-head"><h3>Comercial / CRM</h3><span class="mod-badge avail">Disponible</span></div>
-      <p>Oportunidades, campañas, cotizaciones y tarifas. Ideal cuando sumes venta consultiva o mayorista con seguimiento.</p>
-    </div>
-    <div class="mod-card available">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
-      <div class="mod-head"><h3>Producción</h3><span class="mod-badge avail">Disponible</span></div>
-      <p>Productos compuestos y combos con factibilidad de producción, que ajusta el stock de materias primas en cada venta.</p>
-    </div>
-    <div class="mod-card available">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3 3-2-2"/></svg></div>
-      <div class="mod-head"><h3>RRHH / Sueldos</h3><span class="mod-badge avail">Disponible</span></div>
-      <p>Liquidación de sueldos y legajos. YiQi escala desde pymes hasta empresas con cientos de empleados.</p>
-    </div>
-    <div class="mod-card available">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-      <div class="mod-head"><h3>POS — Punto de venta</h3><span class="mod-badge avail">Disponible</span></div>
-      <p>Caja y venta en mostrador conectada al mismo stock y facturación, si en algún momento sumás local físico.</p>
-    </div>
-    <div class="mod-card available">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M9 11H3v10h6zM21 3h-6v18h6zM15 7H9v14h6z"/></svg></div>
-      <div class="mod-head"><h3>Gestión / Servicios</h3><span class="mod-badge avail">Disponible</span></div>
-      <p>Órdenes de trabajo y seguimiento de servicios, orientado a empresas de servicios. Activable a futuro.</p>
-    </div>
-    <div class="mod-card available">
-      <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></div>
-      <div class="mod-head"><h3>Smarties — paneles</h3><span class="mod-badge avail">Incluido</span></div>
-      <p>Tableros configurables transversales: pedidos por entregar, ranking de productos, facturación y alertas, por canal.</p>
-    </div>
-  </div>
+  <p class="lead" style="margin-top:24px;font-size:13.5px">Además, <b style="color:var(--text)">Smarties</b> —los paneles configurables de indicadores— atraviesa todos los módulos: pedidos por entregar, ranking de productos, facturación y alertas, por canal.</p>
 </section>
 
 <!-- ===== INTEGRACIONES ===== -->
@@ -570,7 +610,7 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
 
 <footer class="footer">
   <div class="wrap footer-in">
-    <span>© 2026 YiQi S.A. · Propuesta para Avelia (JRS Comercio Exterior) · DS v1.2.5</span>
+    <span>© 2026 YiQi S.A. · Propuesta para Avelia · DS v1.2.5</span>
     <span><a href="https://yiqi.com.ar" target="_blank" rel="noopener">yiqi.com.ar</a> · <a href="https://avelia.com.ar" target="_blank" rel="noopener">avelia.com.ar</a></span>
   </div>
 </footer>
@@ -597,6 +637,26 @@ addEventListener('scroll',()=>{const h=document.documentElement;const sc=h.scrol
 // reveal
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});},{threshold:.12});
 document.querySelectorAll('.reveal:not(.show)').forEach(el=>io.observe(el));
+// módulos expand en mobile
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('#modGrid .mod-card').forEach(card=>{
+    card.addEventListener('click',()=>{
+      if(window.innerWidth>600) return;
+      const open=card.classList.contains('mod-expanded');
+      document.querySelectorAll('#modGrid .mod-card').forEach(c=>c.classList.remove('mod-expanded'));
+      if(!open) card.classList.add('mod-expanded');
+    });
+  });
+});
+// módulos filter
+function filterMods(btn,filter){
+  document.querySelectorAll('.mod-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#modGrid .mod-card').forEach(c=>{
+    if(filter==='all') c.classList.remove('mod-hidden');
+    else c.classList.toggle('mod-hidden', c.dataset.status!==filter);
+  });
+}
 </script>
 </body>
 </html>
