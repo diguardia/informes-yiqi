@@ -167,16 +167,30 @@ html[data-theme="light"] .badge-cyan{border-color:rgba(0,159,199,.22)}
 .hero h1 .hl{color:var(--cyan)}
 .hero p.intro{color:var(--muted);font-size:clamp(14px,1.7vw,17px);max-width:600px;margin-bottom:28px;line-height:1.7}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.hero-meta{margin-top:22px;display:flex;gap:20px;flex-wrap:wrap;font:500 12px var(--mono);color:var(--muted-2)}
-.hero-meta b{color:var(--muted);font-weight:600}
+.hero-meta{margin-top:26px;display:inline-flex;background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden}
+.hero-meta-item{display:flex;flex-direction:column;gap:4px;padding:12px 20px}
+.hero-meta-item+.hero-meta-item{border-left:1px solid var(--line)}
+.hero-meta-label{font:600 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+.hero-meta-val{font:500 13px var(--sans);color:var(--text);display:flex;flex-direction:column;gap:5px}
+.hero-meta-val-row{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hero-meta-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.hero-meta-dot.on{background:var(--green);box-shadow:0 0 6px var(--green)}
+.hero-meta-dot.soon{background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
 
 /* avelia hero stage */
 .hero-side{display:flex;justify-content:center;align-items:center}
 .avelia-stage{display:flex;flex-direction:column;align-items:center;gap:22px;width:100%}
 .avelia-hero-logo{width:100%;max-width:480px;height:auto;background:#fff;border-radius:var(--radius-xl);padding:44px 48px;box-shadow:var(--shadow-lg);image-rendering:auto}
 .avelia-hero-fallback{display:flex;align-items:center;justify-content:center;width:100%;max-width:480px;background:#fff;border-radius:var(--radius-xl);padding:60px 48px;box-shadow:var(--shadow-lg);font:800 56px var(--display);letter-spacing:-.03em;color:#17191c}
-.avelia-stage-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.avelia-stage-chips .orbit-chip{position:static;transform:none}
+.avelia-int-status{background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:14px 18px;display:flex;flex-direction:column;gap:9px;width:100%;max-width:340px}
+.avelia-int-row{display:flex;align-items:center;gap:10px;font:500 12.5px var(--sans);color:var(--muted)}
+.avelia-int-row .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.avelia-int-row .dot.on{background:var(--green);box-shadow:0 0 7px var(--green)}
+.avelia-int-row .dot.soon{background:var(--cyan);box-shadow:0 0 7px var(--cyan)}
+.avelia-int-row .int-name{color:var(--text);font-weight:600;flex:1}
+.avelia-int-row .int-tag{font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.avelia-int-row .int-tag.on{color:var(--green)}
+.avelia-int-row .int-tag.soon{color:var(--cyan)}
 /* orbit chip (reuse de estilo) */
 .orbit{position:relative;width:300px;height:300px;display:flex;align-items:center;justify-content:center}
 .orbit-ring{position:absolute;border:1px solid var(--line-strong);border-radius:50%;animation:spin 26s linear infinite}
@@ -208,6 +222,7 @@ html[data-theme="light"] .badge-cyan{border-color:rgba(0,159,199,.22)}
 .mod-filter{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
 .mod-filter-btn{font:600 12px var(--mono);padding:7px 16px;border-radius:var(--radius-pill);border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all var(--tr)}
 .mod-filter-btn.active{background:var(--cyan-soft);border-color:rgba(0,204,255,.28);color:var(--cyan)}
+.mod-filter-btn.active[data-filter="avail"]{background:var(--amber-soft);border-color:rgba(246,166,35,.28);color:var(--amber)}
 .mod-filter-btn:hover:not(.active){background:var(--bg-soft);color:var(--text)}
 html[data-theme="light"] .mod-filter-btn.active{border-color:rgba(0,159,199,.3)}
 .mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px;margin-top:20px}
@@ -218,6 +233,18 @@ html[data-theme="light"] .mod-filter-btn.active{border-color:rgba(0,159,199,.3)}
 .mod-card.available .mod-ico{background:var(--bg-soft)}
 .mod-card.available .mod-ico svg{stroke:var(--muted)}
 .mod-card.mod-hidden{display:none}
+/* available colapsado en desktop */
+.mod-card.available{padding:14px 18px}
+.mod-card.available .mod-ico{width:30px;height:30px;margin-bottom:0;flex-shrink:0}
+.mod-card.available .mod-ico svg{width:15px;height:15px}
+.mod-card.available .mod-head{margin-bottom:0}
+.mod-card.available > p{max-height:0;overflow:hidden;opacity:0;margin-top:0;transition:max-height .25s ease,opacity .2s ease,margin-top .2s ease}
+.mod-card.available:hover{padding:18px}
+.mod-card.available:hover .mod-ico{width:38px;height:38px;margin-bottom:12px}
+.mod-card.available:hover .mod-ico svg{width:19px;height:19px}
+.mod-card.available:hover .mod-head{margin-bottom:6px}
+.mod-card.available:hover > p{max-height:120px;opacity:1;margin-top:4px}
+.mod-card.available{transition:box-shadow var(--tr),transform var(--tr),padding .2s ease}
 .mod-ico{width:38px;height:38px;border-radius:var(--radius);background:var(--cyan-soft);display:flex;align-items:center;justify-content:center;margin-bottom:15px}
 .mod-ico svg{width:19px;height:19px;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .mod-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
@@ -225,20 +252,22 @@ html[data-theme="light"] .mod-filter-btn.active{border-color:rgba(0,159,199,.3)}
 .mod-card p{font-size:13px;color:var(--muted);line-height:1.55}
 .mod-badge{flex-shrink:0;font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);white-space:nowrap}
 .mod-badge.prop{color:var(--cyan);background:var(--cyan-soft)}
-.mod-badge.avail{color:var(--muted-2);background:var(--bg-soft)}
+.mod-badge.avail{color:var(--amber);background:var(--amber-soft)}
 html[data-theme="light"] .mod-badge.prop{box-shadow:inset 0 0 0 1px rgba(0,159,199,.22)}
 
 /* integraciones */
-.int-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:34px}
-.int-card{background:var(--bg-elev-2);border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-sm)}
-.int-head{display:flex;align-items:center;gap:9px;margin-bottom:11px}
-.int-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green)}
-.int-dot.soon{background:var(--amber);box-shadow:0 0 9px var(--amber)}
-.int-card h4{font:600 14px var(--sans);color:var(--text)}
-.int-state{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--green);margin-left:auto}
-.int-state.soon{color:var(--amber)}
-.int-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
-.int-card ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.int-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:34px}
+.int-card{background:var(--bg-elev-2);border-radius:var(--radius-md);padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:0}
+.int-status{display:inline-flex;align-items:center;gap:7px;margin-bottom:10px}
+.int-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--green);box-shadow:0 0 8px var(--green)}
+.int-dot.soon{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.int-dot.avail{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.int-state{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--green)}
+.int-state.soon{color:var(--cyan)}
+.int-state.avail{color:var(--amber)}
+.int-card h4{font:700 16px var(--display);color:var(--text);line-height:1.25;margin-bottom:8px}
+.int-desc{font-size:12.5px;color:var(--muted);line-height:1.55;flex:1;margin-bottom:12px}
+.int-card ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
 .int-card ul li{font:500 11px var(--mono);color:var(--muted);background:var(--bg-soft);padding:3px 9px;border-radius:var(--radius-pill)}
 
 /* banner automatización */
@@ -251,37 +280,131 @@ html[data-theme="light"] .mod-badge.prop{box-shadow:inset 0 0 0 1px rgba(0,159,1
 .flow-step span{font-size:13px;color:var(--text)}
 @media(max-width:760px){.hl-banner{grid-template-columns:1fr;gap:22px}}
 
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px}
-.step{background:var(--bg-elev-2);border-radius:var(--radius-md);padding:24px;box-shadow:var(--shadow-sm)}
-.step .num{font:800 28px var(--display);color:var(--cyan-soft-2);line-height:1;margin-bottom:12px}
-html[data-theme="light"] .step .num{color:var(--cyan)}
-.step h3{font:600 15px var(--display);margin-bottom:7px;color:var(--text)}
-.step p{font-size:13px;color:var(--muted);line-height:1.55}
+/* timeline implementación */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;position:relative}
+.tl-step{display:flex;flex-direction:column;align-items:center;position:relative;padding:0 14px}
+.tl-step:not(:last-child)::after{content:'';position:absolute;top:17px;left:50%;width:100%;height:1px;background:linear-gradient(to right,var(--line-strong),var(--line));z-index:0}
+.tl-node{width:34px;height:34px;border-radius:50%;background:var(--bg-elev-2);box-shadow:var(--shadow-sm),0 0 0 5px var(--bg);display:flex;align-items:center;justify-content:center;font:700 11px var(--mono);letter-spacing:.04em;color:var(--cyan);position:relative;z-index:1;margin-bottom:22px;flex-shrink:0}
+html[data-theme="light"] .tl-node{box-shadow:var(--shadow-sm),0 0 0 5px var(--bg)}
+.tl-content{text-align:center}
+.tl-content h3{font:600 14px var(--display);color:var(--text);margin-bottom:8px;line-height:1.3}
+.tl-content p{font-size:12.5px;color:var(--muted);line-height:1.55}
 
+/* IA Ready banner */
+.ia-ready-banner{background:var(--bg-elev-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:clamp(32px,5vw,52px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
+.ia-ready-logo svg .ia-letters{fill:var(--text)}
+.ia-ready-logo svg .ia-accent{fill:var(--cyan)}
+.ia-ready-banner p{font-size:15px;color:var(--muted);line-height:1.65;max-width:560px}
+.ia-ready-ctas{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+/* footer canónico */
+.footer{border-top:1px solid var(--line);padding:52px 0 32px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.footer-block--brand{display:flex;flex-direction:column;gap:16px}
+.footer-logo-link{display:inline-block;line-height:1}
+.footer-logo-link .yql{fill:var(--text)}
+.footer-logo-link .yqs{fill:var(--cyan)}
+.footer-socials{display:flex;gap:8px}
+.social-btn{width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--muted-2);transition:all var(--tr)}
+.social-btn:hover{color:var(--text);background:var(--bg-soft)}
+.social-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.footer-block-label{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:14px}
+.footer-contacts{display:flex;flex-direction:column;gap:10px}
+.footer-contacts a{font-size:13px;color:var(--muted);transition:color var(--tr)}
+.footer-contacts a:hover{color:var(--cyan)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px}
+.footer-copy{font-size:12px;color:var(--muted-2)}
+.footer-version{font:600 11px var(--mono);color:var(--muted-2);transition:color var(--tr)}
+.footer-version:hover{color:var(--cyan)}
+@media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr;gap:22px}.footer-bottom{flex-direction:column;text-align:center;gap:8px}}
+/* plazos infographic */
+.plazos-card{background:var(--bg-elev-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:28px 30px;margin-top:32px}
+.plazos-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.plazos-title{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.plazos-total{font:700 13px var(--mono);color:var(--muted);letter-spacing:.04em}
+.plazos-total b{color:var(--text);font-size:18px;letter-spacing:-.02em;margin-right:4px}
+.plazos-bar-wrap{position:relative;margin-bottom:8px}
+.plazos-bar{display:flex;height:28px;border-radius:var(--radius-sm);overflow:hidden;gap:2px}
+.plazos-ph{display:flex;align-items:center;justify-content:center;font:600 11px var(--mono);letter-spacing:.04em;border-radius:var(--radius-xs);transition:filter var(--tr)}
+.plazos-ph:hover{filter:brightness(1.15)}
+.plazos-ph.p1{background:var(--cyan-soft-2);color:var(--cyan);width:25%}
+.plazos-ph.p2{background:rgba(0,196,140,.18);color:var(--green);width:42%}
+.plazos-ph.p3{background:rgba(246,166,35,.14);color:var(--amber);width:33%}
+.plazos-ph span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 10px}
+.plazos-weeks{display:flex;justify-content:space-between;margin-top:6px;padding:0 1px}
+.plazos-wk{font:500 10px var(--mono);color:var(--muted-2)}
+.plazos-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.plazos-phase-item{display:flex;flex-direction:column;gap:4px}
+.plazos-phase-label{font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.plazos-phase-label.c1{color:var(--cyan)}
+.plazos-phase-label.c2{color:var(--green)}
+.plazos-phase-label.c3{color:var(--amber)}
+.plazos-phase-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.plazos-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.plazos-note svg{flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:600px){
+  .plazos-phases{grid-template-columns:1fr}
+  .plazos-ph span{font-size:10px;padding:0 7px}
+}
 /* necesitamos */
-.need-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:14px;margin-top:34px}
-.need-item{display:flex;gap:13px;background:var(--bg-elev-2);border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm)}
-.need-item .chk{flex-shrink:0;width:22px;height:22px;border-radius:var(--radius-xs);background:var(--cyan-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-weight:700;font-size:12px}
-.need-item h4{font:600 14px var(--sans);margin-bottom:3px;color:var(--text)}
-.need-item p{font-size:12.5px;color:var(--muted);line-height:1.5}
+.need-doc{background:var(--bg-elev-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;margin-top:32px}
+.need-doc-head{padding:14px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.need-doc-label{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)}
+.need-doc-pill{font:600 11px var(--mono);color:var(--cyan);background:var(--cyan-soft);padding:3px 10px;border-radius:var(--radius-pill)}
+.need-doc-actions{display:flex;align-items:center;gap:10px}
+.need-copy-btn{display:inline-flex;align-items:center;gap:6px;font:600 11px var(--mono);color:var(--muted);background:transparent;border:1px solid var(--line);padding:4px 12px;border-radius:var(--radius-pill);cursor:pointer;transition:all var(--tr)}
+.need-copy-btn:hover{color:var(--text);border-color:var(--line-strong)}
+.need-copy-btn.copied{color:var(--green);border-color:rgba(0,196,140,.28);background:var(--green-soft)}
+.need-copy-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.need-row{display:grid;grid-template-columns:36px 1fr 1.6fr;gap:16px 20px;align-items:start;padding:17px 24px;border-bottom:1px solid var(--line);transition:background var(--tr)}
+.need-row:last-child{border-bottom:none}
+.need-row:hover{background:var(--bg-soft)}
+.need-num{font:700 11px var(--mono);color:var(--muted-2);padding-top:2px;letter-spacing:.06em}
+.need-row-title{font:600 13.5px var(--sans);color:var(--text);line-height:1.3}
+.need-row-desc{font:400 13px var(--sans);color:var(--muted);line-height:1.5}
+@media(max-width:600px){
+  .need-row{grid-template-columns:28px 1fr;gap:10px 12px;padding:14px 18px}
+  .need-row-desc{grid-column:2;margin-top:-4px}
+  .need-doc-head{padding:12px 18px}
+}
 
 /* propuesta */
-.prop-card{background:var(--bg-elev-2);box-shadow:var(--shadow-md);border-radius:var(--radius-lg);padding:clamp(30px,5vw,52px);margin-top:36px}
-.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:24px}
-.prop-label{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:9px}
-.prop-item p{font-size:13.5px;color:var(--muted);line-height:1.6}
+.prop-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:36px}
+.prop-item{background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:24px 26px;display:flex;flex-direction:column;gap:12px}
+.prop-item-head{display:flex;align-items:center;gap:12px}
+.prop-ico{width:34px;height:34px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prop-ico svg{width:17px;height:17px;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.prop-ico.ico-impl{background:var(--cyan-soft)}
+.prop-ico.ico-impl svg{stroke:var(--cyan)}
+.prop-ico.ico-sub{background:var(--green-soft)}
+.prop-ico.ico-sub svg{stroke:var(--green)}
+.prop-ico.ico-dev{background:var(--purple-soft)}
+.prop-ico.ico-dev svg{stroke:var(--purple)}
+.prop-ico.ico-sup{background:var(--amber-soft)}
+.prop-ico.ico-sup svg{stroke:var(--amber)}
+.prop-label{font:700 14px var(--display);color:var(--text)}
+.prop-item p{font-size:13px;color:var(--muted);line-height:1.65}
 .prop-item p b{color:var(--text);font-weight:600}
+@media(max-width:600px){.prop-grid{grid-template-columns:1fr}}
 
 /* cta final */
 .cta-final{text-align:center;padding-top:clamp(56px,9vw,104px);padding-bottom:clamp(56px,9vw,104px)}
 .cta-final h2{font:800 clamp(26px,4.4vw,44px)/1.12 var(--display);letter-spacing:-.03em;margin-bottom:15px;color:var(--text)}
 .cta-final p{color:var(--muted);max-width:560px;margin:0 auto 30px;font-size:15px;line-height:1.7}
 .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted-2);font-size:12.5px}
-.footer-in{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.footer a{color:var(--muted)}
-.footer a:hover{color:var(--cyan)}
+.footer{border-top:1px solid var(--line);padding:52px 0 32px;color:var(--muted-2);font-size:13px}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.footer-brand{display:flex;flex-direction:column;gap:14px}
+.footer-brand p{font-size:13px;color:var(--muted);line-height:1.65;max-width:240px}
+.footer-col h5{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-bottom:14px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col ul li a{font-size:13px;color:var(--muted);transition:color var(--tr)}
+.footer-col ul li a:hover{color:var(--cyan)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:24px;font-size:12px;color:var(--muted-2)}
+.footer-bottom a{color:var(--muted-2)}
+.footer-bottom a:hover{color:var(--cyan)}
+@media(max-width:760px){.footer-top{grid-template-columns:1fr 1fr;gap:28px}}
+@media(max-width:600px){.footer-top{grid-template-columns:1fr;gap:24px}.footer-bottom{flex-direction:column;text-align:center;gap:8px}}
 
 /* reveal */
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
@@ -308,13 +431,25 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   .mod-card{cursor:pointer}
   /* hl-banner, steps, grids */
   .hl-banner{padding:22px 18px}
-  .steps{grid-template-columns:1fr}
-  .prop-grid{grid-template-columns:1fr}
-  .hero-meta{flex-direction:column;gap:6px}
+  .timeline{grid-template-columns:1fr;padding-left:20px}
+  .tl-step{flex-direction:row;align-items:flex-start;gap:16px;padding:0 0 28px 0}
+  .tl-step:not(:last-child)::after{top:0;left:-10px;width:1px;height:100%}
+  .tl-node{margin-bottom:0;flex-shrink:0}
+  .tl-content{text-align:left}
+  .hero-meta{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .hero-meta-item+.hero-meta-item{border-left:none;border-top:1px solid var(--line)}
+  .hero-meta-item:nth-child(2){border-left:1px solid var(--line);border-top:none}
   .cta-final p{font-size:14px}
-  .footer-in{flex-direction:column;text-align:center;gap:8px}
   .topbar{padding:0 16px;gap:10px}
 }
+/* IA Ready scramble */
+.ia-claim{font:600 clamp(22px,3vw,36px)/1.2 var(--mono);letter-spacing:-.01em;color:#f0f1f3;margin-bottom:16px;display:flex;align-items:center;gap:0;white-space:nowrap;flex-wrap:nowrap}
+.ia-claim .tp-scramble{font-variant-ligatures:none;font-feature-settings:"kern" 0}
+.ia-claim .tp-dud{color:var(--cyan);opacity:1}
+html[data-theme="light"] .ia-claim .tp-dud{color:var(--cyan);opacity:.72}
+.claim-cursor{display:inline-block;width:.55em;height:1em;background:var(--cyan);margin-left:3px;vertical-align:text-bottom;animation:cursorBlink .9s steps(1) infinite;flex-shrink:0}
+@keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.claim-cursor{animation:none}.ia-claim .tp-dud{color:inherit;opacity:1}}
 </style>
 </head>
 <body>
@@ -323,12 +458,14 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
 
 <!-- ===== TOPBAR ===== -->
 <header class="topbar">
+  <a href="https://yiqi.com.ar" target="_blank" rel="noopener" aria-label="YiQi — sitio web">
   <svg class="yqlogo" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YiQi">
     <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
     <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
     <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
     <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
   </svg>
+  </a>
   <div class="topbar-spacer"></div>
   <div class="theme-toggle" role="group" aria-label="Tema">
     <button class="theme-opt" data-val="dark" title="Oscuro" aria-label="Tema oscuro" onclick="setTheme('dark')">
@@ -341,7 +478,7 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
     </button>
   </div>
-  <a class="btn-mini" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+  <a class="btn-mini" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
 </header>
 
 <!-- ===== HERO ===== -->
@@ -355,23 +492,41 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
       <h1>Avelia, esto es <span class="hl">para tu operación</span> multicanal.</h1>
       <p class="intro">Avelia importa directo desde China y vende por Mercado Libre y Tienda Nube, con planes de sumar Frávega, Tienda Macro e ICBC. Ese crecimiento trae un desafío real: listas de precios, stock e impuestos en varios canales a la vez. YiQi centraliza todo en un solo sistema en la nube, con integraciones nativas y automatización punta a punta — y escala junto con el negocio a medida que se suman canales.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+        <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
         <a class="btn btn-ghost" href="#modulos">Ver la solución</a>
       </div>
       <div class="hero-meta">
-        <span><b>Rubro:</b> e-commerce / importación</span>
-        <span><b>Canales:</b> Mercado Libre · Tienda Nube</span>
-        <span><b>Equipo:</b> 1–10</span>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Rubro</span>
+          <div class="hero-meta-val">
+            <span class="hero-meta-val-row">e-commerce</span>
+            <span class="hero-meta-val-row">importación directa</span>
+          </div>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Canales activos</span>
+          <div class="hero-meta-val">
+            <span class="hero-meta-val-row"><span class="hero-meta-dot on"></span>Mercado Libre</span>
+            <span class="hero-meta-val-row"><span class="hero-meta-dot on"></span>Tienda Nube</span>
+          </div>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Próximamente</span>
+          <div class="hero-meta-val">
+            <span class="hero-meta-val-row"><span class="hero-meta-dot soon"></span>Frávega</span>
+            <span class="hero-meta-val-row"><span class="hero-meta-dot soon"></span>Tienda Macro</span>
+            <span class="hero-meta-val-row"><span class="hero-meta-dot soon"></span>ICBC</span>
+          </div>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Equipo</span>
+          <span class="hero-meta-val">1–10 personas</span>
+        </div>
       </div>
     </div>
     <div class="hero-side">
       <div class="avelia-stage">
         <img class="avelia-hero-logo" src="https://acdn-us.mitiendanube.com/stores/007/018/833/themes/common/logo-506259183-1764869838-863eb5e74a3bc392498d3cf080d34b391764869838-480-0.webp" alt="Avelia" onerror="this.parentNode.innerHTML='<span class=&quot;avelia-hero-fallback&quot;>AVELIA</span>'">
-        <div class="avelia-stage-chips" aria-hidden="true">
-          <span class="orbit-chip">Mercado Libre</span>
-          <span class="orbit-chip">Tienda Nube</span>
-          <span class="orbit-chip">Stock · Compras</span>
-        </div>
       </div>
     </div>
   </div>
@@ -413,9 +568,9 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <p class="lead">YiQi cubre toda la operación de una empresa con 14 módulos que se conectan entre sí. Para Avelia seleccionamos el núcleo que resuelve hoy la venta multicanal, las compras de importación y el backoffice. El resto del sistema queda disponible para activar cuando el negocio lo necesite — sin cambiar de plataforma.</p>
 
   <div class="mod-filter" role="group" aria-label="Filtrar módulos">
-    <button class="mod-filter-btn active" onclick="filterMods(this,'all')">Todos · 14</button>
-    <button class="mod-filter-btn" onclick="filterMods(this,'prop')">En la propuesta · 7</button>
-    <button class="mod-filter-btn" onclick="filterMods(this,'avail')">Disponibles · 7</button>
+    <button class="mod-filter-btn active" data-filter="all" onclick="filterMods(this,'all')">Todos · 14</button>
+    <button class="mod-filter-btn" data-filter="prop" onclick="filterMods(this,'prop')">En la propuesta · 7</button>
+    <button class="mod-filter-btn" data-filter="avail" onclick="filterMods(this,'avail')">Disponibles · 7</button>
   </div>
 
   <div class="mod-grid" id="modGrid">
@@ -501,22 +656,26 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <p class="lead">Los canales actuales funcionan desde el día uno, y los que se quieran sumar quedan listos para conectar sin rehacer la operación.</p>
   <div class="int-grid">
     <div class="int-card">
-      <div class="int-head"><span class="int-dot"></span><h4>Mercado Libre</h4><span class="int-state">Activo</span></div>
+      <div class="int-status"><span class="int-dot"></span><span class="int-state">Activo</span></div>
+      <h4>Mercado Libre</h4>
       <p class="int-desc">Integración completa a nivel operativo y documental, incluido servicio Full.</p>
       <ul><li>Ventas</li><li>Stock</li><li>Full</li><li>Facturación</li></ul>
     </div>
     <div class="int-card">
-      <div class="int-head"><span class="int-dot"></span><h4>Tienda Nube</h4><span class="int-state">Activo</span></div>
+      <div class="int-status"><span class="int-dot"></span><span class="int-state">Activo</span></div>
+      <h4>Tienda Nube</h4>
       <p class="int-desc">Sincronización de catálogo, precios, stock y pedidos en tiempo real.</p>
       <ul><li>Catálogo</li><li>Precios</li><li>Pedidos</li></ul>
     </div>
     <div class="int-card">
-      <div class="int-head"><span class="int-dot soon"></span><h4>Frávega · Macro · ICBC</h4><span class="int-state soon">A sumar</span></div>
+      <div class="int-status"><span class="int-dot soon"></span><span class="int-state soon">A sumar</span></div>
+      <h4>Frávega · Macro · ICBC</h4>
       <p class="int-desc">Marketplaces objetivo para la expansión, sobre la misma base de stock y precios.</p>
       <ul><li>Roadmap</li><li>Multicanal</li></ul>
     </div>
     <div class="int-card">
-      <div class="int-head"><span class="int-dot"></span><h4>Otros e-commerce</h4><span class="int-state">Disponible</span></div>
+      <div class="int-status"><span class="int-dot avail"></span><span class="int-state avail">Disponible</span></div>
+      <h4>Otros e-commerce</h4>
       <p class="int-desc">Conectores para las principales plataformas si se amplía la tienda propia.</p>
       <ul><li>WooCommerce</li><li>Shopify</li><li>Vtex</li><li>Magento</li></ul>
     </div>
@@ -547,13 +706,60 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <span class="section-kicker">Implementación</span>
   <h2>No es solo un sistema. Es una puesta en marcha guiada.</h2>
   <p class="lead">La implementación de YiQi es consultiva y acompañada, no autogestionada: se planifica cada etapa con el equipo del cliente para que ningún proceso quede afuera.</p>
-  <div class="steps">
-    <div class="step"><div class="num">01</div><h3>Entendemos tu operación</h3><p>Revisamos canales, importación, listas de precios, stock e impuestos para definir una base de trabajo clara.</p></div>
-    <div class="step"><div class="num">02</div><h3>Adaptamos YiQi</h3><p>Configuramos módulos, flujos de pedidos y reglas por canal según cómo trabaja Avelia hoy.</p></div>
-    <div class="step"><div class="num">03</div><h3>Conectamos tus canales</h3><p>Integramos Mercado Libre y Tienda Nube, y dejamos lista la base para sumar nuevos marketplaces.</p></div>
-    <div class="step"><div class="num">04</div><h3>Salís a operar acompañado</h3><p>Puesta en marcha gradual con soporte: bot de ayuda, tickets, tutoriales y llamadas por Calendly.</p></div>
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="tl-node">01</div>
+      <div class="tl-content"><h3>Entendemos tu operación</h3><p>Revisamos canales, importación, listas de precios, stock e impuestos para definir una base de trabajo clara.</p></div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-node">02</div>
+      <div class="tl-content"><h3>Adaptamos YiQi</h3><p>Configuramos módulos, flujos de pedidos y reglas por canal según cómo trabaja Avelia hoy.</p></div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-node">03</div>
+      <div class="tl-content"><h3>Conectamos los canales</h3><p>Integramos Mercado Libre y Tienda Nube, y dejamos lista la base para sumar nuevos marketplaces.</p></div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-node">04</div>
+      <div class="tl-content"><h3>Sales a operar acompañado</h3><p>Puesta en marcha gradual con soporte: bot de ayuda, tickets, tutoriales y llamadas por Calendly.</p></div>
+    </div>
   </div>
-  <p class="lead" style="margin-top:24px"><b style="color:var(--text)">Plazos:</b> los procesos simples se habilitan rápido; una implementación completa estima entre 10 y 12 semanas según módulos y complejidad de datos.</p>
+  <div class="plazos-card">
+    <div class="plazos-top">
+      <span class="plazos-title">Plazos orientativos</span>
+      <span class="plazos-total"><b>10–12</b> semanas para implementación completa</span>
+    </div>
+    <div class="plazos-bar">
+      <div class="plazos-ph p1"><span>Configuración</span></div>
+      <div class="plazos-ph p2"><span>Módulos e integraciones</span></div>
+      <div class="plazos-ph p3"><span>Ajuste · Go live</span></div>
+    </div>
+    <div class="plazos-weeks">
+      <span class="plazos-wk">Sem 1</span>
+      <span class="plazos-wk">Sem 3</span>
+      <span class="plazos-wk">Sem 5</span>
+      <span class="plazos-wk">Sem 8</span>
+      <span class="plazos-wk">Sem 12</span>
+    </div>
+    <div class="plazos-phases">
+      <div class="plazos-phase-item">
+        <span class="plazos-phase-label c1">Semanas 1–3</span>
+        <span class="plazos-phase-desc">Parámetros del sistema, catálogo de productos, configuración impositiva y usuarios.</span>
+      </div>
+      <div class="plazos-phase-item">
+        <span class="plazos-phase-label c2">Semanas 4–8</span>
+        <span class="plazos-phase-desc">Activación de módulos, flujos de compra y venta, integraciones con Mercado Libre y Tienda Nube.</span>
+      </div>
+      <div class="plazos-phase-item">
+        <span class="plazos-phase-label c3">Semanas 9–12</span>
+        <span class="plazos-phase-desc">Pruebas en paralelo, capacitación del equipo y puesta en marcha gradual con soporte activo.</span>
+      </div>
+    </div>
+    <div class="plazos-note">
+      <svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Los procesos simples se pueden habilitar antes. El plazo final depende de la cantidad de módulos y la complejidad de los datos.
+    </div>
+  </div>
 </section>
 
 <!-- ===== QUÉ NECESITAMOS ===== -->
@@ -561,13 +767,47 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <span class="section-kicker">Para empezar</span>
   <h2>Qué necesitamos de Avelia.</h2>
   <p class="lead">Con esta información dejamos lista la base para una puesta en marcha ordenada y sin fricciones.</p>
-  <div class="need-grid">
-    <div class="need-item"><span class="chk">✓</span><div><h4>Listas de precios por canal</h4><p>Precios y márgenes actuales, o el Excel que se usa para importarlos.</p></div></div>
-    <div class="need-item"><span class="chk">✓</span><div><h4>Catálogo de productos</h4><p>Productos, variantes y, si aplica, combos o productos compuestos.</p></div></div>
-    <div class="need-item"><span class="chk">✓</span><div><h4>Estructura de depósitos</h4><p>Cómo está organizado el stock y la logística de salida.</p></div></div>
-    <div class="need-item"><span class="chk">✓</span><div><h4>Accesos a cuentas externas</h4><p>Mercado Libre y Tienda Nube para configurar las integraciones.</p></div></div>
-    <div class="need-item"><span class="chk">✓</span><div><h4>Datos impositivos y contables</h4><p>Parametrización fiscal para automatizar facturación y asientos.</p></div></div>
-    <div class="need-item"><span class="chk">✓</span><div><h4>Usuarios y roles</h4><p>Quiénes operan el sistema y con qué nivel de acceso.</p></div></div>
+  <div class="need-doc">
+    <div class="need-doc-head">
+      <span class="need-doc-label">Checklist de inicio</span>
+      <div class="need-doc-actions">
+        <span class="need-doc-pill">6 items</span>
+        <button class="need-copy-btn" id="checklistCopyBtn" onclick="copyChecklist()" aria-label="Copiar checklist">
+          <svg viewBox="0 0 24 24" id="checklistIcon"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span id="checklistCopyLabel">Copiar</span>
+        </button>
+      </div>
+    </div>
+    <div class="need-row">
+      <span class="need-num">01</span>
+      <span class="need-row-title">Listas de precios por canal</span>
+      <span class="need-row-desc">Precios y márgenes actuales, o el Excel que se usa para importarlos.</span>
+    </div>
+    <div class="need-row">
+      <span class="need-num">02</span>
+      <span class="need-row-title">Catálogo de productos</span>
+      <span class="need-row-desc">Productos, variantes y, si aplica, combos o productos compuestos.</span>
+    </div>
+    <div class="need-row">
+      <span class="need-num">03</span>
+      <span class="need-row-title">Estructura de depósitos</span>
+      <span class="need-row-desc">Cómo está organizado el stock y la logística de salida.</span>
+    </div>
+    <div class="need-row">
+      <span class="need-num">04</span>
+      <span class="need-row-title">Accesos a cuentas externas</span>
+      <span class="need-row-desc">Mercado Libre y Tienda Nube para configurar las integraciones.</span>
+    </div>
+    <div class="need-row">
+      <span class="need-num">05</span>
+      <span class="need-row-title">Datos impositivos y contables</span>
+      <span class="need-row-desc">Parametrización fiscal para automatizar facturación y asientos.</span>
+    </div>
+    <div class="need-row">
+      <span class="need-num">06</span>
+      <span class="need-row-title">Usuarios y roles</span>
+      <span class="need-row-desc">Quiénes operan el sistema y con qué nivel de acceso.</span>
+    </div>
   </div>
 </section>
 
@@ -576,24 +816,50 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <span class="section-kicker">Modelo comercial</span>
   <h2>Una solución que se define según tu operación.</h2>
   <p class="lead">El alcance se arma a medida de los módulos, integraciones y usuarios que Avelia necesite. Estos son los componentes del modelo.</p>
-  <div class="prop-card">
-    <div class="prop-grid">
-      <div class="prop-item">
-        <div class="prop-label">Implementación</div>
-        <p><b>Cargo inicial (fee)</b> por la puesta en marcha consultiva y guiada. Se reabrió la opción de <b>financiar en cuotas</b> para facilitar el acceso a pymes.</p>
+  <div class="prop-grid">
+    <div class="prop-item">
+      <div class="prop-item-head">
+        <span class="prop-ico ico-impl"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        <span class="prop-label">Implementación</span>
       </div>
-      <div class="prop-item">
-        <div class="prop-label">Suscripción mensual</div>
-        <p>Cargo mensual según <b>módulos, integraciones y usuarios activos</b>. Se paga por lo que se usa y crece junto con el negocio.</p>
+      <p><b>Cargo inicial (fee)</b> por la puesta en marcha consultiva y guiada. Con opción de <b>financiar en cuotas</b> para facilitar el acceso a pymes.</p>
+    </div>
+    <div class="prop-item">
+      <div class="prop-item-head">
+        <span class="prop-ico ico-sub"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></span>
+        <span class="prop-label">Suscripción mensual</span>
       </div>
-      <div class="prop-item">
-        <div class="prop-label">Desarrollos a medida</div>
-        <p>Si falta una función puntual: <b>desarrollo exclusivo</b> por horas, o <b>compartido</b> con 30% de descuento si la mejora es de interés general.</p>
+      <p>Cargo mensual según <b>módulos, integraciones y usuarios activos</b>. Se paga por lo que se usa y escala junto con el negocio.</p>
+    </div>
+    <div class="prop-item">
+      <div class="prop-item-head">
+        <span class="prop-ico ico-dev"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+        <span class="prop-label">Desarrollos a medida</span>
       </div>
-      <div class="prop-item">
-        <div class="prop-label">Soporte continuo</div>
-        <p>Bot de ayuda, sistema de <b>tickets</b>, tutoriales en YouTube y agenda de llamadas por Calendly tras la puesta en marcha.</p>
+      <p>Si falta una función puntual: <b>desarrollo exclusivo</b> por horas, o <b>compartido</b> con 30% de descuento si la mejora es de interés general.</p>
+    </div>
+    <div class="prop-item">
+      <div class="prop-item-head">
+        <span class="prop-ico ico-sup"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+        <span class="prop-label">Soporte continuo</span>
       </div>
+      <p>Bot de ayuda, sistema de <b>tickets</b>, tutoriales en YouTube y agenda de llamadas por Calendly tras la puesta en marcha.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IA READY ===== -->
+<section class="section wrap reveal" id="ia-ready">
+  <span class="section-kicker">API · IA Ready</span>
+  <div class="ia-ready-banner">
+    <div class="ia-ready-logo"><svg viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:40px;width:auto"><path class="ia-letters" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/><path class="ia-letters" d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z"/><path class="ia-letters" d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z"/><path class="ia-letters" d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z"/><path class="ia-letters" d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z"/><path class="ia-accent" d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z"/><path class="ia-letters" d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z"/></svg></div>
+    <p class="ia-claim" aria-label="Construye con IA, conecta y automatiza">
+      <span class="tp-scramble" id="ia-scramble-1" aria-hidden="true"></span><span class="claim-cursor" aria-hidden="true"></span>
+    </p>
+    <p style="font-size:15px;color:var(--muted);line-height:1.65;max-width:540px">API REST, webhooks e interfaces nativas — tres formas de conectar YiQi con el ecosistema de Avelia y con herramientas de IA.</p>
+    <div class="ia-ready-ctas">
+      <a class="btn btn-primary" href="https://yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener">Ver IA Ready</a>
+      <a class="btn btn-ghost" href="https://yiqi.com.ar/api-docs.html" target="_blank" rel="noopener">Ver API Docs</a>
     </div>
   </div>
 </section>
@@ -603,15 +869,60 @@ html[data-theme="light"] .step .num{color:var(--cyan)}
   <h2>Coordinemos la demo orientada a tu operación.</h2>
   <p>Te mostramos en vivo las integraciones con Mercado Libre y Tienda Nube, el circuito de compra y stock, y cómo YiQi automatiza tu operación multicanal.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+    <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
     <a class="btn btn-ghost" href="#modulos">Ver la solución</a>
   </div>
 </section>
 
 <footer class="footer">
-  <div class="wrap footer-in">
-    <span>© 2026 YiQi S.A. · Propuesta para Avelia · DS v1.2.5</span>
-    <span><a href="https://yiqi.com.ar" target="_blank" rel="noopener">yiqi.com.ar</a> · <a href="https://avelia.com.ar" target="_blank" rel="noopener">avelia.com.ar</a></span>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-block footer-block--brand">
+        <a href="https://yiqi.com.ar" target="_blank" rel="noopener" class="footer-logo-link" aria-label="YiQi">
+          <svg width="60" height="39" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi">
+  <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+  <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+  <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+  <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+</svg>
+        </a>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/company/yiqi-sa" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://instagram.com/yiqisa" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://facebook.com/yiqi.com.ar" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://youtube.com/@yiqi3369" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-block">
+        <p class="footer-block-label">Producto</p>
+        <div class="footer-contacts">
+          <a href="https://yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener">IA Ready</a>
+          <a href="https://yiqi.com.ar/api-docs.html" target="_blank" rel="noopener">API Docs</a>
+          <a href="https://me.yiqi.com.ar" target="_blank" rel="noopener">Login</a>
+          <a href="https://yiqi.com.ar/faq.html" target="_blank" rel="noopener">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-block">
+        <p class="footer-block-label">Empresa</p>
+        <div class="footer-contacts">
+          <a href="https://yiqi.com.ar" target="_blank" rel="noopener">yiqi.com.ar</a>
+          <a href="https://yiqi.com.ar/acerca-de.html" target="_blank" rel="noopener">Acerca de YiQi</a>
+          <a href="mailto:comercial@yiqi.com.ar">comercial@yiqi.com.ar</a>
+        </div>
+      </div>
+      <div class="footer-block">
+        <p class="footer-block-label">Ayuda ERP</p>
+        <div class="footer-contacts">
+          <a href="https://sites.google.com/yiqi.com.ar/ayudaerp" target="_blank" rel="noopener">Centro de ayuda</a>
+          <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
+          <a href="https://wa.me/5491123727422" target="_blank" rel="noopener">+54 11 2372 7422</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 YiQi S.A. · Propuesta para Avelia · Todos los derechos reservados</p>
+      <span class="footer-version">DS v1.2.6</span>
+    </div>
   </div>
 </footer>
 
@@ -637,6 +948,81 @@ addEventListener('scroll',()=>{const h=document.documentElement;const sc=h.scrol
 // reveal
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});},{threshold:.12});
 document.querySelectorAll('.reveal:not(.show)').forEach(el=>io.observe(el));
+// checklist copy
+function copyChecklist(){
+  const text = `Checklist de inicio — YiQi para Avelia
+
+01  Listas de precios por canal
+    Precios y márgenes actuales, o el Excel que se usa para importarlos.
+
+02  Catálogo de productos
+    Productos, variantes y, si aplica, combos o productos compuestos.
+
+03  Estructura de depósitos
+    Cómo está organizado el stock y la logística de salida.
+
+04  Accesos a cuentas externas
+    Mercado Libre y Tienda Nube para configurar las integraciones.
+
+05  Datos impositivos y contables
+    Parametrización fiscal para automatizar facturación y asientos.
+
+06  Usuarios y roles
+    Quiénes operan el sistema y con qué nivel de acceso.`;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('checklistCopyBtn');
+    const lbl=document.getElementById('checklistCopyLabel');
+    const ico=document.getElementById('checklistIcon');
+    btn.classList.add('copied');
+    lbl.textContent='Copiado';
+    ico.innerHTML='<polyline points="20 6 9 17 4 12"/>';
+    setTimeout(()=>{btn.classList.remove('copied');lbl.textContent='Copiar';ico.innerHTML='<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';},2200);
+  });
+}
+// IA Ready scramble
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const e1=document.getElementById('ia-scramble-1');
+    const e2=document.getElementById('ia-scramble-2');
+    if(e1) e1.textContent='Construye con IA,';
+    if(e2) e2.textContent='conecta y automatiza.';
+    return;
+  }
+  const POOL='!<>-_\/[]{}—=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  function escapeHTML(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+  class IaScramble{
+    constructor(node){this.node=node;this.frame=0;this.queue=[];this.update=this.update.bind(this);}
+    setText(target){
+      const old=this.node.textContent;const len=Math.max(old.length,target.length);
+      this.queue=[];
+      for(let i=0;i<len;i++){const from=old[i]||'';const to=target[i]||'';const start=Math.floor(Math.random()*40);const end=start+16+Math.floor(Math.random()*32);this.queue.push({from,to,start,end,char:''});}
+      cancelAnimationFrame(this.req);this.frame=0;
+      return new Promise(resolve=>{this.resolve=resolve;this.update();});
+    }
+    update(){
+      let html='';let done=0;
+      for(let i=0;i<this.queue.length;i++){const item=this.queue[i];if(this.frame>=item.end){done++;html+=escapeHTML(item.to);}else if(this.frame>=item.start){if(!item.char||Math.random()<0.28)item.char=POOL[Math.floor(Math.random()*POOL.length)];html+='<span class="tp-dud">'+escapeHTML(item.char)+'</span>';}else html+=escapeHTML(item.from);}
+      this.node.innerHTML=html;
+      if(done===this.queue.length)this.resolve();else{this.req=requestAnimationFrame(this.update);this.frame++;}
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    const el1=document.getElementById('ia-scramble-1');
+    if(!el1)return;
+    const fx1=new IaScramble(el1);
+    let played=false;
+    const section=document.getElementById('ia-ready');
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting&&!played){
+          played=true;io.disconnect();
+          fx1.setText('Construye con IA, conecta y automatiza');
+        }
+      });
+    },{threshold:0.25});
+    if(section)io.observe(section);
+  });
+})();
 // módulos expand en mobile
 document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('#modGrid .mod-card').forEach(card=>{
