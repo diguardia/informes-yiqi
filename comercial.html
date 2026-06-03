@@ -518,6 +518,13 @@
       font: 400 11px var(--mono); color: var(--muted-2);
     }
 
+
+    /* ── CHART WRAPPERS ─────────────────────────────────────── */
+    .chart-wrap { position: relative; height: 260px; }
+    .chart-wrap-tall { position: relative; height: 320px; }
+    .chart-half { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    @media (max-width: 640px) { .chart-half { grid-template-columns: 1fr; } }
+
     /* ── MOBILE ──────────────────────────────────────────────── */
     @media (max-width: 980px) {
       .hamburger { display: flex; }
@@ -703,11 +710,7 @@
           <div class="kpi-value" id="v-cont">86</div>
           <div class="kpi-delta" id="d-cont">reportados por campaña</div>
         </div>
-        <div class="kpi-card card-reveal" id="kpi-resp">
-          <div class="kpi-label">Índice de respuesta</div>
-          <div class="kpi-value" id="v-resp">—</div>
-          <div class="kpi-delta" id="d-resp">pendiente · Inbox IG</div>
-        </div>
+
         <div class="kpi-card card-reveal" id="kpi-gasto">
           <div class="kpi-label">Gasto total</div>
           <div class="kpi-value" id="v-gasto" style="font-size:18px">$1.967.248</div>
@@ -723,11 +726,7 @@
           <div class="kpi-value" id="v-clics">12.631</div>
           <div class="kpi-delta" id="d-clics">↑ 150,9% vs 2025</div>
         </div>
-        <div class="kpi-card card-reveal" id="kpi-seg">
-          <div class="kpi-label">Seguidores nuevos</div>
-          <div class="kpi-value" id="v-seg">—</div>
-          <div class="kpi-delta neutral" id="d-seg">pendiente · requiere Instagram Insights</div>
-        </div>
+
       </div>
 
       <!-- Gráfico evolución mensual -->
@@ -753,7 +752,7 @@
       <div class="section-title">Anuncios</div>
       <div class="section-sub">1 ene – 31 may 2026 · 21 campañas con gasto · 7 activas en mayo · clic en columna para ordenar</div>
 
-      <div class="card card-reveal">
+      <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
           <span class="search-wrap">
             <input class="table-search" id="search-anuncios" placeholder="Buscar anuncio…" aria-label="Buscar en tabla de anuncios">
@@ -953,6 +952,13 @@
           <div class="table-empty" id="empty-anuncios" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
         </div>
       </div>
+
+      <!-- Gráfico gasto por campaña -->
+      <div class="card card-reveal" style="margin-top:14px">
+        <div class="card-subtitle">Gasto por campaña · Top 10 · YTD 2026 (ARS)</div>
+        <div class="chart-wrap-tall"><canvas id="chart-anuncios" aria-label="Gasto por campaña"></canvas></div>
+      </div>
+
     </section>
 
     <!-- ── SECCIÓN 3: FUNNEL CRM ───────────────────────────────── -->
@@ -993,6 +999,13 @@
           <div class="kpi-value" id="cotiz-v-tasa">27,8%</div>
           <div class="kpi-delta neutral" id="cotiz-d-tasa">15 concretadas / 54 ONs</div>
         </div>
+      </div>
+
+
+      <!-- Gráfico funnel visual -->
+      <div class="card card-reveal" style="margin-top:14px">
+        <div class="card-subtitle" style="margin-bottom:10px">Embudo de conversión · <span id="funnel-chart-period">YTD 2026</span></div>
+        <div class="chart-wrap"><canvas id="chart-funnel" aria-label="Embudo de conversión"></canvas></div>
       </div>
 
       <div class="two-col">
@@ -1105,7 +1118,20 @@
         </div>
       </div>
 
-      <div class="card card-reveal">
+
+      <!-- Gráficos origen y evolución mensual -->
+      <div class="chart-half card-reveal">
+        <div class="card">
+          <div class="card-subtitle">Por origen · YTD 54 ONs</div>
+          <div class="chart-wrap"><canvas id="chart-ons-origen" aria-label="ONs por origen"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-subtitle">Por mes · 2026</div>
+          <div class="chart-wrap"><canvas id="chart-ons-mes" aria-label="ONs por mes"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
           <span class="search-wrap">
             <input class="table-search" id="search-nuevas" placeholder="Buscar empresa o título…" aria-label="Buscar en tabla de nuevas ONs">
@@ -1280,7 +1306,14 @@
         </div>
       </div>
 
-      <div class="card card-reveal">
+
+      <!-- Gráfico concretadas por mes -->
+      <div class="card card-reveal" style="margin-top:14px">
+        <div class="card-subtitle">Concretadas y monto por mes · 2026</div>
+        <div class="chart-wrap"><canvas id="chart-concretadas" aria-label="Concretadas por mes"></canvas></div>
+      </div>
+
+      <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
           <span class="search-wrap">
             <input class="table-search" id="search-concretadas" placeholder="Buscar empresa…" aria-label="Buscar en tabla de concretaciones">
@@ -1438,66 +1471,54 @@ const META_DATA = {
     alcance:  '297.299',    dAlcance: ['positive', 'alcance único · ene–may 2026'],
     conv:     '593',        dConv:    ['neutral',  'campañas de mensajes'],
     cont:     '86',         dCont:    ['neutral',  'reportados por campaña'],
-    resp:     null,         dResp:    ['neutral',  'pendiente · Inbox IG'],
     gasto:    '$1.967.248', dGasto:   ['negative', '↓ 53,8% vs 2025 · ARS'],
     inter:    '23.536',     dInter:   ['positive', '↑ 322,7% vs 2025'],
     clics:    '13.135',     dClics:   ['positive', '↑ 161,0% vs 2025'],
-    seg:      null,         dSeg:     ['neutral',  'pendiente · IG Insights'],
   },
   ene: {
     period:   'Enero 2026 · Instagram · 1–31 ene',
     alcance:  '3.605',   dAlcance: ['negative', '↓ 95,3% vs ene 2025'],
     conv:     '5',       dConv:    ['neutral',  '2 campañas messaging activas'],
     cont:     null,      dCont:    ['neutral',  'no reportado por campaña'],
-    resp:     null,      dResp:    ['neutral',  'pendiente · Inbox IG'],
     gasto:    '$61.911', dGasto:   ['negative', '↓ 89,9% vs ene 2025'],
     inter:    '887',     dInter:   ['negative', '↓ 25,1% vs ene 2025'],
     clics:    '48',      dClics:   ['negative', '↓ 95,4% vs ene 2025'],
-    seg:      null,      dSeg:     ['neutral',  'pendiente · IG Insights'],
   },
   feb: {
     period:   'Febrero 2026 · Instagram · 1–28 feb',
     alcance:  '45.484',   dAlcance: ['negative', '↓ 58,3% vs feb 2025'],
     conv:     '103',      dConv:    ['neutral',  '8 campañas messaging activas'],
     cont:     null,       dCont:    ['neutral',  'no reportado por campaña'],
-    resp:     null,       dResp:    ['neutral',  'pendiente · Inbox IG'],
     gasto:    '$265.850', dGasto:   ['negative', '↓ 69,1% vs feb 2025'],
     inter:    '5.212',    dInter:   ['positive', '↑ 285,8% vs feb 2025'],
     clics:    '1.408',    dClics:   ['positive', '↑ 13,5% vs feb 2025'],
-    seg:      null,       dSeg:     ['neutral',  'pendiente · IG Insights'],
   },
   mar: {
     period:   'Marzo 2026 · Instagram · 1–31 mar',
     alcance:  '74.139',   dAlcance: ['positive', '↑ 37,1% vs mar 2025'],
     conv:     '199',      dConv:    ['neutral',  '5 campañas messaging activas'],
     cont:     null,       dCont:    ['neutral',  'no reportado por campaña'],
-    resp:     null,       dResp:    ['neutral',  'pendiente · Inbox IG'],
     gasto:    '$568.390', dGasto:   ['negative', '↓ 50,0% vs mar 2025'],
     inter:    '2.610',    dInter:   ['positive', '↑ 140,6% vs mar 2025'],
     clics:    '2.017',    dClics:   ['positive', '↑ 105,8% vs mar 2025'],
-    seg:      null,       dSeg:     ['neutral',  'pendiente · IG Insights'],
   },
   abr: {
     period:   'Abril 2026 · Instagram · 1–30 abr',
     alcance:  '129.222',  dAlcance: ['positive', '↑ 117,7% vs abr 2025'],
     conv:     '186',      dConv:    ['neutral',  '2 campañas messaging activas'],
     cont:     null,       dCont:    ['neutral',  'no reportado por campaña'],
-    resp:     null,       dResp:    ['neutral',  'pendiente · Inbox IG'],
     gasto:    '$526.277', dGasto:   ['negative', '↓ 38,6% vs abr 2025'],
     inter:    '5.668',    dInter:   ['positive', '↑ 371,9% vs abr 2025'],
     clics:    '4.856',    dClics:   ['positive', '↑ 339,1% vs abr 2025'],
-    seg:      null,       dSeg:     ['neutral',  'pendiente · IG Insights'],
   },
   may: {
     period:   'Mayo 2026 · Instagram · completo',
     alcance:  '109.675',  dAlcance: ['positive', '↑ 135,6% vs may 2025'],
     conv:     '100',      dConv:    ['neutral',  '4 campañas messaging activas'],
     cont:     '86',       dCont:    ['neutral',  'nuevos contactos campañas may'],
-    resp:     null,       dResp:    ['neutral',  'pendiente · Inbox IG'],
     gasto:    '$544.821', dGasto:   ['negative', '↓ 30,6% vs may 2025'],
     inter:    '9.159',    dInter:   ['positive', '↑ 1113,0% vs may 2025'],
     clics:    '4.806',    dClics:   ['positive', '↑ 619,6% vs may 2025'],
-    seg:      null,       dSeg:     ['neutral',  'pendiente · IG Insights'],
   },
 };
 
@@ -1596,6 +1617,7 @@ function setFunnelPeriod(key) {
   setInput('cot-apr-cant', d.ganadas);
   // Los montos ARS se dejan para ingreso manual
   calcFunnel();
+  renderFunnelChart(key);
 }
 
 // Colores automáticos según valor del delta
@@ -1603,11 +1625,9 @@ const KPI_COLORS = {
   alcance: { positive: 'kpi-green', negative: 'kpi-red',   neutral: 'kpi-muted' },
   conv:    { positive: 'kpi-green', negative: 'kpi-red',   neutral: 'kpi-muted' },
   cont:    { positive: 'kpi-green', negative: 'kpi-red',   neutral: 'kpi-muted' },
-  resp:    { positive: 'kpi-green', negative: 'kpi-green', neutral: 'kpi-muted' }, // siempre verde si hay dato
   gasto:   { positive: 'kpi-amber', negative: 'kpi-amber', neutral: 'kpi-amber' },
   inter:   { positive: 'kpi-green', negative: 'kpi-red',   neutral: 'kpi-muted' },
   clics:   { positive: 'kpi-cyan',  negative: 'kpi-red',   neutral: 'kpi-muted' },
-  seg:     { positive: 'kpi-green', negative: 'kpi-red',   neutral: 'kpi-muted' },
 };
 
 function setMes(key) {
@@ -1627,7 +1647,7 @@ function setMes(key) {
   if (headerEl) headerEl.textContent = d.period.split(' · ')[0];
 
   // Métricas
-  const metrics = ['alcance','conv','cont','resp','gasto','inter','clics','seg'];
+  const metrics = ['alcance','conv','cont','gasto','inter','clics'];
   metrics.forEach(m => {
     const valEl   = document.getElementById('v-' + m);
     const deltaEl = document.getElementById('d-' + m);
@@ -1708,7 +1728,7 @@ function toggleMetaLine(metric) {
   document.querySelectorAll('[data-meta-metric]').forEach(p => {
     p.classList.toggle('active', META_VISIBLE.has(p.dataset.metaMetric));
   });
-  renderMetaChart();
+  renderMetaChart(); renderAnunciosChart(); renderOnsCharts(); renderConcretadasChart();
 }
 
 function renderMetaChart() {
@@ -2056,6 +2076,180 @@ function initScrollSpy() {
 }
 
 
+
+/* ─── GRÁFICO ANUNCIOS ──────────────────────────────────────── */
+function renderAnunciosChart() {
+  const ctx = document.getElementById('chart-anuncios');
+  if (!ctx) return;
+  if (_charts.anuncios) { _charts.anuncios.destroy(); delete _charts.anuncios; }
+  const labels = [
+    '@interbanking — engagement','Instagram Post — link clicks',
+    'Con @interbanking','Interbanking en YiQi','Puedes vender más — leads',
+    'Menos tareas manuales','[15/5] Promoción FB','Reserva tu demo',
+    'Construye con IA','Instagram Post — mensajes'
+  ];
+  const data = [700080,403664,174331,79835,69392,69165,63984,57861,45974,38445];
+  const cyan = getCSSVar('--cyan'); const cs = getCSSVar('--cyan-soft');
+  _charts.anuncios = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4 }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeInOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: getCSSVar('--bg-elev-2'), borderColor: getCSSVar('--line'), borderWidth: 1,
+          titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), padding: 10,
+          callbacks: { label: ctx => ' $' + ctx.raw.toLocaleString('es-AR') + ' ARS' }
+        }
+      },
+      scales: {
+        x: { grid: { color: getCSSVar('--line') }, ticks: { color: getCSSVar('--muted'), font: { family: getCSSVar('--mono'), size: 10 }, callback: v => '$' + (v/1000).toFixed(0) + 'k' } },
+        y: { grid: { display: false }, ticks: { color: getCSSVar('--muted'), font: { family: getCSSVar('--sans'), size: 10 } } }
+      }
+    }
+  });
+}
+
+/* ─── GRÁFICO FUNNEL ─────────────────────────────────────────── */
+const FUNNEL_DATA = {
+  ytd: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [297299,593,86,54,15] },
+  ene: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [3605,5,0,6,6] },
+  feb: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [45484,103,0,6,1] },
+  mar: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [74139,199,0,23,3] },
+  abr: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [129222,186,0,11,5] },
+  may: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [109675,100,86,8,0] },
+};
+function renderFunnelChart(key) {
+  const ctx = document.getElementById('chart-funnel');
+  if (!ctx) return;
+  if (_charts.funnel) { _charts.funnel.destroy(); delete _charts.funnel; }
+  const d = FUNNEL_DATA[key] || FUNNEL_DATA.ytd;
+  const max = d.data[0] || 1;
+  const pcts = d.data.map(v => Math.max((v / max) * 100, v > 0 ? 2 : 0));
+  const cyan = getCSSVar('--cyan'); const cs = getCSSVar('--cyan-soft');
+  _charts.funnel = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: d.labels,
+      datasets: [{ data: pcts, backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4,
+        rawVals: d.data }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeInOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: getCSSVar('--bg-elev-2'), borderColor: getCSSVar('--line'), borderWidth: 1,
+          titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), padding: 10,
+          callbacks: { label: ctx => ' ' + ctx.dataset.rawVals[ctx.dataIndex].toLocaleString('es-AR') }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: getCSSVar('--muted'), font: { family: getCSSVar('--sans'), size: 10 } } },
+        y: { display: false, max: 110 }
+      }
+    }
+  });
+  const el = document.getElementById('funnel-chart-period');
+  const labels = { ytd:'YTD 2026', ene:'Ene', feb:'Feb', mar:'Mar', abr:'Abr', may:'May' };
+  if (el) el.textContent = labels[key] || 'YTD';
+}
+
+/* ─── GRÁFICOS NUEVAS ONs ───────────────────────────────────── */
+function renderOnsCharts() {
+  // Donut por origen
+  const ctxO = document.getElementById('chart-ons-origen');
+  if (ctxO) {
+    if (_charts.onsOrigen) { _charts.onsOrigen.destroy(); }
+    _charts.onsOrigen = new Chart(ctxO, {
+      type: 'doughnut',
+      data: {
+        labels: ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG'],
+        datasets: [{ data: [38,10,4,2],
+          backgroundColor: ['rgba(0,204,255,.35)','rgba(0,196,140,.35)','rgba(246,166,35,.35)','rgba(167,139,250,.35)'],
+          borderWidth: 0 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: { duration: 900 },
+        cutout: '62%',
+        plugins: {
+          legend: { position: 'bottom', labels: { color: getCSSVar('--muted'), font: { family: getCSSVar('--sans'), size: 10 }, boxWidth: 10, padding: 10 } },
+          tooltip: { backgroundColor: getCSSVar('--bg-elev-2'), borderColor: getCSSVar('--line'), borderWidth: 1,
+            titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), padding: 10 }
+        }
+      }
+    });
+  }
+  // Bar por mes
+  const ctxM = document.getElementById('chart-ons-mes');
+  if (ctxM) {
+    if (_charts.onsMes) { _charts.onsMes.destroy(); }
+    const cyan = getCSSVar('--cyan'); const cs = getCSSVar('--cyan-soft');
+    _charts.onsMes = new Chart(ctxM, {
+      type: 'bar',
+      data: {
+        labels: ['Ene','Feb','Mar','Abr','May'],
+        datasets: [{ label: 'ONs nuevas', data: [6,6,23,11,8], backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: { duration: 900, easing: 'easeInOutQuart' },
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: getCSSVar('--bg-elev-2'), borderColor: getCSSVar('--line'), borderWidth: 1,
+            titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), padding: 10 }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: getCSSVar('--muted'), font: { family: getCSSVar('--mono'), size: 10 } } },
+          y: { grid: { color: getCSSVar('--line') }, ticks: { color: getCSSVar('--muted'), font: { family: getCSSVar('--mono'), size: 10 }, stepSize: 5 } }
+        }
+      }
+    });
+  }
+}
+
+/* ─── GRÁFICO CONCRETADAS ───────────────────────────────────── */
+function renderConcretadasChart() {
+  const ctx = document.getElementById('chart-concretadas');
+  if (!ctx) return;
+  if (_charts.concretadas) { _charts.concretadas.destroy(); }
+  const cyan = getCSSVar('--cyan'); const cs = getCSSVar('--cyan-soft');
+  const green = getCSSVar('--green'); const gs = getCSSVar('--green-soft');
+  _charts.concretadas = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Ene','Feb','Mar','Abr','May'],
+      datasets: [
+        { label: 'Cantidad', data: [6,1,3,5,0], backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4, yAxisID: 'y' },
+        { label: 'Monto (miles ARS)', data: [3116,354,5287,5128,0], backgroundColor: 'rgba(0,196,140,.30)', borderWidth: 0, borderRadius: 4, yAxisID: 'y2' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeInOutQuart' },
+      plugins: {
+        legend: { labels: { color: getCSSVar('--muted'), font: { family: getCSSVar('--mono'), size: 10 }, boxWidth: 10, padding: 10 } },
+        tooltip: { backgroundColor: getCSSVar('--bg-elev-2'), borderColor: getCSSVar('--line'), borderWidth: 1,
+          titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), padding: 10,
+          callbacks: { label: ctx => ctx.datasetIndex === 1 ? ' $' + (ctx.raw * 1000).toLocaleString('es-AR') + ' ARS' : ' ' + ctx.raw + ' concretadas' } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: getCSSVar('--muted'), font: { family: getCSSVar('--mono'), size: 10 } } },
+        y: { grid: { color: getCSSVar('--line') }, ticks: { color: getCSSVar('--cyan'), font: { family: getCSSVar('--mono'), size: 10 } }, position: 'left' },
+        y2: { grid: { display: false }, ticks: { color: getCSSVar('--green'), font: { family: getCSSVar('--mono'), size: 10 }, callback: v => '$' + v + 'k' }, position: 'right' }
+      }
+    }
+  });
+}
+
 /* ─── COUNT-UP EN KPI VALUES ────────────────────────────────── */
 function parseKpiValue(text) {
   // Devuelve { num, fmt } o null si no es un número animable
@@ -2125,8 +2319,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollSpy();
   initReveal();
   initSearchShortcut();
-  renderMetaChart();
+  renderMetaChart(); renderAnunciosChart(); renderOnsCharts(); renderConcretadasChart();
   setFunnelPeriod('ytd');
+  renderAnunciosChart();
+  renderOnsCharts();
+  renderConcretadasChart();
 });
 </script>
 </body>
