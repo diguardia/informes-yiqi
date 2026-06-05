@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YiQi para Droguería JAVA — Propuesta ERP</title>
-<meta name="description" content="Propuesta YiQi ERP para Droguería JAVA: ventas con comisiones por laboratorio, trazabilidad de lotes y vencimientos, compras con AFIP, finanzas y estadísticas en tiempo real.">
+<meta name="description" content="Propuesta YiQi ERP para Droguería JAVA: ventas con comisiones por laboratorio, trazabilidad de lotes y vencimientos, compras con ARCA, finanzas y estadísticas en tiempo real.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -489,6 +489,13 @@ html[data-theme="light"] .hl-banner{background:#fff;box-shadow:0 0 0 1px rgba(0,
 html[data-theme="light"] .flow-step{background:rgba(0,0,0,.04);box-shadow:none}
 html[data-theme="light"] .mod-card.in-prop{box-shadow:0 0 0 1px rgba(0,159,199,.14) inset,var(--shadow-sm)}
 html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159,199,.22) inset,var(--shadow-md)}
+.dev-feature{margin-top:12px;background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:0 0 0 1px var(--purple-soft) inset,var(--shadow-sm);padding:24px 26px;display:flex;gap:16px;align-items:flex-start}
+.dev-feature-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.dev-feature .prop-label{line-height:1.2}
+.dev-feature p{font-size:13px;color:var(--muted);line-height:1.65}
+.dev-feature p b{color:var(--text);font-weight:600}
+html[data-theme="light"] .dev-feature{background:#fff}
+@media(max-width:600px){.dev-feature{flex-direction:column;gap:12px;padding:20px}}
 </style>
 </head>
 <body>
@@ -529,7 +536,7 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
 
       </div>
       <h1><span class="nb">Droguería JAVA, esto es</span> <span class="nb"><span class="hl">para tu operación</span> farmacéutica.</span></h1>
-      <p class="intro">Droguería JAVA distribuye medicamentos de primera línea y genéricos, con vendedores que cobran comisión según el laboratorio. Hoy Dalfarma no acompaña: no entrega estadísticas de compra ni de venta por mes o trimestre, ni resuelve la trazabilidad de lotes y vencimientos. YiQi centraliza ventas, compras, stock y finanzas en un solo sistema en la nube, con automatización punta a punta y datos en tiempo real — y escala a medida que el negocio lo necesita.</p>
+      <p class="intro">Droguería JAVA distribuye medicamentos de primera línea y genéricos, con vendedores que cobran comisión según el laboratorio. Hoy el sistema actual no acompaña: no entrega estadísticas de compra ni de venta por mes o trimestre. A eso se suma una necesidad propia del rubro: la trazabilidad de lotes y vencimientos. YiQi centraliza ventas, compras, stock y finanzas en un solo sistema en la nube, con automatización punta a punta y datos en tiempo real — y escala a medida que el negocio lo necesita.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
         <a class="btn btn-ghost" href="#modulos">Ver la solución</a>
@@ -545,7 +552,7 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
         <div class="hero-meta-item">
           <span class="hero-meta-label">Sistema actual</span>
           <div class="hero-meta-val">
-            <span class="hero-meta-val-row"><span class="hero-meta-dot soon"></span>Dalfarma</span>
+            <span class="hero-meta-val-row"><span class="hero-meta-dot soon"></span>limitado</span>
             <span class="hero-meta-val-row">sin estadísticas</span>
           </div>
         </div>
@@ -578,14 +585,14 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
 <section class="section wrap reveal" id="desafio">
   <span class="section-kicker">El desafío de Droguería JAVA</span>
   <h2><span class="nb">De un sistema que no informa</span> <span class="nb">a una operación que se mide sola.</span></h2>
-  <p class="lead">Dalfarma cubre lo básico, pero no entrega estadísticas de compra ni de venta por mes o trimestre, no resuelve comisiones por laboratorio ni la trazabilidad de lotes y vencimientos. YiQi ordena toda la operación desde un único lugar y la vuelve medible.</p>
+  <p class="lead">El sistema actual cubre lo básico, pero no entrega estadísticas de compra ni de venta por mes o trimestre. A eso se suman dos necesidades propias del rubro: comisiones diferenciadas por laboratorio y trazabilidad de lotes y vencimientos. YiQi ordena toda la operación desde un único lugar y la vuelve medible.</p>
   <div class="ba-grid">
     <div class="ba-card before">
-      <h3>✕ Hoy, con Dalfarma</h3>
+      <h3>✕ Hoy, con el sistema actual</h3>
       <ul class="ba-list">
         <li><span class="ba-icon">✕</span>Sin estadísticas de compra ni de venta por mes o trimestre.</li>
         <li><span class="ba-icon">✕</span>Comisiones por laboratorio calculadas a mano, factura por factura.</li>
-        <li><span class="ba-icon">✕</span>Lotes y vencimientos sin trazabilidad ni control FIFO.</li>
+        <li><span class="ba-icon">✕</span>Lotes y vencimientos controlados de forma manual, sin FIFO automático.</li>
         <li><span class="ba-icon">✕</span>Cobranzas y precios gestionados de forma manual.</li>
         <li><span class="ba-icon">✕</span>Sin visibilidad de la rentabilidad real por vendedor.</li>
       </ul>
@@ -657,20 +664,20 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
     <div class="mod-card in-prop" data-status="prop">
       <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
       <div class="mod-head"><h3>Compras</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Circuito de compra conectado al stock: solicitudes, órdenes, recepción y pagos. Importa comprobantes electrónicos desde "Mis Comprobantes" de AFIP y precarga las facturas de compra.</p>
+      <p>Circuito de compra conectado al stock: solicitudes, órdenes, recepción y pagos. Importa comprobantes electrónicos desde "Mis Comprobantes" de ARCA y precarga las facturas de compra.</p>
 
       <ul class="mod-features">
         <li>Solicitud de compra</li>
         <li>Orden de compra</li>
         <li>Factura de compra</li>
-        <li>Import AFIP Mis Comprobantes</li>
+        <li>Import ARCA Mis Comprobantes</li>
         <li>Orden de pago</li>
         <li>Notas de compra</li>
       </ul>
       <div class="mod-tags">
         <span class="mod-tag t-cyan">Compras</span>
         <span class="mod-tag t-green">Pagos</span>
-        <span class="mod-tag t-amber">AFIP</span>
+        <span class="mod-tag t-amber">ARCA</span>
       </div>
     </div>
     <div class="mod-card in-prop" data-status="prop">
@@ -890,12 +897,12 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
 <!-- ===== INTEGRACIONES ===== -->
 <section class="section wrap reveal" id="integraciones">
   <span class="section-kicker">Integraciones</span>
-  <h2>Conectado con AFIP, los bancos y el <span class="nb">e-commerce</span>.</h2>
+  <h2>Conectado con ARCA, los bancos y el <span class="nb">e-commerce</span>.</h2>
   <p class="lead">YiQi se enlaza con las herramientas que la droguería ya usa para cargar comprobantes, conciliar pagos y, si se quiere, vender online — sin doble carga manual.</p>
   <div class="int-grid">
     <div class="int-card">
       <div class="int-status"><span class="int-dot"></span><span class="int-state">Activo</span></div>
-      <h4>AFIP · Mis Comprobantes</h4>
+      <h4>ARCA · Mis Comprobantes</h4>
       <p class="int-desc">Importa comprobantes electrónicos, precarga facturas de compra y concilia diferencias.</p>
       <ul><li>Facturas de compra</li><li>Precarga</li><li>Conciliación</li></ul>
     </div>
@@ -955,7 +962,7 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
     </div>
     <div class="tl-step">
       <div class="tl-node">03</div>
-      <div class="tl-content"><h3>Migramos los datos</h3><p>Cargamos catálogo, clientes, proveedores y saldos desde Dalfarma, y conectamos AFIP y los bancos.</p></div>
+      <div class="tl-content"><h3>Migramos los datos</h3><p>Cargamos catálogo, clientes, proveedores y saldos desde el sistema actual, y dejamos lista la importación de comprobantes ARCA y extractos bancarios.</p></div>
     </div>
     <div class="tl-step">
       <div class="tl-node">04</div>
@@ -986,7 +993,7 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
       </div>
       <div class="plazos-phase-item">
         <span class="plazos-phase-label c2">Semanas 3–7</span>
-        <span class="plazos-phase-desc">Activación de módulos, flujos de compra y venta, integraciones con AFIP y bancos, migración desde Dalfarma.</span>
+        <span class="plazos-phase-desc">Activación de módulos, flujos de compra y venta, importación de comprobantes ARCA y extractos bancarios, migración desde el sistema actual.</span>
       </div>
       <div class="plazos-phase-item">
         <span class="plazos-phase-label c3">Semanas 8–10</span>
@@ -1037,8 +1044,8 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
     </div>
     <div class="need-row">
       <span class="need-num">04</span>
-      <span class="need-row-title">Accesos a AFIP y bancos</span>
-      <span class="need-row-desc">Mis Comprobantes y los extractos bancarios para automatizar carga y conciliación.</span>
+      <span class="need-row-title">Acceso a ARCA y banco</span>
+      <span class="need-row-desc">Que cuenten con su acceso a ARCA Mis Comprobantes y al home banking para exportar comprobantes y extractos. YiQi los importa; no ingresa a sus sistemas.</span>
     </div>
     <div class="need-row">
       <span class="need-num">05</span>
@@ -1088,6 +1095,17 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
       <p>Bot de ayuda, sistema de <b>tickets</b>, tutoriales en YouTube y agenda de llamadas por Calendly tras la puesta en marcha.</p>
     </div>
   </div>
+
+  <div class="dev-feature">
+    <span class="prop-ico ico-dev" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span>
+    <div>
+      <div class="dev-feature-head">
+        <span class="prop-label">Comisiones por tipo de laboratorio</span>
+        <span class="badge badge-cyan">Desarrollo a medida</span>
+      </div>
+      <p>Cálculo automático de comisiones diferenciadas según la marca del producto: <b>2% para laboratorios de primera línea</b> y <b>7% para genéricos</b>, sobre las facturas del mes. Se incluye como desarrollo a medida en la cotización; la lógica basada en la marca se confirma con el equipo de ingeniería.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ===== IA READY ===== -->
@@ -1109,7 +1127,7 @@ html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159
 <!-- ===== CTA FINAL ===== -->
 <section class="cta-final wrap reveal" id="contacto">
   <h2>Coordinemos la reunión con el resto del equipo.</h2>
-  <p>Te mostramos en vivo las comisiones por laboratorio, la trazabilidad de lotes y vencimientos, el circuito de compra con AFIP y cómo YiQi vuelve medible toda tu operación.</p>
+  <p>Te mostramos en vivo las comisiones por laboratorio, la trazabilidad de lotes y vencimientos, el circuito de compra con ARCA y cómo YiQi vuelve medible toda tu operación.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
     <a class="btn btn-ghost" href="#modulos">Ver la solución</a>
@@ -1203,8 +1221,8 @@ function copyChecklist(){
 03  Estructura de comisiones
     Tasas por tipo de laboratorio (primera línea vs. genéricos) y cómo se facturan.
 
-04  Accesos a AFIP y bancos
-    Mis Comprobantes y los extractos bancarios para automatizar carga y conciliación.
+04  Acceso a ARCA y banco
+    Que cuenten con su acceso a ARCA Mis Comprobantes y al home banking para exportar comprobantes y extractos. YiQi los importa; no ingresa a sus sistemas.
 
 05  Datos impositivos
     Parametrización fiscal para automatizar la facturación y la exportación al contador.
