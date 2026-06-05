@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html data-theme="system" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Informe de Servicio — Mayo 2026 · ECOSAN × YiQi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─── TOKENS DS v1.2.5 ─── */
+:root {
+  --bg:#0c0c0e; --bg-elev:#111114; --bg-elev-2:#18181c;
+  --bg-soft:rgba(255,255,255,.04);
+  --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.14);
+  --text:#f0f1f3; --muted:#8a8d94; --muted-2:#5a5d66;
+  --text-cyan-muted:rgba(0,195,240,.45);
+  --cyan:#00ccff; --cyan-soft:rgba(0,204,255,.12); --cyan-soft-2:rgba(0,204,255,.18);
+  --cyan-label:rgba(0,204,255,.52);
+  --green:#00c48c; --green-soft:rgba(0,196,140,.12);
+  --amber:#f6a623; --amber-soft:rgba(246,166,35,.12);
+  --red:#f25f5c; --red-soft:rgba(242,95,92,.12);
+  --blue:#7ab7ff; --purple:#a78bfa; --purple-soft:rgba(167,139,250,.12);
+  --warm:#b5a090; --warm-soft:rgba(181,160,144,.10);
+  --glow:0 0 0 3px rgba(0,204,255,.22);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+  --shadow-md:0 4px 16px rgba(0,0,0,.28);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.36);
+  --sans:"Inter",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --display:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --topbar-h:56px; --sidebar-w:240px;
+  --radius-xs:5px; --radius-sm:7px; --radius:10px;
+  --radius-md:12px; --radius-lg:16px; --radius-xl:20px; --radius-pill:999px;
+  --tr:180ms ease;
+}
+html[data-theme="light"] {
+  --bg:#f5f4f0; --bg-elev:#eeece7; --bg-elev-2:#e6e4df;
+  --bg-soft:rgba(0,0,0,.04);
+  --line:rgba(0,0,0,.08); --line-strong:rgba(0,0,0,.13);
+  --text:#17191c; --muted:#586170; --muted-2:#7f8896;
+  --text-cyan-muted:rgba(0,140,175,.48);
+  --cyan:#009fc7; --cyan-soft:rgba(0,159,199,.12); --cyan-soft-2:rgba(0,159,199,.18);
+  --cyan-label:rgba(0,159,199,.52);
+  --green:#0c9b6d; --green-soft:rgba(12,155,109,.12);
+  --amber:#c78000; --amber-soft:rgba(199,128,0,.12);
+  --red:#d4485e; --red-soft:rgba(212,72,94,.12);
+  --blue:#347de6; --purple:#7c3aed;
+  --glow:0 0 0 3px rgba(0,159,199,.22);
+  --shadow-sm:0 2px 8px rgba(16,36,54,.08);
+  --shadow-md:0 8px 24px rgba(16,36,54,.12);
+  --shadow-lg:0 16px 32px rgba(16,36,54,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:var(--sans);
+  background:
+    radial-gradient(circle at 72% 8%,rgba(0,204,255,.07),transparent 28%),
+    radial-gradient(circle at 12% 60%,rgba(0,204,255,.04),transparent 22%),
+    var(--bg);
+  color:var(--text);overflow-x:hidden;transition:background .25s,color .25s
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(circle at 72% 8%,rgba(0,159,199,.06),transparent 28%),
+    radial-gradient(circle at 12% 60%,rgba(0,159,199,.04),transparent 22%),
+    var(--bg);
+}
+
+/* ─── LOGO ─── */
+.yql{fill:var(--text)}.yqs{fill:var(--cyan)}
+
+/* ─── TOPBAR ─── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  height:var(--topbar-h);display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;background:rgba(12,12,14,.82);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+html[data-theme="light"] .topbar{background:rgba(238,236,231,.88);}
+.topbar-left{display:flex;align-items:center;gap:14px}
+.topbar-logo svg{height:36px;width:auto}
+.topbar-sep{width:1px;height:20px;background:var(--line-strong)}
+.client-badge{
+  font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);padding:3px 8px;border:1px solid var(--line);
+  border-radius:var(--radius-pill);background:var(--bg-soft)
+}
+.topbar-period{font:500 11px var(--mono);color:var(--cyan);letter-spacing:.06em}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.theme-switch{display:flex;align-items:center;border-radius:var(--radius-pill);padding:3px;gap:1px}
+.theme-opt{width:28px;height:26px;border-radius:var(--radius-pill);display:grid;place-items:center;color:var(--muted-2);background:none;border:none;cursor:pointer;transition:color var(--tr),background var(--tr)}
+.theme-opt:hover{color:var(--text)}
+.theme-opt.active{background:var(--bg-elev-2);color:var(--text)}
+.mobile-menu-btn{
+  display:none;width:34px;height:34px;border-radius:var(--radius-sm);border:1px solid var(--line);
+  background:var(--bg-elev-2);cursor:pointer;align-items:center;justify-content:center;
+  color:var(--muted);
+}
+
+/* ─── LAYOUT ─── */
+.layout{display:flex;min-height:100vh}
+
+/* ─── SIDEBAR ─── */
+.sidebar{
+  position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));
+  width:var(--sidebar-w);overflow-y:auto;
+  background:linear-gradient(180deg,rgba(24,24,28,.96),rgba(17,17,20,.92));
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-right:1px solid var(--line);
+  padding:24px 0;z-index:50;transition:transform .28s ease;
+  flex-shrink:0;
+}
+html[data-theme="light"] .sidebar{background:var(--bg-elev);backdrop-filter:none;-webkit-backdrop-filter:none;}
+.sidebar{scrollbar-width:none;}
+.sidebar::-webkit-scrollbar{display:none;}
+.nav-section{padding:0 12px 16px}
+.nav-label{
+  font:600 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-2);padding:0 8px 8px;display:block
+}
+.nav-item{
+  display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-sm);
+  color:var(--muted);font:500 13px var(--sans);cursor:pointer;
+  transition:color var(--tr),background var(--tr);text-decoration:none;border:none;
+}
+.nav-item:hover{background:var(--bg-soft);color:var(--text);}
+.nav-item.active{background:var(--cyan-soft);color:var(--text-cyan-muted);}
+.nav-item svg{width:15px;height:15px;flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--muted-2);flex-shrink:0;margin-left:auto}
+.nav-item.active .nav-dot{background:var(--cyan)}
+
+/* ─── MAIN ─── */
+.main{flex:1;min-width:0;padding:40px 40px 80px}
+
+/* ─── HERO ─── */
+.hero{
+  background:linear-gradient(135deg,var(--bg-elev-2) 0%,var(--bg-elev) 100%);
+  border:none;border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);
+  padding:48px 56px;margin-bottom:40px;position:relative;overflow:hidden;
+}
+html[data-theme="light"] .hero{background:linear-gradient(135deg,var(--bg-elev) 0%,var(--bg) 100%);}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 50%,rgba(0,204,255,.06),transparent 55%);
+  pointer-events:none
+}
+.hero-kicker{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.hero-title{font:700 32px var(--sans);color:var(--text);line-height:1.2;margin-bottom:8px}
+.hero-sub{font:400 15px var(--sans);color:var(--muted);line-height:1.6;max-width:480px;margin-bottom:28px}
+.hero-logos{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.hero-logo-wrap{
+  display:flex;align-items:center;gap:12px;padding:14px 20px;
+  background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius-sm);
+}
+.hero-logo-wrap svg{height:24px;width:auto}
+.hero-divider{width:1px;height:28px;background:var(--line-strong)}
+.hero-badge{
+  display:flex;align-items:center;gap:6px;padding:6px 12px;
+  border:1px solid var(--green);border-radius:var(--radius-pill);
+  background:var(--green-soft);font:600 11px var(--mono);color:var(--green)
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.hero-meta{
+  display:flex;gap:24px;flex-wrap:wrap;margin-top:28px;
+  padding-top:24px;border-top:1px solid var(--line)
+}
+.hero-meta-item label{font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);display:block;margin-bottom:3px}
+.hero-meta-item span{font:600 13px var(--sans);color:var(--text)}
+
+/* ─── SECTION ─── */
+.section{margin-bottom:48px;scroll-margin-top:calc(var(--topbar-h) + 20px)}
+.section-header{margin-bottom:24px}
+.section-kicker{font:600 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.section-title{font:700 20px var(--sans);color:var(--text);margin-bottom:6px}
+.section-sub{font:400 13px var(--sans);color:var(--muted);line-height:1.6}
+
+/* ─── KPI CARDS ─── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.kpi-card{
+  background:var(--bg-elev-2);border:none;border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);
+  padding:20px;transition:box-shadow .18s;position:relative;overflow:hidden
+}
+.kpi-card:hover{box-shadow:var(--shadow-md)}
+.kpi-card.accent-cyan{box-shadow:var(--shadow-sm),0 0 0 1px rgba(0,204,255,.14) inset}
+.kpi-card.accent-green{box-shadow:var(--shadow-sm),0 0 0 1px rgba(0,196,140,.14) inset}
+.kpi-card.accent-amber{box-shadow:var(--shadow-sm),0 0 0 1px rgba(246,166,35,.14) inset}
+.kpi-icon{width:32px;height:32px;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.kpi-icon.cyan-bg{background:var(--cyan-soft)}
+.kpi-icon.green-bg{background:var(--green-soft)}
+.kpi-icon.amber-bg{background:var(--amber-soft)}
+.kpi-icon.muted-bg{background:var(--bg-soft)}
+.kpi-value{font-size:30px;font-weight:700;letter-spacing:-.04em;color:var(--text);line-height:1;margin-top:10px}
+.kpi-value span{font:700 16px var(--sans);color:var(--muted);margin-left:3px}
+.kpi-label{font:500 12px var(--sans);color:var(--muted);margin-top:4px}
+.kpi-sub{font:500 11px var(--mono);margin-top:6px}
+
+/* ─── CHARTS GRID ─── */
+.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:32px}
+.charts-grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:32px}
+.chart-card{
+  background:var(--bg-elev);border:none;border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);padding:24px;
+}
+.chart-card-title{font:600 13px var(--sans);color:var(--text);margin-bottom:4px}
+.chart-card-sub{font:400 11px var(--sans);color:var(--muted-2);margin-bottom:16px}
+.chart-wrap{position:relative;height:200px;display:flex;align-items:center;justify-content:center}
+.legend-table{margin-top:14px;width:100%}
+.legend-thead{display:grid;grid-template-columns:1fr auto auto;gap:4px;padding:0 0 6px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.legend-th{font:700 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);display:flex;align-items:center;gap:4px}
+.legend-th-num{justify-content:flex-end;min-width:32px}
+.legend-row{display:grid;grid-template-columns:1fr auto auto;gap:4px;padding:5px 0;align-items:center;border-bottom:1px solid var(--line)}
+.legend-row:last-child{border-bottom:none}
+.legend-row:hover{background:var(--bg-soft);border-radius:4px;padding-left:4px;padding-right:4px}
+.legend-label{display:flex;align-items:center;gap:7px;font:400 12px var(--sans);color:var(--muted)}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-count{font:600 12px var(--mono);color:var(--text);text-align:right;min-width:32px}
+.legend-pct{font:500 11px var(--mono);color:var(--muted-2);text-align:right;min-width:36px}
+
+/* ─── LINE CHART ─── */
+.line-chart-card{
+  background:var(--bg-elev);border:none;border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);padding:24px;margin-bottom:32px;
+}
+.line-chart-wrap{position:relative;height:240px}
+.chart-note{
+  margin-top:14px;padding:12px 16px;background:var(--bg-soft);
+  border-radius:var(--radius-sm);border:1px solid var(--cyan-soft-2);
+}
+.chart-note p{font:400 12px var(--sans);color:var(--muted);line-height:1.6}
+.chart-note ul{margin:6px 0 0 14px}
+.chart-note ul li{font:400 12px var(--sans);color:var(--muted);line-height:1.7}
+
+/* ─── FLOURISH EMBEDS ─── */
+.embed-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:32px}
+.embed-card{
+  background:var(--bg-elev);border:none;border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm);overflow:hidden;
+}
+.embed-header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.embed-title{font:600 13px var(--sans);color:var(--text)}
+.embed-sub{font:400 11px var(--sans);color:var(--muted-2);margin-left:auto}
+.embed-badge{
+  font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cyan);padding:3px 7px;border:1px solid var(--cyan-soft-2);
+  border-radius:var(--radius-pill);background:var(--cyan-soft)
+}
+.embed-clip{position:relative;height:530px;overflow:hidden}
+.embed-clip::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:var(--bg-elev);z-index:2;pointer-events:none}
+.embed-clip iframe{position:absolute;top:-90px;left:0;width:100%;height:710px;border:none;background:var(--bg-elev-2)}
+.embed-link-bar{padding:10px 20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}
+.embed-ext-link{display:inline-flex;align-items:center;gap:6px;font:500 11px var(--mono);color:var(--muted-2);text-decoration:none;padding:4px 10px;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--bg-soft);transition:all .15s}
+.embed-ext-link:hover{color:var(--cyan);border-color:var(--cyan-soft-2);background:var(--cyan-soft)}
+.embed-ext-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+
+/* ─── SORTABLE TABLE ─── */
+.table-sortable th{cursor:pointer;user-select:none;position:relative;padding-right:30px !important;}
+.table-sortable th::after{content:"↕";position:absolute;right:10px;top:50%;transform:translateY(-50%);font:700 11px var(--mono);color:var(--muted-2);opacity:.55;}
+.table-sortable th.sorted-asc::after{content:"↑";color:var(--cyan);opacity:1}
+.table-sortable th.sorted-desc::after{content:"↓";color:var(--cyan);opacity:1}
+.table-empty{display:none;padding:18px 16px;border-top:1px solid var(--line);color:var(--muted);font:500 12px var(--sans);background:var(--bg-elev);text-align:center;}
+.table-empty.show{display:block}
+
+/* ─── TABLE ─── */
+.table-wrap{background:var(--bg-elev);border:none;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.table-search{flex:1;min-width:180px;padding:7px 12px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-sm);font:400 12px var(--sans);color:var(--text);outline:none;transition:border-color .15s}
+.table-search:focus{border-color:var(--cyan)}
+.table-search::placeholder{color:var(--muted-2)}
+.filter-btn{padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--bg-elev-2);font:500 11px var(--sans);color:var(--muted);cursor:pointer;transition:all .15s;}
+.filter-btn:hover,.filter-btn.active{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-soft)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 14px;background:var(--bg-elev);font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);text-align:left;white-space:nowrap;border-bottom:1px solid var(--line);cursor:pointer;}
+thead th:hover{color:var(--text)}
+tbody tr{border-bottom:1px solid var(--line);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--bg-soft)}
+tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
+.td-ticket{font:500 12px var(--mono);color:var(--muted-2)}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:var(--radius-pill);font:600 10px var(--mono);letter-spacing:.06em;white-space:nowrap}
+.badge-sprint{background:var(--cyan-soft);color:var(--cyan);border:1px solid var(--cyan-soft-2)}
+.badge-soporte{background:var(--bg-soft);color:var(--muted);border:1px solid var(--line)}
+.badge-implementacion{background:rgba(167,139,250,.12);color:var(--purple);border:1px solid rgba(167,139,250,.2)}
+.badge-correccion{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,176,32,.2)}
+.badge-desarrollo{background:var(--cyan-soft);color:var(--cyan);border:1px solid var(--cyan-soft-2)}
+.badge-edicion{background:var(--blue);color:#fff;border:1px solid rgba(122,183,255,.3);background:rgba(122,183,255,.12);color:var(--blue)}
+.badge-mejora{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,196,140,.2)}
+.esfuerzo-alta{color:var(--amber);font:600 11px var(--mono)}
+.esfuerzo-media{color:var(--cyan);font:600 11px var(--mono)}
+.esfuerzo-baja{color:var(--muted);font:600 11px var(--mono)}
+.avance-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:var(--radius-pill);background:var(--green-soft);color:var(--green);font:600 10px var(--mono);border:1px solid rgba(0,196,140,.2)}
+
+/* ─── DIVIDER ─── */
+.section-divider{height:1px;background:var(--line);margin:40px 0}
+
+/* ─── FOOTER ─── */
+/* El footer es siempre oscuro — las letras del logo se fuerzan a blanco suave */
+.footer .yql{fill:rgba(255,255,255,.75)}
+.footer{
+  background:#000;border-top:1px solid var(--line);
+  padding:32px 40px;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;
+}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-brand svg{height:18px;width:auto}
+.footer-text{font:400 12px var(--sans);color:rgba(255,255,255,.4)}
+.footer-meta{font:400 11px var(--mono);color:rgba(255,255,255,.4)}
+
+/* ─── MOBILE OVERLAY ─── */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:49;backdrop-filter:blur(3px)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:980px){
+  .mobile-menu-btn{display:flex}
+  .sidebar{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%);z-index:98;}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{padding:24px 20px 60px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-grid{grid-template-columns:1fr}
+  .charts-grid-3{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .hero{padding:32px 28px}
+  .hero-title{font-size:24px}
+  .footer{flex-direction:column;align-items:flex-start;padding:24px 20px}
+}
+@media(max-width:520px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .charts-grid-3{grid-template-columns:1fr}
+  .hero-meta{gap:16px}
+  .table-header{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── TOPBAR ─── -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">
+      <svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi">
+        <rect fill="none" height="65" width="100"/>
+        <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+        <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+        <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      </svg>
+    </div>
+    <div class="topbar-sep" style="width:1px;height:20px;background:var(--line-strong)"></div>
+    <div style="display:flex;align-items:center;gap:7px">
+      <span class="client-badge">ECOSAN</span>
+      <span class="topbar-period">Mayo 2026</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="theme-switch" role="group" aria-label="Tema">
+      <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" aria-label="Oscuro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="theme-opt" data-val="system" onclick="setTheme('system')" aria-label="Sistema">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </button>
+      <button class="theme-opt" data-val="light" onclick="setTheme('light')" aria-label="Claro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Menú">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav>
+      <div class="nav-section">
+        <span class="nav-label">Informe · May 2026</span>
+        <a href="#contexto" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Contexto del sprint<span class="nav-dot"></span>
+        </a>
+        <a href="#resumen" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Resumen ejecutivo<span class="nav-dot"></span>
+        </a>
+        <a href="#tickets-creados" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Tickets creados<span class="nav-dot"></span>
+        </a>
+        <a href="#historico" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Histórico<span class="nav-dot"></span>
+        </a>
+        <a href="#sprints" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          Análisis de sprints<span class="nav-dot"></span>
+        </a>
+        <a href="#detalle" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Detalle del sprint<span class="nav-dot"></span>
+        </a>
+      </div>
+      <div class="nav-section" style="border-top:1px solid var(--line);padding-top:16px;margin-top:4px">
+        <span class="nav-label">Métricas clave</span>
+        <div style="padding:0 8px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font:400 12px var(--sans);color:var(--muted)">Resolución</span>
+            <span style="font:600 12px var(--mono);color:var(--green)">85%</span>
+          </div>
+          <div style="height:4px;background:var(--bg-soft);border-radius:2px;overflow:hidden">
+            <div style="width:85%;height:100%;background:var(--green);border-radius:2px"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font:400 12px var(--sans);color:var(--muted)">Avance tratados</span>
+            <span style="font:600 12px var(--mono);color:var(--cyan)">100%</span>
+          </div>
+          <div style="height:4px;background:var(--bg-soft);border-radius:2px;overflow:hidden">
+            <div style="width:100%;height:100%;background:var(--cyan);border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-section" style="border-top:1px solid var(--line);padding-top:16px;margin-top:auto">
+        <a class="nav-item" href="https://apidoc.yiqi.com.ar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          API Docs
+        </a>
+        <a class="nav-item" href="https://sites.google.com/yiqi.com.ar/ayudaerp" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          Soporte
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero" id="hero">
+      <div class="hero-kicker">Informe de servicio · Sprint mensual</div>
+      <h1 class="hero-title">Mayo 2026</h1>
+      <p class="hero-sub">Resumen ejecutivo del período 1/5/2026 – 31/5/2026. Soporte y análisis funcional, conciliación de cuentas corrientes de proveedores, seguimiento de Órdenes de Trabajo y acompañamiento al proyecto GEODELIVER.</p>
+      <div class="hero-logos">
+        <div class="hero-logo-wrap">
+          <span style="font:700 15px var(--sans);color:var(--text);letter-spacing:.02em">ECOSAN</span>
+          <span style="font:400 10px var(--sans);color:var(--muted-2);letter-spacing:.04em;margin-left:6px">Construcción Modular</span>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-logo-wrap">
+          <svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" style="height:34px;width:auto" aria-label="YiQi">
+            <rect fill="none" height="65" width="100"/>
+            <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+            <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+            <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+            <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+          </svg>
+          <span style="font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);margin-left:6px">ERP</span>
+        </div>
+        <div class="hero-badge">Tickets tratados · 100% avance</div>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><label>Período</label><span>1/5/2026 – 31/5/2026</span></div>
+        <div class="hero-meta-item"><label>Tickets del sprint</label><span>Sin planificación formal</span></div>
+        <div class="hero-meta-item"><label>Reuniones</label><span>2 realizadas</span></div>
+        <div class="hero-meta-item"><label>Versión informe</label><span>v1.3.0</span></div>
+      </div>
+    </div>
+
+    <!-- CONTEXTO -->
+    <section class="section" id="contexto">
+      <div class="section-header">
+        <div class="section-kicker">01 · Contexto</div>
+        <h2 class="section-title">Contexto del sprint</h2>
+        <p class="section-sub">Resumen narrativo de las iniciativas trabajadas durante el período.</p>
+      </div>
+      <div style="background:var(--bg-elev);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:28px 32px">
+        <p style="font:400 14px var(--sans);color:var(--text);line-height:1.75;margin-bottom:14px">Durante el mes se trabajó en tareas de soporte, análisis funcional y mejoras operativas para acompañar las necesidades de los clientes y garantizar la continuidad de los procesos.</p>
+        <div style="padding:12px 16px;background:var(--amber-soft);border-radius:var(--radius-sm);border:1px solid rgba(246,166,35,.2);margin-bottom:20px">
+          <p style="font:italic 400 13px var(--sans);color:var(--muted);line-height:1.65"><strong style="color:var(--amber);font-style:normal;font-weight:600">Nota:</strong> las tareas desarrolladas durante este período respondieron principalmente a necesidades operativas y requerimientos emergentes del negocio, por lo que <strong style="color:var(--text);font-weight:600;font-style:normal">no existió una planificación previa formal del sprint</strong>.</p>
+        </div>
+        <p style="font:600 12px var(--sans);color:var(--text);margin-bottom:12px">Principales actividades realizadas</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;padding:14px 16px;background:var(--green-soft);border-radius:var(--radius-sm);border:1px solid rgba(0,196,140,.2)">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:6px;flex-shrink:0"></div>
+            <p style="font:400 13px var(--sans);color:var(--muted);line-height:1.65">Balanceo y <strong style="color:var(--text);font-weight:600">validación de las cuentas corrientes</strong> de los proveedores SEMAT y GNC Prov. Unidas.</p>
+          </div>
+          <div style="display:flex;gap:12px;padding:14px 16px;background:var(--cyan-soft);border-radius:var(--radius-sm);border:1px solid var(--cyan-soft-2)">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--cyan);margin-top:6px;flex-shrink:0"></div>
+            <p style="font:400 13px var(--sans);color:var(--muted);line-height:1.65">Soporte y <strong style="color:var(--text);font-weight:600">seguimiento de Órdenes de Trabajo (OT)</strong> en ECOSAN, incluyendo asistencia a sucursales y franquicias.</p>
+          </div>
+          <div style="display:flex;gap:12px;padding:14px 16px;background:var(--purple-soft);border-radius:var(--radius-sm);border:1px solid rgba(167,139,250,.2)">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--purple);margin-top:6px;flex-shrink:0"></div>
+            <p style="font:400 13px var(--sans);color:var(--muted);line-height:1.65">Acompañamiento continuo al <strong style="color:var(--text);font-weight:600">proyecto GEODELIVER</strong>, participando en análisis, validaciones y seguimiento de requerimientos.</p>
+          </div>
+          <div style="display:flex;gap:12px;padding:14px 16px;background:var(--warm-soft);border-radius:var(--radius-sm);border:1px solid rgba(181,160,144,.2)">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--warm);margin-top:6px;flex-shrink:0"></div>
+            <p style="font:400 13px var(--sans);color:var(--muted);line-height:1.65">Atención de consultas, incidencias y ajustes relacionados con <strong style="color:var(--text);font-weight:600">facturación, stock, compras, proveedores y gestión de usuarios</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- RESUMEN -->
+    <section class="section" id="resumen">
+      <div class="section-header">
+        <div class="section-kicker">02 · Resumen</div>
+        <h2 class="section-title">Resumen ejecutivo</h2>
+        <p class="section-sub">Métricas consolidadas del período 1/5/2026 – 31/5/2026.</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card accent-cyan">
+          <div class="kpi-icon cyan-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="kpi-value">27</div><div class="kpi-label">Tickets creados</div><div class="kpi-sub" style="color:var(--muted-2)">En el período</div>
+        </div>
+        <div class="kpi-card accent-green">
+          <div class="kpi-icon green-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="kpi-value">17 <span>63%</span></div><div class="kpi-label">Tickets resueltos</div><div class="kpi-sub" style="color:var(--green)">Tasa de resolución</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon muted-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="kpi-value" style="color:var(--muted)">—</div><div class="kpi-label">Tickets del sprint</div><div class="kpi-sub" style="color:var(--muted-2)">Sin planificación formal</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon muted-bg"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="kpi-value">2</div><div class="kpi-label">Reuniones</div><div class="kpi-sub" style="color:var(--muted-2)">+ 16 tickets de soporte</div>
+        </div>
+      </div>
+      <div style="background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:32px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)">
+          <div style="padding:16px 20px;border-right:1px solid var(--line)">
+            <div style="font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px">Resumen de tickets</div>
+            <table style="width:100%;border-collapse:collapse">
+              <tbody>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets del sprint</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--muted-2);text-align:right">—</td><td style="padding:8px 0;text-align:right;padding-left:8px;font:600 11px var(--mono);color:var(--muted-2)">—</td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets creados</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">27</td><td></td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Tickets tratados</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">20</td><td style="padding:8px 0;text-align:right;padding-left:8px"><span class="badge badge-sprint">100%</span></td></tr>
+                <tr><td style="padding:8px 0;font:400 13px var(--sans);color:var(--muted)">Ingeniería (fuera soporte)</td><td style="padding:8px 0;font:600 13px var(--mono);color:var(--text);text-align:right">4</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="padding:16px 20px">
+            <div style="font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px">Tickets por tipo</div>
+            <table style="width:100%;border-collapse:collapse">
+              <tbody>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 0;font:400 13px var(--sans);color:var(--muted)">Soporte</td><td style="padding:7px 0;font:600 13px var(--mono);color:var(--text);text-align:right">16</td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 0;font:400 13px var(--sans);color:var(--muted)">Corrección</td><td style="padding:7px 0;font:600 13px var(--mono);color:var(--text);text-align:right">2</td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 0;font:400 13px var(--sans);color:var(--muted)">Implementación</td><td style="padding:7px 0;font:600 13px var(--mono);color:var(--text);text-align:right">1</td></tr>
+                <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 0;font:400 13px var(--sans);color:var(--muted)">Edición de datos</td><td style="padding:7px 0;font:600 13px var(--mono);color:var(--text);text-align:right">1</td></tr>
+                <tr><td style="padding:7px 0;font:600 13px var(--sans);color:var(--text)">Total</td><td style="padding:7px 0;font:700 13px var(--mono);color:var(--cyan);text-align:right">20</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="padding:12px 20px;display:flex;gap:20px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Fecha desde: <strong style="color:var(--text)">1/5/2026</strong></span></div>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Fecha hasta: <strong style="color:var(--text)">31/5/2026</strong></span></div>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Reuniones: <strong style="color:var(--text)">2</strong></span></div>
+          <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span style="font:400 12px var(--sans);color:var(--muted-2)">Tickets de soporte: <strong style="color:var(--text)">16</strong></span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- TICKETS CREADOS -->
+    <section class="section" id="tickets-creados">
+      <div class="section-header">
+        <div class="section-kicker">03 · Distribución</div>
+        <h2 class="section-title">Tickets creados en mayo 2026</h2>
+        <p class="section-sub">27 tickets creados en el período — 17 resueltos (63%)</p>
+      </div>
+      <div class="charts-grid-3">
+        <div class="chart-card"><div class="chart-card-title">Estado de tickets</div><div class="chart-card-sub">Del total creado en el período</div><div class="chart-wrap"><canvas id="chartEstado"></canvas></div><div id="legend-estado"></div></div>
+        <div class="chart-card"><div class="chart-card-title">Tipo de ticket</div><div class="chart-card-sub">Clasificación por naturaleza</div><div class="chart-wrap"><canvas id="chartTipo"></canvas></div><div id="legend-tipo"></div></div>
+        <div class="chart-card"><div class="chart-card-title">Esfuerzo (Complejidad)</div><div class="chart-card-sub">Distribución por nivel</div><div class="chart-wrap"><canvas id="chartEsfuerzo"></canvas></div><div id="legend-esfuerzo"></div></div>
+      </div>
+      <div class="charts-grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
+        <div class="chart-card"><div class="chart-card-title">Sectores</div><div class="chart-card-sub">Áreas involucradas</div><div class="chart-wrap"><canvas id="chartSectores"></canvas></div><div id="legend-sectores"></div></div>
+        <div style="background:var(--bg-elev);border:none;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:24px;display:flex;flex-direction:column;gap:12px;justify-content:center">
+          <div style="font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px">Indicadores de gestión</div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span style="font:400 13px var(--sans);color:var(--muted)">Mandos medios crean tickets funcionales</span><span class="badge badge-sprint" style="flex-shrink:0">✓</span></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span style="font:400 13px var(--sans);color:var(--muted)">Usuarios finales solo reportan errores</span><span class="badge badge-sprint" style="flex-shrink:0">✓</span></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0"><span style="font:400 13px var(--sans);color:var(--muted)">Evidencia obligatoria en errores</span><span class="badge badge-sprint" style="flex-shrink:0">✓</span></div>
+          <div style="padding:12px;background:var(--amber-soft);border-radius:var(--radius-sm);border:1px solid rgba(246,166,35,.2)"><p style="font:400 11px var(--sans);color:var(--muted);line-height:1.4">Período sin planificación previa formal del sprint: las tareas respondieron a necesidades operativas y requerimientos emergentes del negocio.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- HISTÓRICO -->
+    <section class="section" id="historico">
+      <div class="section-header">
+        <div class="section-kicker">04 · Tendencia</div>
+        <h2 class="section-title">Histórico de tickets creados</h2>
+        <p class="section-sub">Evolución mensual desde mayo 2025 hasta mayo 2026.</p>
+      </div>
+      <div class="line-chart-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+          <div><div style="font:600 13px var(--sans);color:var(--text)">Tickets por mes</div><div style="font:400 11px var(--sans);color:var(--muted-2)">May 2025 → May 2026</div></div>
+          <div style="display:flex;gap:16px"><div style="display:flex;align-items:center;gap:6px"><div style="width:24px;height:2px;background:var(--cyan);border-radius:1px"></div><span style="font:400 11px var(--sans);color:var(--muted)">Tickets creados</span></div></div>
+        </div>
+        <div class="line-chart-wrap"><canvas id="chartHistorico"></canvas></div>
+        <div class="chart-note" style="margin-top:20px">
+          <p><strong style="color:var(--text)">Nota:</strong> La reducción de tickets creados refleja una mejora en el modelo de gestión de Ecosan, priorizando requerimientos mejor definidos y alineados con la operación.</p>
+          <ul><li>Solo mandos medios pueden crear tickets funcionales.</li><li>Usuarios finales solo reportan errores, con evidencia obligatoria.</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SPRINTS -->
+    <section class="section" id="sprints">
+      <div class="section-header">
+        <div class="section-kicker">05 · Análisis</div>
+        <h2 class="section-title">Análisis de sprints</h2>
+        <p class="section-sub">Este mes no hubo planificación formal de sprint; se muestra la distribución total de tickets (planificados, no planificados y de soporte).</p>
+      </div>
+      <div class="embed-grid" style="grid-template-columns:1fr">
+        <div class="embed-card">
+          <div class="embed-header"><span class="embed-title">Sprints — Total de tickets</span><span class="embed-badge">Interactivo</span><span class="embed-sub">Planificados, no planificados y de soporte</span></div>
+          <div class="embed-clip" style="height:560px"><iframe src="https://public.flourish.studio/visualisation/22076490/" style="height:750px" title="Sprints Total Tickets" loading="lazy" allowfullscreen scrolling="no"></iframe></div>
+          <div class="embed-link-bar"><a href="https://public.flourish.studio/visualisation/22076490/" target="_blank" rel="noopener" class="embed-ext-link">Ver en Flourish<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
+        </div>
+      </div>
+      </section>
+
+    <div class="section-divider"></div>
+
+    <!-- DETALLE -->
+    <section class="section" id="detalle">
+      <div class="section-header">
+        <div class="section-kicker">06 · Detalle</div>
+        <h2 class="section-title">Sprint mayo 2026</h2>
+        <p class="section-sub">Listado completo de 20 tickets trabajados durante el período.</p>
+      </div>
+      <div class="table-wrap">
+        <div class="table-header">
+          <input class="table-search" id="tableSearch" type="text" placeholder="Buscar por título, sector, tipo…" />
+          <button class="filter-btn active" data-filter="all">Todos (20)</button>
+          <button class="filter-btn" data-filter="ingenieria">Ingeniería (4)</button>
+          <button class="filter-btn" data-filter="soporte">Soporte (16)</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table id="sprintTable" class="table-sortable">
+            <thead><tr><th>Título</th><th>Sprint</th><th>BL</th><th>Sector</th><th>Ticket</th><th>Tipo</th><th>Avance</th><th>Esfuerzo</th></tr></thead>
+            <tbody>
+              <tr data-type="soporte"><td>SEMAT</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">33668</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>GNC Prov. Unidas</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">33670</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>Cambio de nombre de ubicación y creación de Staging In – Depósito Don Torcuato</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Servicios</td><td class="td-ticket">33991</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Error al calcular Retenciones</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34242</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Fc Venta IVA liquidado en otro período</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34287</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>CBR * Bloqueo en carga de recibos Pago Fácil</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Cobranzas</td><td class="td-ticket">34335</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>OTs no generan factura en Opciones en Servicios</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34346</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Error en Libro de Sueldos</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>RRHH</td><td class="td-ticket">34356</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Error al emitir factura - Cliente Victor M Contreras</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34388</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Factura no visible 17951</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34369</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Error en asiento contable OP ID: 64589</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34377</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>No se pudo programar un retiro</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Servicios</td><td class="td-ticket">34389</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Factura 17767 sin sucursal</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34407</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="ingenieria"><td>Reporte detalle factura en Ecología Sur</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34436</td><td><span class="badge badge-implementacion">Implementación</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>No se proyectarán las facturas del cliente Grupo Peñaflor SA</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Facturación</td><td class="td-ticket">34473</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Grupo Peñaflor SA</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Facturación</td><td class="td-ticket">34476</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Oportunidad de Negocio 2228-2227 / Problema con cotización n° 2228</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34502</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>OC - Cambiar de estado</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Compras</td><td class="td-ticket">34520</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Stock con cantidad errónea</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34523</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>Factura de compra - borrar</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34531</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+            </tbody>
+          </table>
+          <div class="table-empty" id="tableEmpty">No se encontraron tickets con ese criterio.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <svg viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" style="height:18px;width:auto" aria-label="YiQi">
+      <rect fill="none" height="65" width="100"/>
+      <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+      <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+      <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+    </svg>
+    <span class="footer-text">© 2026 YiQi S.A. · ECOSAN · DS v1.2.5</span>
+  </div>
+  <div class="footer-meta">Informe de Servicio · ECOSAN · Mayo 2026</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const html = document.documentElement;
+const _mq = window.matchMedia('(prefers-color-scheme: dark)');
+function resolveTheme(v){return v==='system'?(_mq.matches?'dark':'light'):v;}
+function applyTheme(v){html.dataset.theme=resolveTheme(v);}
+function setTheme(v){
+  localStorage.setItem('yiqi-theme',v);
+  applyTheme(v);
+  document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.val===v));
+  setTimeout(renderAllCharts,50);
+}
+function isDarkMode(){return html.dataset.theme==='dark';}
+_mq.addEventListener('change',()=>{if((localStorage.getItem('yiqi-theme')||'system')==='system')applyTheme('system');});
+(function(){
+  const s=localStorage.getItem('yiqi-theme')||'system';
+  applyTheme(s);
+  document.addEventListener('DOMContentLoaded',()=>
+    document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.val===s)));
+})();
+
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+const menuBtn = document.getElementById('menuBtn');
+menuBtn.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); });
+overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); });
+
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('section.section');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const a = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+
+const tableSearch = document.getElementById('tableSearch');
+const filterBtns = document.querySelectorAll('.filter-btn');
+let currentFilter = 'all', sortCol = -1, sortDir = 1;
+
+function applyFilter() {
+  const q = tableSearch.value.toLowerCase();
+  const rows = Array.from(document.querySelectorAll('#sprintTable tbody tr'));
+  let visible = 0;
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    const type = row.getAttribute('data-type');
+    const matchSearch = text.includes(q);
+    const matchFilter = currentFilter === 'all'
+      || (currentFilter === 'ingenieria' && type === 'ingenieria')
+      || (currentFilter === 'soporte' && type === 'soporte');
+    const show = matchSearch && matchFilter;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const empty = document.getElementById('tableEmpty');
+  if (empty) empty.classList.toggle('show', visible === 0);
+}
+
+function sortTable(colIdx) {
+  const tbody = document.querySelector('#sprintTable tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  const ths = document.querySelectorAll('#sprintTable thead th');
+  if (sortCol === colIdx) { sortDir *= -1; } else { sortCol = colIdx; sortDir = 1; }
+  ths.forEach((th, i) => { th.classList.remove('sorted-asc','sorted-desc'); if (i === colIdx) th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc'); });
+  rows.sort((a, b) => {
+    const aV = a.cells[colIdx]?.textContent.trim() || '';
+    const bV = b.cells[colIdx]?.textContent.trim() || '';
+    const aN = parseFloat(aV.replace(/[^0-9.-]/g,'')), bN = parseFloat(bV.replace(/[^0-9.-]/g,''));
+    if (!isNaN(aN) && !isNaN(bN)) return (aN - bN) * sortDir;
+    return aV.localeCompare(bV, 'es') * sortDir;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+document.querySelectorAll('#sprintTable thead th').forEach((th, i) => th.addEventListener('click', () => sortTable(i)));
+tableSearch.addEventListener('input', applyFilter);
+filterBtns.forEach(btn => { btn.addEventListener('click', () => { filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentFilter = btn.getAttribute('data-filter'); applyFilter(); }); });
+
+function getCSSVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+const chartInstances = {};
+
+function buildLegend(id, labels, data, colors) {
+  const total = data.reduce((a,b)=>a+b,0);
+  const rows = labels.map((l,i)=>({label:l,count:data[i],color:colors[i],pct:Math.round(data[i]/total*100)})).sort((a,b)=>b.count-a.count);
+  const c = document.getElementById(id);
+  if (!c) return;
+  c.innerHTML = `<div class="legend-table"><div class="legend-thead"><div class="legend-th">Categoría</div><div class="legend-th legend-th-num">n</div><div class="legend-th legend-th-num">%</div></div><div class="legend-tbody">${rows.map(r=>`<div class="legend-row"><div class="legend-label"><div class="legend-dot" style="background:${r.color}"></div>${r.label}</div><div class="legend-count">${r.count}</div><div class="legend-pct">${r.pct}%</div></div>`).join('')}</div></div>`;
+}
+
+function makeDonut(id, labels, data, colors) {
+  const ctx = document.getElementById(id).getContext('2d');
+  if (chartInstances[id]) chartInstances[id].destroy();
+  chartInstances[id] = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: getCSSVar('--bg-elev'), borderWidth: 2, hoverBorderWidth: 0 }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false }, tooltip: { backgroundColor: getCSSVar('--bg-elev-2'), titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), borderColor: getCSSVar('--line-strong'), borderWidth: 1, padding: 10, callbacks: { label: ctx => ` ${ctx.parsed} (${Math.round(ctx.parsed/ctx.dataset.data.reduce((a,b)=>a+b,0)*100)}%)` } } } }
+  });
+}
+
+function renderAllCharts() {
+  const c = {
+    green:getCSSVar('--green'), amber:getCSSVar('--amber'),
+    muted2:getCSSVar('--muted-2'), cyan:getCSSVar('--cyan'),
+    purple:getCSSVar('--purple'), red:getCSSVar('--red'),
+    muted:getCSSVar('--muted'), blue:getCSSVar('--blue')
+  };
+  // Estado (creados, total 27): Cerrado 16, En ingeniería 4, Analizando mejora 3, Analizando inconsistencia 2, Pendiente Validación 1, Analizando edición datos 1
+  const dE={l:['Cerrado','En ingeniería','Analizando mejora','Analizando inconsistencia','Pendiente de Validación','Analizando edición de datos'],d:[16,4,3,2,1,1],c:[c.green,c.amber,c.purple,c.blue,c.cyan,c.red]};
+  // Tipo (trabajados, total 20): Soporte 16, Corrección 2, Implementación 1, Edición de datos 1
+  const dT={l:['Soporte','Corrección','Implementación','Edición de datos'],d:[16,2,1,1],c:[c.muted,c.amber,c.purple,c.blue]};
+  // Esfuerzo (base 20, según detalle): Baja 13 (65%), Media 7 (35%)
+  const dF={l:['Baja','Media'],d:[13,7],c:[c.muted2,c.cyan]};
+  // Sectores (base 20, según detalle): Sucursales 7, Administración 6, Servicios 2, Facturación 2, Cobranzas 1, RRHH 1, Compras 1
+  const dS={l:['Sucursales','Administración','Servicios','Facturación','Cobranzas','RRHH','Compras'],d:[7,6,2,2,1,1,1],c:[c.green,c.cyan,c.red,c.blue,c.muted,c.amber,c.purple]};
+
+  makeDonut('chartEstado',dE.l,dE.d,dE.c);
+  makeDonut('chartTipo',dT.l,dT.d,dT.c);
+  makeDonut('chartEsfuerzo',dF.l,dF.d,dF.c);
+  makeDonut('chartSectores',dS.l,dS.d,dS.c);
+  buildLegend('legend-estado',dE.l,dE.d,dE.c);
+  buildLegend('legend-tipo',dT.l,dT.d,dT.c);
+  buildLegend('legend-esfuerzo',dF.l,dF.d,dF.c);
+  buildLegend('legend-sectores',dS.l,dS.d,dS.c);
+
+  if (chartInstances['chartHistorico']) chartInstances['chartHistorico'].destroy();
+  const ctxL = document.getElementById('chartHistorico').getContext('2d');
+  const grad = ctxL.createLinearGradient(0,0,0,240);
+  grad.addColorStop(0, isDarkMode() ? 'rgba(0,204,255,.18)' : 'rgba(0,159,199,.15)');
+  grad.addColorStop(1, 'rgba(0,204,255,0)');
+  chartInstances['chartHistorico'] = new Chart(ctxL, {
+    type: 'line',
+    data: {
+      labels:['May 25','Jun 25','Jul 25','Ago 25','Sep 25','Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26','May 26'],
+      datasets:[{
+        label:'Tickets creados',
+        data:[58,41,31,31,41,35,29,19,23,25,27,21,27],
+        borderColor:getCSSVar('--cyan'), backgroundColor:grad,
+        borderWidth:2, pointBackgroundColor:getCSSVar('--cyan'),
+        pointBorderColor:getCSSVar('--bg-elev'), pointBorderWidth:2,
+        pointRadius:5, pointHoverRadius:7, tension:.38, fill:true
+      }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:getCSSVar('--bg-elev-2'), titleColor:getCSSVar('--text'),
+          bodyColor:getCSSVar('--muted'), borderColor:getCSSVar('--line-strong'),
+          borderWidth:1, padding:10, displayColors:false,
+          callbacks:{label:ctx=>` ${ctx.parsed.y} tickets`}
+        }
+      },
+      scales:{
+        x:{ grid:{color:getCSSVar('--line'),drawBorder:false}, ticks:{color:getCSSVar('--muted-2'),font:{family:"'IBM Plex Mono'",size:10}} },
+        y:{ min:0, grid:{color:getCSSVar('--line'),drawBorder:false}, ticks:{color:getCSSVar('--muted-2'),font:{family:"'IBM Plex Mono'",size:10},stepSize:10} }
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderAllCharts);
+window.addEventListener('load', renderAllCharts);
+</script>
+</body>
+</html>
