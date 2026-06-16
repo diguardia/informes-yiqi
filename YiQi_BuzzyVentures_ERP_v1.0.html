@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YiQi para el grupo — Propuesta ERP multiempresa</title>
-<meta name="description" content="Propuesta YiQi ERP para un grupo multiempresa: unificación multiempresa en un solo ERP — facturación ARCA, compras con carga por IA, tesorería, contabilidad consolidada, sueldos y stock centralizado.">
+<meta name="description" content="Propuesta YiQi ERP para un grupo multiempresa: unificación multiempresa en un solo ERP — facturación ARCA, compras con aprobaciones, tesorería, contabilidad consolidada, sueldos y stock centralizado.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -335,37 +335,7 @@ html[data-theme="light"] .tl-node{box-shadow:var(--shadow-sm),0 0 0 5px var(--bg
 .footer-version:hover{color:var(--cyan)}
 @media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:600px){.footer-grid{grid-template-columns:1fr;gap:22px}.footer-bottom{flex-direction:column;text-align:center;gap:8px}}
-/* plazos infographic */
-.plazos-card{background:var(--bg-elev-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:28px 30px;margin-top:32px}
-.plazos-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-.plazos-title{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
-.plazos-total{font:700 13px var(--mono);color:var(--muted);letter-spacing:.04em}
-.plazos-total b{color:var(--text);font-size:18px;letter-spacing:-.02em;margin-right:4px}
-.plazos-bar-wrap{position:relative;margin-bottom:8px}
-.plazos-bar{display:flex;height:28px;border-radius:var(--radius-sm);overflow:hidden;gap:2px}
-.plazos-ph{display:flex;align-items:center;justify-content:center;font:600 11px var(--mono);letter-spacing:.04em;border-radius:var(--radius-xs);transition:filter var(--tr)}
-.plazos-ph:hover{filter:brightness(1.15)}
-.plazos-ph.p1{background:var(--cyan-soft-2);color:var(--cyan);width:25%}
-.plazos-ph.p2{background:rgba(0,196,140,.18);color:var(--green);width:42%}
-.plazos-ph.p3{background:rgba(246,166,35,.14);color:var(--amber);width:33%}
-.plazos-ph span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 10px}
-.plazos-weeks{display:flex;justify-content:space-between;margin-top:6px;padding:0 1px}
-.plazos-wk{font:500 10px var(--mono);color:var(--muted-2)}
-.plazos-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
-.plazos-phase-item{display:flex;flex-direction:column;gap:4px}
-.plazos-phase-label{font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase}
-.plazos-phase-label.c1{color:var(--cyan)}
-.plazos-phase-label.c2{color:var(--green)}
-.plazos-phase-label.c3{color:var(--amber)}
-.plazos-phase-desc{font-size:12px;color:var(--muted);line-height:1.5}
-.plazos-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;align-items:flex-start;gap:12px}
-.plazos-note ul{list-style:none;display:flex;flex-direction:column;gap:6px}
-.plazos-note ul li{display:flex;align-items:baseline;gap:8px}
-.plazos-note ul li::before{content:"›";color:var(--cyan);font-weight:700;font-size:14px;flex-shrink:0}
-.plazos-note svg{flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;align-self:flex-start}
 @media(max-width:600px){
-  .plazos-phases{grid-template-columns:1fr}
-  .plazos-ph span{font-size:10px;padding:0 7px}
 }
 /* necesitamos */
 .need-doc{background:var(--bg-elev-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;margin-top:32px}
@@ -480,7 +450,6 @@ html[data-theme="light"] .ba-card,
 html[data-theme="light"] .int-card,
 html[data-theme="light"] .prop-item,
 html[data-theme="light"] .need-doc,
-html[data-theme="light"] .plazos-card,
 html[data-theme="light"] .step,
 html[data-theme="light"] .need-item,
 html[data-theme="light"] .ia-ready-banner,
@@ -490,13 +459,6 @@ html[data-theme="light"] .hl-banner{background:#fff;box-shadow:0 0 0 1px rgba(0,
 html[data-theme="light"] .flow-step{background:rgba(0,0,0,.04);box-shadow:none}
 html[data-theme="light"] .mod-card.in-prop{box-shadow:0 0 0 1px rgba(0,159,199,.14) inset,var(--shadow-sm)}
 html[data-theme="light"] .mod-card.in-prop:hover{box-shadow:0 0 0 1px rgba(0,159,199,.22) inset,var(--shadow-md)}
-.dev-feature{margin-top:12px;background:var(--bg-elev-2);border-radius:var(--radius-md);box-shadow:0 0 0 1px var(--purple-soft) inset,var(--shadow-sm);padding:24px 26px;display:flex;gap:16px;align-items:flex-start}
-.dev-feature-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-.dev-feature .prop-label{line-height:1.2}
-.dev-feature p{font-size:13px;color:var(--muted);line-height:1.65}
-.dev-feature p b{color:var(--text);font-weight:600}
-html[data-theme="light"] .dev-feature{background:#fff}
-@media(max-width:600px){.dev-feature{flex-direction:column;gap:12px;padding:20px}}
 .client-logo-tile{width:100%;max-width:300px;aspect-ratio:1/1;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg)}
 .client-logo-tile svg{width:100%;height:100%;display:block}
 .flow-step{position:relative}
@@ -576,6 +538,10 @@ html[data-theme="light"] .sec-card{background:#fff}
 .sec-card h3{font:600 15px var(--display);color:var(--text);margin-bottom:8px}
 .sec-card p{font-size:13px;color:var(--muted);line-height:1.6}
 @media(max-width:760px){.sec-grid{grid-template-columns:1fr}}
+.future-note{margin-top:16px;background:var(--bg-soft);border-radius:var(--radius-md);padding:18px 22px}
+.future-kicker{font:600 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);display:block;margin-bottom:6px}
+.future-note p{font-size:13px;color:var(--muted);line-height:1.6}
+.future-note p b{color:var(--text);font-weight:600}
 </style>
 </head>
 <body>
@@ -616,7 +582,7 @@ html[data-theme="light"] .sec-card{background:#fff}
 
       </div>
       <h1><span class="nb">Tres razones sociales,</span> <span class="nb"><span class="hl">una sola operación</span>.</span></h1>
-      <p class="intro">La propuesta cubre las tres razones sociales del grupo —Haras La Nora SA, Buzzy Ventures SRL y Voces de Areco SRL, más una fundación educativa a confirmar— con unidades de negocio que van del agro y la cría de caballos a la importación y venta de productos (entre ellos mobiliario Loll Designs) y los proyectos inmobiliarios. Hoy cada empresa opera por separado, sin visión consolidada y con gastos que no siempre quedan imputados a la razón social correcta para el estado de resultados. YiQi unifica ventas, compras, tesorería, contabilidad, stock y sueldos en un solo sistema en la nube — con visión por empresa y consolidada, y carga automatizada por IA.</p>
+      <p class="intro">La propuesta cubre las tres razones sociales del grupo —Haras La Nora SA, Buzzy Ventures SRL y Voces de Areco SRL, más una fundación educativa a confirmar— con unidades de negocio que van del agro y la cría de caballos a la importación y venta de productos (entre ellos mobiliario Loll Designs) y los proyectos inmobiliarios. Hoy cada empresa opera por separado, sin visión consolidada y con gastos que no siempre quedan imputados a la razón social correcta para el estado de resultados. YiQi unifica ventas, compras, tesorería, contabilidad, stock y sueldos en un solo sistema en la nube — con visión por empresa y consolidada.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Agenda reunión</a>
         <a class="btn btn-ghost" href="#modulos">Ver la solución</a>
@@ -670,7 +636,7 @@ html[data-theme="light"] .sec-card{background:#fff}
 <section class="section wrap reveal" id="desafio">
   <span class="section-kicker">El desafío del grupo</span>
   <h2><span class="nb">De un sistema que no informa</span> <span class="nb">a una operación que se mide sola.</span></h2>
-  <p class="lead">El sistema actual cubre lo básico, pero hoy las operaciones están repartidas en sistemas separados, lo que dificulta una visión global para decidir. A eso se suman necesidades propias del rubro: contabilidad automatizada (IVA, balances, libros), finanzas con conciliación bancaria e Interbanking, y stock centralizado. YiQi ordena toda la operación desde un único lugar y la vuelve medible.</p>
+  <p class="lead">El sistema actual cubre lo básico, pero hoy las operaciones están repartidas en sistemas separados, lo que dificulta una visión global para decidir. A eso se suman necesidades propias del rubro: contabilidad automatizada (IVA, balances, libros), tesorería con retenciones y conciliación bancaria, y stock centralizado. YiQi ordena toda la operación desde un único lugar y la vuelve medible.</p>
   <div class="ba-grid">
     <div class="ba-card before">
       <h3>✕ Hoy, con el sistema actual</h3>
@@ -688,7 +654,7 @@ html[data-theme="light"] .sec-card{background:#fff}
         <li><span class="ba-icon">✓</span>Estado de resultados correcto por empresa y consolidado.</li>
         <li><span class="ba-icon">✓</span>Stock centralizado en tiempo real (sillas, caballos, obras).</li>
         <li><span class="ba-icon">✓</span>Facturación vía ARCA y sueldos automatizados.</li>
-        <li><span class="ba-icon">✓</span>Carga automática por IA de presupuestos, facturas y comprobantes.</li>
+        <li><span class="ba-icon">✓</span>Facturas y comprobantes centralizados, con sus archivos adjuntos.</li>
         <li><span class="ba-icon">✓</span>Análisis de rentabilidad de obras y alertas de desvío.</li>
       </ul>
     </div>
@@ -767,7 +733,7 @@ html[data-theme="light"] .sec-card{background:#fff}
 <section class="section wrap reveal" id="modulos">
   <span class="section-kicker">Módulos YiQi</span>
   <h2><span class="nb">El ERP completo — y qué entra</span> <span class="nb">en la propuesta del grupo.</span></h2>
-  <p class="lead">YiQi cubre toda la operación de una empresa con 14 módulos que se conectan entre sí. Para el grupo seleccionamos el núcleo que resuelve hoy la facturación, las compras con carga por IA, la tesorería con retenciones, la contabilidad, los sueldos y el stock centralizado de las tres razones sociales. El resto del sistema queda disponible para activar cuando el negocio lo necesite — sin cambiar de plataforma.</p>
+  <p class="lead">YiQi cubre toda la operación de una empresa con 14 módulos que se conectan entre sí. Para el grupo seleccionamos el núcleo que resuelve hoy la facturación, las compras con aprobaciones, la tesorería con retenciones, la contabilidad, los sueldos y el stock centralizado de las tres razones sociales. El resto del sistema queda disponible para activar cuando el negocio lo necesite — sin cambiar de plataforma.</p>
 
   <div class="mod-filter" role="group" aria-label="Filtrar módulos">
     <button class="mod-filter-btn active" data-filter="all" onclick="filterMods(this,'all')">Todos · 14</button>
@@ -817,39 +783,39 @@ html[data-theme="light"] .sec-card{background:#fff}
     <div class="mod-card in-prop" data-status="prop">
       <div class="mod-ico"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
       <div class="mod-head"><h3>Compras</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Circuito con solicitante y aprobador, carga automática por IA de presupuestos y de facturas de proveedor (con los archivos adjuntos), recepción, cuenta corriente y comprobantes de servicios.</p>
+      <p>Circuito con solicitante y aprobador: orden de compra, recepción de facturas de proveedor con sus archivos adjuntos, cuenta corriente y comprobantes de servicios.</p>
 
       <ul class="mod-features">
         <li>Solicitud y aprobación</li>
-        <li>Carga IA de presupuestos</li>
-        <li>Carga IA de facturas</li>
+        <li>Orden de compra</li>
         <li>Recepción de factura</li>
         <li>Cta. corriente proveedores</li>
         <li>Comprobantes de servicios</li>
+        <li>Orden de pago</li>
       </ul>
       <div class="mod-tags">
         <span class="mod-tag t-cyan">Compras</span>
-        <span class="mod-tag t-green">Carga IA</span>
-        <span class="mod-tag t-amber">Aprobaciones</span>
+        <span class="mod-tag t-green">Aprobaciones</span>
+        <span class="mod-tag t-amber">Proveedores</span>
       </div>
     </div>
     <div class="mod-card in-prop" data-status="prop">
       <div class="mod-ico"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 18V6"/></svg></div>
       <div class="mod-head"><h3>Tesorería y Finanzas</h3><span class="mod-badge prop">En la propuesta</span></div>
-      <p>Pagos y registro, emisión de certificados de retención, lista de cheques para endosar, extracto bancario y conciliación automática con Interbanking.</p>
+      <p>Pagos y registro, emisión de certificados de retención, lista de cheques para endosar, extracto bancario y conciliación contra las operaciones registradas.</p>
 
       <ul class="mod-features">
         <li>Orden y registro de pago</li>
         <li>Certificado de retención</li>
         <li>Cheques para endosar</li>
         <li>Conciliación bancaria</li>
-        <li>Interbanking</li>
         <li>Extracto bancario</li>
+        <li>Cuentas bancarias</li>
       </ul>
       <div class="mod-tags">
         <span class="mod-tag t-cyan">Tesorería</span>
         <span class="mod-tag t-green">Retenciones</span>
-        <span class="mod-tag t-blue">Interbanking</span>
+        <span class="mod-tag t-blue">Conciliación</span>
       </div>
     </div>
     <div class="mod-card in-prop" data-status="prop">
@@ -1050,7 +1016,7 @@ html[data-theme="light"] .sec-card{background:#fff}
 <!-- ===== INTEGRACIONES ===== -->
 <section class="section wrap reveal" id="integraciones">
   <span class="section-kicker">Integraciones</span>
-  <h2><span class="nb">Conectado con ARCA, los bancos</span> <span class="nb">y la carga por IA.</span></h2>
+  <h2><span class="nb">Conectado con ARCA, los bancos</span> <span class="nb">y tu Excel.</span></h2>
   <p class="lead">YiQi se enlaza con las herramientas que el grupo ya usa: factura vía ARCA, concilia con los bancos y carga comprobantes de forma automática con IA — sin doble carga manual.</p>
   <div class="int-grid">
     <div class="int-card">
@@ -1061,15 +1027,15 @@ html[data-theme="light"] .sec-card{background:#fff}
     </div>
     <div class="int-card">
       <div class="int-status"><span class="int-dot"></span><span class="int-state">Activo</span></div>
-      <h4>Bancos · Interbanking</h4>
-      <p class="int-desc">Conciliación bancaria automática con integración a Interbanking; contrasta extractos contra las operaciones.</p>
-      <ul><li>Interbanking</li><li>Conciliación</li><li>Cierre</li></ul>
+      <h4>Bancos · Extractos</h4>
+      <p class="int-desc">Importá el extracto bancario y conciliá contra las operaciones registradas, identificando pendientes.</p>
+      <ul><li>Extractos</li><li>Conciliación</li><li>Pendientes</li></ul>
     </div>
     <div class="int-card">
       <div class="int-status"><span class="int-dot"></span><span class="int-state">Activo</span></div>
-      <h4>Carga por IA</h4>
-      <p class="int-desc">Lee presupuestos, facturas y comprobantes de servicios y los carga solos, conservando los archivos.</p>
-      <ul><li>Presupuestos</li><li>Facturas</li><li>Comprobantes</li></ul>
+      <h4>Excel · Importación</h4>
+      <p class="int-desc">Importá listas de precios, datos maestros y saldos para la puesta en marcha y la operación.</p>
+      <ul><li>Listas</li><li>Maestros</li><li>Saldos</li></ul>
     </div>
     <div class="int-card">
       <div class="int-status"><span class="int-dot avail"></span><span class="int-state avail">Disponible</span></div>
@@ -1078,21 +1044,25 @@ html[data-theme="light"] .sec-card{background:#fff}
       <ul><li>Plantillas</li><li>Avisos</li><li>Contactos por rol</li></ul>
     </div>
   </div>
+  <div class="future-note">
+    <span class="future-kicker">Charlado para más adelante</span>
+    <p>No entra en esta etapa, pero se puede sumar sin cambiar de plataforma: <b>conexión con Interbanking</b> para conciliación bancaria automática, <b>carga de comprobantes con IA</b> y <b>alertas de desvío con IA</b>.</p>
+  </div>
 </section>
 
 <!-- ===== AUTOMATIZACIÓN ===== -->
 <section class="section wrap reveal" id="automatizacion">
   <span class="section-kicker">El diferencial</span>
   <h2><span class="nb">Llega un comprobante</span> <span class="nb">y el sistema hace el resto.</span></h2>
-  <p class="lead">Desde que entra un comprobante hasta el estado de resultados consolidado, YiQi automatiza la carga, la imputación y los registros de las tres empresas — sin intervención manual constante.</p>
+  <p class="lead">Desde que entra un comprobante hasta el estado de resultados consolidado, YiQi centraliza la operación y automatiza la imputación y los registros de las tres empresas — sin doble carga entre sistemas.</p>
   <div class="hl-banner">
     <div>
       <h3>Automatización punta a punta</h3>
       <p>Menos carga manual, menos errores y números confiables por empresa. El equipo se enfoca en analizar y decidir, no en cargar comprobantes ni repetir datos.</p>
-      <div class="flow-tags"><span>Carga por IA</span><span>Imputación correcta</span><span>Consolidación</span></div>
+      <div class="flow-tags"><span>Imputación correcta</span><span>Retenciones</span><span>Consolidación</span></div>
     </div>
     <div class="flow">
-      <div class="flow-step"><span class="n">1</span><span>La IA lee y carga la factura del proveedor</span></div>
+      <div class="flow-step"><span class="n">1</span><span>Se registra la factura del proveedor</span></div>
       <div class="flow-step"><span class="n">2</span><span>Se imputa a la razón social correcta</span></div>
       <div class="flow-step"><span class="n">3</span><span>Se calcula la retención y se registra el pago</span></div>
       <div class="flow-step flow-step--out"><span class="n">4</span><span>Impacta en el estado de resultados consolidado</span></div>
@@ -1121,46 +1091,6 @@ html[data-theme="light"] .sec-card{background:#fff}
     <div class="tl-step">
       <div class="tl-node">04</div>
       <div class="tl-content"><h3>Sales a operar acompañado</h3><p>Puesta en marcha gradual con soporte: asistente virtual, tickets, tutoriales y llamadas por Calendly.</p></div>
-    </div>
-  </div>
-  <div class="plazos-card">
-    <div class="plazos-top">
-      <span class="plazos-title">Plazos orientativos</span>
-      <span class="plazos-total"><b>~1 ago</b> · puesta en marcha gradual y por etapas</span>
-    </div>
-    <div class="plazos-bar">
-      <div class="plazos-ph p1"><span>Configuración</span></div>
-      <div class="plazos-ph p2"><span>Módulos e integraciones</span></div>
-      <div class="plazos-ph p3"><span>Ajuste · Go live</span></div>
-    </div>
-    <div class="plazos-weeks">
-      <span class="plazos-wk">Sem 1</span>
-      <span class="plazos-wk">Sem 2</span>
-      <span class="plazos-wk">Sem 4</span>
-      <span class="plazos-wk">Sem 7</span>
-      <span class="plazos-wk">Sem 10</span>
-    </div>
-    <div class="plazos-phases">
-      <div class="plazos-phase-item">
-        <span class="plazos-phase-label c1">Semanas 1–2</span>
-        <span class="plazos-phase-desc">Parámetros del sistema, catálogo, configuración impositiva, reglas de negocio y usuarios.</span>
-      </div>
-      <div class="plazos-phase-item">
-        <span class="plazos-phase-label c2">Semanas 3–7</span>
-        <span class="plazos-phase-desc">Activación de módulos, facturación vía ARCA, carga por IA en compras, conciliación con Interbanking y migración desde el sistema actual.</span>
-      </div>
-      <div class="plazos-phase-item">
-        <span class="plazos-phase-label c3">Semanas 8–10</span>
-        <span class="plazos-phase-desc">Pruebas en paralelo, capacitación del equipo y puesta en marcha gradual con soporte activo.</span>
-      </div>
-    </div>
-    <div class="plazos-note">
-      <svg width="20" height="20" viewBox="0 0 24 24" style="margin-top:2px;flex-shrink:0;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-      <ul>
-        <li>Los procesos simples se pueden habilitar antes.</li>
-        <li>El plazo final depende de la cantidad de módulos y la complejidad de los datos.</li>
-        <li>El plan de implementación específico de cada cliente se construye en las primeras reuniones.</li>
-      </ul>
     </div>
   </div>
   <p class="lead" style="margin-top:28px;font-size:13.5px">La migración es guiada y por Excel — trasladamos lo esencial para no frenar la operación:</p>
@@ -1281,16 +1211,7 @@ html[data-theme="light"] .sec-card{background:#fff}
     </div>
   </div>
 
-  <div class="dev-feature">
-    <span class="prop-ico ico-dev" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></span>
-    <div>
-      <div class="dev-feature-head">
-        <span class="prop-label">Alertas de desvío presupuestario (IA)</span>
-        <span class="badge badge-cyan">Desarrollo a medida</span>
-      </div>
-      <p>Analítica con IA que dispara alertas automáticas ante desvíos presupuestarios — por ejemplo, gastos que superan un porcentaje definido — para sumar control estratégico. Se incluye como desarrollo a medida en la cotización.</p>
-    </div>
-  </div>
+  <p class="lead" style="margin-top:18px;font-size:13.5px"><b style="color:var(--text)">La propuesta de servicio detallada está en la cotización</b>, con las especificaciones de lo acordado y cotizado.</p>
 </section>
 
 <!-- ===== IA READY ===== -->
