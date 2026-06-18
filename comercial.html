@@ -137,6 +137,7 @@
     html[data-theme="light"] .topbar { background: rgba(238,236,231,.88); }
 
     .topbar-brand   { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .topbar-logo-link { display: flex; align-items: center; }
     .topbar-divider { width: 1px; height: 20px; background: var(--line-strong); flex-shrink: 0; }
     .topbar-title   { font: 600 13px var(--sans); color: var(--muted); white-space: nowrap; }
     .topbar-period  { font: 500 11px var(--mono); color: var(--muted-2); white-space: nowrap; }
@@ -617,9 +618,10 @@
     </svg>
   </button>
   <div class="topbar-brand">
-    <!-- Logo YiQi — paths originales del DS, fills reemplazados por CSS vars -->
+    <!-- Logo YiQi — enlaza a yiqi.com.ar -->
+    <a href="https://yiqi.com.ar" target="_blank" rel="noopener" class="topbar-logo-link" aria-label="Ir a yiqi.com.ar">
     <svg viewBox="15 14 75 36" width="60" height="39" xmlns="http://www.w3.org/2000/svg"
-         aria-label="YiQi" role="img" style="flex-shrink:0;display:block"
+         aria-hidden="true" style="flex-shrink:0;display:block"
          preserveAspectRatio="xMidYMid meet">
       <!-- Y -->
       <path style="fill:var(--text)" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
@@ -630,6 +632,7 @@
       <!-- i (punto + palo) -->
       <path style="fill:var(--text)" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
     </svg>
+    </a>
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-title">Meta + CRM</span>
     <div class="topbar-divider" aria-hidden="true"></div>
