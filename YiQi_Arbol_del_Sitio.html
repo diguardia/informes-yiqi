@@ -13,6 +13,10 @@
 <style>
 .wrap{max-width:1040px;margin:0 auto;padding:36px 24px 80px}
 .head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.yq-logo{height:26px;width:auto;display:block;color:var(--text);margin-bottom:12px}
+.yq-logo .yq-q{fill:var(--cyan)}
+.yq-logo-link{display:inline-block}
+.yq-logo-link:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
 .kicker{font:600 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
 h1{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 4px}
 .sub{font:400 13px var(--sans);color:var(--muted)}
@@ -70,7 +74,13 @@ h1{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 4px}
 .diagram-shell:fullscreen{border-radius:0;background:var(--bg)}
 .diagram-shell:fullscreen .map-viewport{height:calc(100vh - 54px)}
 .pv-body{flex:1;min-height:0;background:var(--bg)}
-.pv-body iframe{width:100%;height:64vh;border:0;display:block;background:#fff}
+.pv-body iframe{width:100%;height:64vh;border:0;display:block;background:var(--bg-elev-2);color-scheme:dark}
+html{color-scheme:dark} html[data-theme="light"]{color-scheme:light}
+*{scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+*::-webkit-scrollbar-thumb:hover{background:var(--muted-2)}
+*::-webkit-scrollbar-track{background:transparent}
 .pv-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-top:1px solid var(--line)}
 .pv-url{font:400 11px var(--mono);color:var(--muted-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pv-msg{padding:48px 22px;text-align:center;color:var(--muted);font:400 13px/1.6 var(--sans)}
@@ -84,6 +94,7 @@ h1{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 4px}
 <div class="wrap">
   <div class="head">
     <div>
+      <a class="yq-logo-link" href="https://yiqi.com.ar/" target="_blank" rel="noopener" aria-label="Ir a yiqi.com.ar"><svg class="yq-logo" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YiQi"><path fill="currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path fill="currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path class="yq-q" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/><path fill="currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/></svg></a>
       <div class="kicker">// Arquitectura</div>
       <h1 id="title">Árbol del sitio — yiqi.com.ar</h1>
       <div class="sub" id="subtitle"></div>
@@ -102,6 +113,7 @@ h1{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 4px}
       <div class="pr-tabbar" role="tablist" aria-label="Árbol">
         <button class="pr-tabbtn" role="tab" aria-selected="true"  data-subject="site">Sitio</button>
         <button class="pr-tabbtn" role="tab" aria-selected="false" data-subject="ds">Design System</button>
+        <button class="pr-tabbtn" role="tab" aria-selected="false" data-subject="inf">Informes</button>
       </div>
       <div class="pr-tabbar" role="tablist" aria-label="Vista">
         <button class="pr-tabbtn" role="tab" aria-selected="false" data-view="list">Lista</button>
@@ -122,7 +134,7 @@ h1{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:6px 0 4px}
           <button class="pr-tabbtn" role="tab" aria-selected="false" data-layout="v">Vertical</button>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span class="dg-hint">rueda = zoom · arrastrar = mover · click = abrir</span>
+          <span class="dg-hint">rueda = zoom · arrastrar = mover · click = abrir · F = pantalla completa</span>
           <div class="zoomctl"><button id="zout">−</button><button id="zfit" style="font-size:11px;width:auto;padding:0 10px">Ajustar</button><button id="zin">+</button><button id="zfull" title="Pantalla completa" style="font-size:13px">⛶</button></div>
         </div>
       </div>
@@ -154,7 +166,7 @@ const ROOT_SITE={label:'Home',sub:'/',url:BASE+'/',st:'root',children:[
   {label:'IA Ready',sub:'/ia-ready.html',st:'pub'},{label:'API Docs',sub:'/api-docs.html',st:'pub'},
   {label:'Novedades',sub:'/novedades.html',st:'pub'},{label:'Capacitaciones',sub:'/capacitaciones.html',st:'pub'},
   {label:'FAQ',sub:'/faq.html',st:'pub'},{label:'Acerca de',sub:'/acerca-de.html',st:'pub'},
-  {label:'Ayuda ERP',sub:'/ayuda-erp.html',st:'pub'},{label:'Contacto',sub:'/contacto.html',st:'pub'}]},
+  {label:'Ayuda ERP',sub:'/ayuda-erp.html',st:'pub',children:[{label:'Centro de ayuda (Google Sites)',sub:'sites.google.com/yiqi.com.ar/ayudaerp',url:'https://sites.google.com/yiqi.com.ar/ayudaerp/inicio',st:'ext'}]},{label:'Contacto',sub:'/contacto.html',st:'pub'}]},
  {label:'Showcase',desc:'embebidas en Home',st:'grp',children:[
   {label:'Panel ERP',sub:'/erp-panel.html',st:'pub'},{label:'Panel mobile',sub:'/erp-mobile.html',st:'pub'}]},
  {label:'Pre-lanzamiento',desc:'fuera del sitemap',st:'grp',children:[
@@ -218,11 +230,32 @@ const ROOT_DS={label:'Catálogo DS',sub:'v1.2.7',url:CAT,st:'root',children:[
   {label:'47 Banners de apps',a:'app-banners',st:'comp'}]}
 ]};
 
+const ROOT_INF={label:'Informes',sub:'carpeta /Informes',st:'root',children:[
+ {label:'Propuestas ERP',st:'grp',children:[
+  {label:'Apolo Outdoor',sub:'YiQi_ApoloOutdoor_ERP_v1.0.html',url:'YiQi_ApoloOutdoor_ERP_v1.0.html',st:'pub'},
+  {label:'Avelia',sub:'YiQi_Avelia_ERP_v1.0.html',url:'YiQi_Avelia_ERP_v1.0.html',st:'pub'},
+  {label:'Buzzy Ventures (grupo)',sub:'YiQi_BuzzyVentures_ERP_v1.0.html',url:'YiQi_BuzzyVentures_ERP_v1.0.html',st:'pub'},
+  {label:'Droguería JAVA',sub:'YiQi_DrogueriaJAVA_ERP_v1.0.html',url:'YiQi_DrogueriaJAVA_ERP_v1.0.html',st:'pub'},
+  {label:'MelCity',sub:'YiQi_MelCity_ERP_v1.8.html',url:'YiQi_MelCity_ERP_v1.8.html',st:'pub'},
+  {label:'Template (lead)',sub:'YiQi_TEMPLATE_ERP_Lead_v1.0.html',url:'YiQi_TEMPLATE_ERP_Lead_v1.0.html',st:'pub'}]},
+ {label:'Informes ATC',st:'grp',children:[
+  {label:'ATC · Abril 2026',sub:'YiQi_Informe_ATC_202604.html',url:'YiQi_Informe_ATC_202604.html',st:'draft'},
+  {label:'ATC Operacional · Abr 2026',sub:'YiQi_Informe_ATC_Operacional_202604.html',url:'YiQi_Informe_ATC_Operacional_202604.html',st:'draft'}]},
+ {label:'Informes ECOSAN',st:'grp',children:[
+  {label:'ECOSAN · Abril 2026',sub:'YiQi_Informe_ECOSAN_202604.html',url:'YiQi_Informe_ECOSAN_202604.html',st:'pre'},
+  {label:'ECOSAN · Mayo 2026',sub:'YiQi_Informe_ECOSAN_202605.html',url:'YiQi_Informe_ECOSAN_202605.html',st:'pre'}]},
+ {label:'Otros',st:'grp',children:[
+  {label:'Comercial (Meta + CRM)',sub:'comercial.html',url:'comercial.html',st:'ext'},
+  {label:'Árbol del sitio (este)',sub:'YiQi_Arbol_del_Sitio.html',url:'YiQi_Arbol_del_Sitio.html',st:'ext'}]}
+]};
+
 const SUBJ={
  site:{root:ROOT_SITE,kind:'site',title:'Árbol del sitio — yiqi.com.ar',sub:'22 páginas · 11 públicas · 8 pre-lanzamiento · 1 borrador · 2 de sistema',
    legend:'<span class="badge badge-green">Pública</span><span class="badge badge-amber">Pre-lanzamiento</span><span class="badge badge-cyan">Borrador</span><span class="badge">Sistema</span><span class="badge badge-blue">Externo</span>'},
  ds:{root:ROOT_DS,kind:'ds',title:'Árbol del Design System — catálogo v1.2.7',sub:'8 grupos · 47 secciones documentadas · fuente: yiqi-imagen',
-   legend:'<span class="badge badge-cyan">Grupo</span><span class="badge">Componente</span><span class="badge badge-blue">Sub-componente</span>'}
+   legend:'<span class="badge badge-cyan">Grupo</span><span class="badge">Componente</span><span class="badge badge-blue">Sub-componente</span>'},
+ inf:{root:ROOT_INF,kind:'inf',title:'Árbol de Informes — carpeta /Informes',sub:'12 documentos · 6 propuestas ERP · 2 ATC · 2 ECOSAN · 2 otros',
+   legend:'<span class="badge badge-green">Propuesta ERP</span><span class="badge badge-cyan">ATC</span><span class="badge badge-amber">ECOSAN</span><span class="badge badge-blue">Otro</span>'}
 };
 
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
@@ -231,7 +264,7 @@ const BADGE={pub:['pública','badge-green'],pre:['pre-lanzam.','badge-amber'],dr
 
 /* ── LISTA (data-driven) ── */
 function row(n,kind,sub){
-  const href=urlOf(n), path=kind==='site'?(n.sub||''):(n.a?('#'+n.a):'');
+  const href=urlOf(n), path=kind==='site'?(n.sub||''):(n.a?('#'+n.a):(n.sub||''));
   let badge='';
   if(kind==='site'&&BADGE[n.st]){ const b=BADGE[n.st]; badge=`<span class="badge ${b[1]}">${b[0]}</span>`; }
   const cls='node'+(sub?' sub':''), tag=href?'a':'div', attrs=href?` href="${href}" data-url="${href}" data-label="${esc(n.label)}" data-path="${esc(path)}" target="_blank" rel="noopener"`:'';
@@ -292,14 +325,14 @@ function wireNodes(){
     const i=+el.dataset.i,n=M.nodes[i];
     el.addEventListener('mouseenter',()=>{ svg.classList.add('dim'); ancestors(i).forEach(pi=>{ const ne=vp.querySelector(`.node-g[data-i="${pi}"]`); if(ne)ne.classList.add('hl'); const ce=vp.querySelector(`.conn[data-to="${pi}"]`); if(ce)ce.classList.add('hl'); }); });
     el.addEventListener('mouseleave',()=>{ svg.classList.remove('dim'); vp.querySelectorAll('.hl').forEach(x=>x.classList.remove('hl')); });
-    el.addEventListener('click',()=>{ if(urlOf(n)) openPreview(n.label, urlOf(n), n.sub||(n.a?('#'+n.a):'')); });
+    el.addEventListener('click',()=>{ if(dragMoved) return; if(urlOf(n)) openPreview(n.label, urlOf(n), n.sub||(n.a?('#'+n.a):'')); });
   });
 }
 vpwrap.addEventListener('wheel',e=>{ e.preventDefault(); const r=vpwrap.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,f=e.deltaY<0?1.12:1/1.12,nk=Math.max(.1,Math.min(view.k*f,3)); view.tx=mx-(mx-view.tx)*(nk/view.k); view.ty=my-(my-view.ty)*(nk/view.k); view.k=nk; applyT(); },{passive:false});
-let drag=null;
-vpwrap.addEventListener('pointerdown',e=>{ drag={x:e.clientX,y:e.clientY,tx:view.tx,ty:view.ty}; vpwrap.classList.add('grabbing'); vpwrap.setPointerCapture(e.pointerId); });
-vpwrap.addEventListener('pointermove',e=>{ if(!drag)return; view.tx=drag.tx+(e.clientX-drag.x); view.ty=drag.ty+(e.clientY-drag.y); applyT(); });
-vpwrap.addEventListener('pointerup',()=>{ drag=null; vpwrap.classList.remove('grabbing'); });
+let drag=null, dragMoved=false;
+vpwrap.addEventListener('pointerdown',e=>{ drag={x:e.clientX,y:e.clientY,tx:view.tx,ty:view.ty}; dragMoved=false; vpwrap.classList.add('grabbing'); });
+vpwrap.addEventListener('pointermove',e=>{ if(!drag)return; if(Math.abs(e.clientX-drag.x)+Math.abs(e.clientY-drag.y)>4) dragMoved=true; view.tx=drag.tx+(e.clientX-drag.x); view.ty=drag.ty+(e.clientY-drag.y); applyT(); });
+window.addEventListener('pointerup',()=>{ drag=null; vpwrap.classList.remove('grabbing'); });
 function zoom(f){ const r=vpwrap.getBoundingClientRect(),cx=r.width/2,cy=r.height/2,nk=Math.max(.1,Math.min(view.k*f,3)); view.tx=cx-(cx-view.tx)*(nk/view.k); view.ty=cy-(cy-view.ty)*(nk/view.k); view.k=nk; applyT(); }
 document.getElementById('zin').onclick=()=>zoom(1.2);
 document.getElementById('zout').onclick=()=>zoom(1/1.2);
@@ -340,8 +373,12 @@ window.addEventListener('resize',()=>{ if(!document.getElementById('view-diagram
 
 /* Pantalla completa */
 const shell=document.querySelector('.diagram-shell');
-document.getElementById('zfull').onclick=()=>{ if(!document.fullscreenElement){ (shell.requestFullscreen?shell.requestFullscreen():shell.webkitRequestFullscreen&&shell.webkitRequestFullscreen()); } else { document.exitFullscreen(); } };
+function toggleFull(){ if(!document.fullscreenElement){ if(shell.requestFullscreen) shell.requestFullscreen(); else if(shell.webkitRequestFullscreen) shell.webkitRequestFullscreen(); } else { document.exitFullscreen(); } }
+document.getElementById('zfull').onclick=toggleFull;
 document.addEventListener('fullscreenchange',()=>requestAnimationFrame(fit));
+document.addEventListener('keydown',function(e){
+  if((e.key==='f'||e.key==='F') && !document.getElementById('view-diagram').hidden && !modal.classList.contains('open') && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName||'')){ e.preventDefault(); toggleFull(); }
+});
 
 /* Full-bleed cuando el diagrama está visible */
 function syncWide(){ document.body.classList.toggle('diagram-wide', !document.getElementById('view-diagram').hidden); }
@@ -349,13 +386,15 @@ document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',(
 
 /* ── Preview modal ── */
 const modal=document.getElementById('preview'),pvBody=document.getElementById('pvBody'),pvTitle=document.getElementById('pvTitle'),pvUrl=document.getElementById('pvUrl'),pvOpen=document.getElementById('pvOpen');
-function frameable(url){ try{ if(url.indexOf('mailto:')===0) return false; const h=new URL(url).host; return /(^|\.)yiqi\.com\.ar$/.test(h)||h==='diguardia.github.io'; }catch(e){ return false; } }
+function frameable(url){ if(!url||url.indexOf('mailto:')===0) return false; if(!/^https?:/i.test(url)) return true; try{ const h=new URL(url).host; return /(^|\.)yiqi\.com\.ar$/.test(h)||h==='diguardia.github.io'; }catch(e){ return false; } }
 function openPreview(label,url,path){
   if(!url) return;
   pvTitle.textContent=label; pvUrl.textContent=url; pvOpen.href=url;
   if(frameable(url)) pvBody.innerHTML='<iframe src="'+url+'" title="'+esc(label)+'" loading="lazy" referrerpolicy="no-referrer"></iframe>';
   else pvBody.innerHTML='<div class="pv-msg">Vista previa no disponible para destinos externos.<br>Usá <b>Abrir en pestaña</b>.</div>';
+  (document.fullscreenElement||document.body).appendChild(modal);
   modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  document.getElementById('pvClose').focus();
 }
 function closePreview(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); pvBody.innerHTML=''; }
 document.getElementById('pvClose').onclick=closePreview;
