@@ -165,8 +165,38 @@
       color: var(--muted); border-radius: var(--radius-sm);
       transition: background var(--tr), color var(--tr);
       flex-shrink: 0;
+      order: 99;            /* canónico mobile: hamburguesa a la derecha */
+      margin-left: 4px;
     }
     .hamburger:hover { background: var(--bg-soft); color: var(--text); }
+
+    /* DS 1.2.7 — focus visible accesible */
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 4px; }
+
+    /* DS 1.2.7 — skip link */
+    .skip-link {
+      position: absolute; top: -100%; left: 8px; z-index: 999;
+      background: var(--cyan); color: #0a0a0b;
+      padding: 8px 16px; border-radius: 0 0 var(--radius) var(--radius);
+      font: 600 13px var(--sans); text-decoration: none;
+      transition: top .2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* DS 1.2.7 — selector de período sticky global */
+    .period-bar {
+      position: sticky; top: var(--topbar-h); z-index: 95;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      margin: -28px -32px 20px; padding: 10px 32px;
+      background: rgba(12,12,14,.82);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    html[data-theme="light"] .period-bar { background: rgba(238,236,231,.88); }
+    .period-bar-label {
+      font: 600 9px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted-2); margin-right: 4px;
+    }
 
     /* ── LAYOUT ──────────────────────────────────────────────── */
     .ds-layout {
@@ -213,6 +243,13 @@
     .sidebar-footer {
       margin-top: auto; padding-top: 16px;
       border-top: 1px solid var(--line);
+    }
+    /* DS 1.2.7 — theme switch en el menú: oculto en desktop (vive en el header) */
+    .sidebar-theme { display: none; }
+    .sidebar-theme-label {
+      display: block; margin-bottom: 8px;
+      font: 600 9px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted-2);
     }
 
     /* ── CONTENT ─────────────────────────────────────────────── */
@@ -384,7 +421,9 @@
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 14px;
+      margin-top: 14px;
+      align-items: start;
     }
 
     .field-group { display: flex; flex-direction: column; gap: 5px; }
@@ -530,11 +569,12 @@
       .hamburger { display: flex; }
       .ds-layout { grid-template-columns: 1fr; }
       .sidebar {
-        position: fixed; top: var(--topbar-h); left: 0; z-index: 90;
+        position: fixed; top: var(--topbar-h); right: 0; left: auto; z-index: 90;
         width: min(var(--sidebar-w), 85vw);
-        transform: translateX(-110%);
+        transform: translateX(110%);
         transition: transform .26s cubic-bezier(.4,0,.2,1);
-        box-shadow: 4px 0 28px rgba(0,0,0,.4);
+        box-shadow: -4px 0 28px rgba(0,0,0,.4);
+        border-right: none; border-left: 1px solid var(--line);
       }
       .sidebar.open { transform: translateX(0); }
       .ds-overlay {
@@ -544,7 +584,11 @@
       }
       .ds-overlay.show { display: block; }
       .content { padding: 20px 16px 64px; }
+      .period-bar { margin: -20px -16px 16px; padding: 8px 16px; }
       .topbar-period { display: none; }
+      /* DS 1.2.7 — en mobile el theme switch sale del header y vive en el menú */
+      .topbar .theme-toggle { display: none; }
+      .sidebar-theme { display: block; }
     }
     @media (max-width: 760px) {
       .two-col     { grid-template-columns: 1fr; }
@@ -561,10 +605,12 @@
 </head>
 <body>
 
+<a href="#content" class="skip-link">Saltar al contenido principal</a>
+
 <!-- ── TOPBAR ─────────────────────────────────────────────────── -->
-<header class="topbar">
-  <button class="hamburger" onclick="toggleNav()" aria-label="Abrir menú">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+<header class="topbar" role="banner">
+  <button class="hamburger" id="nav-btn" onclick="toggleNav()" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
       <line x1="3" y1="6"  x2="21" y2="6"/>
       <line x1="3" y1="12" x2="21" y2="12"/>
       <line x1="3" y1="18" x2="21" y2="18"/>
@@ -587,7 +633,7 @@
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-title">Meta + CRM</span>
     <div class="topbar-divider" aria-hidden="true"></div>
-    <span class="topbar-period" id="topbar-period">1 ene – 31 may 2026 · completo</span>
+    <span class="topbar-period" id="topbar-period">1 ene – 18 jun 2026 · parcial</span>
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-period" style="font:500 11px var(--mono);color:var(--muted-2)" title="ID de cuenta publicitaria Meta">Meta ID · 370211010327709</span>
   </div>
@@ -676,25 +722,62 @@
       <span>ONs Concretadas</span>
     </a>
 
+    <a class="nav-link" href="#planificacion">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </span>
+      <span>Planificación</span>
+    </a>
+
+    <!-- DS 1.2.7 — theme switch del menú (visible solo en mobile) -->
+    <div class="sidebar-footer sidebar-theme">
+      <span class="sidebar-theme-label">Tema</span>
+      <div class="theme-toggle" role="group" aria-label="Tema">
+        <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button class="theme-opt" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </button>
+        <button class="theme-opt" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
   </nav>
 
   <!-- ── MAIN CONTENT ─────────────────────────────────────────── -->
   <main class="content" id="content">
 
-    <!-- ── SECCIÓN 1: RESUMEN META ─────────────────────────────── -->
-    <section id="resumen">
-      <div class="section-title">Resumen Meta</div>
-      <div class="section-sub" id="resumen-period">1 ene – 31 may 2026 · Instagram · vs mismo rango 2025</div>
+    <!-- ── SELECTOR DE PERÍODO · sticky global ──────────────────── -->
+    <div class="period-bar" role="group" aria-label="Período del informe">
+      <span class="period-bar-label">Período</span>
+      <button class="month-pill active" onclick="setPeriodo('ytd')">Todo 2026</button>
+      <button class="month-pill" onclick="setPeriodo('ene')">Ene</button>
+      <button class="month-pill" onclick="setPeriodo('feb')">Feb</button>
+      <button class="month-pill" onclick="setPeriodo('mar')">Mar</button>
+      <button class="month-pill" onclick="setPeriodo('abr')">Abr</button>
+      <button class="month-pill" onclick="setPeriodo('may')">May</button>
+      <button class="month-pill" onclick="setPeriodo('jun')">Jun</button>
+    </div>
 
-      <!-- Pills de mes -->
-      <div class="month-filter" role="group" aria-label="Filtrar por mes">
-        <button class="month-pill active" onclick="setMes('ytd')">Todo 2026</button>
-        <button class="month-pill" onclick="setMes('ene')">Ene</button>
-        <button class="month-pill" onclick="setMes('feb')">Feb</button>
-        <button class="month-pill" onclick="setMes('mar')">Mar</button>
-        <button class="month-pill" onclick="setMes('abr')">Abr</button>
-        <button class="month-pill" onclick="setMes('may')">May</button>
-      </div>
+    <!-- ── SECCIÓN 1: RESUMEN META ─────────────────────────────── -->
+    <section id="resumen" aria-label="Resumen Meta">
+      <div class="section-title">Resumen Meta</div>
+      <div class="section-sub" id="resumen-period">1 ene – 18 jun 2026 · Instagram · variación intermensual</div>
 
       <div class="kpi-grid" id="resumen-kpis">
         <div class="kpi-card card-reveal" id="kpi-alcance">
@@ -734,7 +817,7 @@
       <!-- Gráfico evolución mensual -->
       <div class="card card-reveal" style="margin-top:18px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-          <div class="card-subtitle" style="margin:0">Evolución mensual · Ene–May 2026</div>
+          <div class="card-subtitle" style="margin:0">Evolución mensual · Ene–Jun 2026</div>
           <div style="display:flex;gap:5px;flex-wrap:wrap">
             <button class="month-pill active" data-meta-metric="conv"    onclick="toggleMetaLine('conv')">Conversaciones</button>
             <button class="month-pill active" data-meta-metric="inter"   onclick="toggleMetaLine('inter')">Interacciones</button>
@@ -750,9 +833,9 @@
     </section>
 
     <!-- ── SECCIÓN 2: ANUNCIOS ─────────────────────────────────── -->
-    <section id="anuncios">
+    <section id="anuncios" aria-label="Anuncios">
       <div class="section-title">Anuncios</div>
-      <div class="section-sub">1 ene – 31 may 2026 · 21 campañas con gasto · 7 activas en mayo · clic en columna para ordenar</div>
+      <div class="section-sub" id="anuncios-sub">Campañas con gasto · según el período de Resumen Meta · clic en columna para ordenar</div>
 
       <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
@@ -761,195 +844,20 @@
             <button class="search-clear" type="button" aria-label="Limpiar búsqueda" title="Limpiar (Esc)">×</button>
             <span class="search-kbd" aria-hidden="true">⌘K</span>
           </span>
-          <span style="font:500 11px var(--mono); color:var(--muted-2); margin-left:auto">
-            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cyan);margin-right:4px"></span>
-            Activa en mayo (completo)
-          </span>
+          <span id="anuncios-count" style="font:500 11px var(--mono); color:var(--muted-2); margin-left:auto"></span>
         </div>
         <div class="table-wrap">
           <table class="ds-table" id="tabla-anuncios">
             <thead>
               <tr>
                 <th class="sortable" onclick="sortTable('tabla-anuncios',0)">Anuncio <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-anuncios',1)">Estado <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-anuncios',2)">Gasto <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-anuncios',3)">Resultado <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-anuncios',4)">Costo/Res. <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-anuncios',5)">Vistas <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-anuncios',1)">Gasto <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-anuncios',2)">Resultado <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-anuncios',3)">Costo/Res. <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-anuncios',4)">Vistas <span class="sort-arrow">⇅</span></th>
               </tr>
             </thead>
-            <tbody>
-              <!-- ── Activas en mayo (resaltadas) ────────────────────── -->
-              <tr style="background:var(--cyan-soft)">
-                <td>@interbanking — engagement <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-amber">En pausa</span></td>
-                <td data-num="700080"><span class="num">$700.080</span></td>
-                <td>405 conversaciones</td>
-                <td><span class="num">$1.729/conv</span></td>
-                <td data-num="237874"><span class="num">237.874</span></td>
-              </tr>
-              <tr style="background:var(--cyan-soft)">
-                <td>Instagram Post — link clicks <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="403664"><span class="num">$403.664</span></td>
-                <td>7.178 clics</td>
-                <td><span class="num">$56/clic</span></td>
-                <td data-num="372841"><span class="num">372.841</span></td>
-              </tr>
-              <tr style="background:var(--cyan-soft)">
-                <td>[15/5/2026] Promoción FB <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="63984"><span class="num">$63.984</span></td>
-                <td>24 conversaciones</td>
-                <td><span class="num">$2.666/conv</span></td>
-                <td data-num="17687"><span class="num">17.687</span></td>
-              </tr>
-              <tr style="background:var(--cyan-soft)">
-                <td>Puedes vender más — leads <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="69392"><span class="num">$69.392</span></td>
-                <td>8 leads</td>
-                <td><span class="num">$8.674/lead</span></td>
-                <td data-num="7219"><span class="num">7.219</span></td>
-              </tr>
-              <tr style="background:var(--cyan-soft)">
-                <td>Construye con IA <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="45974"><span class="num">$45.974</span></td>
-                <td>14 conversaciones</td>
-                <td><span class="num">$3.284/conv</span></td>
-                <td data-num="5988"><span class="num">5.988</span></td>
-              </tr>
-              <tr style="background:var(--cyan-soft)">
-                <td>Instagram Post — mensajes <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="38445"><span class="num">$38.445</span></td>
-                <td>10 conversaciones</td>
-                <td><span class="num">$3.844/conv</span></td>
-                <td data-num="4817"><span class="num">4.817</span></td>
-              </tr>
-              <tr style="background:var(--cyan-soft)">
-                <td>[27/5/2026] Formulario YiQi <span class="badge badge-cyan" style="margin-left:4px">● May</span></td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="20340"><span class="num">$20.340</span></td>
-                <td>5 leads</td>
-                <td><span class="num">$4.068/lead</span></td>
-                <td data-num="1052"><span class="num">1.052</span></td>
-              </tr>
-              <!-- ── Fuera del período activo (ene–abr) ──────────────── -->
-              <tr>
-                <td>Con @interbanking</td>
-                <td><span class="badge badge-amber">En pausa</span></td>
-                <td data-num="174331"><span class="num">$174.331</span></td>
-                <td>12 conversaciones</td>
-                <td><span class="num">$14.528/conv</span></td>
-                <td data-num="29393"><span class="num">29.393</span></td>
-              </tr>
-              <tr>
-                <td>Interbanking en YiQi</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="79835"><span class="num">$79.835</span></td>
-                <td>23 conversaciones</td>
-                <td><span class="num">$3.471/conv</span></td>
-                <td data-num="12617"><span class="num">12.617</span></td>
-              </tr>
-              <tr>
-                <td>Menos tareas manuales</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="69165"><span class="num">$69.165</span></td>
-                <td>8 conversaciones</td>
-                <td><span class="num">$8.646/conv</span></td>
-                <td data-num="10055"><span class="num">10.055</span></td>
-              </tr>
-              <tr>
-                <td>Reserva tu demo</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="57861"><span class="num">$57.861</span></td>
-                <td>24 conversaciones</td>
-                <td><span class="num">$2.411/conv</span></td>
-                <td data-num="11897"><span class="num">11.897</span></td>
-              </tr>
-              <tr>
-                <td>YiQi ERP — 15 años (msgs)</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="49926"><span class="num">$49.926</span></td>
-                <td>4 conversaciones</td>
-                <td><span class="num">$12.482/conv</span></td>
-                <td data-num="3355"><span class="num">3.355</span></td>
-              </tr>
-              <tr>
-                <td>La automatización — link clicks</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="29998"><span class="num">$29.998</span></td>
-                <td>620 clics</td>
-                <td><span class="num">$48/clic</span></td>
-                <td data-num="27264"><span class="num">27.264</span></td>
-              </tr>
-              <tr>
-                <td>YiQi ERP — 15 años · msgs</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="29662"><span class="num">$29.662</span></td>
-                <td>7 conversaciones</td>
-                <td><span class="num">$4.237/conv</span></td>
-                <td data-num="6319"><span class="num">6.319</span></td>
-              </tr>
-              <tr>
-                <td>La automatización — msgs</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="23736"><span class="num">$23.736</span></td>
-                <td>10 conversaciones</td>
-                <td><span class="num">$2.374/conv</span></td>
-                <td data-num="4243"><span class="num">4.243</span></td>
-              </tr>
-              <tr>
-                <td>Gestiona tu empresa</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="20807"><span class="num">$20.807</span></td>
-                <td>10 conversaciones</td>
-                <td><span class="num">$2.081/conv</span></td>
-                <td data-num="3613"><span class="num">3.613</span></td>
-              </tr>
-              <tr>
-                <td>Instagram Post #2</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="20776"><span class="num">$20.776</span></td>
-                <td>23 conversaciones</td>
-                <td><span class="num">$903/conv</span></td>
-                <td data-num="7929"><span class="num">7.929</span></td>
-              </tr>
-              <tr>
-                <td>La automatización — msgs #2</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="19870"><span class="num">$19.870</span></td>
-                <td>7 conversaciones</td>
-                <td><span class="num">$2.839/conv</span></td>
-                <td data-num="2660"><span class="num">2.660</span></td>
-              </tr>
-              <tr>
-                <td>YiQi ERP — tickets</td>
-                <td><span class="badge badge-amber">En pausa</span></td>
-                <td data-num="19631"><span class="num">$19.631</span></td>
-                <td>6 conversaciones</td>
-                <td><span class="num">$3.272/conv</span></td>
-                <td data-num="3739"><span class="num">3.739</span></td>
-              </tr>
-              <tr>
-                <td>Mercado Libre / Frávega</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="17785"><span class="num">$17.785</span></td>
-                <td>5 conversaciones</td>
-                <td><span class="num">$3.557/conv</span></td>
-                <td data-num="3567"><span class="num">3.567</span></td>
-              </tr>
-              <tr>
-                <td>Mitos vs realidad</td>
-                <td><span class="badge badge-cyan">Activo</span></td>
-                <td data-num="11985"><span class="num">$11.985</span></td>
-                <td>1 conversación</td>
-                <td><span class="num">$11.985/conv</span></td>
-                <td data-num="2242"><span class="num">2.242</span></td>
-              </tr>
-            </tbody>
+            <tbody id="anuncios-tbody"></tbody>
           </table>
           <div class="table-empty" id="empty-anuncios" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
         </div>
@@ -957,27 +865,16 @@
 
       <!-- Gráfico gasto por campaña -->
       <div class="card card-reveal" style="margin-top:14px">
-        <div class="card-subtitle">Gasto por campaña · Top 10 · YTD 2026 (ARS)</div>
+        <div class="card-subtitle" id="anuncios-chart-sub">Gasto por campaña · Top 10 · ene–jun 2026 (ARS)</div>
         <div class="chart-wrap-tall"><canvas id="chart-anuncios" aria-label="Gasto por campaña"></canvas></div>
       </div>
 
     </section>
 
     <!-- ── SECCIÓN 3: FUNNEL CRM ───────────────────────────────── -->
-    <section id="funnel">
+    <section id="funnel" aria-label="Funnel CRM">
       <div class="section-title">Funnel CRM</div>
       <div class="section-sub" id="funnel-period-sub">Seleccioná un período para cargar los datos de cotizaciones automáticamente</div>
-
-      <!-- Period pills -->
-      <div class="month-filter" style="margin-bottom:14px">
-        <span style="font:500 11px var(--mono);color:var(--muted-2);margin-right:4px">Período:</span>
-        <button class="month-pill funnel-pill active" onclick="setFunnelPeriod('ytd')">Todo 2026</button>
-        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('ene')">Ene</button>
-        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('feb')">Feb</button>
-        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('mar')">Mar</button>
-        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('abr')">Abr</button>
-        <button class="month-pill funnel-pill" onclick="setFunnelPeriod('may')">May</button>
-      </div>
 
       <!-- KPI ONs por estado -->
       <div class="kpi-grid" style="margin-bottom:18px">
@@ -1055,7 +952,7 @@
             <div class="rate-card">
               <div class="rate-label">Alcance → Contacto</div>
               <div class="rate-value" id="r-alc-cont">0,1%</div>
-              <div class="rate-sub" id="s-alc-cont">86 / 355.258</div>
+              <div class="rate-sub" id="s-alc-cont">96 / 367.494</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">Contacto → ON</div>
@@ -1075,7 +972,7 @@
             <div class="rate-card">
               <div class="rate-label">Costo por ON</div>
               <div class="rate-value" id="r-costo-on">—</div>
-              <div class="rate-sub" id="s-costo-on">$1.901.187 / ONs</div>
+              <div class="rate-sub" id="s-costo-on">$2.264.053 / ONs</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">Ticket promedio enviado</div>
@@ -1093,9 +990,9 @@
     </section>
 
     <!-- ── SECCIÓN 4: NUEVAS ONs DETALLE ────────────────────── -->
-    <section id="nuevas-ons">
+    <section id="nuevas-ons" aria-label="Nuevas ONs — Detalle">
       <div class="section-title">Nuevas ONs — Detalle</div>
-      <div class="section-sub">Oportunidades de Negocio creadas en el CRM · 54 ONs YTD 2026 · mostrando abr–may (19 registros) · clic en columna para ordenar</div>
+      <div class="section-sub" id="nuevas-sub">Oportunidades de Negocio creadas en el CRM · 54 ONs YTD 2026 · cargadas abr–may · clic en columna para ordenar</div>
 
       <div class="kpi-grid" style="margin-bottom:18px">
         <div class="kpi-card kpi-cyan card-reveal">
@@ -1112,6 +1009,11 @@
           <div class="kpi-label">Origen Cliente YTD</div>
           <div class="kpi-value">38</div>
           <div class="kpi-delta neutral">70,4% del total</div>
+        </div>
+        <div class="kpi-card kpi-green card-reveal">
+          <div class="kpi-label">Origen Web YTD</div>
+          <div class="kpi-value">10</div>
+          <div class="kpi-delta neutral">18,5% del total · yiqi.com.ar</div>
         </div>
         <div class="kpi-card kpi-muted card-reveal">
           <div class="kpi-label">Origen Meta/IG YTD</div>
@@ -1281,9 +1183,9 @@
 
     <!-- ── SECCIÓN 5: ONs CONCRETADAS ────────────────────────── -->
 
-    <section id="concretadas">
+    <section id="concretadas" aria-label="ONs Concretadas — Detalle">
       <div class="section-title">ONs Concretadas — Detalle</div>
-      <div class="section-sub">Oportunidades concretadas en 2026 · 15 registros · clic en columna para ordenar</div>
+      <div class="section-sub" id="concretadas-sub">Oportunidades concretadas en 2026 · 15 registros · clic en columna para ordenar</div>
 
       <div class="kpi-grid" style="margin-bottom:18px">
         <div class="kpi-card kpi-green card-reveal">
@@ -1452,13 +1354,51 @@
       </div>
     </section>
 
+    <!-- ── SECCIÓN 6: PLANIFICACIÓN ─────────────────────────────── -->
+    <section id="planificacion" aria-label="Planificación">
+      <div class="section-title">Planificación</div>
+      <div class="section-sub">Acciones comerciales planificadas · prioridad y período por definir · clic en columna para ordenar</div>
+
+      <div class="card card-reveal" style="margin-top:24px">
+        <div class="table-toolbar">
+          <span class="search-wrap">
+            <input class="table-search" id="search-plan" placeholder="Buscar acción…" aria-label="Buscar en planificación">
+            <button class="search-clear" type="button" aria-label="Limpiar búsqueda" title="Limpiar (Esc)">×</button>
+            <span class="search-kbd" aria-hidden="true">⌘K</span>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table class="ds-table" id="tabla-plan">
+            <thead>
+              <tr>
+                <th class="sortable" onclick="sortTable('tabla-plan',0)">Categoría <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-plan',1)">Acción <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-plan',2)">Prioridad <span class="sort-arrow">⇅</span></th>
+                <th class="sortable" onclick="sortTable('tabla-plan',3)">Período <span class="sort-arrow">⇅</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Acciones comerciales</td><td><strong>Campañas</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+              <tr><td>Acciones comerciales</td><td><strong>Ventas</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+              <tr><td>Acciones comerciales</td><td><strong>iA Ready</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+              <tr><td>Acciones comerciales</td><td><strong>Costos</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+              <tr><td>Acciones comerciales</td><td><strong>Importadores</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+              <tr><td>Acciones presenciales o directas</td><td><strong>Email marketing</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+              <tr><td>Acciones presenciales o directas</td><td><strong>Capacitaciones</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
+            </tbody>
+          </table>
+          <div class="table-empty" id="empty-plan" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
+        </div>
+      </div>
+    </section>
+
   </main><!-- /content -->
 </div><!-- /ds-layout -->
 
 <div class="ds-overlay" id="overlay" onclick="closeNav()" aria-hidden="true"></div>
 
-<footer class="page-footer">
-  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://yiqi.com.ar/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.6</a> · Meta Ads ID 370211010327709 · Actualizado 31 may 2026
+<footer class="page-footer" role="contentinfo">
+  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://yiqi.com.ar/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7</a> · Meta Ads ID 370211010327709 · Actualizado 18 jun 2026
 </footer>
 
 <script>
@@ -1469,58 +1409,67 @@
 //               period }
 const META_DATA = {
   ytd: {
-    period:   '1 ene – 31 may 2026 · Instagram · vs mismo rango 2025',
-    alcance:  '297.299',    dAlcance: ['positive', 'alcance único · ene–may 2026'],
-    conv:     '593',        dConv:    ['neutral',  'campañas de mensajes'],
-    cont:     '86',         dCont:    ['neutral',  'reportados por campaña'],
-    gasto:    '$1.967.248', dGasto:   ['negative', '↓ 53,8% vs 2025 · ARS'],
-    inter:    '23.536',     dInter:   ['positive', '↑ 322,7% vs 2025'],
-    clics:    '13.135',     dClics:   ['positive', '↑ 161,0% vs 2025'],
+    period:   '1 ene – 18 jun 2026 · Instagram · variación intermensual',
+    alcance:  '309.535',    dAlcance: ['positive', 'alcance único · ene–jun 2026'],
+    conv:     '618',        dConv:    ['neutral',  'campañas de mensajes'],
+    cont:     '96',         dCont:    ['neutral',  'reportados por campaña'],
+    gasto:    '$2.264.053', dGasto:   ['neutral', 'acumulado ene–jun · ARS'],
+    inter:    '29.092',     dInter:   ['neutral', 'acumulado ene–jun'],
+    clics:    '13.303',     dClics:   ['neutral', 'acumulado ene–jun'],
   },
   ene: {
     period:   'Enero 2026 · Instagram · 1–31 ene',
-    alcance:  '3.605',   dAlcance: ['negative', '↓ 95,3% vs ene 2025'],
-    conv:     '5',       dConv:    ['neutral',  '2 campañas messaging activas'],
+    alcance:  '3.605',   dAlcance: ['neutral', 'primer mes (sin mes previo)'],
+    conv:     '5',       dConv:    ['neutral', 'primer mes (sin mes previo)'],
     cont:     null,      dCont:    ['neutral',  'no reportado por campaña'],
-    gasto:    '$61.911', dGasto:   ['negative', '↓ 89,9% vs ene 2025'],
-    inter:    '887',     dInter:   ['negative', '↓ 25,1% vs ene 2025'],
-    clics:    '48',      dClics:   ['negative', '↓ 95,4% vs ene 2025'],
+    gasto:    '$61.911', dGasto:   ['neutral', 'primer mes (sin mes previo)'],
+    inter:    '887',     dInter:   ['neutral', 'primer mes (sin mes previo)'],
+    clics:    '48',      dClics:   ['neutral', 'primer mes (sin mes previo)'],
   },
   feb: {
     period:   'Febrero 2026 · Instagram · 1–28 feb',
-    alcance:  '45.484',   dAlcance: ['negative', '↓ 58,3% vs feb 2025'],
-    conv:     '103',      dConv:    ['neutral',  '8 campañas messaging activas'],
+    alcance:  '45.484',   dAlcance: ['positive', '↑ 1161,7% vs ene'],
+    conv:     '103',      dConv:    ['positive', '↑ 1960,0% vs ene'],
     cont:     null,       dCont:    ['neutral',  'no reportado por campaña'],
-    gasto:    '$265.850', dGasto:   ['negative', '↓ 69,1% vs feb 2025'],
-    inter:    '5.212',    dInter:   ['positive', '↑ 285,8% vs feb 2025'],
-    clics:    '1.408',    dClics:   ['positive', '↑ 13,5% vs feb 2025'],
+    gasto:    '$265.850', dGasto:   ['positive', '↑ 329,4% vs ene'],
+    inter:    '5.212',    dInter:   ['positive', '↑ 487,6% vs ene'],
+    clics:    '1.408',    dClics:   ['positive', '↑ 2833,3% vs ene'],
   },
   mar: {
     period:   'Marzo 2026 · Instagram · 1–31 mar',
-    alcance:  '74.139',   dAlcance: ['positive', '↑ 37,1% vs mar 2025'],
-    conv:     '199',      dConv:    ['neutral',  '5 campañas messaging activas'],
+    alcance:  '74.139',   dAlcance: ['positive', '↑ 63,0% vs feb'],
+    conv:     '199',      dConv:    ['positive', '↑ 93,2% vs feb'],
     cont:     null,       dCont:    ['neutral',  'no reportado por campaña'],
-    gasto:    '$568.390', dGasto:   ['negative', '↓ 50,0% vs mar 2025'],
-    inter:    '2.610',    dInter:   ['positive', '↑ 140,6% vs mar 2025'],
-    clics:    '2.017',    dClics:   ['positive', '↑ 105,8% vs mar 2025'],
+    gasto:    '$568.390', dGasto:   ['positive', '↑ 113,8% vs feb'],
+    inter:    '2.610',    dInter:   ['negative', '↓ 49,9% vs feb'],
+    clics:    '2.017',    dClics:   ['positive', '↑ 43,3% vs feb'],
   },
   abr: {
     period:   'Abril 2026 · Instagram · 1–30 abr',
-    alcance:  '129.222',  dAlcance: ['positive', '↑ 117,7% vs abr 2025'],
-    conv:     '186',      dConv:    ['neutral',  '2 campañas messaging activas'],
+    alcance:  '129.222',  dAlcance: ['positive', '↑ 74,3% vs mar'],
+    conv:     '186',      dConv:    ['negative', '↓ 6,5% vs mar'],
     cont:     null,       dCont:    ['neutral',  'no reportado por campaña'],
-    gasto:    '$526.277', dGasto:   ['negative', '↓ 38,6% vs abr 2025'],
-    inter:    '5.668',    dInter:   ['positive', '↑ 371,9% vs abr 2025'],
-    clics:    '4.856',    dClics:   ['positive', '↑ 339,1% vs abr 2025'],
+    gasto:    '$526.277', dGasto:   ['negative', '↓ 7,4% vs mar'],
+    inter:    '5.668',    dInter:   ['positive', '↑ 117,2% vs mar'],
+    clics:    '4.856',    dClics:   ['positive', '↑ 140,8% vs mar'],
   },
   may: {
     period:   'Mayo 2026 · Instagram · completo',
-    alcance:  '109.675',  dAlcance: ['positive', '↑ 135,6% vs may 2025'],
-    conv:     '100',      dConv:    ['neutral',  '4 campañas messaging activas'],
+    alcance:  '109.675',  dAlcance: ['negative', '↓ 15,1% vs abr'],
+    conv:     '100',      dConv:    ['negative', '↓ 46,2% vs abr'],
     cont:     '86',       dCont:    ['neutral',  'nuevos contactos campañas may'],
-    gasto:    '$544.821', dGasto:   ['negative', '↓ 30,6% vs may 2025'],
-    inter:    '9.159',    dInter:   ['positive', '↑ 1113,0% vs may 2025'],
-    clics:    '4.806',    dClics:   ['positive', '↑ 619,6% vs may 2025'],
+    gasto:    '$544.821', dGasto:   ['positive', '↑ 3,5% vs abr'],
+    inter:    '9.159',    dInter:   ['positive', '↑ 61,6% vs abr'],
+    clics:    '4.806',    dClics:   ['negative', '↓ 1,0% vs abr'],
+  },
+  jun: {
+    period:   'Junio 2026 · Instagram · 1–18 jun (parcial)',
+    alcance:  '12.236',   dAlcance: ['negative', '↓ 88,8% vs may'],
+    conv:     '25',       dConv:    ['negative', '↓ 75,0% vs may'],
+    cont:     '10',       dCont:    ['negative', '↓ 88,4% vs may'],
+    gasto:    '$296.805', dGasto:   ['negative', '↓ 45,5% vs may'],
+    inter:    '5.556',    dInter:   ['negative', '↓ 39,3% vs may'],
+    clics:    '168',      dClics:   ['negative', '↓ 96,5% vs may'],
   },
 };
 
@@ -1532,50 +1481,58 @@ const COTIZ_DATA = {
   ytd: {
     period:   '1 ene – 31 may 2026 · 54 ONs nuevas · 15 concretadas',
     ons:       54,  enCurso: null, enviadas: null, ganadas: 15, vencidas: null,
-    dOns:  '54 ONs nuevas YTD 2026',
+    dOns:  '54 ONs nuevas · acumulado ene–may',        dOnsDir:  'neutral',
     dEnv:  'pendiente · ingresar manualmente',
-    dGan:  '$13.885.039 ARS acumulado YTD',
-    dTasa: '27,8% conversión (15 / 54)',
+    dGan:  '$13.885.039 ARS · 15 concretadas (acum.)', dGanDir:  'neutral',
+    dTasa: '27,8% conversión (15 / 54)',               dTasaDir: 'neutral',
   },
   ene: {
     period:   'Enero 2026 · 6 ONs nuevas · 6 concretadas',
     ons:       6,   enCurso: null, enviadas: null, ganadas: 6, vencidas: null,
-    dOns:  '6 ONs creadas en enero',
+    dOns:  'primer mes (sin mes previo)', dOnsDir:  'neutral',
     dEnv:  'pendiente · ingresar manualmente',
-    dGan:  '$3.115.783 ARS · 6 concretadas',
-    dTasa: 'Ene: 100,0% (incluye ONs viejas que cerraron)',
+    dGan:  '$3.115.783 ARS · primer mes', dGanDir:  'neutral',
+    dTasa: 'primer mes (sin mes previo)', dTasaDir: 'neutral',
   },
   feb: {
     period:   'Febrero 2026 · 6 ONs nuevas · 1 concretada',
     ons:       6,   enCurso: null, enviadas: null, ganadas: 1, vencidas: null,
-    dOns:  '6 ONs creadas en febrero',
+    dOns:  'sin cambios vs ene',   dOnsDir:  'neutral',
     dEnv:  'pendiente · ingresar manualmente',
-    dGan:  '$353.925 ARS · 1 concretada',
-    dTasa: 'Feb: 16,7% de conversión',
+    dGan:  '↓ 83,3% vs ene',       dGanDir:  'negative',
+    dTasa: '↓ 83,3 pp vs ene',     dTasaDir: 'negative',
   },
   mar: {
     period:   'Marzo 2026 · 23 ONs nuevas · 3 concretadas',
     ons:       23,  enCurso: null, enviadas: null, ganadas: 3, vencidas: null,
-    dOns:  '23 ONs creadas en marzo',
+    dOns:  '↑ 283,3% vs feb',  dOnsDir:  'positive',
     dEnv:  'pendiente · ingresar manualmente',
-    dGan:  '$5.287.209 ARS · 3 concretadas',
-    dTasa: 'Mar: 13,0% de conversión',
+    dGan:  '↑ 200,0% vs feb',  dGanDir:  'positive',
+    dTasa: '↓ 3,6 pp vs feb',  dTasaDir: 'negative',
   },
   abr: {
     period:   'Abril 2026 · 11 ONs nuevas · 5 concretadas',
     ons:       11,  enCurso: null, enviadas: null, ganadas: 5, vencidas: null,
-    dOns:  '11 ONs creadas en abril',
+    dOns:  '↓ 52,2% vs mar',   dOnsDir:  'negative',
     dEnv:  'pendiente · ingresar manualmente',
-    dGan:  '$5.128.123 ARS · 5 concretadas',
-    dTasa: 'Abr: 45,5% de conversión',
+    dGan:  '↑ 66,7% vs mar',   dGanDir:  'positive',
+    dTasa: '↑ 32,4 pp vs mar', dTasaDir: 'positive',
   },
   may: {
     period:   'Mayo 2026 · 8 ONs nuevas · 0 concretadas',
     ons:       8,   enCurso: null, enviadas: null, ganadas: 0, vencidas: null,
-    dOns:  '8 ONs creadas (5 cliente · 2 web · 1 recomendación)',
+    dOns:  '↓ 27,3% vs abr',    dOnsDir:  'negative',
     dEnv:  'pendiente · ingresar manualmente',
-    dGan:  '0 concretadas en may · vs 5 en may 2025',
-    dTasa: 'May: 0,0% (sin cierres)',
+    dGan:  '↓ 100,0% vs abr',   dGanDir:  'negative',
+    dTasa: '↓ 45,5 pp vs abr',  dTasaDir: 'negative',
+  },
+  jun: {
+    period:   'Junio 2026 · 1–18 jun · datos de CRM pendientes de carga',
+    ons:       0,   enCurso: null, enviadas: null, ganadas: 0, vencidas: null,
+    dOns:  'Pendiente · cargar ONs de junio',     dOnsDir:  'neutral',
+    dEnv:  'pendiente · ingresar manualmente',
+    dGan:  'Pendiente · sin cierres cargados',    dGanDir:  'neutral',
+    dTasa: 'Jun: pendiente de carga',             dTasaDir: 'neutral',
   },
 };
 
@@ -1603,10 +1560,12 @@ function setFunnelPeriod(key) {
   const tasa = d.ons > 0 ? fmtPct((d.ganadas / d.ons) * 100) : '—';
   v('cotiz-v-tasa', tasa);
 
-  dt('cotiz-d-ons',  d.dOns);
-  dt('cotiz-d-env',  d.dEnv);
-  dt('cotiz-d-gan',  d.dGan);
-  dt('cotiz-d-tasa', d.dTasa);
+  // Delta + color según dirección (variación intermensual)
+  const dd = (id, txt, dir) => { const el = document.getElementById(id); if (el) { el.textContent = txt; el.className = 'kpi-delta ' + (dir || 'neutral'); } };
+  dd('cotiz-d-ons',  d.dOns,  d.dOnsDir);
+  dd('cotiz-d-env',  d.dEnv,  'neutral');
+  dd('cotiz-d-gan',  d.dGan,  d.dGanDir);
+  dd('cotiz-d-tasa', d.dTasa, d.dTasaDir);
 
   // Pre-llenar inputs del calculador
   const setInput = (id, val) => {
@@ -1632,12 +1591,66 @@ const KPI_COLORS = {
   clics:   { positive: 'kpi-cyan',  negative: 'kpi-red',   neutral: 'kpi-muted' },
 };
 
+// Selector de período global (controla Resumen Meta, Anuncios, Funnel CRM y tablas de ONs)
+function setPeriodo(key) {
+  // Preservar la posición de scroll: los re-render de charts/tablas cambian el alto
+  // de la página y el navegador reajustaría el scroll hacia arriba.
+  const y = window.scrollY;
+  const keepScroll = () => window.scrollTo(0, y);
+
+  document.querySelectorAll('.period-bar .month-pill').forEach(p => {
+    p.classList.toggle('active', p.getAttribute('onclick').includes(`'${key}'`));
+  });
+  setMes(key);
+  setFunnelPeriod(key);
+  filterOnsByPeriodo(key);
+
+  keepScroll();
+  requestAnimationFrame(keepScroll);   // tras el reflow de los charts
+  setTimeout(keepScroll, 0);
+}
+
+// Filtra las tablas de Nuevas ONs (fecha creación) y Concretadas (fecha concreción) por el período
+const _MES_NUM = { '01':'ene','02':'feb','03':'mar','04':'abr','05':'may','06':'jun' };
+function filterOnsByPeriodo(key) {
+  // [tabla, índice de columna con la fecha, input de búsqueda, empty, subtítulo, sufijo del subtítulo]
+  const tablas = [
+    ['tabla-nuevas',      0, 'search-nuevas',      'empty-nuevas',
+     'nuevas-sub',      'Oportunidades de Negocio creadas en el CRM · cargadas abr–may'],
+    ['tabla-concretadas', 4, 'search-concretadas', 'empty-concretadas',
+     'concretadas-sub', 'Oportunidades concretadas en 2026'],
+  ];
+  tablas.forEach(([tid, col, sid, eid, subId, subBase]) => {
+    const q = (document.getElementById(sid)?.value || '').toLowerCase();
+    let inPeriodCount = 0, shown = 0;
+    document.querySelectorAll(`#${tid} tbody tr`).forEach(tr => {
+      const dn = (tr.cells[col] && tr.cells[col].dataset.num || '').replace(/\D/g, '');
+      const mes = _MES_NUM[dn.slice(4, 6)];
+      const inPeriod = (key === 'ytd') || (mes === key);
+      tr.dataset.periodHide = inPeriod ? '' : '1';
+      if (inPeriod) inPeriodCount++;
+      const show = inPeriod && tr.textContent.toLowerCase().includes(q);
+      tr.style.display = show ? '' : 'none';
+      if (show) shown++;
+    });
+    const empty = document.getElementById(eid);
+    if (empty) empty.style.display = shown === 0 ? 'block' : 'none';
+    // Subtítulo dinámico
+    const sub = document.getElementById(subId);
+    if (sub) {
+      const lbl = (typeof PERIODO_LABEL !== 'undefined' && PERIODO_LABEL[key]) || '';
+      const reg = `${inPeriodCount} ${inPeriodCount === 1 ? 'registro' : 'registros'} · ${lbl}`;
+      sub.textContent = `${subBase} · ${reg} · clic en columna para ordenar`;
+    }
+  });
+}
+
 function setMes(key) {
   const d = META_DATA[key];
   if (!d) return;
 
-  // Actualizar pills
-  document.querySelectorAll('.month-pill').forEach(p => {
+  // Resaltar el pill activo en la barra de período sticky
+  document.querySelectorAll('.period-bar .month-pill').forEach(p => {
     p.classList.toggle('active', p.getAttribute('onclick').includes(`'${key}'`));
   });
 
@@ -1673,11 +1686,24 @@ function setMes(key) {
     // Placeholder opacity
     cardEl.classList.toggle('kpi-placeholder', !val);
   });
+
+  // Filtrar el gráfico y la tabla de anuncios por el período seleccionado
+  _currentMes = key;
+  if (typeof renderAnunciosChart === 'function') renderAnunciosChart();
+  if (typeof renderAnunciosTable === 'function') renderAnunciosTable();
 }
 
 /* ─── UTILS ──────────────────────────────────────────────────── */
 function getCSSVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+// DS 1.2.7 — color de chart derivado de token CSS (sin hardcodear). Aplica alpha sobre un token hex.
+function rgbaVar(name, a) {
+  const h = getCSSVar(name).replace('#', '');
+  if (h.length < 6) return getCSSVar(name);
+  const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+  return `rgba(${r},${g},${b},${a})`;
 }
 
 function fmtPct(n) {
@@ -1696,6 +1722,7 @@ function val(id) {
 
 /* ─── CHARTS STATE ──────────────────────────────────────────── */
 const _charts = {};
+let _currentMes = 'ytd';   // período activo de Resumen Meta (alimenta el gráfico de anuncios)
 
 function sortDonutDesc(labels, data, colors) {
   const idx = data.map((_, i) => i).sort((a, b) => data[b] - data[a]);
@@ -1708,15 +1735,15 @@ function sortDonutDesc(labels, data, colors) {
 
 /* ─── ORIGEN CHART (removido — sección eliminada) ───────────── */
 /* ─── META LINE CHART ───────────────────────────────────────── */
-const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May'];
+const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
 
-// Datos reales de Meta Ads API · cuenta 370211010327709 · 2026-01-01 a 2026-05-31
+// Datos reales de Meta Ads API · cuenta 370211010327709 · 2026-01-01 a 2026-06-18 (jun parcial 1–18)
 const META_SERIES = {
-  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94],   color: '--green',  right: false },
-  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045], color: '--blue',   right: false },
-  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302], color: '--purple', right: false },
-  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479],  color: '--red',    right: false },
-  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8], color: '--amber', right: true, suffix: 'k' },
+  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   25],   color: '--green',  right: false },
+  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 5556], color: '--blue',   right: false },
+  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 168],  color: '--purple', right: false },
+  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  297],  color: '--red',    right: false },
+  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 12.2], color: '--amber', right: true, suffix: 'k' },
 };
 
 const META_VISIBLE = new Set(['conv', 'inter']);
@@ -1829,9 +1856,9 @@ function valF(id) {
 }
 
 function calcFunnel() {
-  const CONTACTOS  = 86;       // YTD 2026 nuevos contactos reportados por campañas Meta
-  const ALCANCE    = 355258;   // YTD 2026 alcance único Meta Ads
-  const GASTO      = 1967248;  // YTD 2026 gasto ARS Meta Ads
+  const CONTACTOS  = 96;       // YTD 2026 nuevos contactos reportados por campañas Meta (incl. jun 1–18)
+  const ALCANCE    = 367494;   // YTD 2026 alcance Meta Ads (incl. jun 1–18)
+  const GASTO      = 2264053;  // YTD 2026 gasto ARS Meta Ads (incl. jun 1–18)
 
   const ons        = val('ons-nuevas');
   const cotEnv     = val('cot-env');
@@ -1875,7 +1902,7 @@ function calcFunnel() {
     set('s-costo-on', `$${GASTO.toLocaleString('es-AR')} / ${ons}`);
   } else {
     set('r-costo-on', '—');
-    set('s-costo-on', '$1.901.187 / ONs');
+    set('s-costo-on', '$2.264.053 / ONs');
   }
 
   /* Ticket promedio enviado */
@@ -1924,6 +1951,59 @@ function sortTable(tableId, colIdx) {
   rows.forEach(r => tbody.appendChild(r));
 }
 
+/* ─── PLANIFICACIÓN · carga desde Google Sheets ─────────────────
+   Pegá acá el link de la hoja publicada como CSV:
+   En Google Sheets → Archivo → Compartir → Publicar en la web →
+   elegí la pestaña y formato "Valores separados por comas (.csv)" → Publicar.
+   La hoja debe tener encabezados: Categoría, Acción, Prioridad, Período.
+   Si queda vacío, se usan las filas cargadas a mano en el HTML.            */
+const PLAN_SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-IYXaCBvVHCNPfWoPHo5BdO3DzakMs3lMyPrefo5RqqeEk6DWA-0bm4h2r--P9XiIqmqB5OEGH6fL/pub?gid=0&single=true&output=csv';
+
+function parseCSV(text) {
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+      else cur += c;
+    } else {
+      if (c === '"') q = true;
+      else if (c === ',') { row.push(cur); cur = ''; }
+      else if (c === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+      else if (c !== '\r') cur += c;
+    }
+  }
+  if (cur !== '' || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+
+async function loadPlanSheet() {
+  if (!PLAN_SHEET_CSV) return;  // sin URL → quedan las filas estáticas
+  try {
+    const res = await fetch(PLAN_SHEET_CSV, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = parseCSV(await res.text()).filter(r => r.some(c => c.trim() !== ''));
+    if (rows.length < 2) return;
+    const muted = '<span class="num" style="color:var(--muted-2)">—</span>';
+    const cell = v => (v && v.trim()) ? v.trim() : muted;
+    const prio = v => {
+      const t = (v || '').trim().toLowerCase();
+      if (!t) return muted;
+      const cls = t === 'alta' ? 'badge-red' : t === 'media' ? 'badge-amber' : t === 'baja' ? 'badge-green' : 'badge-muted';
+      return `<span class="badge ${cls}">${v.trim()}</span>`;
+    };
+    const tb = document.querySelector('#tabla-plan tbody');
+    if (!tb) return;
+    tb.innerHTML = rows.slice(1).map(r =>
+      `<tr><td>${cell(r[0])}</td><td><strong>${(r[1] || '').trim()}</strong></td><td>${prio(r[2])}</td><td>${cell(r[3])}</td></tr>`
+    ).join('');
+    const inp = document.getElementById('search-plan');
+    if (inp && inp.value) inp.dispatchEvent(new Event('input'));
+  } catch (e) {
+    console.warn('Planificación: no se pudo cargar la hoja de Google', e);
+  }
+}
+
 function setupSearch(inputId, tableId, emptyId) {
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -1934,7 +2014,7 @@ function setupSearch(inputId, tableId, emptyId) {
     const rows = document.querySelectorAll(`#${tableId} tbody tr`);
     let visible = 0;
     rows.forEach(r => {
-      const match = r.textContent.toLowerCase().includes(q);
+      const match = r.textContent.toLowerCase().includes(q) && r.dataset.periodHide !== '1';
       r.style.display = match ? '' : 'none';
       if (match) visible++;
     });
@@ -1967,6 +2047,7 @@ function initSearchShortcut() {
     'anuncios':     'search-anuncios',
     'nuevas-ons':   'search-nuevas',
     'concretadas':  'search-concretadas',
+    'planificacion':'search-plan',
   };
   const findActiveSearchId = () => {
     // 1) Sección con scroll-spy activo
@@ -2030,12 +2111,14 @@ _mq.addEventListener('change', () => {
 
 /* ─── MOBILE NAV ────────────────────────────────────────────── */
 function toggleNav() {
-  document.getElementById('sidebar').classList.toggle('open');
+  const isOpen = document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('overlay').classList.toggle('show');
+  document.getElementById('nav-btn')?.setAttribute('aria-expanded', isOpen);
 }
 function closeNav() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
+  document.getElementById('nav-btn')?.setAttribute('aria-expanded', 'false');
 }
 
 /* ─── SMOOTH SCROLL ─────────────────────────────────────────── */
@@ -2044,7 +2127,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const target = document.querySelector(a.getAttribute('href'));
     if (!target) return;
     e.preventDefault();
-    const offset = document.querySelector('.topbar')?.offsetHeight || 54;
+    const offset = (document.querySelector('.topbar')?.offsetHeight || 54)
+                 + (document.querySelector('.period-bar')?.offsetHeight || 0);
     window.scrollTo({
       top: target.getBoundingClientRect().top + window.scrollY - offset - 12,
       behavior: 'smooth'
@@ -2080,23 +2164,65 @@ function initScrollSpy() {
 
 
 /* ─── GRÁFICO ANUNCIOS ──────────────────────────────────────── */
+// Gasto por campaña por período · Meta Ads API · cuenta 370211010327709 · 2026 (jun parcial 1–18)
+const ANUNCIOS_BY_PERIOD = {
+  ytd: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Con @interbanking", "Puedes vender más — leads", "El sistema que opera", "Formulario YiQi — leads", "Interbanking en YiQi", "Menos tareas manuales", "[15/5/2026] Promoción FB", "Reserva tu demo"], data: [700080, 403664, 174331, 168360, 124776, 94069, 79835, 69165, 63984, 57861] },
+  ene: { labels: ["YiQi ERP, 15 años", "Mitos vs realidad"], data: [49926, 11985] },
+  feb: { labels: ["Reserva tu demo", "Interbanking en YiQi", "La automatización — link clicks", "YiQi ERP, 15 años (msgs)", "La automatización — msgs", "Gestiona tu empresa", "Instagram Post #2", "La automatización — msgs #2", "Mercado Libre, Frávega"], data: [57861, 45353, 29998, 29662, 23736, 20807, 20776, 19870, 17785] },
+  mar: { labels: ["@interbanking ahora", "Con @interbanking", "Menos tareas manuales", "Interbanking en YiQi", "YiQi ERP tiene algo"], data: [270781, 174331, 69165, 34482, 19631] },
+  abr: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Construye con IA"], data: [344332, 170258, 11687] },
+  may: { labels: ["Instagram Post — link clicks", "@interbanking ahora", "Puedes vender más — leads", "[15/5/2026] Promoción FB", "Instagram Post — mensajes", "Construye con IA", "[27/5/2026] Promoción Formulario"], data: [233406, 84967, 69392, 63984, 38445, 34287, 20340] },
+  jun: { labels: ["El sistema que opera", "Puedes vender más — leads", "Formulario YiQi — leads"], data: [124776, 98969, 73730] },
+};
+
+const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio (1–18)' };
+
+// Tabla de anuncios por período · [nombre, gasto, resultado, costo/res, vistas(impresiones)]
+const ANUNCIOS_TABLA = {
+  ytd: [["Publicación de Instagram: @interbanking ahora...", 700080, "405 conversaciones", "$1.729/conv", 237874], ["Instagram Post — link clicks", 403664, "7.178 clics", "$56/clic", 372841], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Puedes vender más — leads", 168390, "14 leads", "$12.028/lead", 13305], ["El sistema que opera", 124785, "26 conversaciones", "$4.799/conv", 11128], ["Formulario YiQi — leads", 94069, "9 leads", "$10.452/lead", 6192], ["Interbanking en YiQi", 79835, "23 conversaciones", "$3.471/conv", 12617], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Construye con IA", 45974, "14 conversaciones", "$3.284/conv", 5988], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
+  ene: [["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
+  feb: [["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["Interbanking en YiQi", 45353, "17 conversaciones", "$2.668/conv", 6996], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567]],
+  mar: [["Publicación de Instagram: @interbanking ahora...", 270781, "167 conversaciones", "$1.621/conv", 92487], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["Interbanking en YiQi", 34482, "6 conversaciones", "$5.747/conv", 5621], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739]],
+  abr: [["Publicación de Instagram: @interbanking ahora...", 344332, "184 conversaciones", "$1.871/conv", 115325], ["Instagram Post — link clicks", 170258, "3.192 clics", "$53/clic", 184961], ["Construye con IA", 11687, "2 conversaciones", "$5.844/conv", 897]],
+  may: [["Instagram Post — link clicks", 233406, "3.986 clics", "$59/clic", 187880], ["Publicación de Instagram: @interbanking ahora...", 84967, "54 conversaciones", "$1.573/conv", 30062], ["Puedes vender más — leads", 69392, "8 leads", "$8.674/lead", 7219], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["Construye con IA", 34287, "12 conversaciones", "$2.857/conv", 5091], ["Formulario YiQi — leads", 20340, "5 leads", "$4.068/lead", 1052]],
+  jun: [["El sistema que opera", 124785, "26 conversaciones", "$4.799/conv", 11128], ["Puedes vender más — leads", 98998, "6 leads", "$16.500/lead", 6086], ["Formulario YiQi — leads", 73730, "4 leads", "$18.432/lead", 5140]],
+};
+
+function renderAnunciosTable() {
+  const tb = document.getElementById('anuncios-tbody');
+  if (!tb) return;
+  const rows = ANUNCIOS_TABLA[_currentMes] || ANUNCIOS_TABLA.ytd;
+  tb.innerHTML = rows.map(([name, gasto, resultado, costo, vistas]) => `
+    <tr>
+      <td>${name}</td>
+      <td data-num="${gasto}"><span class="num">$${gasto.toLocaleString('es-AR')}</span></td>
+      <td>${resultado}</td>
+      <td><span class="num">${costo}</span></td>
+      <td data-num="${vistas}"><span class="num">${vistas.toLocaleString('es-AR')}</span></td>
+    </tr>`).join('');
+  const cnt = document.getElementById('anuncios-count');
+  if (cnt) cnt.textContent = `${rows.length} ${rows.length === 1 ? 'campaña' : 'campañas'} con gasto · ${PERIODO_LABEL[_currentMes] || ''}`;
+  // Re-aplicar búsqueda activa sobre las filas nuevas
+  const inp = document.getElementById('search-anuncios');
+  if (inp && inp.value) inp.dispatchEvent(new Event('input'));
+}
+
 function renderAnunciosChart() {
   const ctx = document.getElementById('chart-anuncios');
   if (!ctx) return;
   if (_charts.anuncios) { _charts.anuncios.destroy(); delete _charts.anuncios; }
-  const labels = [
-    '@interbanking — engagement','Instagram Post — link clicks',
-    'Con @interbanking','Interbanking en YiQi','Puedes vender más — leads',
-    'Menos tareas manuales','[15/5] Promoción FB','Reserva tu demo',
-    'Construye con IA','Instagram Post — mensajes'
-  ];
-  const data = [700080,403664,174331,79835,69392,69165,63984,57861,45974,38445];
-  const cyan = getCSSVar('--cyan'); const cs = getCSSVar('--cyan-soft');
+  // Datos filtrados por el período seleccionado en Resumen Meta
+  const per = ANUNCIOS_BY_PERIOD[_currentMes] || ANUNCIOS_BY_PERIOD.ytd;
+  const labels = per.labels;
+  const data = per.data;
+  // Subtítulo según período
+  const sub = document.getElementById('anuncios-chart-sub');
+  if (sub) sub.textContent = `Gasto por campaña · ${_currentMes === 'ytd' ? 'Top 10' : 'campañas con gasto'} · ${PERIODO_LABEL[_currentMes] || ''} (ARS)`;
   _charts.anuncios = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
-      datasets: [{ data, backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4 }]
+      datasets: [{ data, backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4 }]
     },
     options: {
       indexAxis: 'y',
@@ -2120,12 +2246,13 @@ function renderAnunciosChart() {
 
 /* ─── GRÁFICO FUNNEL ─────────────────────────────────────────── */
 const FUNNEL_DATA = {
-  ytd: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [297299,593,86,54,15] },
+  ytd: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [309535,618,96,54,15] },
   ene: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [3605,5,0,6,6] },
   feb: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [45484,103,0,6,1] },
   mar: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [74139,199,0,23,3] },
   abr: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [129222,186,0,11,5] },
   may: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [109675,100,86,8,0] },
+  jun: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [12236,25,10,0,0] },
 };
 function renderFunnelChart(key) {
   const ctx = document.getElementById('chart-funnel');
@@ -2139,7 +2266,7 @@ function renderFunnelChart(key) {
     type: 'bar',
     data: {
       labels: d.labels,
-      datasets: [{ data: pcts, backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4,
+      datasets: [{ data: pcts, backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4,
         rawVals: d.data }]
     },
     options: {
@@ -2160,7 +2287,7 @@ function renderFunnelChart(key) {
     }
   });
   const el = document.getElementById('funnel-chart-period');
-  const labels = { ytd:'YTD 2026', ene:'Ene', feb:'Feb', mar:'Mar', abr:'Abr', may:'May' };
+  const labels = { ytd:'YTD 2026', ene:'Ene', feb:'Feb', mar:'Mar', abr:'Abr', may:'May', jun:'Jun' };
   if (el) el.textContent = labels[key] || 'YTD';
 }
 
@@ -2170,20 +2297,25 @@ function renderOnsCharts() {
   const ctxO = document.getElementById('chart-ons-origen');
   if (ctxO) {
     if (_charts.onsOrigen) { _charts.onsOrigen.destroy(); }
+    const _od = sortDonutDesc(
+      ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG'],
+      [38,10,4,2],
+      [rgbaVar('--cyan', .35), rgbaVar('--green', .35), rgbaVar('--amber', .35), rgbaVar('--purple', .35)]
+    );
     _charts.onsOrigen = new Chart(ctxO, {
       type: 'doughnut',
       data: {
-        labels: ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG'],
-        datasets: [{ data: [38,10,4,2],
-          backgroundColor: ['rgba(0,204,255,.35)','rgba(0,196,140,.35)','rgba(246,166,35,.35)','rgba(167,139,250,.35)'],
-          borderWidth: 0 }]
+        labels: _od.labels,
+        datasets: [{ data: _od.data,
+          backgroundColor: _od.colors,
+          borderWidth: 0, hoverOffset: 6 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
         animation: { duration: 900 },
-        cutout: '62%',
+        cutout: '68%',
         plugins: {
-          legend: { position: 'bottom', labels: { color: getCSSVar('--muted'), font: { family: getCSSVar('--sans'), size: 10 }, boxWidth: 10, padding: 10 } },
+          legend: { position: 'bottom', labels: { color: getCSSVar('--muted'), font: { family: getCSSVar('--sans'), size: 10 }, boxWidth: 10, padding: 10, usePointStyle: true, pointStyle: 'circle' } },
           tooltip: { backgroundColor: getCSSVar('--bg-elev-2'), borderColor: getCSSVar('--line'), borderWidth: 1,
             titleColor: getCSSVar('--text'), bodyColor: getCSSVar('--muted'), padding: 10 }
         }
@@ -2198,8 +2330,8 @@ function renderOnsCharts() {
     _charts.onsMes = new Chart(ctxM, {
       type: 'bar',
       data: {
-        labels: ['Ene','Feb','Mar','Abr','May'],
-        datasets: [{ label: 'ONs nuevas', data: [6,6,23,11,8], backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4 }]
+        labels: ['Ene','Feb','Mar','Abr','May','Jun'],
+        datasets: [{ label: 'ONs nuevas', data: [6,6,23,11,8,0], backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
@@ -2228,10 +2360,10 @@ function renderConcretadasChart() {
   _charts.concretadas = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Ene','Feb','Mar','Abr','May'],
+      labels: ['Ene','Feb','Mar','Abr','May','Jun'],
       datasets: [
-        { label: 'Cantidad', data: [6,1,3,5,0], backgroundColor: 'rgba(0,204,255,.30)', borderWidth: 0, borderRadius: 4, yAxisID: 'y' },
-        { label: 'Monto (miles ARS)', data: [3116,354,5287,5128,0], backgroundColor: 'rgba(0,196,140,.30)', borderWidth: 0, borderRadius: 4, yAxisID: 'y2' }
+        { label: 'Cantidad', data: [6,1,3,5,0,0], backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4, yAxisID: 'y' },
+        { label: 'Monto (miles ARS)', data: [3116,354,5287,5128,0,0], backgroundColor: rgbaVar('--green', .30), borderWidth: 0, borderRadius: 4, yAxisID: 'y2' }
       ]
     },
     options: {
@@ -2314,15 +2446,16 @@ document.addEventListener('DOMContentLoaded', () => {
   applyTheme(stored);
   updateSwitch(stored);
 
-  setMes('ytd');
+  setPeriodo('ytd');
   setupSearch('search-anuncios',     'tabla-anuncios',     'empty-anuncios');
   setupSearch('search-concretadas', 'tabla-concretadas', 'empty-concretadas');
   setupSearch('search-nuevas',      'tabla-nuevas',      'empty-nuevas');
+  setupSearch('search-plan',         'tabla-plan',         'empty-plan');
+  loadPlanSheet();
   initScrollSpy();
   initReveal();
   initSearchShortcut();
   renderMetaChart(); renderAnunciosChart(); renderOnsCharts(); renderConcretadasChart();
-  setFunnelPeriod('ytd');
   renderAnunciosChart();
   renderOnsCharts();
   renderConcretadasChart();
