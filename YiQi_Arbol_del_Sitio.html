@@ -129,8 +129,8 @@ html{color-scheme:dark} html[data-theme="light"]{color-scheme:light}
     <div class="diagram-shell">
       <div class="diagram-top">
         <div class="pr-tabbar" role="tablist" aria-label="Disposición">
-          <button class="pr-tabbtn" role="tab" aria-selected="true"  data-layout="h">Horizontal</button>
-          <button class="pr-tabbtn" role="tab" aria-selected="false" data-layout="r">Radial</button>
+          <button class="pr-tabbtn" role="tab" aria-selected="false"  data-layout="h">Horizontal</button>
+          <button class="pr-tabbtn" role="tab" aria-selected="true" data-layout="r">Radial</button>
           <button class="pr-tabbtn" role="tab" aria-selected="false" data-layout="v">Vertical</button>
         </div>
         <div style="display:flex;align-items:center;gap:10px">
@@ -405,7 +405,7 @@ document.getElementById('tree').addEventListener('click',function(e){ const a=e.
 /* init: Sitio + Diagrama */
 applySubject(SUBJ.site);
 syncWide();
-requestAnimationFrame(()=>render('h'));
+requestAnimationFrame(()=>render('r'));
 </script>
 </body>
 </html>

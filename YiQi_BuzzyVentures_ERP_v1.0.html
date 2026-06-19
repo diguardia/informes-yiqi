@@ -8,86 +8,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Design System YiQi · tokens y componentes por CDN (no forkear). Para editar el DS en vivo: ../yiqi-imagen/styles.css -->
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
 <style>
 @font-face{font-family:"Greycliff CF";src:url("fonts/Greycliff-CF-Heavy.woff2") format("woff2");font-weight:700 900;font-style:normal;font-display:swap}
 :root{
-  /* Backgrounds */
-  --bg:#0c0c0e;
-  --bg-elev:#111114;
-  --bg-elev-2:#18181c;
-  --bg-soft:rgba(255,255,255,.04);
-  /* Bordes */
-  --line:rgba(255,255,255,.08);
-  --line-strong:rgba(255,255,255,.14);
-  /* Texto */
-  --text:#f0f1f3;
-  --muted:#8a8d94;
-  --muted-2:#5a5d66;
-  --text-cyan-muted:rgba(0,195,240,.45);
-  /* Marca */
-  --cyan:#00ccff;
-  --cyan-soft:rgba(0,204,255,.12);
-  --cyan-soft-2:rgba(0,204,255,.18);
-  --cyan-label:rgba(0,204,255,.52);
-  /* Semánticos */
-  --green:#00c48c;
-  --green-soft:rgba(0,196,140,.12);
-  --amber:#f6a623;
-  --amber-soft:rgba(246,166,35,.12);
-  --red:#f25f5c;
-  --red-soft:rgba(242,95,92,.12);
-  --blue:#7ab7ff;
-  --purple:#a78bfa;
-  --purple-soft:rgba(167,139,250,.12);
-  --warm:#b5a090;
-  --warm-soft:rgba(181,160,144,.10);
-  /* Efectos */
-  --glow:0 0 0 3px rgba(0,204,255,.22);
-  --shadow-sm:0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
-  --shadow-md:0 4px 16px rgba(0,0,0,.28);
-  --shadow-lg:0 8px 32px rgba(0,0,0,.36);
-  /* Tipografía */
-  --sans:"Inter", ui-sans-serif, system-ui, sans-serif;
-  --mono:"IBM Plex Mono", ui-monospace, monospace;
-  --display:"Greycliff CF", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  /* Layout */
-  --sidebar-w:240px;
-  --topbar-h:56px;
-  /* Radius */
-  --radius-xs:5px;
-  --radius-sm:7px;
-  --radius:10px;
-  --radius-md:12px;
-  --radius-lg:16px;
-  --radius-xl:20px;
-  --radius-pill:999px;
-  --tr:180ms ease;
+  /* Tokens del DS via CDN. Alias de compatibilidad: paleta vieja --purple -> --violet del DS. */
+  --purple:var(--violet);
+  --purple-soft:var(--violet-soft);
 }
-html[data-theme="light"]{
-  --bg:#f5f4f0;
-  --bg-elev:#eeece7;
-  --bg-elev-2:#e6e4df;
-  --bg-soft:rgba(0,0,0,.04);
-  --line:rgba(0,0,0,.08);
-  --line-strong:rgba(0,0,0,.13);
-  --text:#17191c;
-  --muted:#586170;
-  --muted-2:#7f8896;
-  --text-cyan-muted:rgba(0,140,175,.48);
-  --cyan:#009fc7;
-  --cyan-soft:rgba(0,159,199,.12);
-  --cyan-soft-2:rgba(0,159,199,.18);
-  --cyan-label:rgba(0,159,199,.52);
-  --green:#0c9b6d;
-  --amber:#c78000;
-  --red:#d4485e;
-  --blue:#347de6;
-  --purple:#7c3aed;
-  --glow:0 0 0 3px rgba(0,159,199,.22);
-  --shadow-sm:0 2px 8px rgba(16,36,54,.08);
-  --shadow-md:0 8px 24px rgba(16,36,54,.12);
-  --shadow-lg:0 16px 32px rgba(16,36,54,.16);
-}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{
