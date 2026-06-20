@@ -31,10 +31,13 @@
     .topbar-logo-link { display:flex; align-items:center; }
     .topbar-title { font:600 13px var(--sans); color:var(--muted); white-space:nowrap; }
     .topbar-divider { width:1px; height:20px; background:var(--line-strong); flex-shrink:0; }
-    .topbar-actions { margin-left:auto; display:flex; align-items:center; gap:8px; }
+    .topbar-actions { position:fixed; top:0; right:22px; height:var(--topbar-h); z-index:101;
+      display:flex; align-items:center; gap:8px; }
     .topbar-burger { display:none; margin-left:auto; width:38px; height:38px; place-items:center;
       border:1px solid var(--line); background:var(--bg-elev); color:var(--text); border-radius:var(--radius-sm); cursor:pointer; }
     .topbar-burger svg { width:18px; height:18px; }
+    .menu-close { display:none; }
+    .menu-backdrop { display:none; }
 
     /* Selector de vista (Mapa / Radiales) */
     .view-toggle { display:inline-flex; gap:2px; background:var(--bg-soft); border-radius:var(--radius-pill); padding:3px; }
@@ -153,13 +156,16 @@
     .scope-hint { position:absolute; left:50%; bottom:16px; transform:translateX(-50%); z-index:2;
       pointer-events:none; font:500 11px var(--mono); color:var(--muted-2);
       background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius-pill); padding:5px 14px; }
-    .scope-style { position:absolute; left:16px; bottom:16px; z-index:3; appearance:none; -webkit-appearance:none;
+    .scope-bottombar { position:absolute; left:16px; right:16px; bottom:16px; z-index:3;
+      display:flex; align-items:flex-end; gap:12px 8px; flex-wrap:wrap; pointer-events:none; }
+    .scope-bottombar > * { pointer-events:auto; }
+    .scope-style { appearance:none; -webkit-appearance:none;
       background:var(--bg-elev); color:var(--text); border:1px solid var(--line); border-radius:var(--radius-sm);
       padding:8px 30px 8px 12px; font:600 12px var(--sans); cursor:pointer; box-shadow:var(--shadow-sm);
       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238a8f99' stroke-width='2'><path d='M2 4l4 4 4-4'/></svg>");
       background-repeat:no-repeat; background-position:right 11px center; }
     .scope-style:focus { outline:none; border-color:var(--cyan); }
-    .scope-ctls { position:absolute; right:16px; bottom:16px; z-index:3; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; max-width:60%; }
+    .scope-ctls { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-left:auto; }
     .scope-ctl { width:38px; height:38px; display:grid; place-items:center; border:1px solid var(--line);
       background:var(--bg-elev); color:var(--text); border-radius:var(--radius-sm); cursor:pointer;
       font:600 18px/1 var(--sans); box-shadow:var(--shadow-sm); transition:background var(--tr),color var(--tr); }
@@ -211,24 +217,32 @@
       .gridwrap { padding:14px; }
       .grid { grid-template-columns:1fr; }
       .card.span2 { grid-column:span 1; }
-      /* topbar: menú hamburguesa */
+      /* topbar: menú hamburguesa → drawer derecho */
       .topbar { gap:8px; padding:0 14px; }
       .topbar-title, .topbar-divider { display:none; }
       .topbar-burger { display:grid; }
-      .topbar-actions { position:absolute; top:calc(var(--topbar-h) - 2px); right:10px; z-index:200; margin-left:0;
-        flex-direction:column; align-items:stretch; gap:10px; padding:12px; display:none;
-        background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-lg); }
-      .topbar-actions.open { display:flex; }
+      .menu-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:290; }
+      .menu-backdrop.show { display:block; }
+      .topbar-actions { position:fixed; top:0; right:0; bottom:0; height:auto; z-index:300; margin-left:0;
+        width:min(82vw,300px); flex-direction:column; align-items:stretch; gap:14px; padding:16px;
+        background:var(--bg-elev); border-left:1px solid var(--line); box-shadow:var(--shadow-lg);
+        transform:translateX(100%); transition:transform .22s ease; }
+      .topbar-actions.open { transform:translateX(0); }
+      .menu-close { display:inline-flex; align-self:flex-end; align-items:center; justify-content:center;
+        width:36px; height:36px; border:none; background:transparent; color:var(--muted); cursor:pointer; border-radius:var(--radius-sm); }
+      .menu-close:hover { color:var(--text); background:var(--bg-soft); }
+      .menu-close svg { width:20px; height:20px; }
       .view-toggle { flex-direction:column; background:transparent; padding:0; gap:4px; }
-      .view-opt { justify-content:flex-start; padding:9px 12px; gap:9px; }
+      .view-opt { justify-content:flex-start; padding:11px 12px; gap:10px; }
       .view-opt svg { display:inline-block; }
       .theme-toggle { align-self:center; }
       /* Alcance: filtro y controles compactos */
+      .scope-bottombar { left:10px; right:10px; bottom:10px; gap:8px; }
       .scope-tags { gap:6px; }
       .scope-tag { padding:5px 9px; font-size:11px; }
-      .scope-ctls { max-width:none; gap:6px; left:auto; right:10px; bottom:10px; justify-content:flex-end; }
+      .scope-ctls { gap:6px; }
       .scope-ctl { width:34px; height:34px; }
-      .scope-style { left:10px; bottom:10px; font-size:11px; padding:7px 26px 7px 10px; }
+      .scope-style { font-size:11px; padding:7px 26px 7px 10px; }
       /* Flujo */
       .flowwrap { padding:22px 16px; }
       .flow-title { font-size:24px; }
@@ -253,7 +267,12 @@
   <button class="topbar-burger" type="button" aria-label="Menú" aria-expanded="false" onclick="toggleMenu()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
   </button>
+</header>
+  <div class="menu-backdrop" id="menuBackdrop" onclick="closeMenu()" aria-hidden="true"></div>
   <div class="topbar-actions" id="topbarActions">
+    <button class="menu-close" type="button" aria-label="Cerrar menú" onclick="closeMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
     <div class="view-toggle" role="group" aria-label="Vista">
       <button class="view-opt active" data-view="map" onclick="setView('map')" aria-label="Vista mapa global">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M10 10 6.5 7.5M14 10l3.5-2.5M10 14l-3.5 2.5M14 14l3.5 2.5"/></svg>
@@ -284,7 +303,7 @@
       </button>
     </div>
   </div>
-</header>
+
 
 
 <div class="views">
@@ -324,6 +343,7 @@
         </div>
       </div>
       <div class="scope-hint">Arrastra para girar · rueda para zoom</div>
+      <div class="scope-bottombar">
       <select class="scope-style" id="scopeStyle" aria-label="Estilo de la escena">
         <option value="color">Color</option>
         <option value="gray">Grises</option>
@@ -351,6 +371,7 @@
         <button class="scope-ctl" id="scopePlay" type="button" aria-label="Pausar animación" title="Pausar / Reanudar">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>
         </button>
+      </div>
       </div>
     </div>
   </section>
@@ -889,16 +910,16 @@ function scopeDeclutter(){
     for(let j=i+1;j<items.length;j++){ const b=items[j];
       const ox=(a.hw+b.hw)*0.96-Math.abs(a.x-b.x), oy=(a.hh+b.hh)*0.96-Math.abs(a.y-b.y);
       if(ox>0 && oy>0){
-        if(ox<oy){ const s=(a.x<=b.x?-1:1)*ox*0.5; a.fx+=s; b.fx-=s; }
-        else     { const s=(a.y<=b.y?-1:1)*oy*0.5; a.fy+=s; b.fy-=s; }
+        if(ox<oy){ const s=(a.x<=b.x?-1:1)*ox*0.3; a.fx+=s; b.fx-=s; }
+        else     { const s=(a.y<=b.y?-1:1)*oy*0.3; a.fy+=s; b.fy-=s; }
       }
     }
   }
-  // aplicar (px→mundo), resorte de vuelta al nodo, damping, clamp
+  // aplicar (px→mundo), resorte de vuelta al nodo, damping, clamp — suave
   for(const it of items){ const nd=it.nd, k=1/it.ppw;
-    nd.ovx += it.fx*k*0.5;  nd.ovy += -it.fy*k*0.5;     // pantalla y-abajo → mundo y-arriba
-    nd.ovx -= nd.ox*0.08;   nd.ovy -= nd.oy*0.08;        // resorte hacia el nodo
-    nd.ovx *= 0.8;          nd.ovy *= 0.8;               // damping
+    nd.ovx += it.fx*k*0.3;  nd.ovy += -it.fy*k*0.3;     // pantalla y-abajo → mundo y-arriba
+    nd.ovx -= nd.ox*0.07;   nd.ovy -= nd.oy*0.07;        // resorte hacia el nodo
+    nd.ovx *= 0.86;         nd.ovy *= 0.86;              // damping (más suave)
     nd.ox += nd.ovx;        nd.oy += nd.ovy;
     const mag=Math.hypot(nd.ox,nd.oy); if(mag>1.7){ nd.ox*=1.7/mag; nd.oy*=1.7/mag; }
   }
@@ -938,16 +959,16 @@ function scopePhysicsStep(){
   for(let i=0;i<ns.length;i++){ const a=ns[i];
     for(let j=i+1;j<ns.length;j++){ const b=ns[j];
       const dx=a.pos.x-b.pos.x, dy=a.pos.y-b.pos.y, dz=a.pos.z-b.pos.z;
-      let d2=dx*dx+dy*dy+dz*dz; if(d2<0.04) d2=0.04;
-      const f=0.05/d2, inv=1/Math.sqrt(d2), fx=dx*inv*f, fy=dy*inv*f, fz=dz*inv*f;
+      let d2=dx*dx+dy*dy+dz*dz; if(d2<0.45) d2=0.45;        // piso alto: la fuerza no se dispara al chocar (suave)
+      const f=0.045/d2, inv=1/Math.sqrt(d2), fx=dx*inv*f, fy=dy*inv*f, fz=dz*inv*f;
       a.vel.x+=fx; a.vel.y+=fy; a.vel.z+=fz; b.vel.x-=fx; b.vel.y-=fy; b.vel.z-=fz;
     }
   }
   for(const nd of ns){
     const len=nd.pos.length()||0.0001, k=0.02*(nd.r-len);          // resorte radial a la capa
     nd.vel.x+=nd.pos.x/len*k; nd.vel.y+=nd.pos.y/len*k; nd.vel.z+=nd.pos.z/len*k;
-    nd.vel.multiplyScalar(0.85);                                   // damping
-    if(nd.vel.length()>0.4) nd.vel.setLength(0.4);                 // clamp anti-explosión
+    nd.vel.multiplyScalar(0.9);                                    // damping (más suave)
+    if(nd.vel.length()>0.12) nd.vel.setLength(0.12);               // tope de velocidad bajo → sin saltos bruscos
     nd.pos.add(nd.vel);
     nd.sp.position.copy(nd.pos.clone().add(nd.pos.clone().normalize().multiplyScalar(0.42)));
     const arr=nd.lineGeo.attributes.position.array; arr[3]=nd.pos.x; arr[4]=nd.pos.y; arr[5]=nd.pos.z;
@@ -1043,13 +1064,15 @@ function renderFlow(){
 }
 
 /* ── Menú hamburguesa (mobile) ────────────────────────────────── */
-function toggleMenu(){ const a=document.getElementById('topbarActions'); const open=a.classList.toggle('open');
-  const b=document.querySelector('.topbar-burger'); if(b) b.setAttribute('aria-expanded', String(open)); }
-function closeMenu(){ const a=document.getElementById('topbarActions'); if(a) a.classList.remove('open');
-  const b=document.querySelector('.topbar-burger'); if(b) b.setAttribute('aria-expanded','false'); }
-document.addEventListener('click', e=>{           // cerrar al tocar afuera
-  if(!e.target.closest('.topbar-actions') && !e.target.closest('.topbar-burger')) closeMenu();
-});
+function setMenu(open){
+  const a=document.getElementById('topbarActions'), bd=document.getElementById('menuBackdrop'), b=document.querySelector('.topbar-burger');
+  if(a) a.classList.toggle('open', open);
+  if(bd) bd.classList.toggle('show', open);
+  if(b) b.setAttribute('aria-expanded', String(open));
+}
+function toggleMenu(){ const a=document.getElementById('topbarActions'); setMenu(!(a && a.classList.contains('open'))); }
+function closeMenu(){ setMenu(false); }
+window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeMenu(); });   // Esc cierra
 
 /* ── Selector de vista ────────────────────────────────────────── */
 function setView(v){
