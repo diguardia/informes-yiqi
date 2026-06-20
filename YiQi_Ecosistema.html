@@ -32,6 +32,9 @@
     .topbar-title { font:600 13px var(--sans); color:var(--muted); white-space:nowrap; }
     .topbar-divider { width:1px; height:20px; background:var(--line-strong); flex-shrink:0; }
     .topbar-actions { margin-left:auto; display:flex; align-items:center; gap:8px; }
+    .topbar-burger { display:none; margin-left:auto; width:38px; height:38px; place-items:center;
+      border:1px solid var(--line); background:var(--bg-elev); color:var(--text); border-radius:var(--radius-sm); cursor:pointer; }
+    .topbar-burger svg { width:18px; height:18px; }
 
     /* Selector de vista (Mapa / Radiales) */
     .view-toggle { display:inline-flex; gap:2px; background:var(--bg-soft); border-radius:var(--radius-pill); padding:3px; }
@@ -134,18 +137,12 @@
     .mini.dim .conn.hl { opacity:.95; }
 
     /* ── VISTA 3 · ALCANCE (hero 3D) ── */
-    .scope { position:relative; flex:1; overflow:hidden; display:flex; flex-direction:column;
+    .scope { position:relative; flex:1; overflow:hidden;
       background:radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0/26px 26px; }
-    .scope-canvas { position:absolute; inset:0; }      /* desktop: el canvas llena toda la vista */
+    .scope-canvas { position:absolute; inset:0; }      /* el canvas llena toda la vista (escena centrada) */
     #scope3d { width:100%; height:100%; display:block; cursor:grab; touch-action:none; }
     #scope3d:active { cursor:grabbing; }
-    .scope-copy { position:absolute; left:48px; top:50%; transform:translateY(-50%);
-      max-width:380px; z-index:2; pointer-events:none; }
-    .scope-kicker { margin:0 0 10px; font:600 11px var(--mono); letter-spacing:.16em;
-      text-transform:uppercase; color:var(--cyan); }
-    .scope-title { margin:0 0 16px; font:800 44px/1.05 var(--display); letter-spacing:-.02em; color:var(--text); }
-    .scope-sub { margin:0 0 22px; font:400 15px/1.55 var(--sans); color:var(--muted); }
-    .scope-sub b { color:var(--text); font-weight:600; }
+    .scope-copy { position:absolute; top:14px; left:16px; right:16px; z-index:2; pointer-events:none; }
     .scope-tags { display:flex; flex-wrap:wrap; gap:8px; }
     .scope-tag { display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border:none;
       border-radius:var(--radius-pill); background:var(--bg-elev-2); color:var(--text);
@@ -171,9 +168,6 @@
     .scope-ctl.rec { color:var(--red); border-color:var(--red); }
 
     @media (max-width:920px) {
-      .scope-copy { position:static; transform:none; max-width:none; padding:18px 22px 0; }
-      .scope-title { font-size:30px; }
-      .scope-canvas { position:relative; inset:auto; flex:1; min-height:0; }  /* mobile: el canvas va debajo del copy */
       .scope-hint { display:none; }
     }
 
@@ -217,21 +211,24 @@
       .gridwrap { padding:14px; }
       .grid { grid-template-columns:1fr; }
       .card.span2 { grid-column:span 1; }
-      /* topbar: liberar ancho para los 4 tabs */
+      /* topbar: menú hamburguesa */
       .topbar { gap:8px; padding:0 14px; }
       .topbar-title, .topbar-divider { display:none; }
-      .view-opt { padding:0 8px; gap:0; }
-      .view-opt svg { display:none; }
-      /* Alcance: copy y controles compactos */
-      .scope-copy { padding:14px 16px 0; }
-      .scope-title { font-size:23px; }
-      .scope-sub { font-size:13px; margin-bottom:14px; }
+      .topbar-burger { display:grid; }
+      .topbar-actions { position:absolute; top:calc(var(--topbar-h) - 2px); right:10px; z-index:200; margin-left:0;
+        flex-direction:column; align-items:stretch; gap:10px; padding:12px; display:none;
+        background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-lg); }
+      .topbar-actions.open { display:flex; }
+      .view-toggle { flex-direction:column; background:transparent; padding:0; gap:4px; }
+      .view-opt { justify-content:flex-start; padding:9px 12px; gap:9px; }
+      .view-opt svg { display:inline-block; }
+      .theme-toggle { align-self:center; }
+      /* Alcance: filtro y controles compactos */
       .scope-tags { gap:6px; }
-      .scope-tag { padding:5px 10px; font-size:11px; }
-      .scope-canvas { min-height:44vh; }
-      .scope-ctls { max-width:none; gap:6px; left:10px; right:10px; bottom:10px; justify-content:center; }
+      .scope-tag { padding:5px 9px; font-size:11px; }
+      .scope-ctls { max-width:none; gap:6px; left:auto; right:10px; bottom:10px; justify-content:flex-end; }
       .scope-ctl { width:34px; height:34px; }
-      .scope-style { left:10px; bottom:54px; font-size:11px; padding:7px 26px 7px 10px; }
+      .scope-style { left:10px; bottom:10px; font-size:11px; padding:7px 26px 7px 10px; }
       /* Flujo */
       .flowwrap { padding:22px 16px; }
       .flow-title { font-size:24px; }
@@ -253,7 +250,10 @@
   </a>
   <div class="topbar-divider" aria-hidden="true"></div>
   <span class="topbar-title">Ecosistema del ERP</span>
-  <div class="topbar-actions">
+  <button class="topbar-burger" type="button" aria-label="Menú" aria-expanded="false" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div class="topbar-actions" id="topbarActions">
     <div class="view-toggle" role="group" aria-label="Vista">
       <button class="view-opt active" data-view="map" onclick="setView('map')" aria-label="Vista mapa global">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M10 10 6.5 7.5M14 10l3.5-2.5M10 14l-3.5 2.5M14 14l3.5 2.5"/></svg>
@@ -286,13 +286,6 @@
   </div>
 </header>
 
-<div class="stats">
-  <div class="stat"><b>+16</b><span>Módulos</span></div>
-  <div class="stat"><b>+60</b><span>Objetos de negocio</span></div>
-  <div class="stat"><b>23</b><span>Integraciones</span></div>
-  <div class="stat"><b>3</b><span>Formas de integrar</span></div>
-  <div class="stat"><b>+20</b><span>Eventos automatizables</span></div>
-</div>
 
 <div class="views">
   <!-- Vista 1: mapa global interactivo -->
@@ -323,9 +316,6 @@
     <div class="scope" id="scope">
       <div class="scope-canvas"><canvas id="scope3d" aria-label="Visualización 3D del alcance de YiQi: operación, fiscal, logística y canales conectados al core"></canvas></div>
       <div class="scope-copy">
-        <p class="scope-kicker">El ecosistema YiQi</p>
-        <h2 class="scope-title">Todo tu negocio,<br>conectado con el mundo.</h2>
-        <p class="scope-sub">Operación, fisco, bancos, logística y todos tus canales de venta — <b>integrados y automatizados</b> alrededor de un solo núcleo. YiQi proyecta tu negocio hacia afuera: menos trabajo manual, más control de costos.</p>
         <div class="scope-tags" role="group" aria-label="Filtrar categorías">
           <button class="scope-tag" type="button" data-layer="0" style="--c:var(--amber)" aria-pressed="true"><span class="scope-dot"></span>Operación integrada</button>
           <button class="scope-tag" type="button" data-layer="1" style="--c:var(--violet)" aria-pressed="true"><span class="scope-dot"></span>Fiscal &amp; bancos</button>
@@ -787,8 +777,7 @@ function scopeStepParticles(dir){
 function scopeCamUpdate(){
   const cam=R3.camera;
   cam.position.set(camRadius*Math.sin(camPhi)*Math.sin(camTheta), camRadius*Math.cos(camPhi), camRadius*Math.sin(camPhi)*Math.cos(camTheta));
-  cam.lookAt(0,0,0);
-  if(window.innerWidth>920) cam.translateX(-camRadius*0.17);   // correr la escena a la derecha del copy
+  cam.lookAt(0,0,0);   // escena centrada (sin hero a la izquierda)
 }
 
 function scopeInit(){
@@ -1053,8 +1042,18 @@ function renderFlow(){
     '<span class="path">'+path+'</span><span class="note">Pasos por API (iA Ready): <span class="api-n">'+n+'</span> · '+note+'</span>';
 }
 
+/* ── Menú hamburguesa (mobile) ────────────────────────────────── */
+function toggleMenu(){ const a=document.getElementById('topbarActions'); const open=a.classList.toggle('open');
+  const b=document.querySelector('.topbar-burger'); if(b) b.setAttribute('aria-expanded', String(open)); }
+function closeMenu(){ const a=document.getElementById('topbarActions'); if(a) a.classList.remove('open');
+  const b=document.querySelector('.topbar-burger'); if(b) b.setAttribute('aria-expanded','false'); }
+document.addEventListener('click', e=>{           // cerrar al tocar afuera
+  if(!e.target.closest('.topbar-actions') && !e.target.closest('.topbar-burger')) closeMenu();
+});
+
 /* ── Selector de vista ────────────────────────────────────────── */
 function setView(v){
+  closeMenu();
   document.getElementById('view-map').hidden   = (v !== 'map');
   document.getElementById('view-grid').hidden  = (v !== 'grid');
   document.getElementById('view-scope').hidden = (v !== 'scope');
