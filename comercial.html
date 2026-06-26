@@ -1370,7 +1370,8 @@
     <!-- ── SECCIÓN 6: PLANIFICACIÓN ─────────────────────────────── -->
     <section id="planificacion" aria-label="Planificación">
       <div class="section-title">Planificación</div>
-      <div class="section-sub">Planificación comercial · grilla semanal · se actualiza desde Google Sheets</div>
+      <div class="section-sub">Planificación comercial · grilla semanal · <a href="https://docs.google.com/spreadsheets/d/1x4QDp3fsBcz9gQhjNfiyCG9MJL8NmHG5UvwHcyntym0/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
+      <div class="month-filter" id="plan-mes-filter" role="group" aria-label="Filtrar planificación por mes" style="margin-top:12px"></div>
 
       <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
@@ -1975,6 +1976,23 @@ function parseCSV(text) {
   return rows;
 }
 
+const _MES_ABBR = { '01':'Ene','02':'Feb','03':'Mar','04':'Abr','05':'May','06':'Jun','07':'Jul','08':'Ago','09':'Sep','10':'Oct','11':'Nov','12':'Dic' };
+function buildPlanFilter(head) {
+  const cont = document.getElementById('plan-mes-filter');
+  if (!cont) return;
+  const meses = [];
+  head.forEach((h,i) => { if (i < 2) return; const mm = (h.split('/')[1]||'').trim().padStart(2,'0'); if (mm && !meses.includes(mm)) meses.push(mm); });
+  cont.innerHTML = `<button class="month-pill active" onclick="filterPlanMes('all')">Todo el año</button>`
+    + meses.map(mm => `<button class="month-pill" onclick="filterPlanMes('${mm}')">${_MES_ABBR[mm]||mm}</button>`).join('');
+}
+function filterPlanMes(m) {
+  document.querySelectorAll('#plan-mes-filter .month-pill').forEach(p =>
+    p.classList.toggle('active', p.getAttribute('onclick').includes(`'${m}'`)));
+  document.querySelectorAll('#tabla-plan [data-mes]').forEach(el => {
+    el.style.display = (m === 'all' || el.dataset.mes === m) ? '' : 'none';
+  });
+}
+
 async function loadPlanSheet() {
   if (!PLAN_SHEET_CSV) return;  // sin URL → quedan las filas estáticas
   try {
@@ -1987,14 +2005,20 @@ async function loadPlanSheet() {
     const thr = document.querySelector('#tabla-plan thead tr');
     const tb  = document.querySelector('#tabla-plan tbody');
     if (!thr || !tb) return;
-    thr.innerHTML = head.map((h,i) =>
-      `<th class="${i===0?'plan-col0':i===1?'plan-col1':'plan-week-h'}">${esc(h.trim())}</th>`).join('');
-    tb.innerHTML = body.map(r => '<tr>' + head.map((_,i) => {
+    thr.innerHTML = head.map((h,i) => {
+      if (i===0) return `<th class="plan-col0">${esc(h.trim())}</th>`;
+      if (i===1) return `<th class="plan-col1">${esc(h.trim())}</th>`;
+      const mm = (h.split('/')[1]||'').trim().padStart(2,'0');
+      return `<th class="plan-week-h" data-mes="${mm}">${esc(h.trim())}</th>`;
+    }).join('');
+    tb.innerHTML = body.map(r => '<tr>' + head.map((h,i) => {
       const v = (r[i]||'').trim();
       if (i===0) return `<td class="plan-col0"><strong>${esc(v)}</strong></td>`;
       if (i===1) return `<td class="plan-col1 plan-detalle">${esc(v)}</td>`;
-      return `<td class="plan-week">${v ? `<span class="plan-chip">${esc(v)}</span>` : ''}</td>`;
+      const mm = (h.split('/')[1]||'').trim().padStart(2,'0');
+      return `<td class="plan-week" data-mes="${mm}">${v ? `<span class="plan-chip">${esc(v)}</span>` : ''}</td>`;
     }).join('') + '</tr>').join('');
+    buildPlanFilter(head);
     const inp = document.getElementById('search-plan');
     if (inp && inp.value) inp.dispatchEvent(new Event('input'));
   } catch (e) {
