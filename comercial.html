@@ -7,14 +7,97 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-<!-- Design System YiQi · tokens y componentes por CDN (no forkear). Para editar el DS en vivo: ../yiqi-imagen/styles.css -->
-<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* ── TOKENS ─────────────────────────────────────────────── */
-    
+    :root {
+      --bg:              #0c0c0e;
+      --bg-elev:         #111114;
+      --bg-elev-2:       #18181c;
+      --bg-soft:         rgba(255,255,255,.04);
 
-    
+      --line:            rgba(255,255,255,.08);
+      --line-strong:     rgba(255,255,255,.14);
+
+      --text:            #f0f1f3;
+      --muted:           #8a8d94;
+      --muted-2:         #5a5d66;
+
+      --cyan:            #00ccff;
+      --cyan-soft:       rgba(0,204,255,.12);
+      --cyan-soft-2:     rgba(0,204,255,.18);
+      --cyan-label:      rgba(0,204,255,.52);
+      --text-cyan-muted: rgba(0,195,240,.45);
+
+      --green:           #00c48c;
+      --green-soft:      rgba(0,196,140,.12);
+      --amber:           #f6a623;
+      --amber-soft:      rgba(246,166,35,.12);
+      --red:             #f25f5c;
+      --red-soft:        rgba(242,95,92,.12);
+      --blue:            #7ab7ff;
+      --purple:          #a78bfa;
+      --purple-soft:     rgba(167,139,250,.12);
+      --warm:            #b5a090;
+      --warm-soft:       rgba(181,160,144,.10);
+
+      --glow:            0 0 0 3px rgba(0,204,255,.22);
+      --shadow-sm:       0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+      --shadow-md:       0 4px 16px rgba(0,0,0,.28);
+      --shadow-lg:       0 8px 32px rgba(0,0,0,.36);
+
+      --sans:            "Inter", ui-sans-serif, system-ui, sans-serif;
+      --mono:            "IBM Plex Mono", ui-monospace, monospace;
+      --display:         "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+      --sidebar-w:       240px;
+      --topbar-h:        56px;
+
+      --radius-xs:       5px;
+      --radius-sm:       7px;
+      --radius:          10px;
+      --radius-md:       12px;
+      --radius-lg:       16px;
+      --radius-xl:       20px;
+      --radius-pill:     999px;
+      --tr:              180ms ease;
+    }
+
+    html[data-theme="light"] {
+      --bg:              #f5f4f0;
+      --bg-elev:         #eeece7;
+      --bg-elev-2:       #e6e4df;
+      --bg-soft:         rgba(0,0,0,.04);
+
+      --line:            rgba(0,0,0,.08);
+      --line-strong:     rgba(0,0,0,.13);
+
+      --text:            #17191c;
+      --muted:           #586170;
+      --muted-2:         #7f8896;
+
+      --text-cyan-muted: rgba(0,140,175,.48);
+
+      --cyan:            #009fc7;
+      --cyan-soft:       rgba(0,159,199,.12);
+      --cyan-soft-2:     rgba(0,159,199,.18);
+      --cyan-label:      rgba(0,159,199,.52);
+
+      --green:           #0c9b6d;
+      --green-soft:      rgba(12,155,109,.12);
+      --amber:           #c78000;
+      --amber-soft:      rgba(199,128,0,.12);
+      --red:             #d4485e;
+      --red-soft:        rgba(212,72,94,.12);
+      --blue:            #347de6;
+      --purple:          #7c3aed;
+      --purple-soft:     rgba(124,58,237,.12);
+
+      --glow:            0 0 0 3px rgba(0,159,199,.22);
+      --shadow-sm:       0 2px 8px rgba(16,36,54,.08);
+      --shadow-md:       0 8px 24px rgba(16,36,54,.12);
+      --shadow-lg:       0 16px 32px rgba(16,36,54,.16);
+    }
 
     /* ── RESET ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -335,6 +418,16 @@
     }
     .num { font: 500 13px var(--mono); }
 
+    /* DS — Planificación timeline */
+    .plan-table th, .plan-table td { white-space: nowrap; vertical-align: top; }
+    .plan-table .plan-detalle { white-space: normal; min-width: 230px; max-width: 340px; color: var(--muted); font-size: 12px; }
+    .plan-col0 { position: sticky; left: 0; z-index: 2; background: var(--bg-elev); border-right: 1px solid var(--line); min-width: 140px; }
+    .plan-table thead .plan-col0 { z-index: 3; }
+    .plan-week-h { font: 600 10px var(--mono); color: var(--muted-2); text-align: center; }
+    .plan-week { min-width: 96px; }
+    .plan-chip { display: inline-block; white-space: normal; background: var(--cyan-soft); color: var(--text-cyan-muted);
+      border-radius: var(--radius-sm); padding: 4px 8px; font: 500 11px var(--sans); line-height: 1.3; max-width: 140px; }
+
     /* ── FUNNEL SECTION ──────────────────────────────────────── */
     .two-col {
       display: grid;
@@ -553,7 +646,7 @@
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-title">Meta + CRM</span>
     <div class="topbar-divider" aria-hidden="true"></div>
-    <span class="topbar-period" id="topbar-period">1 ene – 18 jun 2026 · parcial</span>
+    <span class="topbar-period" id="topbar-period">1 ene – 22 jun 2026 · parcial</span>
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-period" style="font:500 11px var(--mono);color:var(--muted-2)" title="ID de cuenta publicitaria Meta">Meta ID · 370211010327709</span>
   </div>
@@ -697,7 +790,7 @@
     <!-- ── SECCIÓN 1: RESUMEN META ─────────────────────────────── -->
     <section id="resumen" aria-label="Resumen Meta">
       <div class="section-title">Resumen Meta</div>
-      <div class="section-sub" id="resumen-period">1 ene – 18 jun 2026 · Instagram · variación intermensual</div>
+      <div class="section-sub" id="resumen-period">1 ene – 22 jun 2026 · Instagram · variación intermensual</div>
 
       <div class="kpi-grid" id="resumen-kpis">
         <div class="kpi-card card-reveal" id="kpi-alcance">
@@ -872,7 +965,7 @@
             <div class="rate-card">
               <div class="rate-label">Alcance → Contacto</div>
               <div class="rate-value" id="r-alc-cont">0,1%</div>
-              <div class="rate-sub" id="s-alc-cont">96 / 367.494</div>
+              <div class="rate-sub" id="s-alc-cont">97 / 369.715</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">Contacto → ON</div>
@@ -892,7 +985,7 @@
             <div class="rate-card">
               <div class="rate-label">Costo por ON</div>
               <div class="rate-value" id="r-costo-on">—</div>
-              <div class="rate-sub" id="s-costo-on">$2.264.053 / ONs</div>
+              <div class="rate-sub" id="s-costo-on">$2.329.512 / ONs</div>
             </div>
             <div class="rate-card">
               <div class="rate-label">Ticket promedio enviado</div>
@@ -1277,7 +1370,7 @@
     <!-- ── SECCIÓN 6: PLANIFICACIÓN ─────────────────────────────── -->
     <section id="planificacion" aria-label="Planificación">
       <div class="section-title">Planificación</div>
-      <div class="section-sub">Acciones comerciales planificadas · prioridad y período por definir · clic en columna para ordenar</div>
+      <div class="section-sub">Planificación comercial · grilla semanal · se actualiza desde Google Sheets</div>
 
       <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
@@ -1288,24 +1381,9 @@
           </span>
         </div>
         <div class="table-wrap">
-          <table class="ds-table" id="tabla-plan">
-            <thead>
-              <tr>
-                <th class="sortable" onclick="sortTable('tabla-plan',0)">Categoría <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-plan',1)">Acción <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-plan',2)">Prioridad <span class="sort-arrow">⇅</span></th>
-                <th class="sortable" onclick="sortTable('tabla-plan',3)">Período <span class="sort-arrow">⇅</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Acciones comerciales</td><td><strong>Campañas</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-              <tr><td>Acciones comerciales</td><td><strong>Ventas</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-              <tr><td>Acciones comerciales</td><td><strong>iA Ready</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-              <tr><td>Acciones comerciales</td><td><strong>Costos</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-              <tr><td>Acciones comerciales</td><td><strong>Importadores</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-              <tr><td>Acciones presenciales o directas</td><td><strong>Email marketing</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-              <tr><td>Acciones presenciales o directas</td><td><strong>Capacitaciones</strong></td><td><span class="num" style="color:var(--muted-2)">—</span></td><td><span class="num" style="color:var(--muted-2)">—</span></td></tr>
-            </tbody>
+          <table class="ds-table plan-table" id="tabla-plan">
+            <thead><tr></tr></thead>
+            <tbody></tbody>
           </table>
           <div class="table-empty" id="empty-plan" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
         </div>
@@ -1318,7 +1396,7 @@
 <div class="ds-overlay" id="overlay" onclick="closeNav()" aria-hidden="true"></div>
 
 <footer class="page-footer" role="contentinfo">
-  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://yiqi.com.ar/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7</a> · Meta Ads ID 370211010327709 · Actualizado 18 jun 2026
+  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://yiqi.com.ar/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7</a> · Meta Ads ID 370211010327709 · Actualizado 22 jun 2026
 </footer>
 
 <script>
@@ -1329,13 +1407,13 @@
 //               period }
 const META_DATA = {
   ytd: {
-    period:   '1 ene – 18 jun 2026 · Instagram · variación intermensual',
-    alcance:  '309.535',    dAlcance: ['positive', 'alcance único · ene–jun 2026'],
-    conv:     '618',        dConv:    ['neutral',  'campañas de mensajes'],
-    cont:     '96',         dCont:    ['neutral',  'reportados por campaña'],
-    gasto:    '$2.264.053', dGasto:   ['neutral', 'acumulado ene–jun · ARS'],
-    inter:    '29.092',     dInter:   ['neutral', 'acumulado ene–jun'],
-    clics:    '13.303',     dClics:   ['neutral', 'acumulado ene–jun'],
+    period:   '1 ene – 22 jun 2026 · Instagram · variación intermensual',
+    alcance:  '311.756',    dAlcance: ['positive', 'alcance único · ene–jun 2026'],
+    conv:     '625',        dConv:    ['neutral',  'campañas de mensajes'],
+    cont:     '97',         dCont:    ['neutral',  'reportados por campaña'],
+    gasto:    '$2.329.512', dGasto:   ['neutral', 'acumulado ene–jun · ARS'],
+    inter:    '30.525',     dInter:   ['neutral', 'acumulado ene–jun'],
+    clics:    '13.327',     dClics:   ['neutral', 'acumulado ene–jun'],
   },
   ene: {
     period:   'Enero 2026 · Instagram · 1–31 ene',
@@ -1383,13 +1461,13 @@ const META_DATA = {
     clics:    '4.806',    dClics:   ['negative', '↓ 1,0% vs abr'],
   },
   jun: {
-    period:   'Junio 2026 · Instagram · 1–18 jun (parcial)',
-    alcance:  '12.236',   dAlcance: ['negative', '↓ 88,8% vs may'],
-    conv:     '25',       dConv:    ['negative', '↓ 75,0% vs may'],
-    cont:     '10',       dCont:    ['negative', '↓ 88,4% vs may'],
-    gasto:    '$296.805', dGasto:   ['negative', '↓ 45,5% vs may'],
-    inter:    '5.556',    dInter:   ['negative', '↓ 39,3% vs may'],
-    clics:    '168',      dClics:   ['negative', '↓ 96,5% vs may'],
+    period:   'Junio 2026 · Instagram · 1–22 jun (parcial)',
+    alcance:  '14.457',   dAlcance: ['negative', '↓ 86,8% vs may'],
+    conv:     '32',       dConv:    ['negative', '↓ 68,0% vs may'],
+    cont:     '11',       dCont:    ['negative', '↓ 87,2% vs may'],
+    gasto:    '$362.264', dGasto:   ['negative', '↓ 33,5% vs may'],
+    inter:    '6.989',    dInter:   ['negative', '↓ 23,7% vs may'],
+    clics:    '192',      dClics:   ['negative', '↓ 96,0% vs may'],
   },
 };
 
@@ -1447,7 +1525,7 @@ const COTIZ_DATA = {
     dTasa: '↓ 45,5 pp vs abr',  dTasaDir: 'negative',
   },
   jun: {
-    period:   'Junio 2026 · 1–18 jun · datos de CRM pendientes de carga',
+    period:   'Junio 2026 · 1–22 jun · datos de CRM pendientes de carga',
     ons:       0,   enCurso: null, enviadas: null, ganadas: 0, vencidas: null,
     dOns:  'Pendiente · cargar ONs de junio',     dOnsDir:  'neutral',
     dEnv:  'pendiente · ingresar manualmente',
@@ -1659,11 +1737,11 @@ const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
 
 // Datos reales de Meta Ads API · cuenta 370211010327709 · 2026-01-01 a 2026-06-18 (jun parcial 1–18)
 const META_SERIES = {
-  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   25],   color: '--green',  right: false },
-  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 5556], color: '--blue',   right: false },
-  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 168],  color: '--purple', right: false },
-  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  297],  color: '--red',    right: false },
-  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 12.2], color: '--amber', right: true, suffix: 'k' },
+  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   32],   color: '--green',  right: false },
+  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 6989], color: '--blue',   right: false },
+  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 192],  color: '--purple', right: false },
+  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  362],  color: '--red',    right: false },
+  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 14.5], color: '--amber', right: true, suffix: 'k' },
 };
 
 const META_VISIBLE = new Set(['conv', 'inter']);
@@ -1776,9 +1854,9 @@ function valF(id) {
 }
 
 function calcFunnel() {
-  const CONTACTOS  = 96;       // YTD 2026 nuevos contactos reportados por campañas Meta (incl. jun 1–18)
-  const ALCANCE    = 367494;   // YTD 2026 alcance Meta Ads (incl. jun 1–18)
-  const GASTO      = 2264053;  // YTD 2026 gasto ARS Meta Ads (incl. jun 1–18)
+  const CONTACTOS  = 97;       // YTD 2026 nuevos contactos reportados por campañas Meta (incl. jun 1–22)
+  const ALCANCE    = 369715;   // YTD 2026 alcance Meta Ads (incl. jun 1–22)
+  const GASTO      = 2329512;  // YTD 2026 gasto ARS Meta Ads (incl. jun 1–22)
 
   const ons        = val('ons-nuevas');
   const cotEnv     = val('cot-env');
@@ -1822,7 +1900,7 @@ function calcFunnel() {
     set('s-costo-on', `$${GASTO.toLocaleString('es-AR')} / ${ons}`);
   } else {
     set('r-costo-on', '—');
-    set('s-costo-on', '$2.264.053 / ONs');
+    set('s-costo-on', '$2.329.512 / ONs');
   }
 
   /* Ticket promedio enviado */
@@ -1904,23 +1982,25 @@ async function loadPlanSheet() {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const rows = parseCSV(await res.text()).filter(r => r.some(c => c.trim() !== ''));
     if (rows.length < 2) return;
-    const muted = '<span class="num" style="color:var(--muted-2)">—</span>';
-    const cell = v => (v && v.trim()) ? v.trim() : muted;
-    const prio = v => {
-      const t = (v || '').trim().toLowerCase();
-      if (!t) return muted;
-      const cls = t === 'alta' ? 'badge-red' : t === 'media' ? 'badge-amber' : t === 'baja' ? 'badge-green' : 'badge-muted';
-      return `<span class="badge ${cls}">${v.trim()}</span>`;
-    };
-    const tb = document.querySelector('#tabla-plan tbody');
-    if (!tb) return;
-    tb.innerHTML = rows.slice(1).map(r =>
-      `<tr><td>${cell(r[0])}</td><td><strong>${(r[1] || '').trim()}</strong></td><td>${prio(r[2])}</td><td>${cell(r[3])}</td></tr>`
-    ).join('');
+    const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const head = rows[0], body = rows.slice(1);
+    const thr = document.querySelector('#tabla-plan thead tr');
+    const tb  = document.querySelector('#tabla-plan tbody');
+    if (!thr || !tb) return;
+    thr.innerHTML = head.map((h,i) =>
+      `<th class="${i===0?'plan-col0':i===1?'plan-col1':'plan-week-h'}">${esc(h.trim())}</th>`).join('');
+    tb.innerHTML = body.map(r => '<tr>' + head.map((_,i) => {
+      const v = (r[i]||'').trim();
+      if (i===0) return `<td class="plan-col0"><strong>${esc(v)}</strong></td>`;
+      if (i===1) return `<td class="plan-col1 plan-detalle">${esc(v)}</td>`;
+      return `<td class="plan-week">${v ? `<span class="plan-chip">${esc(v)}</span>` : ''}</td>`;
+    }).join('') + '</tr>').join('');
     const inp = document.getElementById('search-plan');
     if (inp && inp.value) inp.dispatchEvent(new Event('input'));
   } catch (e) {
     console.warn('Planificación: no se pudo cargar la hoja de Google', e);
+    const tb = document.querySelector('#tabla-plan tbody');
+    if (tb && !tb.children.length) tb.innerHTML = '<tr><td style="padding:20px;color:var(--muted-2)">No se pudo cargar la planificación desde Google Sheets. Abrí el dashboard servido por http(s), no como archivo local.</td></tr>';
   }
 }
 
@@ -2086,26 +2166,26 @@ function initScrollSpy() {
 /* ─── GRÁFICO ANUNCIOS ──────────────────────────────────────── */
 // Gasto por campaña por período · Meta Ads API · cuenta 370211010327709 · 2026 (jun parcial 1–18)
 const ANUNCIOS_BY_PERIOD = {
-  ytd: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Con @interbanking", "Puedes vender más — leads", "El sistema que opera", "Formulario YiQi — leads", "Interbanking en YiQi", "Menos tareas manuales", "[15/5/2026] Promoción FB", "Reserva tu demo"], data: [700080, 403664, 174331, 168360, 124776, 94069, 79835, 69165, 63984, 57861] },
+  ytd: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Puedes vender más — leads", "Con @interbanking", "El sistema que opera", "Formulario YiQi — leads", "Interbanking en YiQi", "Menos tareas manuales", "[15/5/2026] Promoción FB", "Reserva tu demo"], data: [700080, 403664, 190463, 174331, 152211, 109321, 79835, 69165, 63984, 57861] },
   ene: { labels: ["YiQi ERP, 15 años", "Mitos vs realidad"], data: [49926, 11985] },
-  feb: { labels: ["Reserva tu demo", "Interbanking en YiQi", "La automatización — link clicks", "YiQi ERP, 15 años (msgs)", "La automatización — msgs", "Gestiona tu empresa", "Instagram Post #2", "La automatización — msgs #2", "Mercado Libre, Frávega"], data: [57861, 45353, 29998, 29662, 23736, 20807, 20776, 19870, 17785] },
+  feb: { labels: ["Reserva tu demo", "Interbanking en YiQi", "La automatización — link clicks", "YiQi ERP, 15 años (msgs)", "La automatización — msgs", "Gestiona tu empresa", "Instagram Post #2", "La automatización — msgs #2", "Mercado Libre / Frávega"], data: [57861, 45353, 29998, 29662, 23736, 20807, 20776, 19870, 17785] },
   mar: { labels: ["@interbanking ahora", "Con @interbanking", "Menos tareas manuales", "Interbanking en YiQi", "YiQi ERP tiene algo"], data: [270781, 174331, 69165, 34482, 19631] },
   abr: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Construye con IA"], data: [344332, 170258, 11687] },
-  may: { labels: ["Instagram Post — link clicks", "@interbanking ahora", "Puedes vender más — leads", "[15/5/2026] Promoción FB", "Instagram Post — mensajes", "Construye con IA", "[27/5/2026] Promoción Formulario"], data: [233406, 84967, 69392, 63984, 38445, 34287, 20340] },
-  jun: { labels: ["El sistema que opera", "Puedes vender más — leads", "Formulario YiQi — leads"], data: [124776, 98969, 73730] },
+  may: { labels: ["Instagram Post — link clicks", "@interbanking ahora", "Puedes vender más — leads", "[15/5/2026] Promoción FB", "Instagram Post — mensajes", "Construye con IA", "Formulario YiQi — leads"], data: [233406, 84967, 69392, 63984, 38445, 34287, 20340] },
+  jun: { labels: ["El sistema que opera", "Puedes vender más — leads", "Formulario YiQi — leads"], data: [152211, 121072, 88981] },
 };
 
-const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio (1–18)' };
+const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio (1–22)' };
 
 // Tabla de anuncios por período · [nombre, gasto, resultado, costo/res, vistas(impresiones)]
 const ANUNCIOS_TABLA = {
-  ytd: [["Publicación de Instagram: @interbanking ahora...", 700080, "405 conversaciones", "$1.729/conv", 237874], ["Instagram Post — link clicks", 403664, "7.178 clics", "$56/clic", 372841], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Puedes vender más — leads", 168390, "14 leads", "$12.028/lead", 13305], ["El sistema que opera", 124785, "26 conversaciones", "$4.799/conv", 11128], ["Formulario YiQi — leads", 94069, "9 leads", "$10.452/lead", 6192], ["Interbanking en YiQi", 79835, "23 conversaciones", "$3.471/conv", 12617], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Construye con IA", 45974, "14 conversaciones", "$3.284/conv", 5988], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
+  ytd: [["@interbanking ahora", 700080, "405 conversaciones", "$1.729/conv", 237874], ["Instagram Post — link clicks", 403664, "7.178 clics", "$56/clic", 372841], ["Puedes vender más — leads", 190463, "15 leads", "$12.698/lead", 14384], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["El sistema que opera", 152211, "32 conversaciones", "$4.757/conv", 14816], ["Formulario YiQi — leads", 109321, "9 leads", "$12.147/lead", 6948], ["Interbanking en YiQi", 79835, "23 conversaciones", "$3.471/conv", 12617], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Construye con IA", 45974, "14 conversaciones", "$3.284/conv", 5988], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
   ene: [["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
   feb: [["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["Interbanking en YiQi", 45353, "17 conversaciones", "$2.668/conv", 6996], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567]],
-  mar: [["Publicación de Instagram: @interbanking ahora...", 270781, "167 conversaciones", "$1.621/conv", 92487], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["Interbanking en YiQi", 34482, "6 conversaciones", "$5.747/conv", 5621], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739]],
-  abr: [["Publicación de Instagram: @interbanking ahora...", 344332, "184 conversaciones", "$1.871/conv", 115325], ["Instagram Post — link clicks", 170258, "3.192 clics", "$53/clic", 184961], ["Construye con IA", 11687, "2 conversaciones", "$5.844/conv", 897]],
-  may: [["Instagram Post — link clicks", 233406, "3.986 clics", "$59/clic", 187880], ["Publicación de Instagram: @interbanking ahora...", 84967, "54 conversaciones", "$1.573/conv", 30062], ["Puedes vender más — leads", 69392, "8 leads", "$8.674/lead", 7219], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["Construye con IA", 34287, "12 conversaciones", "$2.857/conv", 5091], ["Formulario YiQi — leads", 20340, "5 leads", "$4.068/lead", 1052]],
-  jun: [["El sistema que opera", 124785, "26 conversaciones", "$4.799/conv", 11128], ["Puedes vender más — leads", 98998, "6 leads", "$16.500/lead", 6086], ["Formulario YiQi — leads", 73730, "4 leads", "$18.432/lead", 5140]],
+  mar: [["@interbanking ahora", 270781, "167 conversaciones", "$1.621/conv", 92487], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["Interbanking en YiQi", 34482, "6 conversaciones", "$5.747/conv", 5621], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739]],
+  abr: [["@interbanking ahora", 344332, "184 conversaciones", "$1.871/conv", 115325], ["Instagram Post — link clicks", 170258, "3.192 clics", "$53/clic", 184961], ["Construye con IA", 11687, "2 conversaciones", "$5.844/conv", 897]],
+  may: [["Instagram Post — link clicks", 233406, "3.986 clics", "$59/clic", 187880], ["@interbanking ahora", 84967, "54 conversaciones", "$1.573/conv", 30062], ["Puedes vender más — leads", 69392, "8 leads", "$8.674/lead", 7219], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["Construye con IA", 34287, "12 conversaciones", "$2.857/conv", 5091], ["Formulario YiQi — leads", 20340, "5 leads", "$4.068/lead", 1052]],
+  jun: [["El sistema que opera", 152211, "32 conversaciones", "$4.757/conv", 14816], ["Puedes vender más — leads", 121072, "7 leads", "$17.296/lead", 7165], ["Formulario YiQi — leads", 88981, "4 leads", "$22.245/lead", 5896]],
 };
 
 function renderAnunciosTable() {
@@ -2166,13 +2246,13 @@ function renderAnunciosChart() {
 
 /* ─── GRÁFICO FUNNEL ─────────────────────────────────────────── */
 const FUNNEL_DATA = {
-  ytd: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [309535,618,96,54,15] },
+  ytd: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [311756,625,97,54,15] },
   ene: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [3605,5,0,6,6] },
   feb: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [45484,103,0,6,1] },
   mar: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [74139,199,0,23,3] },
   abr: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [129222,186,0,11,5] },
   may: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [109675,100,86,8,0] },
-  jun: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [12236,25,10,0,0] },
+  jun: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [14457,32,11,0,0] },
 };
 function renderFunnelChart(key) {
   const ctx = document.getElementById('chart-funnel');
