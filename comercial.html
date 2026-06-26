@@ -1977,21 +1977,47 @@ function parseCSV(text) {
 }
 
 const _MES_ABBR = { '01':'Ene','02':'Feb','03':'Mar','04':'Abr','05':'May','06':'Jun','07':'Jul','08':'Ago','09':'Sep','10':'Oct','11':'Nov','12':'Dic' };
+const _Q_MESES = { Q1:['01','02','03'], Q2:['04','05','06'], Q3:['07','08','09'], Q4:['10','11','12'] };
+let _planMeses = new Set();   // vacío = todos
+let _planDisp  = new Set();   // meses presentes en la hoja
 function buildPlanFilter(head) {
   const cont = document.getElementById('plan-mes-filter');
   if (!cont) return;
   const meses = [];
   head.forEach((h,i) => { if (i < 2) return; const mm = (h.split('/')[1]||'').trim().padStart(2,'0'); if (mm && !meses.includes(mm)) meses.push(mm); });
-  cont.innerHTML = `<button class="month-pill active" onclick="filterPlanMes('all')">Todo el año</button>`
-    + meses.map(mm => `<button class="month-pill" onclick="filterPlanMes('${mm}')">${_MES_ABBR[mm]||mm}</button>`).join('');
+  _planDisp = new Set(meses); _planMeses = new Set();
+  const sep = '<span style="display:inline-block;width:1px;height:18px;background:var(--line-strong);margin:0 6px;vertical-align:middle"></span>';
+  const qBtns = Object.keys(_Q_MESES)
+    .map(q => ({ q, ms: _Q_MESES[q].filter(m => _planDisp.has(m)) }))
+    .filter(o => o.ms.length)
+    .map(o => `<button class="month-pill" data-q="${o.ms.join(',')}" onclick="planQ('${o.ms.join(',')}')">${o.q}</button>`).join('');
+  cont.innerHTML = `<button class="month-pill active" id="plan-all-btn" onclick="planAll()">Todo el año</button>`
+    + meses.map(mm => `<button class="month-pill" data-mes="${mm}" onclick="planMes('${mm}')">${_MES_ABBR[mm]||mm}</button>`).join('')
+    + (qBtns ? sep + qBtns : '');
+  _planApply();
 }
-function filterPlanMes(m) {
-  document.querySelectorAll('#plan-mes-filter .month-pill').forEach(p =>
-    p.classList.toggle('active', p.getAttribute('onclick').includes(`'${m}'`)));
+function _planApply() {
+  const all = _planMeses.size === 0;
   document.querySelectorAll('#tabla-plan [data-mes]').forEach(el => {
-    el.style.display = (m === 'all' || el.dataset.mes === m) ? '' : 'none';
+    el.style.display = (all || _planMeses.has(el.dataset.mes)) ? '' : 'none';
   });
+  document.querySelectorAll('#plan-mes-filter [data-mes]').forEach(p =>
+    p.classList.toggle('active', _planMeses.has(p.dataset.mes)));
+  document.querySelectorAll('#plan-mes-filter [data-q]').forEach(p => {
+    const ms = p.dataset.q.split(',');
+    p.classList.toggle('active', ms.length > 0 && ms.every(m => _planMeses.has(m)));
+  });
+  const allBtn = document.getElementById('plan-all-btn');
+  if (allBtn) allBtn.classList.toggle('active', all);
 }
+function planMes(m) { _planMeses.has(m) ? _planMeses.delete(m) : _planMeses.add(m); _planApply(); }
+function planQ(list) {
+  const ms = list.split(',');
+  const allIn = ms.length > 0 && ms.every(m => _planMeses.has(m));
+  ms.forEach(m => allIn ? _planMeses.delete(m) : _planMeses.add(m));
+  _planApply();
+}
+function planAll() { _planMeses.clear(); _planApply(); }
 
 async function loadPlanSheet() {
   if (!PLAN_SHEET_CSV) return;  // sin URL → quedan las filas estáticas
