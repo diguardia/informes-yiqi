@@ -646,7 +646,7 @@
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-title">Meta + CRM</span>
     <div class="topbar-divider" aria-hidden="true"></div>
-    <span class="topbar-period" id="topbar-period">1 ene – 22 jun 2026 · parcial</span>
+    <span class="topbar-period" id="topbar-period">1 ene – 30 jun 2026</span>
     <div class="topbar-divider" aria-hidden="true"></div>
     <span class="topbar-period" style="font:500 11px var(--mono);color:var(--muted-2)" title="ID de cuenta publicitaria Meta">Meta ID · 370211010327709</span>
   </div>
@@ -790,7 +790,7 @@
     <!-- ── SECCIÓN 1: RESUMEN META ─────────────────────────────── -->
     <section id="resumen" aria-label="Resumen Meta">
       <div class="section-title">Resumen Meta</div>
-      <div class="section-sub" id="resumen-period">1 ene – 22 jun 2026 · Instagram · variación intermensual</div>
+      <div class="section-sub" id="resumen-period">1 ene – 30 jun 2026 · Instagram · variación intermensual</div>
 
       <div class="kpi-grid" id="resumen-kpis">
         <div class="kpi-card card-reveal" id="kpi-alcance">
@@ -1408,13 +1408,13 @@
 //               period }
 const META_DATA = {
   ytd: {
-    period:   '1 ene – 22 jun 2026 · Instagram · variación intermensual',
-    alcance:  '311.756',    dAlcance: ['positive', 'alcance único · ene–jun 2026'],
-    conv:     '625',        dConv:    ['neutral',  'campañas de mensajes'],
-    cont:     '97',         dCont:    ['neutral',  'reportados por campaña'],
-    gasto:    '$2.329.512', dGasto:   ['neutral', 'acumulado ene–jun · ARS'],
-    inter:    '30.525',     dInter:   ['neutral', 'acumulado ene–jun'],
-    clics:    '13.327',     dClics:   ['neutral', 'acumulado ene–jun'],
+    period:   '1 ene – 30 jun 2026 · Instagram · variación intermensual',
+    alcance:  '313.993',    dAlcance: ['positive', 'alcance único · ene–jun 2026'],
+    conv:     '634',        dConv:    ['neutral',  'campañas de mensajes'],
+    cont:     '86',         dCont:    ['neutral',  'may · jun pendiente de carga'],
+    gasto:    '$2.442.964', dGasto:   ['neutral', 'acumulado ene–jun · ARS'],
+    inter:    '32.803',     dInter:   ['neutral', 'acumulado ene–jun'],
+    clics:    '13.382',     dClics:   ['neutral', 'acumulado ene–jun'],
   },
   ene: {
     period:   'Enero 2026 · Instagram · 1–31 ene',
@@ -1462,13 +1462,13 @@ const META_DATA = {
     clics:    '4.806',    dClics:   ['negative', '↓ 1,0% vs abr'],
   },
   jun: {
-    period:   'Junio 2026 · Instagram · 1–22 jun (parcial)',
-    alcance:  '14.457',   dAlcance: ['negative', '↓ 86,8% vs may'],
-    conv:     '32',       dConv:    ['negative', '↓ 68,0% vs may'],
-    cont:     '11',       dCont:    ['negative', '↓ 87,2% vs may'],
-    gasto:    '$362.264', dGasto:   ['negative', '↓ 33,5% vs may'],
-    inter:    '6.989',    dInter:   ['negative', '↓ 23,7% vs may'],
-    clics:    '192',      dClics:   ['negative', '↓ 96,0% vs may'],
+    period:   'Junio 2026 · Instagram · 1–30 jun',
+    alcance:  '19.327',   dAlcance: ['negative', '↓ 82,4% vs may'],
+    conv:     '41',       dConv:    ['negative', '↓ 59,0% vs may'],
+    cont:     null,       dCont:    ['neutral',  'pendiente · no proviene de Meta Ads'],
+    gasto:    '$475.715', dGasto:   ['negative', '↓ 12,7% vs may'],
+    inter:    '9.267',    dInter:   ['positive', '↑ 1,2% vs may'],
+    clics:    '247',      dClics:   ['negative', '↓ 94,9% vs may'],
   },
 };
 
@@ -1736,13 +1736,13 @@ function sortDonutDesc(labels, data, colors) {
 /* ─── META LINE CHART ───────────────────────────────────────── */
 const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
 
-// Datos reales de Meta Ads API · cuenta 370211010327709 · 2026-01-01 a 2026-06-18 (jun parcial 1–18)
+// Datos reales de Meta Ads API · cuenta 370211010327709 · 2026-01-01 a 2026-06-30 (jun completo)
 const META_SERIES = {
-  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   32],   color: '--green',  right: false },
-  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 6989], color: '--blue',   right: false },
-  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 192],  color: '--purple', right: false },
-  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  362],  color: '--red',    right: false },
-  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 14.5], color: '--amber', right: true, suffix: 'k' },
+  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   41],   color: '--green',  right: false },
+  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 9267], color: '--blue',   right: false },
+  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 247],  color: '--purple', right: false },
+  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  476],  color: '--red',    right: false },
+  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 19.3], color: '--amber', right: true, suffix: 'k' },
 };
 
 const META_VISIBLE = new Set(['conv', 'inter']);
@@ -2214,28 +2214,28 @@ function initScrollSpy() {
 
 
 /* ─── GRÁFICO ANUNCIOS ──────────────────────────────────────── */
-// Gasto por campaña por período · Meta Ads API · cuenta 370211010327709 · 2026 (jun parcial 1–18)
+// Gasto por campaña por período · Meta Ads API · cuenta 370211010327709 · 2026 (jun completo 1–30)
 const ANUNCIOS_BY_PERIOD = {
-  ytd: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Puedes vender más — leads", "Con @interbanking", "El sistema que opera", "Formulario YiQi — leads", "Interbanking en YiQi", "Menos tareas manuales", "[15/5/2026] Promoción FB", "Reserva tu demo"], data: [700080, 403664, 190463, 174331, 152211, 109321, 79835, 69165, 63984, 57861] },
+  ytd: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Puedes vender más — leads", "El sistema que opera", "Con @interbanking", "Formulario YiQi — leads", "Interbanking en YiQi", "Menos tareas manuales", "[15/5/2026] Promoción FB", "Reserva tu demo"], data: [700080, 403664, 241228, 177464, 174331, 146754, 79835, 69165, 63984, 57861] },
   ene: { labels: ["YiQi ERP, 15 años", "Mitos vs realidad"], data: [49926, 11985] },
   feb: { labels: ["Reserva tu demo", "Interbanking en YiQi", "La automatización — link clicks", "YiQi ERP, 15 años (msgs)", "La automatización — msgs", "Gestiona tu empresa", "Instagram Post #2", "La automatización — msgs #2", "Mercado Libre / Frávega"], data: [57861, 45353, 29998, 29662, 23736, 20807, 20776, 19870, 17785] },
   mar: { labels: ["@interbanking ahora", "Con @interbanking", "Menos tareas manuales", "Interbanking en YiQi", "YiQi ERP tiene algo"], data: [270781, 174331, 69165, 34482, 19631] },
   abr: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Construye con IA"], data: [344332, 170258, 11687] },
   may: { labels: ["Instagram Post — link clicks", "@interbanking ahora", "Puedes vender más — leads", "[15/5/2026] Promoción FB", "Instagram Post — mensajes", "Construye con IA", "Formulario YiQi — leads"], data: [233406, 84967, 69392, 63984, 38445, 34287, 20340] },
-  jun: { labels: ["El sistema que opera", "Puedes vender más — leads", "Formulario YiQi — leads"], data: [152211, 121072, 88981] },
+  jun: { labels: ["El sistema que opera", "Puedes vender más — leads", "Formulario YiQi — leads"], data: [177464, 171837, 126414] },
 };
 
-const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio (1–22)' };
+const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio' };
 
 // Tabla de anuncios por período · [nombre, gasto, resultado, costo/res, vistas(impresiones)]
 const ANUNCIOS_TABLA = {
-  ytd: [["@interbanking ahora", 700080, "405 conversaciones", "$1.729/conv", 237874], ["Instagram Post — link clicks", 403664, "7.178 clics", "$56/clic", 372841], ["Puedes vender más — leads", 190463, "15 leads", "$12.698/lead", 14384], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["El sistema que opera", 152211, "32 conversaciones", "$4.757/conv", 14816], ["Formulario YiQi — leads", 109321, "9 leads", "$12.147/lead", 6948], ["Interbanking en YiQi", 79835, "23 conversaciones", "$3.471/conv", 12617], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Construye con IA", 45974, "14 conversaciones", "$3.284/conv", 5988], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
+  ytd: [["@interbanking ahora", 700080, "405 conversaciones", "$1.729/conv", 237874], ["Instagram Post — link clicks", 403664, "7.178 clics", "$56/clic", 372841], ["Puedes vender más — leads", 241228, "17 leads", "$14.190/lead", 16604], ["El sistema que opera", 177464, "41 conversaciones", "$4.328/conv", 21275], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Formulario YiQi — leads", 146754, "11 leads", "$13.341/lead", 8614], ["Interbanking en YiQi", 79835, "23 conversaciones", "$3.471/conv", 12617], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Construye con IA", 45974, "14 conversaciones", "$3.284/conv", 5988], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
   ene: [["YiQi ERP, 15 años", 49926, "4 conversaciones", "$12.482/conv", 3355], ["Mitos vs realidad", 11985, "1 conversación", "$11.985/conv", 2242]],
   feb: [["Reserva tu demo", 57861, "24 conversaciones", "$2.411/conv", 11897], ["Interbanking en YiQi", 45353, "17 conversaciones", "$2.668/conv", 6996], ["La automatización — link clicks", 29998, "620 clics", "$48/clic", 27264], ["YiQi ERP, 15 años (msgs)", 29662, "7 conversaciones", "$4.237/conv", 6319], ["La automatización — msgs", 23736, "10 conversaciones", "$2.374/conv", 4243], ["Gestiona tu empresa", 20807, "10 conversaciones", "$2.081/conv", 3613], ["Instagram Post #2", 20776, "23 conversaciones", "$903/conv", 7929], ["La automatización — msgs #2", 19870, "7 conversaciones", "$2.839/conv", 2660], ["Mercado Libre / Frávega", 17785, "5 conversaciones", "$3.557/conv", 3567]],
   mar: [["@interbanking ahora", 270781, "167 conversaciones", "$1.621/conv", 92487], ["Con @interbanking", 174331, "12 conversaciones", "$14.528/conv", 29393], ["Menos tareas manuales", 69165, "8 conversaciones", "$8.646/conv", 10055], ["Interbanking en YiQi", 34482, "6 conversaciones", "$5.747/conv", 5621], ["YiQi ERP tiene algo", 19631, "6 conversaciones", "$3.272/conv", 3739]],
   abr: [["@interbanking ahora", 344332, "184 conversaciones", "$1.871/conv", 115325], ["Instagram Post — link clicks", 170258, "3.192 clics", "$53/clic", 184961], ["Construye con IA", 11687, "2 conversaciones", "$5.844/conv", 897]],
   may: [["Instagram Post — link clicks", 233406, "3.986 clics", "$59/clic", 187880], ["@interbanking ahora", 84967, "54 conversaciones", "$1.573/conv", 30062], ["Puedes vender más — leads", 69392, "8 leads", "$8.674/lead", 7219], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["Construye con IA", 34287, "12 conversaciones", "$2.857/conv", 5091], ["Formulario YiQi — leads", 20340, "5 leads", "$4.068/lead", 1052]],
-  jun: [["El sistema que opera", 152211, "32 conversaciones", "$4.757/conv", 14816], ["Puedes vender más — leads", 121072, "7 leads", "$17.296/lead", 7165], ["Formulario YiQi — leads", 88981, "4 leads", "$22.245/lead", 5896]],
+  jun: [["El sistema que opera", 177464, "41 conversaciones", "$4.328/conv", 21275], ["Puedes vender más — leads", 171837, "9 leads", "$19.093/lead", 9385], ["Formulario YiQi — leads", 126414, "6 leads", "$21.069/lead", 7562]],
 };
 
 function renderAnunciosTable() {
