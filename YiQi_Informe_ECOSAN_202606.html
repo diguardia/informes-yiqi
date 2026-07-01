@@ -533,8 +533,8 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
     <section class="section" id="tickets-creados">
       <div class="section-header">
         <div class="section-kicker">03 · Distribución</div>
-        <h2 class="section-title">Tickets creados en mayo 2026</h2>
-        <p class="section-sub">27 tickets creados en el período — 17 resueltos (63%)</p>
+        <h2 class="section-title">Tickets creados en junio 2026</h2>
+        <p class="section-sub">14 tickets creados en el período — 11 resueltos (78%)</p>
       </div>
       <div class="charts-grid-3">
         <div class="chart-card"><div class="chart-card-title">Estado de tickets</div><div class="chart-card-sub">Del total creado en el período</div><div class="chart-wrap"><canvas id="chartEstado"></canvas></div><div id="legend-estado"></div></div>
@@ -560,11 +560,11 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
       <div class="section-header">
         <div class="section-kicker">04 · Tendencia</div>
         <h2 class="section-title">Histórico de tickets creados</h2>
-        <p class="section-sub">Evolución mensual desde mayo 2025 hasta mayo 2026.</p>
+        <p class="section-sub">Evolución mensual desde mayo 2025 hasta junio 2026.</p>
       </div>
       <div class="line-chart-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-          <div><div style="font:600 13px var(--sans);color:var(--text)">Tickets por mes</div><div style="font:400 11px var(--sans);color:var(--muted-2)">May 2025 → May 2026</div></div>
+          <div><div style="font:600 13px var(--sans);color:var(--text)">Tickets por mes</div><div style="font:400 11px var(--sans);color:var(--muted-2)">May 2025 → Jun 2026</div></div>
           <div style="display:flex;gap:16px"><div style="display:flex;align-items:center;gap:6px"><div style="width:24px;height:2px;background:var(--cyan);border-radius:1px"></div><span style="font:400 11px var(--sans);color:var(--muted)">Tickets creados</span></div></div>
         </div>
         <div class="line-chart-wrap"><canvas id="chartHistorico"></canvas></div>
@@ -599,40 +599,32 @@ tbody td{padding:11px 14px;font:400 12px var(--sans);color:var(--text)}
     <section class="section" id="detalle">
       <div class="section-header">
         <div class="section-kicker">06 · Detalle</div>
-        <h2 class="section-title">Sprint mayo 2026</h2>
-        <p class="section-sub">Listado completo de 20 tickets trabajados durante el período.</p>
+        <h2 class="section-title">Sprint junio 2026</h2>
+        <p class="section-sub">Listado completo de 12 tickets trabajados durante el período.</p>
       </div>
       <div class="table-wrap">
         <div class="table-header">
           <input class="table-search" id="tableSearch" type="text" placeholder="Buscar por título, sector, tipo…" />
-          <button class="filter-btn active" data-filter="all">Todos (20)</button>
-          <button class="filter-btn" data-filter="ingenieria">Ingeniería (4)</button>
-          <button class="filter-btn" data-filter="soporte">Soporte (16)</button>
+          <button class="filter-btn active" data-filter="all">Todos (12)</button>
+          <button class="filter-btn" data-filter="ingenieria">Ingeniería (2)</button>
+          <button class="filter-btn" data-filter="soporte">Soporte (10)</button>
         </div>
         <div style="overflow-x:auto">
           <table id="sprintTable" class="table-sortable">
             <thead><tr><th>Título</th><th>Sprint</th><th>BL</th><th>Sector</th><th>Ticket</th><th>Tipo</th><th>Avance</th><th>Esfuerzo</th></tr></thead>
             <tbody>
-              <tr data-type="soporte"><td>SEMAT</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">33668</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>GNC Prov. Unidas</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">33670</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="ingenieria"><td>Cambio de nombre de ubicación y creación de Staging In – Depósito Don Torcuato</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Servicios</td><td class="td-ticket">33991</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>Error al calcular Retenciones</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34242</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Fc Venta IVA liquidado en otro período</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34287</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="ingenieria"><td>CBR * Bloqueo en carga de recibos Pago Fácil</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Cobranzas</td><td class="td-ticket">34335</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>OTs no generan factura en Opciones en Servicios</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34346</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>Error en Libro de Sueldos</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>RRHH</td><td class="td-ticket">34356</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>Error al emitir factura - Cliente Victor M Contreras</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34388</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Factura no visible 17951</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34369</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Error en asiento contable OP ID: 64589</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34377</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>No se pudo programar un retiro</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Servicios</td><td class="td-ticket">34389</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Factura 17767 sin sucursal</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34407</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="ingenieria"><td>Reporte detalle factura en Ecología Sur</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34436</td><td><span class="badge badge-implementacion">Implementación</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>No se proyectarán las facturas del cliente Grupo Peñaflor SA</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Facturación</td><td class="td-ticket">34473</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Grupo Peñaflor SA</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Facturación</td><td class="td-ticket">34476</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>Oportunidad de Negocio 2228-2227 / Problema con cotización n° 2228</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34502</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
-              <tr data-type="soporte"><td>OC - Cambiar de estado</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Compras</td><td class="td-ticket">34520</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="soporte"><td>Stock con cantidad errónea</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34523</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
-              <tr data-type="ingenieria"><td>Factura de compra - borrar</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34531</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>CBR * Error en recibo / no tomó la factura pero lo emitió</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Cobranzas</td><td class="td-ticket">34893</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>CBR * Modificar descripción de estado en facturas</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Cobranzas</td><td class="td-ticket">34896</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Perfil para Reimputar NC (C)</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34545</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Cheque electrónico</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34607</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
+              <tr data-type="soporte"><td>Problema con Tarifa Mendoza</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34618</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Cuenta proveedor Policement</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34627</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Proveedor Papelera Francat</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34630</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Proveedor María Eugenia San José Jerke</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34634</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>Cuenta Corriente ADENER SA</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Administración</td><td class="td-ticket">34635</td><td><span class="badge badge-correccion">Corrección</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Creación de datos en QA</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Externo</td><td class="td-ticket">34653</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="ingenieria"><td>Factura de mantenimiento de MACE</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Sucursales</td><td class="td-ticket">34742</td><td><span class="badge badge-edicion">Edición de datos</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-media">Media</span></td></tr>
+              <tr data-type="soporte"><td>Error al importar archivos Excel URGENTE</td><td><span style="color:var(--muted-2)">—</span></td><td class="td-ticket">—</td><td>Cobranzas</td><td class="td-ticket">34765</td><td><span class="badge badge-soporte">Soporte</span></td><td><span class="avance-pill">100%</span></td><td><span class="esfuerzo-baja">Baja</span></td></tr>
             </tbody>
           </table>
           <div class="table-empty" id="tableEmpty">No se encontraron tickets con ese criterio.</div>
@@ -768,14 +760,14 @@ function renderAllCharts() {
     purple:getCSSVar('--purple'), red:getCSSVar('--red'),
     muted:getCSSVar('--muted'), blue:getCSSVar('--blue')
   };
-  // Estado (creados, total 27): Cerrado 16, En ingeniería 4, Analizando mejora 3, Analizando inconsistencia 2, Pendiente Validación 1, Analizando edición datos 1
-  const dE={l:['Cerrado','En ingeniería','Analizando mejora','Analizando inconsistencia','Pendiente de Validación','Analizando edición de datos'],d:[16,4,3,2,1,1],c:[c.green,c.amber,c.purple,c.blue,c.cyan,c.red]};
-  // Tipo (trabajados, total 20): Soporte 16, Corrección 2, Implementación 1, Edición de datos 1
-  const dT={l:['Soporte','Corrección','Implementación','Edición de datos'],d:[16,2,1,1],c:[c.muted,c.amber,c.purple,c.blue]};
-  // Esfuerzo (base 20, según detalle): Baja 13 (65%), Media 7 (35%)
-  const dF={l:['Baja','Media'],d:[13,7],c:[c.muted2,c.cyan]};
-  // Sectores (base 20, según detalle): Sucursales 7, Administración 6, Servicios 2, Facturación 2, Cobranzas 1, RRHH 1, Compras 1
-  const dS={l:['Sucursales','Administración','Servicios','Facturación','Cobranzas','RRHH','Compras'],d:[7,6,2,2,1,1,1],c:[c.green,c.cyan,c.red,c.blue,c.muted,c.amber,c.purple]};
+  // Estado (creados, total 14): Cerrado 9, Pendiente de Validación 2, Analizando edición de datos 2, En ingeniería 1
+  const dE={l:['Cerrado','Pendiente de Validación','Analizando edición de datos','En ingeniería'],d:[9,2,2,1],c:[c.green,c.cyan,c.red,c.amber]};
+  // Tipo (trabajados, total 12): Soporte 10, Corrección 1, Edición de datos 1
+  const dT={l:['Soporte','Corrección','Edición de datos'],d:[10,1,1],c:[c.muted,c.amber,c.blue]};
+  // Esfuerzo (base 12, según detalle): Baja 3 (25%), Media 9 (75%)
+  const dF={l:['Baja','Media'],d:[3,9],c:[c.muted2,c.cyan]};
+  // Sectores (base 12, según detalle): Administración 5, Sucursales 3, Cobranzas 3, Externo 1
+  const dS={l:['Administración','Sucursales','Cobranzas','Externo'],d:[5,3,3,1],c:[c.cyan,c.green,c.muted,c.red]};
 
   makeDonut('chartEstado',dE.l,dE.d,dE.c);
   makeDonut('chartTipo',dT.l,dT.d,dT.c);
@@ -794,10 +786,10 @@ function renderAllCharts() {
   chartInstances['chartHistorico'] = new Chart(ctxL, {
     type: 'line',
     data: {
-      labels:['May 25','Jun 25','Jul 25','Ago 25','Sep 25','Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26','May 26'],
+      labels:['May 25','Jun 25','Jul 25','Ago 25','Sep 25','Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26','May 26','Jun 26'],
       datasets:[{
         label:'Tickets creados',
-        data:[58,41,31,31,41,35,29,19,23,25,27,21,27],
+        data:[58,41,31,31,41,35,29,19,23,25,27,21,27,14],
         borderColor:getCSSVar('--cyan'), backgroundColor:grad,
         borderWidth:2, pointBackgroundColor:getCSSVar('--cyan'),
         pointBorderColor:getCSSVar('--bg-elev'), pointBorderWidth:2,
