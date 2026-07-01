@@ -785,6 +785,7 @@
       <button class="month-pill" onclick="setPeriodo('abr')">Abr</button>
       <button class="month-pill" onclick="setPeriodo('may')">May</button>
       <button class="month-pill" onclick="setPeriodo('jun')">Jun</button>
+      <button class="month-pill" onclick="setPeriodo('jul')">Jul</button>
     </div>
 
     <!-- ── SECCIÓN 1: RESUMEN META ─────────────────────────────── -->
@@ -1470,6 +1471,15 @@ const META_DATA = {
     inter:    '9.267',    dInter:   ['positive', '↑ 1,2% vs may'],
     clics:    '247',      dClics:   ['negative', '↓ 94,9% vs may'],
   },
+  jul: {
+    period:   'Julio 2026 · Instagram · 1 jul (parcial)',
+    alcance:  '236',      dAlcance: ['neutral', 'parcial · solo 1 jul'],
+    conv:     null,       dConv:    ['neutral', 'sin conversaciones al 1 jul'],
+    cont:     null,       dCont:    ['neutral', 'pendiente · no proviene de Meta Ads'],
+    gasto:    '$6.384',   dGasto:   ['neutral', 'parcial · solo 1 jul'],
+    inter:    '64',       dInter:   ['neutral', 'parcial · solo 1 jul'],
+    clics:    '1',        dClics:   ['neutral', 'parcial · solo 1 jul'],
+  },
 };
 
 // ─── DATOS DE ONs POR PERÍODO ─────────────────────────────────
@@ -1532,6 +1542,14 @@ const COTIZ_DATA = {
     dEnv:  'pendiente · ingresar manualmente',
     dGan:  'Pendiente · sin cierres cargados',    dGanDir:  'neutral',
     dTasa: 'Jun: pendiente de carga',             dTasaDir: 'neutral',
+  },
+  jul: {
+    period:   'Julio 2026 · 1 jul · datos de CRM pendientes de carga',
+    ons:       0,   enCurso: null, enviadas: null, ganadas: 0, vencidas: null,
+    dOns:  'Pendiente · cargar ONs de julio',     dOnsDir:  'neutral',
+    dEnv:  'pendiente · ingresar manualmente',
+    dGan:  'Pendiente · sin cierres cargados',    dGanDir:  'neutral',
+    dTasa: 'Jul: pendiente de carga',             dTasaDir: 'neutral',
   },
 };
 
@@ -1734,15 +1752,15 @@ function sortDonutDesc(labels, data, colors) {
 
 /* ─── ORIGEN CHART (removido — sección eliminada) ───────────── */
 /* ─── META LINE CHART ───────────────────────────────────────── */
-const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
+const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'];
 
 // Datos reales de Meta Ads API · cuenta 370211010327709 · 2026-01-01 a 2026-06-30 (jun completo)
 const META_SERIES = {
-  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   41],   color: '--green',  right: false },
-  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 9267], color: '--blue',   right: false },
-  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 247],  color: '--purple', right: false },
-  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  476],  color: '--red',    right: false },
-  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 19.3], color: '--amber', right: true, suffix: 'k' },
+  conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   41,   0],   color: '--green',  right: false },
+  inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5668, 8045, 9267, 64],  color: '--blue',   right: false },
+  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4302, 247,  1],   color: '--purple', right: false },
+  gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  479,  476,  6],   color: '--red',    right: false },
+  alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 102.8, 19.3, 0.2], color: '--amber', right: true, suffix: 'k' },
 };
 
 const META_VISIBLE = new Set(['conv', 'inter']);
@@ -1855,9 +1873,9 @@ function valF(id) {
 }
 
 function calcFunnel() {
-  const CONTACTOS  = 97;       // YTD 2026 nuevos contactos reportados por campañas Meta (incl. jun 1–22)
-  const ALCANCE    = 369715;   // YTD 2026 alcance Meta Ads (incl. jun 1–22)
-  const GASTO      = 2329512;  // YTD 2026 gasto ARS Meta Ads (incl. jun 1–22)
+  const CONTACTOS  = 86;       // YTD 2026 nuevos contactos reportados por campañas Meta (may; jun pendiente de carga)
+  const ALCANCE    = 374585;   // YTD 2026 alcance Meta Ads (incl. jun completo 1–30)
+  const GASTO      = 2442964;  // YTD 2026 gasto ARS Meta Ads (incl. jun completo 1–30)
 
   const ons        = val('ons-nuevas');
   const cotEnv     = val('cot-env');
@@ -2223,9 +2241,10 @@ const ANUNCIOS_BY_PERIOD = {
   abr: { labels: ["@interbanking ahora", "Instagram Post — link clicks", "Construye con IA"], data: [344332, 170258, 11687] },
   may: { labels: ["Instagram Post — link clicks", "@interbanking ahora", "Puedes vender más — leads", "[15/5/2026] Promoción FB", "Instagram Post — mensajes", "Construye con IA", "Formulario YiQi — leads"], data: [233406, 84967, 69392, 63984, 38445, 34287, 20340] },
   jun: { labels: ["El sistema que opera", "Puedes vender más — leads", "Formulario YiQi — leads"], data: [177464, 171837, 126414] },
+  jul: { labels: ["Puedes vender más — leads", "Formulario YiQi — leads", "Reel · Costos"], data: [3308, 3076, 0] },
 };
 
-const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio' };
+const PERIODO_LABEL = { ytd:'ene–jun 2026', ene:'enero', feb:'febrero', mar:'marzo', abr:'abril', may:'mayo', jun:'junio', jul:'julio (1 jul)' };
 
 // Tabla de anuncios por período · [nombre, gasto, resultado, costo/res, vistas(impresiones)]
 const ANUNCIOS_TABLA = {
@@ -2236,6 +2255,7 @@ const ANUNCIOS_TABLA = {
   abr: [["@interbanking ahora", 344332, "184 conversaciones", "$1.871/conv", 115325], ["Instagram Post — link clicks", 170258, "3.192 clics", "$53/clic", 184961], ["Construye con IA", 11687, "2 conversaciones", "$5.844/conv", 897]],
   may: [["Instagram Post — link clicks", 233406, "3.986 clics", "$59/clic", 187880], ["@interbanking ahora", 84967, "54 conversaciones", "$1.573/conv", 30062], ["Puedes vender más — leads", 69392, "8 leads", "$8.674/lead", 7219], ["[15/5/2026] Promoción FB", 63984, "24 conversaciones", "$2.666/conv", 17687], ["Instagram Post — mensajes", 38445, "10 conversaciones", "$3.845/conv", 4817], ["Construye con IA", 34287, "12 conversaciones", "$2.857/conv", 5091], ["Formulario YiQi — leads", 20340, "5 leads", "$4.068/lead", 1052]],
   jun: [["El sistema que opera", 177464, "41 conversaciones", "$4.328/conv", 21275], ["Puedes vender más — leads", 171837, "9 leads", "$19.093/lead", 9385], ["Formulario YiQi — leads", 126414, "6 leads", "$21.069/lead", 7562]],
+  jul: [["Puedes vender más — leads", 3308, "0 leads", "—", 137], ["Formulario YiQi — leads", 3076, "1 lead", "$3.076/lead", 123], ["Reel · Costos", 0, "0 clics", "—", 0]],
 };
 
 function renderAnunciosTable() {
