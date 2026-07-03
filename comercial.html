@@ -104,6 +104,13 @@
     /* clip no crea scroll container → sticky funciona en todos los browsers */
     html, body { overflow-x: clip; }
 
+    /* ── Scrollbars canónicos (DS v1.2.7) ─────────────────────── */
+    * { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+    *::-webkit-scrollbar { width: 10px; height: 10px; }
+    *::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+    *::-webkit-scrollbar-thumb:hover { background: var(--muted-2); }
+    *::-webkit-scrollbar-track { background: transparent; }
+
     body {
       font: 14px var(--sans);
       color: var(--text);
