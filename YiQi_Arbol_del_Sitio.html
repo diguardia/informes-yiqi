@@ -190,7 +190,7 @@ const ROOT_SITE={label:'Home',sub:'/',url:BASE+'/',st:'root',children:[
 /* ── Datos: DESIGN SYSTEM (catálogo) ── */
 const D=(label,a,children)=>({label,a,st:children?'grp':'comp',children});
 const ROOT_DS={label:'Catálogo DS',sub:'v1.2.7',url:CAT,st:'root',children:[
- {label:'Inicio',st:'grp',children:[{label:'Showcase de ejemplos',a:'',url:CAT.replace('yiqi-design-system.html','examples/showcase.html'),st:'comp'}]},
+ {label:'Inicio',st:'grp',children:[{label:'00 Novedades',a:'release-notes',st:'comp'},{label:'Showcase de ejemplos',a:'',url:CAT.replace('yiqi-design-system.html','examples/showcase.html'),st:'comp'}]},
  {label:'Fundamentos',st:'grp',children:[
   {label:'01 Logo & marca',a:'brand',st:'comp'},{label:'02 Colores',a:'colors',st:'comp'},
   {label:'03 Tipografía',a:'typography',st:'comp'},{label:'04 Espaciado',a:'spacing',st:'comp'},
@@ -219,7 +219,7 @@ const ROOT_DS={label:'Catálogo DS',sub:'v1.2.7',url:CAT,st:'root',children:[
   {label:'33 Apps · Shell',a:'app-shell',st:'comp',children:[{label:'Switch de tema',a:'theme-switch',st:'sub'}]},
   {label:'34 Apps · Login',a:'login',st:'comp'},
   {label:'35 Panel Gerencial',a:'panel-gerencial',st:'comp',children:[{label:'Selector de período',a:'period-filter',st:'sub'}]},
-  {label:'36 Picking · primitivos',a:'apps-picking',st:'comp'}]},
+  {label:'36 Picking · primitivos',a:'apps-picking',st:'comp',children:[{label:'Finalización',a:'pk-done',st:'sub'}]}]},
  {label:'Web',st:'grp',children:[
   {label:'37 Banner Analytics Pro',a:'web-banner',st:'comp'},{label:'38 Scrollbars',a:'scrollbars',st:'comp'}]},
  {label:'Marketplace',st:'grp',children:[
@@ -243,8 +243,10 @@ const ROOT_INF={label:'Informes',sub:'carpeta /Informes',st:'root',children:[
   {label:'ATC Operacional · Abr 2026',sub:'YiQi_Informe_ATC_Operacional_202604.html',url:'YiQi_Informe_ATC_Operacional_202604.html',st:'draft'}]},
  {label:'Informes ECOSAN',st:'grp',children:[
   {label:'ECOSAN · Abril 2026',sub:'YiQi_Informe_ECOSAN_202604.html',url:'YiQi_Informe_ECOSAN_202604.html',st:'pre'},
-  {label:'ECOSAN · Mayo 2026',sub:'YiQi_Informe_ECOSAN_202605.html',url:'YiQi_Informe_ECOSAN_202605.html',st:'pre'}]},
+  {label:'ECOSAN · Mayo 2026',sub:'YiQi_Informe_ECOSAN_202605.html',url:'YiQi_Informe_ECOSAN_202605.html',st:'pre'},
+  {label:'ECOSAN · Junio 2026',sub:'YiQi_Informe_ECOSAN_202606.html',url:'YiQi_Informe_ECOSAN_202606.html',st:'pre'}]},
  {label:'Otros',st:'grp',children:[
+  {label:'Ecosistema',sub:'YiQi_Ecosistema.html',url:'YiQi_Ecosistema.html',st:'pub'},
   {label:'Comercial (Meta + CRM)',sub:'comercial.html',url:'comercial.html',st:'ext'},
   {label:'Árbol del sitio (este)',sub:'YiQi_Arbol_del_Sitio.html',url:'YiQi_Arbol_del_Sitio.html',st:'ext'}]}
 ]};
@@ -254,7 +256,7 @@ const SUBJ={
    legend:'<span class="badge badge-green">Pública</span><span class="badge badge-amber">Pre-lanzamiento</span><span class="badge badge-cyan">Borrador</span><span class="badge">Sistema</span><span class="badge badge-blue">Externo</span>'},
  ds:{root:ROOT_DS,kind:'ds',title:'Árbol del Design System — catálogo v1.2.7',sub:'8 grupos · 47 secciones documentadas · fuente: yiqi-imagen',
    legend:'<span class="badge badge-cyan">Grupo</span><span class="badge">Componente</span><span class="badge badge-blue">Sub-componente</span>'},
- inf:{root:ROOT_INF,kind:'inf',title:'Árbol de Informes — carpeta /Informes',sub:'12 documentos · 6 propuestas ERP · 2 ATC · 2 ECOSAN · 2 otros',
+ inf:{root:ROOT_INF,kind:'inf',title:'Árbol de Informes — carpeta /Informes',sub:'14 documentos · 6 propuestas ERP · 2 ATC · 3 ECOSAN · 3 otros',
    legend:'<span class="badge badge-green">Propuesta ERP</span><span class="badge badge-cyan">ATC</span><span class="badge badge-amber">ECOSAN</span><span class="badge badge-blue">Otro</span>'}
 };
 
