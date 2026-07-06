@@ -691,6 +691,15 @@
   <nav class="sidebar" id="sidebar" aria-label="Navegación principal">
     <div class="nav-section-label">Informe</div>
 
+    <a class="nav-link" href="#planificacion">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </span>
+      <span>Planificación</span>
+    </a>
+
     <a class="nav-link" href="#resumen">
       <span class="nav-icon" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -742,15 +751,6 @@
       <span>ONs Concretadas</span>
     </a>
 
-    <a class="nav-link" href="#planificacion">
-      <span class="nav-icon" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
-      </span>
-      <span>Planificación</span>
-    </a>
-
     <!-- DS 1.2.7 — theme switch del menú (visible solo en mobile) -->
     <div class="sidebar-footer sidebar-theme">
       <span class="sidebar-theme-label">Tema</span>
@@ -794,6 +794,30 @@
       <button class="month-pill" onclick="setPeriodo('jun')">Jun</button>
       <button class="month-pill" onclick="setPeriodo('jul')">Jul</button>
     </div>
+
+    <!-- ── SECCIÓN 0: PLANIFICACIÓN ─────────────────────────────── -->
+    <section id="planificacion" aria-label="Planificación">
+      <div class="section-title">Planificación</div>
+      <div class="section-sub">Planificación comercial · grilla semanal · <a href="https://docs.google.com/spreadsheets/d/1x4QDp3fsBcz9gQhjNfiyCG9MJL8NmHG5UvwHcyntym0/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
+      <div class="month-filter" id="plan-mes-filter" role="group" aria-label="Filtrar planificación por mes" style="margin-top:12px"></div>
+
+      <div class="card card-reveal" style="margin-top:24px">
+        <div class="table-toolbar">
+          <span class="search-wrap">
+            <input class="table-search" id="search-plan" placeholder="Buscar acción…" aria-label="Buscar en planificación">
+            <button class="search-clear" type="button" aria-label="Limpiar búsqueda" title="Limpiar (Esc)">×</button>
+            <span class="search-kbd" aria-hidden="true">⌘K</span>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table class="ds-table plan-table" id="tabla-plan">
+            <thead><tr></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div class="table-empty" id="empty-plan" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
+        </div>
+      </div>
+    </section>
 
     <!-- ── SECCIÓN 1: RESUMEN META ─────────────────────────────── -->
     <section id="resumen" aria-label="Resumen Meta">
@@ -1371,30 +1395,6 @@
             </tbody>
           </table>
           <div class="table-empty" id="empty-concretadas" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SECCIÓN 6: PLANIFICACIÓN ─────────────────────────────── -->
-    <section id="planificacion" aria-label="Planificación">
-      <div class="section-title">Planificación</div>
-      <div class="section-sub">Planificación comercial · grilla semanal · <a href="https://docs.google.com/spreadsheets/d/1x4QDp3fsBcz9gQhjNfiyCG9MJL8NmHG5UvwHcyntym0/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
-      <div class="month-filter" id="plan-mes-filter" role="group" aria-label="Filtrar planificación por mes" style="margin-top:12px"></div>
-
-      <div class="card card-reveal" style="margin-top:24px">
-        <div class="table-toolbar">
-          <span class="search-wrap">
-            <input class="table-search" id="search-plan" placeholder="Buscar acción…" aria-label="Buscar en planificación">
-            <button class="search-clear" type="button" aria-label="Limpiar búsqueda" title="Limpiar (Esc)">×</button>
-            <span class="search-kbd" aria-hidden="true">⌘K</span>
-          </span>
-        </div>
-        <div class="table-wrap">
-          <table class="ds-table plan-table" id="tabla-plan">
-            <thead><tr></tr></thead>
-            <tbody></tbody>
-          </table>
-          <div class="table-empty" id="empty-plan" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
         </div>
       </div>
     </section>
