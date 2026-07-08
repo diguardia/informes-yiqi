@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta de Experiencia YiQi</title>
+<meta name="description" content="Encuesta de experiencia de clientes YiQi — Design System de YiQi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<!-- DS canónico YiQi (CDN) -->
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script>
+/* Tema: sensible al sistema — sigue siempre la preferencia del SO (claro/oscuro) y reacciona en vivo */
+(function(){
+  const mq = matchMedia('(prefers-color-scheme: dark)');
+  const apply = () => { document.documentElement.dataset.theme = mq.matches ? 'dark' : 'light'; };
+  apply();
+  mq.addEventListener('change', apply);
+})();
+</script>
+<style>
+  :root { --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; --maxw: 600px; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    min-height:100dvh;
+    background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:44px 44px, 44px 44px;
+    background-position:-1px -1px,-1px -1px;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px 16px;
+  }
+  .app{ width:100%; max-width:var(--maxw); }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+  /* Brand */
+  .brand{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .logo{ display:inline-flex; align-items:center; line-height:0; }
+  .logo svg{ height:34px; width:auto; display:block; }
+  .brand .tag{ font:600 11px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted-2); }
+
+  /* Card */
+  .card{
+    background:var(--bg-elev); border:1px solid var(--line); border-radius:20px;
+    padding:26px 24px 22px; box-shadow:0 24px 60px -30px rgba(0,0,0,.8);
+    min-height:640px; display:flex; flex-direction:column;
+  }
+  html[data-theme="light"] .card{ box-shadow:0 12px 34px -20px rgba(0,0,0,.22); }
+
+  /* Progreso segmentado */
+  .progress{ display:flex; gap:4px; margin-bottom:20px; }
+  .progress > i{ flex:1; height:5px; border-radius:99px; background:var(--line-strong); transition:background .35s ease; }
+  .progress > i.on{ background:var(--cyan-soft-2); }
+  .progress > i.cur{ background:var(--cyan); }
+
+  /* Meta */
+  .meta{ display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .step-count{ font:500 11px var(--mono); color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+  .eyebrow{ font:600 11px var(--mono); color:var(--cyan); text-transform:uppercase; letter-spacing:.14em; }
+  .meta-dot{ color:var(--muted-2); font:600 11px var(--mono); }
+
+  /* Question */
+  .q-wrap{ animation:rise .34s cubic-bezier(.2,.7,.2,1) both; flex:1 1 auto; display:flex; flex-direction:column; }
+  @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+  h1.q{ font-family:var(--display); font-weight:700; font-size:22px; line-height:1.24; letter-spacing:-.02em; margin:0 0 6px; color:var(--text); }
+  h1.q .req{ color:var(--cyan); margin-left:3px; }
+  .hint{ font:600 13px var(--sans); font-style:italic; color:var(--muted); margin:2px 0 4px; }
+  .q + .q-block-gap{ margin-top:26px; }
+  .q-block{ margin-bottom:4px; }
+  .q-block + .q-block{ margin-top:26px; padding-top:22px; border-top:1px solid var(--line); }
+
+  /* Intro */
+  .intro-title{ font:800 clamp(26px,5.5vw,34px) var(--display); letter-spacing:-.03em; line-height:1.08; margin:2px 0 14px; }
+  .intro-body{ font:400 15px var(--sans); color:var(--muted); line-height:1.65; }
+
+  /* Inputs */
+  .field{ margin-top:14px; }
+  .s-input, .s-textarea{
+    width:100%; background:var(--bg); border:1px solid transparent; border-radius:11px;
+    padding:13px 14px; color:var(--text); font:400 15px var(--sans);
+    transition:background .15s, box-shadow .15s; outline:none;
+  }
+  .s-textarea{ line-height:1.5; resize:vertical; min-height:120px; }
+  .s-input::placeholder, .s-textarea::placeholder{ color:var(--muted-2); }
+  .s-input:focus, .s-textarea:focus{ background:var(--bg-soft); box-shadow:0 0 0 3px var(--cyan-soft); }
+  .q-block.invalid .s-input, .q-block.invalid .s-textarea{ box-shadow:0 0 0 3px var(--red-soft); }
+
+  /* Opciones (single / multi) — modelo opt-btn */
+  .opts{ display:flex; flex-direction:column; gap:9px; margin-top:14px; }
+  .opt{
+    display:flex; align-items:center; gap:12px; width:100%; cursor:pointer;
+    background:var(--bg-elev-2); border:1px solid transparent; border-radius:12px;
+    padding:13px 15px; color:var(--text); font:500 15px var(--sans);
+    transition:background .15s, transform .05s;
+  }
+  .opt:hover{ background:var(--bg-soft); }
+  .opt:active{ transform:scale(.995); }
+  .opt .mark{
+    flex:0 0 20px; height:20px; border:1.5px solid var(--line-strong);
+    display:grid; place-items:center; transition:all .15s; border-radius:6px;
+  }
+  .opt.single .mark{ border-radius:50%; }
+  .opt .mark svg{ width:12px; height:12px; opacity:0; stroke:var(--bg); fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; transition:opacity .12s; }
+  .opt:has(input:checked){ background:var(--cyan-soft); color:var(--cyan); }
+  .opt:has(input:checked) .mark{ border-color:var(--cyan); background:var(--cyan); }
+  .opt:has(input:checked) .mark svg{ opacity:1; }
+  .opt:has(input:focus-visible){ box-shadow:0 0 0 3px var(--cyan-soft); }
+
+  /* NPS 0–10 */
+  .nps-grid{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .nps{
+    min-width:42px; height:44px; padding:0 6px; display:grid; place-items:center;
+    background:var(--bg-elev-2); border:1px solid transparent; border-radius:11px;
+    cursor:pointer; font:600 15px var(--sans); color:var(--text); transition:background .15s;
+  }
+  .nps:hover{ background:var(--bg-soft); }
+  .nps:has(input:checked){ background:var(--cyan-soft); color:var(--cyan); box-shadow:inset 0 0 0 1px var(--cyan-soft-2); }
+  .nps:has(input:focus-visible){ box-shadow:0 0 0 3px var(--cyan-soft); }
+  .nps-legend{ display:flex; justify-content:space-between; margin-top:10px; font:500 11px var(--mono); color:var(--muted-2); }
+
+  /* Error */
+  .field-err{ font:500 12.5px var(--sans); color:var(--red); margin-top:9px; min-height:1em; display:none; }
+  .q-block.invalid .field-err{ display:block; }
+
+  /* Nav */
+  .form-nav{ display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:10px; margin-top:auto; padding-top:24px; }
+  .form-nav .btn{ font:600 13px var(--sans); border:1px solid transparent; border-radius:12px; padding:13px 20px; cursor:pointer; transition:filter .15s, transform .05s, background .15s; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
+  .form-nav .btn:active{ transform:translateY(1px); }
+  .btn-primary{ background:var(--cyan-soft); border:1px solid var(--cyan-a28, rgba(0,204,255,.28)); color:var(--cyan); flex:1; }
+  .btn-primary:hover{ background:var(--cyan-soft-2); }
+  .btn-ghost{ background:transparent; color:var(--muted); border:1px solid transparent; }
+  .btn-ghost:hover{ color:var(--text); background:var(--bg-soft); }
+  .btn svg{ width:15px; height:15px; }
+
+  /* Gracias */
+  .result{ text-align:center; animation:rise .5s cubic-bezier(.2,.7,.2,1) both; padding:14px 0 6px; }
+  .result-check{ width:60px; height:60px; margin:0 auto 20px; border-radius:50%; background:var(--cyan-soft); display:grid; place-items:center; }
+  .result-check svg{ width:28px; height:28px; stroke:var(--cyan); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+  .result-title{ font:800 24px var(--display); letter-spacing:-.02em; margin:0 0 10px; }
+  .result-sub{ font:400 14px var(--sans); color:var(--muted); }
+
+  :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:8px; }
+
+  @media (max-width:520px){
+    .card{ padding:22px 18px 18px; border-radius:16px; }
+    .nps{ min-width:38px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand">
+    <a class="logo" href="https://yiqi.com.ar" target="_blank" rel="noopener" aria-label="YiQi">
+      <svg viewBox="15 14 75 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <path style="fill:var(--text)" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+        <path style="fill:var(--text)" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+        <path style="fill:var(--text)" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      </svg>
+    </a>
+    <span class="tag">Encuesta de Experiencia</span>
+  </div>
+
+  <div class="card" id="card"><!-- render por JS --></div>
+</div>
+
+<script>
+/* ─── Definición de la encuesta (14 páginas) ───────────── */
+const STEPS = [
+  { intro:true, title:'Encuesta de Experiencia YiQi',
+    body:'Tu opinión es muy importante para nosotros.<br>Queremos conocer tu experiencia para seguir mejorando nuestros productos y servicios. Esta encuesta demora menos de 3 minutos y nos ayudará a identificar oportunidades de mejora y nuevas necesidades de nuestros clientes.' },
+
+  { section:'Datos generales', questions:[
+    { id:'empresa', type:'text', q:'Empresa', placeholder:'Tu empresa...', required:true } ] },
+
+  { questions:[
+    { id:'nombre', type:'text', q:'Nombre y apellido', placeholder:'Nombre completo...', required:true } ] },
+
+  { questions:[
+    { id:'area', type:'multi', q:'Área desde la que utilizás YiQi', hint:'(Podés seleccionar más de una opción)', required:true,
+      options:['Dirección / Gerencia','Administración','Ventas','Compras','Depósito / Logística','Producción','E-commerce','Sistemas','Otra'] } ] },
+
+  { questions:[
+    { id:'frecuencia', type:'single', q:'¿Con qué frecuencia utilizás YiQi?', required:true,
+      options:['Todos los días','Varias veces por semana','Algunas veces al mes','Muy poco'] } ] },
+
+  { section:'Experiencia General', questions:[
+    { id:'nps', type:'nps', q:'¿Qué tan probable es que recomiendes YiQi a otra empresa?', required:true } ] },
+
+  { questions:[
+    { id:'atencion', type:'single', q:'¿Cómo calificarías la atención recibida por nuestro equipo?', required:true,
+      options:['Excelente','Muy buena','Buena','Regular','Mala'] } ] },
+
+  { questions:[
+    { id:'tiempos', type:'single', q:'¿Cómo evaluarías nuestros tiempos de respuesta?', required:true,
+      options:['Excelente','Muy buenos','Buenos','Regulares','Malos'] },
+    { id:'resolucion', type:'single', q:'¿Sentís que las consultas o inconvenientes que reportás son resueltos adecuadamente?', required:true,
+      options:['Siempre','Casi siempre','Algunas veces','Pocas veces','Nunca'] } ] },
+
+  { questions:[
+    { id:'acompana', type:'single', q:'¿Sentís que YiQi acompaña las necesidades actuales de tu negocio?', required:true,
+      options:['Totalmente','Bastante','Parcialmente','Poco','Nada'] } ] },
+
+  { section:'Mejora Continua', questions:[
+    { id:'mejora', type:'multi', q:'¿Qué aspecto te gustaría que mejoremos primero?', hint:'(Podés seleccionar más de una opción)', required:true,
+      options:['Atención al cliente','Performance del sistema','Integraciones','Reportes y análisis','Capacitación','Nuevas funcionalidades','Aplicación móvil','Otro'] } ] },
+
+  { section:'Oportunidades y Crecimiento', questions:[
+    { id:'oportunidades', type:'multi', q:'¿Hay alguna funcionalidad, integración o servicio que te interese incorporar durante los próximos meses?', hint:'(Podés seleccionar más de una opción)', required:true,
+      options:['Shopify','Mercado Libre','Tienda Nube','WooCommerce','VTEX','Facturación electrónica','Logística','B2B','Producción','Reportes y análisis','Capacitación funcional','No por el momento','Otra'] } ] },
+
+  { questions:[
+    { id:'proyecto', type:'textarea', q:'¿Hay algún proyecto, necesidad o desafío de tu negocio en el que creas que YiQi podría ayudarte durante los próximos 12 meses?', placeholder:'Cuéntanos un poco más...', required:true } ] },
+
+  { section:'Comentarios', questions:[
+    { id:'valoras', type:'textarea', q:'¿Qué es lo que más valorás de YiQi?', placeholder:'Nos encantaría saberlo...', required:true } ] },
+
+  { questions:[
+    { id:'mejorar', type:'textarea', q:'¿Qué deberíamos mejorar para brindarte una mejor experiencia?', placeholder:'Tus sugerencias nos ayudan a crecer...', required:true } ], submit:true },
+];
+
+const TOTAL = STEPS.length;
+const answers = {};
+let current = 0;
+const card = document.getElementById('card');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CHECK = '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+function progressBar(){
+  let seg = '';
+  for(let i=1;i<TOTAL;i++){
+    const cls = i < current ? 'on' : (i === current ? 'cur' : '');
+    seg += `<i class="${cls}"></i>`;
+  }
+  return `<div class="progress" aria-hidden="true">${seg}</div>`;
+}
+
+function renderQuestion(qd){
+  const req = qd.required ? '<span class="req" aria-hidden="true">*</span>' : '';
+  let out = `<h1 class="q" id="lbl-${qd.id}">${esc(qd.q)}${req}</h1>`;
+  if(qd.hint) out += `<p class="hint">${esc(qd.hint)}</p>`;
+
+  if(qd.type === 'text'){
+    out += `<div class="field"><input class="s-input" type="text" name="${qd.id}" placeholder="${esc(qd.placeholder||'')}" aria-labelledby="lbl-${qd.id}" value="${esc(answers[qd.id]||'')}" oninput="onText('${qd.id}', this.value)"></div>`;
+  } else if(qd.type === 'textarea'){
+    out += `<div class="field"><textarea class="s-textarea" name="${qd.id}" placeholder="${esc(qd.placeholder||'')}" aria-labelledby="lbl-${qd.id}" oninput="onText('${qd.id}', this.value)">${esc(answers[qd.id]||'')}</textarea></div>`;
+  } else if(qd.type === 'single'){
+    const opts = qd.options.map(o=>{
+      const chk = answers[qd.id]===o ? 'checked' : '';
+      return `<label class="opt single"><input type="radio" class="sr-only" name="${qd.id}" value="${esc(o)}" ${chk} onchange="onPick('${qd.id}', this.value)"><span class="mark" aria-hidden="true">${CHECK}</span><span class="opt-txt">${esc(o)}</span></label>`;
+    }).join('');
+    out += `<div class="opts" role="radiogroup" aria-labelledby="lbl-${qd.id}">${opts}</div>`;
+  } else if(qd.type === 'multi'){
+    const sel = answers[qd.id] || [];
+    const opts = qd.options.map(o=>{
+      const chk = sel.includes(o) ? 'checked' : '';
+      return `<label class="opt multi"><input type="checkbox" class="sr-only" name="${qd.id}" value="${esc(o)}" ${chk} onchange="onMulti('${qd.id}', this.value, this.checked)"><span class="mark" aria-hidden="true">${CHECK}</span><span class="opt-txt">${esc(o)}</span></label>`;
+    }).join('');
+    out += `<div class="opts" role="group" aria-labelledby="lbl-${qd.id}">${opts}</div>`;
+  } else if(qd.type === 'nps'){
+    let opts = '';
+    for(let i=0;i<=10;i++){
+      const chk = String(answers[qd.id])===String(i) ? 'checked' : '';
+      opts += `<label class="nps"><input type="radio" class="sr-only" name="${qd.id}" value="${i}" ${chk} onchange="onPick('${qd.id}', this.value)"><span aria-hidden="true">${i}</span><span class="sr-only">${i}</span></label>`;
+    }
+    out += `<div class="nps-grid" role="radiogroup" aria-labelledby="lbl-${qd.id}">${opts}</div>
+            <div class="nps-legend"><span>0 · Nada probable</span><span>10 · Muy probable</span></div>`;
+  }
+  return `<div class="q-block" id="qb-${qd.id}">${out}<div class="field-err" role="alert" id="err-${qd.id}">Introduce un valor</div></div>`;
+}
+
+function render(){
+  const s = STEPS[current];
+
+  if(s.intro){
+    card.innerHTML = `${progressBar()}<div class="q-wrap">
+      <h1 class="intro-title">${s.title}</h1>
+      <p class="intro-body">${s.body}</p>
+      <div class="form-nav">
+        <button type="button" class="btn btn-primary" onclick="next()">Siguiente ${ARROW}</button>
+      </div></div>`;
+    return;
+  }
+
+  const metaTxt = s.section
+    ? `<span class="eyebrow">${esc(s.section)}</span><span class="meta-dot">·</span><span class="step-count">Página ${current+1} de ${TOTAL}</span>`
+    : `<span class="step-count">Página ${current+1} de ${TOTAL}</span>`;
+  const qs = s.questions.map(renderQuestion).join('');
+  const label = s.submit ? `Enviar ${ARROW}` : `Siguiente ${ARROW}`;
+  card.innerHTML = `${progressBar()}<div class="q-wrap">
+    <div class="meta">${metaTxt}</div>
+    ${qs}
+    <div class="form-nav">
+      <button type="button" class="btn btn-ghost" onclick="prev()">Atrás</button>
+      <button type="button" class="btn btn-primary" onclick="next()">${label}</button>
+    </div></div>`;
+  const first = card.querySelector('input[type=text], textarea');
+  if(first) first.focus({preventScroll:true});
+}
+
+/* Handlers */
+let _advTimer = null;
+function onText(id, val){ answers[id] = val; clearErr(id); }
+function onPick(id, val){ answers[id] = val; clearErr(id); maybeAutoAdvance(id); }
+/* Auto-avance: en páginas donde TODAS las preguntas son de opción única (single/NPS),
+   avanza recién cuando todas quedaron respondidas (si hay dos, al marcar la segunda).
+   Anti-rebote para no disparar mientras se navega con flechas del teclado. */
+function maybeAutoAdvance(id){
+  const s = STEPS[current];
+  if(s.intro) return;
+  const allPick = s.questions.every(q => q.type === 'single' || q.type === 'nps');
+  if(!allPick) return;
+  const allAnswered = s.questions.every(q => !q.required || isAnswered(q));
+  if(allAnswered){
+    clearTimeout(_advTimer);
+    _advTimer = setTimeout(() => next(), 320);
+  }
+}
+function onMulti(id, val, checked){
+  const set = new Set(answers[id] || []);
+  checked ? set.add(val) : set.delete(val);
+  answers[id] = [...set];
+  clearErr(id);
+}
+function clearErr(id){ document.getElementById('qb-'+id)?.classList.remove('invalid'); }
+
+/* Validación + navegación */
+function isAnswered(qd){
+  const v = answers[qd.id];
+  if(qd.type === 'multi') return Array.isArray(v) && v.length > 0;
+  return v != null && String(v).trim() !== '';
+}
+function validateStep(){
+  const s = STEPS[current];
+  if(s.intro) return true;
+  let ok = true, firstBad = null;
+  s.questions.forEach(qd => {
+    if(qd.required && !isAnswered(qd)){
+      ok = false;
+      const qb = document.getElementById('qb-'+qd.id);
+      qb?.classList.add('invalid');
+      if(!firstBad) firstBad = qb;
+    }
+  });
+  if(firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+  return ok;
+}
+function next(){
+  clearTimeout(_advTimer);
+  if(!validateStep()) return;
+  if(current < TOTAL - 1){ current++; render(); window.scrollTo({top:0, behavior:'smooth'}); }
+  else finish();
+}
+function prev(){ clearTimeout(_advTimer); if(current > 0){ current--; render(); window.scrollTo({top:0, behavior:'smooth'}); } }
+function finish(){
+  console.log('Respuestas de la encuesta:', answers); // reconstrucción estática: sin backend
+  card.innerHTML = `<div class="result">
+    <div class="result-check" aria-hidden="true">${CHECK}</div>
+    <h1 class="result-title">¡Gracias por completar este formulario!</h1>
+    <p class="result-sub">Tu respuesta nos ayuda a seguir mejorando YiQi.</p>
+  </div>`;
+}
+
+/* Enter = Siguiente (salvo en textarea, donde hace salto de línea; y en botones, que ya actúan) */
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Enter') return;
+  const t = e.target;
+  if(t && (t.tagName === 'TEXTAREA' || t.tagName === 'BUTTON' || t.tagName === 'A')) return;
+  e.preventDefault();
+  next();
+});
+
+render();
+</script>
+</body>
+</html>

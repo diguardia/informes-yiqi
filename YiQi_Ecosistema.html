@@ -422,13 +422,13 @@ const DATA = {
       'Shopify','VTEX','Tienda Nube','WooCommerce','Magento'
     ].map(l=>({label:l,cat:'ecom'})) },
     { label:'Marketplaces & Retail', cat:'market', children:[
-      'Mercado Libre','Frávega','Megatone','Oncity','IRSA','Tornado Store'
+      'Mercado Libre','Frávega','Megatone','Oncity','IRSA','Tornado Store','Provincia Compras'
     ].map(l=>({label:l,cat:'market'})) },
     { label:'Logística & Envíos', cat:'logistica', children:[
       'Mercado Envíos','Enviopack','Sell2Ship','Drubbit','Pulpo','Krikos360'
     ].map(l=>({label:l,cat:'logistica'})) },
     { label:'Fiscal, Bancos & Gobierno', cat:'fiscal', children:[
-      'ARCA','DGI Uruguay','Provincia Compras','Interbanking'
+      'ARCA','DGI Uruguay','Interbanking'
     ].map(l=>({label:l,cat:'fiscal'})) },
     { label:'Automatización', cat:'auto', children:[
       'Zapier','Anymarket'
@@ -1032,7 +1032,7 @@ function scopeRebuild(){       // re-crear materiales con colores del tema actua
 const FLOW_STEPS = [
   { c:'var(--green)',  label:'Entra la orden',     opts:['Mercado Libre','Shopify','Tienda Nube','VTEX','WooCommerce','Frávega','Megatone','Oncity','IRSA','Provincia Compras'] },
   { c:'var(--amber)',  label:'Se procesa',         opts:['Reserva de stock','Costeo y pricing','Reposición (orden de compra)','Pedido en depósito'] },
-  { c:'var(--violet)', label:'Se factura',         opts:['ARCA (Argentina)','DGI (Uruguay)','Provincia Compras (B2G)'] },
+  { c:'var(--violet)', label:'Se factura',         opts:['ARCA (Argentina)','DGI (Uruguay)'] },
   { c:'var(--blue)',   label:'Se despacha',        opts:['Mercado Envíos','Enviopack','Sell2Ship','Drubbit','Pulpo','Krikos360'] },
   { c:'var(--cyan)',   label:'Se cobra y asienta', opts:['Interbanking','Asiento contable automático','Conciliación bancaria'] },
 ];
