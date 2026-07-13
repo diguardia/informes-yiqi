@@ -9,17 +9,28 @@
  * Copiar la URL (termina en /exec) y pegarla en SHEET_ENDPOINT del HTML del formulario.
  */
 
+// Versión del script — abrí la URL /exec para ver cuál está publicada.
+var VERSION = '2026-07-13 · 19 columnas';
+
 // ID de la planilla de respuestas (de la URL del Sheet).
 var SHEET_ID = '1lZU_j6U_ke1gDfcvRmn4-Mx-Fvoxj3osWWRXrk3j54E';
 var SHEET_NAME = 'Respuestas';
 
-// Devuelve la pestaña de respuestas (la crea si no existe). Usa ID: funciona
-// aunque el script no esté "pegado" a la planilla.
+// Devuelve la pestaña de respuestas (la crea si no existe) y SE AUTO-CORRIGE los
+// encabezados: si la fila 1 no coincide con HEADERS, la reescribe. Así el orden
+// de columnas siempre coincide con la versión publicada, sin borrar la hoja.
 function getSheet_() {
   var ss = SpreadsheetApp.openById(SHEET_ID);
   var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(HEADERS);
+  var needHeader = sheet.getLastRow() === 0;
+  if (!needHeader) {
+    var cur = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+    for (var i = 0; i < HEADERS.length; i++) {
+      if (String(cur[i]) !== HEADERS[i]) { needHeader = true; break; }
+    }
+  }
+  if (needHeader) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
     sheet.setFrozenRows(1);
   }
@@ -84,9 +95,10 @@ function doPost(e) {
   }
 }
 
-// Permite verificar en el navegador que el Web App está publicado.
+// Abrí esta URL /exec en el navegador para verificar QUÉ versión está publicada.
+// Si "version" no dice "19 columnas", lo que deployaste NO es este archivo.
 function doGet() {
-  return json({ ok: true, service: 'Encuesta YiQi', ts: new Date().toISOString() });
+  return json({ ok: true, service: 'Encuesta YiQi', version: VERSION, columnas: HEADERS.length, ts: new Date().toISOString() });
 }
 
 function json(obj) {
