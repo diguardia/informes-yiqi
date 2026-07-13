@@ -143,7 +143,12 @@
   .result-check{ width:60px; height:60px; margin:0 auto 20px; border-radius:50%; background:var(--cyan-soft); display:grid; place-items:center; }
   .result-check svg{ width:28px; height:28px; stroke:var(--cyan); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
   .result-title{ font:800 24px var(--display); letter-spacing:-.02em; margin:0 0 10px; }
-  .result-sub{ font:400 14px var(--sans); color:var(--muted); }
+  .result-sub{ font:400 14px var(--sans); color:var(--muted); max-width:440px; margin:0 auto; }
+  .result-cta{ margin-top:26px; padding-top:22px; border-top:1px solid var(--line); }
+  .result-cta-label{ font:600 11px var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted-2); margin:0 0 14px; }
+  .result-cta-btns{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .result-cta .btn{ text-decoration:none; border-radius:12px; padding:12px 18px; font:600 13px var(--sans); }
+  .result-cta .btn svg{ width:15px; height:15px; }
 
   :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:8px; }
 
@@ -394,8 +399,15 @@ function finish(){
   console.log('Respuestas de la encuesta:', answers);
   card.innerHTML = `<div class="result">
     <div class="result-check" aria-hidden="true">${CHECK}</div>
-    <h1 class="result-title">¡Gracias por completar este formulario!</h1>
-    <p class="result-sub">Tu respuesta nos ayuda a seguir mejorando YiQi.</p>
+    <h1 class="result-title">¡Gracias por compartir tu experiencia!</h1>
+    <p class="result-sub">Agradecemos el tiempo dedicado. Tus comentarios son muy valiosos para seguir construyendo un mejor YiQi para todos.</p>
+    <div class="result-cta">
+      <p class="result-cta-label">Mientras tanto, te invitamos a conocer</p>
+      <div class="result-cta-btns">
+        <a class="btn btn-primary" href="https://yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener">Conocer YiQi IA Ready ${ARROW}</a>
+        <a class="btn btn-ghost" href="https://www.yiqi.com.ar/novedades.html" target="_blank" rel="noopener">Ver novedades</a>
+      </div>
+    </div>
   </div>`;
 }
 
