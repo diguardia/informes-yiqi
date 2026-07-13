@@ -359,8 +359,29 @@ function next(){
   else finish();
 }
 function prev(){ clearTimeout(_advTimer); if(current > 0){ current--; render(); window.scrollTo({top:0, behavior:'smooth'}); } }
+/* Destino de los datos: URL del Web App de Google Apps Script (termina en /exec).
+   Pegar acá la URL que te da Apps Script al implementar. Si queda vacío, no envía. */
+const SHEET_ENDPOINT = '';
+
+function submitToSheet(){
+  if(!SHEET_ENDPOINT) return;
+  const j = k => Array.isArray(answers[k]) ? answers[k].join('; ') : (answers[k] || '');
+  const payload = {
+    fecha: new Date().toISOString(),
+    empresa: j('empresa'), nombre: j('nombre'), area: j('area'),
+    frecuencia: j('frecuencia'), nps: j('nps'), atencion: j('atencion'),
+    tiempos: j('tiempos'), resolucion: j('resolucion'), acompana: j('acompana'),
+    mejora: j('mejora'), oportunidades: j('oportunidades'),
+    proyecto: j('proyecto'), valoras: j('valoras'), mejorar: j('mejorar')
+  };
+  try {
+    fetch(SHEET_ENDPOINT, { method:'POST', mode:'no-cors', body: JSON.stringify(payload) });
+  } catch(e){ console.warn('No se pudo enviar al Sheet', e); }
+}
+
 function finish(){
-  console.log('Respuestas de la encuesta:', answers); // reconstrucción estática: sin backend
+  submitToSheet();
+  console.log('Respuestas de la encuesta:', answers);
   card.innerHTML = `<div class="result">
     <div class="result-check" aria-hidden="true">${CHECK}</div>
     <h1 class="result-title">¡Gracias por completar este formulario!</h1>
