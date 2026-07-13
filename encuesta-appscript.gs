@@ -41,6 +41,7 @@ var HEADERS = [
   'Nombre y apellido',
   'Email',
   'Área',
+  'Área — Otra (especificar)',
   'Frecuencia de uso',
   'NPS (0–10)',
   'Atención del equipo',
@@ -48,7 +49,9 @@ var HEADERS = [
   'Resolución de consultas',
   'Acompaña necesidades',
   'Aspecto a mejorar primero',
+  'Aspecto a mejorar — Otro (especificar)',
   'Funcionalidades a incorporar',
+  'Funcionalidades — Otra (especificar)',
   'Proyecto próximos 12 meses',
   'Qué valora de YiQi',
   'Qué mejorar'
@@ -56,9 +59,9 @@ var HEADERS = [
 
 // Debe coincidir con las claves del payload que envía el formulario.
 var KEYS = [
-  'fecha', 'empresa', 'nombre', 'email', 'area', 'frecuencia', 'nps',
-  'atencion', 'tiempos', 'resolucion', 'acompana', 'mejora',
-  'oportunidades', 'proyecto', 'valoras', 'mejorar'
+  'fecha', 'empresa', 'nombre', 'email', 'area', 'area_otro', 'frecuencia', 'nps',
+  'atencion', 'tiempos', 'resolucion', 'acompana', 'mejora', 'mejora_otro',
+  'oportunidades', 'oportunidades_otro', 'proyecto', 'valoras', 'mejorar'
 ];
 
 function doPost(e) {

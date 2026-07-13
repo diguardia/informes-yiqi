@@ -28,7 +28,7 @@ Flujo: el formulario (HTML) envía cada respuesta → un Web App de Apps Script 
 
 ## Columnas (orden)
 
-Fecha/hora · Empresa · Nombre y apellido · Email · Área · Frecuencia de uso · NPS (0–10) · Atención del equipo · Tiempos de respuesta · Resolución de consultas · Acompaña necesidades · Aspecto a mejorar primero · Funcionalidades a incorporar · Proyecto próximos 12 meses · Qué valora de YiQi · Qué mejorar
+Fecha/hora · Empresa · Nombre y apellido · Email · Área · Área — Otra (especificar) · Frecuencia de uso · NPS (0–10) · Atención del equipo · Tiempos de respuesta · Resolución de consultas · Acompaña necesidades · Aspecto a mejorar primero · Aspecto a mejorar — Otro (especificar) · Funcionalidades a incorporar · Funcionalidades — Otra (especificar) · Proyecto próximos 12 meses · Qué valora de YiQi · Qué mejorar
 
 ## Notas
 

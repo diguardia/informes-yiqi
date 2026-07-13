@@ -407,19 +407,14 @@ const SHEET_ENDPOINT = 'https://script.google.com/a/macros/yiqi.com.ar/s/AKfycbw
 function submitToSheet(){
   if(!SHEET_ENDPOINT) return;
   const j = k => Array.isArray(answers[k]) ? answers[k].join('; ') : (answers[k] || '');
-  // Multi con opción "Otra/Otro": reemplaza esa etiqueta por "Otra: <texto>".
-  const jm = k => {
-    const arr = (Array.isArray(answers[k]) ? answers[k] : (answers[k] ? [answers[k]] : [])).slice();
-    const oi = arr.findIndex(o => /^otr[ao]$/i.test(o));
-    if(oi >= 0 && answers[k+'_otro']) arr[oi] = arr[oi] + ': ' + answers[k+'_otro'];
-    return arr.join('; ');
-  };
   const payload = {
     fecha: new Date().toISOString(),
-    empresa: j('empresa'), nombre: j('nombre'), email: j('email'), area: jm('area'),
+    empresa: j('empresa'), nombre: j('nombre'), email: j('email'),
+    area: j('area'), area_otro: answers['area_otro'] || '',
     frecuencia: j('frecuencia'), nps: j('nps'), atencion: j('atencion'),
     tiempos: j('tiempos'), resolucion: j('resolucion'), acompana: j('acompana'),
-    mejora: jm('mejora'), oportunidades: jm('oportunidades'),
+    mejora: j('mejora'), mejora_otro: answers['mejora_otro'] || '',
+    oportunidades: j('oportunidades'), oportunidades_otro: answers['oportunidades_otro'] || '',
     proyecto: j('proyecto'), valoras: j('valoras'), mejorar: j('mejorar')
   };
   try {
