@@ -9,7 +9,31 @@
  * Copiar la URL (termina en /exec) y pegarla en SHEET_ENDPOINT del HTML del formulario.
  */
 
+// ID de la planilla de respuestas (de la URL del Sheet).
+var SHEET_ID = '1lZU_j6U_ke1gDfcvRmn4-Mx-Fvoxj3osWWRXrk3j54E';
 var SHEET_NAME = 'Respuestas';
+
+// Devuelve la pestaña de respuestas (la crea si no existe). Usa ID: funciona
+// aunque el script no esté "pegado" a la planilla.
+function getSheet_() {
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(HEADERS);
+    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+// Corré ESTA función desde el editor (Ejecutar) para probar la escritura
+// sin depender del formulario. Debe autorizar y crear una fila de prueba.
+function pruebaEscritura() {
+  var sheet = getSheet_();
+  sheet.appendRow(KEYS.map(function (k) {
+    return k === 'fecha' ? new Date() : 'PRUEBA';
+  }));
+}
 
 var HEADERS = [
   'Fecha/hora',
@@ -40,14 +64,7 @@ function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(30000);
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(HEADERS);
-      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
-      sheet.setFrozenRows(1);
-    }
+    var sheet = getSheet_();
 
     var data = JSON.parse(e.postData.contents);
     if (data.fecha) { data.fecha = new Date(data.fecha); }
