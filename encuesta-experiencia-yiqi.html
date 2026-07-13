@@ -112,6 +112,11 @@
   .opt:has(input:checked) .mark svg{ opacity:1; }
   .opt:has(input:focus-visible){ box-shadow:0 0 0 3px var(--cyan-soft); }
 
+  /* Campo condicional "Otra / Otro" */
+  .otro-wrap{ margin-top:10px; }
+  .otro-wrap[hidden]{ display:none; }
+  .otro-wrap .s-input{ margin-top:0; }
+
   /* NPS 0–10 */
   .nps-grid{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
   .nps{
@@ -271,7 +276,15 @@ function renderQuestion(qd){
       const chk = sel.includes(o) ? 'checked' : '';
       return `<label class="opt multi"><input type="checkbox" class="sr-only" name="${qd.id}" value="${esc(o)}" ${chk} onchange="onMulti('${qd.id}', this.value, this.checked)"><span class="mark" aria-hidden="true">${CHECK}</span><span class="opt-txt">${esc(o)}</span></label>`;
     }).join('');
-    out += `<div class="opts" role="group" aria-labelledby="lbl-${qd.id}">${opts}</div>`;
+    let extra = '';
+    const other = qd.options.find(o => /^otr[ao]$/i.test(o));
+    if(other){
+      const show = sel.includes(other);
+      extra = `<div class="otro-wrap" id="otro-${qd.id}"${show ? '' : ' hidden'}>
+        <input class="s-input" type="text" id="otroinput-${qd.id}" placeholder="¿Cuál? Especificá..." value="${esc(answers[qd.id+'_otro']||'')}" oninput="onText('${qd.id}_otro', this.value)" aria-label="Especificar la otra opción">
+      </div>`;
+    }
+    out += `<div class="opts" role="group" aria-labelledby="lbl-${qd.id}">${opts}</div>${extra}`;
   } else if(qd.type === 'nps'){
     let opts = '';
     for(let i=0;i<=10;i++){
@@ -335,6 +348,13 @@ function onMulti(id, val, checked){
   const set = new Set(answers[id] || []);
   checked ? set.add(val) : set.delete(val);
   answers[id] = [...set];
+  if(/^otr[ao]$/i.test(val)){
+    const w = document.getElementById('otro-'+id);
+    if(w) w.hidden = !checked;
+    const inp = document.getElementById('otroinput-'+id);
+    if(checked){ if(inp) inp.focus(); }
+    else { answers[id+'_otro'] = ''; if(inp) inp.value = ''; }
+  }
   clearErr(id);
 }
 function clearErr(id){ document.getElementById('qb-'+id)?.classList.remove('invalid'); }
@@ -355,6 +375,12 @@ function validateStep(){
     let bad = false, msg = 'Introduce un valor';
     if(qd.required && !isAnswered(qd)) bad = true;
     else if(qd.type === 'email' && val && !emailOk(val)) { bad = true; msg = 'Introduce un email válido'; }
+    else if(qd.type === 'multi' && qd.options){
+      const other = qd.options.find(o => /^otr[ao]$/i.test(o));
+      if(other && Array.isArray(val) && val.includes(other) && !String(answers[qd.id+'_otro']||'').trim()){
+        bad = true; msg = 'Especificá la otra opción';
+      }
+    }
     if(bad){
       ok = false;
       const qb = document.getElementById('qb-'+qd.id);
@@ -381,12 +407,19 @@ const SHEET_ENDPOINT = 'https://script.google.com/a/macros/yiqi.com.ar/s/AKfycbw
 function submitToSheet(){
   if(!SHEET_ENDPOINT) return;
   const j = k => Array.isArray(answers[k]) ? answers[k].join('; ') : (answers[k] || '');
+  // Multi con opción "Otra/Otro": reemplaza esa etiqueta por "Otra: <texto>".
+  const jm = k => {
+    const arr = (Array.isArray(answers[k]) ? answers[k] : (answers[k] ? [answers[k]] : [])).slice();
+    const oi = arr.findIndex(o => /^otr[ao]$/i.test(o));
+    if(oi >= 0 && answers[k+'_otro']) arr[oi] = arr[oi] + ': ' + answers[k+'_otro'];
+    return arr.join('; ');
+  };
   const payload = {
     fecha: new Date().toISOString(),
-    empresa: j('empresa'), nombre: j('nombre'), email: j('email'), area: j('area'),
+    empresa: j('empresa'), nombre: j('nombre'), email: j('email'), area: jm('area'),
     frecuencia: j('frecuencia'), nps: j('nps'), atencion: j('atencion'),
     tiempos: j('tiempos'), resolucion: j('resolucion'), acompana: j('acompana'),
-    mejora: j('mejora'), oportunidades: j('oportunidades'),
+    mejora: jm('mejora'), oportunidades: jm('oportunidades'),
     proyecto: j('proyecto'), valoras: j('valoras'), mejorar: j('mejorar')
   };
   try {

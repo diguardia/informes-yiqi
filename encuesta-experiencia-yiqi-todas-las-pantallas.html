@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta de Experiencia YiQi — Todas las pantallas</title>
+<meta name="description" content="Vista general de todas las pantallas de la Encuesta de Experiencia YiQi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+<script>
+(function(){
+  const mq = matchMedia('(prefers-color-scheme: dark)');
+  const apply = () => { document.documentElement.dataset.theme = mq.matches ? 'dark' : 'light'; };
+  apply(); mq.addEventListener('change', apply);
+})();
+</script>
+<style>
+  :root { --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:44px 44px, 44px 44px; background-position:-1px -1px,-1px -1px;
+    padding:32px clamp(16px,4vw,44px) 60px;
+  }
+  .page-head{ max-width:1400px; margin:0 auto 26px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .page-head svg{ height:34px; width:auto; display:block; }
+  .page-head h1{ font:800 22px var(--display); letter-spacing:-.02em; margin:0; }
+  .page-head .sub{ font:500 12px var(--mono); color:var(--muted-2); letter-spacing:.04em; }
+  .page-head .divider{ width:1px; height:24px; background:var(--line-strong); }
+
+  .grid{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill, minmax(360px, 1fr)); gap:20px; align-items:start; }
+
+  .screen{ background:var(--bg-elev); border:1px solid var(--line); border-radius:18px; padding:22px 22px 20px; }
+  .screen-tag{ font:600 10px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2); margin-bottom:4px; }
+  .screen-tag b{ color:var(--cyan); font-weight:600; }
+  .progress{ display:flex; gap:3px; margin:10px 0 16px; }
+  .progress > i{ flex:1; height:4px; border-radius:99px; background:var(--line-strong); }
+  .progress > i.cur{ background:var(--cyan); }
+
+  .eyebrow{ font:600 11px var(--mono); color:var(--cyan); text-transform:uppercase; letter-spacing:.14em; margin:0 0 8px; }
+  h2.q{ font:700 17px var(--display); color:var(--text); letter-spacing:-.01em; line-height:1.3; margin:0 0 3px; }
+  h2.q .req{ color:var(--cyan); margin-left:3px; }
+  .hint{ font:600 12px var(--sans); font-style:italic; color:var(--muted); margin:2px 0 0; }
+  .q + .q{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+
+  .intro-title{ font:800 24px var(--display); letter-spacing:-.02em; line-height:1.1; margin:0 0 10px; }
+  .intro-body{ font:400 13.5px var(--sans); color:var(--muted); line-height:1.6; }
+
+  .s-input, .s-textarea{ width:100%; background:var(--bg); border:1px solid transparent; border-radius:10px; padding:11px 13px; color:var(--muted-2); font:400 14px var(--sans); margin-top:12px; }
+  .s-textarea{ min-height:70px; }
+
+  .opts{ display:flex; flex-direction:column; gap:7px; margin-top:12px; }
+  .opt{ display:flex; align-items:center; gap:11px; background:var(--bg-elev-2); border:1px solid transparent; border-radius:11px; padding:10px 13px; font:500 13.5px var(--sans); color:var(--text); }
+  .opt .mark{ flex:0 0 18px; height:18px; border:1.5px solid var(--line-strong); border-radius:5px; }
+  .opt.single .mark{ border-radius:50%; }
+  .nps-grid{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .nps{ min-width:34px; height:36px; padding:0 5px; display:grid; place-items:center; background:var(--bg-elev-2); border-radius:9px; font:600 13px var(--sans); color:var(--text); }
+  .nps-legend{ display:flex; justify-content:space-between; margin-top:8px; font:500 10px var(--mono); color:var(--muted-2); }
+  .otro-note{ margin-top:8px; }
+  .otro-note span{ display:block; font:600 10px var(--mono); text-transform:uppercase; letter-spacing:.08em; color:var(--cyan); margin-bottom:6px; }
+  .otro-note .s-input{ margin-top:0; }
+
+  .nav-row{ display:flex; gap:8px; margin-top:18px; }
+  .fk-btn{ font:600 12px var(--sans); border-radius:10px; padding:10px 15px; }
+  .fk-primary{ background:var(--cyan-soft); border:1px solid var(--cyan-a28, rgba(0,204,255,.28)); color:var(--cyan); flex:1; text-align:center; }
+  .fk-ghost{ background:transparent; color:var(--muted); border:1px solid transparent; }
+
+  .result{ text-align:center; padding:18px 0 8px; }
+  .result-check{ width:52px; height:52px; margin:0 auto 16px; border-radius:50%; background:var(--cyan-soft); display:grid; place-items:center; }
+  .result-check svg{ width:24px; height:24px; stroke:var(--cyan); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+  .result-title{ font:800 20px var(--display); letter-spacing:-.02em; margin:0 0 8px; }
+  .result-sub{ font:400 13px var(--sans); color:var(--muted); }
+  .result-cta{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+  .result-cta-label{ font:600 10px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2); margin:0 0 10px; }
+  .result-cta .fk-btn{ display:inline-block; margin:0 4px; }
+</style>
+</head>
+<body>
+<div class="page-head">
+  <svg viewBox="15 14 75 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+    <path style="fill:var(--text)" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+    <path style="fill:var(--text)" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+    <path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+  </svg>
+  <div class="divider" aria-hidden="true"></div>
+  <h1>Encuesta de Experiencia YiQi</h1>
+  <div class="divider" aria-hidden="true"></div>
+  <span class="sub" id="headSub">Todas las pantallas</span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const STEPS = [
+  { intro:true, title:'Encuesta de Experiencia YiQi',
+    body:'Tu opinión es muy importante para nosotros.<br>Queremos conocer tu experiencia para seguir mejorando nuestros productos y servicios. Esta encuesta demora menos de 3 minutos y nos ayudará a identificar oportunidades de mejora y nuevas necesidades de nuestros clientes.' },
+  { section:'Datos generales', questions:[ { id:'empresa', type:'text', q:'Empresa', placeholder:'Tu empresa...', required:true } ] },
+  { questions:[
+    { id:'nombre', type:'text', q:'Nombre y apellido', placeholder:'Nombre completo...', required:true },
+    { id:'email', type:'email', q:'Email', placeholder:'tucorreo@empresa.com', required:true } ] },
+  { questions:[ { id:'area', type:'multi', q:'Área desde la que utilizás YiQi', hint:'(Podés seleccionar más de una opción)', required:true,
+      options:['Dirección / Gerencia','Administración','Ventas','Compras','Depósito / Logística','Producción','E-commerce','Sistemas','Otra'] } ] },
+  { questions:[ { id:'frecuencia', type:'single', q:'¿Con qué frecuencia utilizás YiQi?', required:true,
+      options:['Todos los días','Varias veces por semana','Algunas veces al mes','Muy poco'] } ] },
+  { section:'Experiencia General', questions:[ { id:'nps', type:'nps', q:'¿Qué tan probable es que recomiendes YiQi a otra empresa?', required:true } ] },
+  { questions:[ { id:'atencion', type:'single', q:'¿Cómo calificarías la atención recibida por nuestro equipo?', required:true,
+      options:['Excelente','Muy buena','Buena','Regular','Mala'] } ] },
+  { questions:[
+    { id:'tiempos', type:'single', q:'¿Cómo evaluarías nuestros tiempos de respuesta?', required:true, options:['Excelente','Muy buenos','Buenos','Regulares','Malos'] },
+    { id:'resolucion', type:'single', q:'¿Sentís que las consultas o inconvenientes que reportás son resueltos adecuadamente?', required:true, options:['Siempre','Casi siempre','Algunas veces','Pocas veces','Nunca'] } ] },
+  { questions:[ { id:'acompana', type:'single', q:'¿Sentís que YiQi acompaña las necesidades actuales de tu negocio?', required:true,
+      options:['Totalmente','Bastante','Parcialmente','Poco','Nada'] } ] },
+  { section:'Mejora Continua', questions:[ { id:'mejora', type:'multi', q:'¿Qué aspecto te gustaría que mejoremos primero?', hint:'(Podés seleccionar más de una opción)', required:true,
+      options:['Atención al cliente','Performance del sistema','Integraciones','Reportes y análisis','Capacitación','Nuevas funcionalidades','Aplicación móvil','Otro'] } ] },
+  { section:'Oportunidades y Crecimiento', questions:[ { id:'oportunidades', type:'multi', q:'¿Hay alguna funcionalidad, integración o servicio que te interese incorporar durante los próximos meses?', hint:'(Podés seleccionar más de una opción)', required:true,
+      options:['Shopify','Mercado Libre','Tienda Nube','WooCommerce','VTEX','Facturación electrónica','Logística','B2B','Producción','Reportes y análisis','Capacitación funcional','No por el momento','Otra'] } ] },
+  { questions:[ { id:'proyecto', type:'textarea', q:'¿Hay algún proyecto, necesidad o desafío de tu negocio en el que creas que YiQi podría ayudarte durante los próximos 12 meses?', placeholder:'Cuéntanos un poco más...', required:true } ] },
+  { section:'Comentarios', questions:[ { id:'valoras', type:'textarea', q:'¿Qué es lo que más valorás de YiQi?', placeholder:'Nos encantaría saberlo...', required:true } ] },
+  { questions:[ { id:'mejorar', type:'textarea', q:'¿Qué deberíamos mejorar para brindarte una mejor experiencia?', placeholder:'Tus sugerencias nos ayudan a crecer...', required:true } ], submit:true },
+];
+const TOTAL = STEPS.length;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function progress(cur){
+  let s='';
+  for(let i=1;i<TOTAL;i++) s += `<i class="${i===cur?'cur':''}"></i>`;
+  return `<div class="progress" aria-hidden="true">${s}</div>`;
+}
+function question(qd){
+  const req = qd.required ? '<span class="req">*</span>' : '';
+  let out = `<div class="q"><h2 class="q">${esc(qd.q)}${req}</h2>`;
+  if(qd.hint) out += `<p class="hint">${esc(qd.hint)}</p>`;
+  if(qd.type === 'text' || qd.type === 'email'){
+    out += `<input class="s-input" disabled placeholder="${esc(qd.placeholder||'')}">`;
+  } else if(qd.type === 'textarea'){
+    out += `<textarea class="s-textarea" disabled placeholder="${esc(qd.placeholder||'')}"></textarea>`;
+  } else if(qd.type === 'single' || qd.type === 'multi'){
+    out += `<div class="opts">` + qd.options.map(o =>
+      `<div class="opt ${qd.type==='single'?'single':'multi'}"><span class="mark"></span><span>${esc(o)}</span></div>`).join('') + `</div>`;
+    const other = qd.type==='multi' && qd.options.find(o => /^otr[ao]$/i.test(o));
+    if(other) out += `<div class="otro-note"><span>Si marca "${esc(other)}"</span><input class="s-input" disabled placeholder="¿Cuál? Especificá... (obligatorio)"></div>`;
+  } else if(qd.type === 'nps'){
+    let n=''; for(let i=0;i<=10;i++) n += `<div class="nps">${i}</div>`;
+    out += `<div class="nps-grid">${n}</div><div class="nps-legend"><span>0 · Nada probable</span><span>10 · Muy probable</span></div>`;
+  }
+  return out + `</div>`;
+}
+function screenCard(s, idx){
+  if(s.intro){
+    return `<div class="screen"><div class="screen-tag">Portada</div>${progress(0)}
+      <h2 class="intro-title">${s.title}</h2><p class="intro-body">${s.body}</p>
+      <div class="nav-row"><span class="fk-btn fk-primary">Siguiente →</span></div></div>`;
+  }
+  const tag = s.section
+    ? `<div class="screen-tag">Página ${idx+1} de ${TOTAL} · <b>${esc(s.section)}</b></div>`
+    : `<div class="screen-tag">Página ${idx+1} de ${TOTAL}</div>`;
+  const qs = s.questions.map(question).join('');
+  const label = s.submit ? 'Enviar →' : 'Siguiente →';
+  return `<div class="screen">${tag}${progress(idx)}${qs}
+    <div class="nav-row"><span class="fk-btn fk-ghost">Atrás</span><span class="fk-btn fk-primary">${label}</span></div></div>`;
+}
+function thanksCard(){
+  return `<div class="screen"><div class="screen-tag">Cierre</div>
+    <div class="result">
+      <div class="result-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h2 class="result-title">¡Gracias por compartir tu experiencia!</h2>
+      <p class="result-sub">Agradecemos el tiempo dedicado. Tus comentarios son muy valiosos para seguir construyendo un mejor YiQi para todos.</p>
+      <div class="result-cta"><p class="result-cta-label">Mientras tanto, te invitamos a conocer</p>
+        <span class="fk-btn fk-primary">Conocer YiQi IA Ready →</span>
+        <span class="fk-btn fk-ghost">Ver novedades</span>
+      </div>
+    </div></div>`;
+}
+
+const grid = document.getElementById('grid');
+grid.innerHTML = STEPS.map(screenCard).join('') + thanksCard();
+document.getElementById('headSub').textContent = TOTAL + ' pantallas + portada y cierre';
+</script>
+</body>
+</html>
