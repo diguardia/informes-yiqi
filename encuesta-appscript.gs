@@ -38,11 +38,31 @@ function getSheet_() {
 }
 
 // Corré ESTA función desde el editor (Ejecutar) para probar la escritura
-// sin depender del formulario. Debe autorizar y crear una fila de prueba.
+// sin depender del formulario. Escribe una fila con datos realistas de ejemplo.
 function pruebaEscritura() {
+  var SAMPLE = {
+    empresa: 'Comercial Andina S.A.',
+    nombre: 'Sebastián Menéndez',
+    email: 'sebastian.menendez@comercialandina.com',
+    area: 'Ventas; Otra',
+    area_otro: 'Marketing digital',
+    frecuencia: 'Todos los días',
+    nps: 9,
+    atencion: 'Muy buena',
+    tiempos: 'Buenos',
+    resolucion: 'Casi siempre',
+    acompana: 'Bastante',
+    mejora: 'Integraciones; Otro',
+    mejora_otro: 'Reportes personalizados',
+    oportunidades: 'Shopify; Mercado Libre; Otra',
+    oportunidades_otro: 'Integración con SAP',
+    proyecto: 'Queremos automatizar la facturación multicanal en los próximos meses.',
+    valoras: 'La integración con Mercado Libre y el soporte cercano.',
+    mejorar: 'Más velocidad en la generación de reportes.'
+  };
   var sheet = getSheet_();
   sheet.appendRow(KEYS.map(function (k) {
-    return k === 'fecha' ? new Date() : 'PRUEBA';
+    return k === 'fecha' ? new Date() : (SAMPLE[k] !== undefined ? SAMPLE[k] : '');
   }));
 }
 
