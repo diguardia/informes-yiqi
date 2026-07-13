@@ -39,6 +39,7 @@ var HEADERS = [
   'Fecha/hora',
   'Empresa',
   'Nombre y apellido',
+  'Email',
   'Área',
   'Frecuencia de uso',
   'NPS (0–10)',
@@ -55,7 +56,7 @@ var HEADERS = [
 
 // Debe coincidir con las claves del payload que envía el formulario.
 var KEYS = [
-  'fecha', 'empresa', 'nombre', 'area', 'frecuencia', 'nps',
+  'fecha', 'empresa', 'nombre', 'email', 'area', 'frecuencia', 'nps',
   'atencion', 'tiempos', 'resolucion', 'acompana', 'mejora',
   'oportunidades', 'proyecto', 'valoras', 'mejorar'
 ];

@@ -180,7 +180,8 @@ const STEPS = [
     { id:'empresa', type:'text', q:'Empresa', placeholder:'Tu empresa...', required:true } ] },
 
   { questions:[
-    { id:'nombre', type:'text', q:'Nombre y apellido', placeholder:'Nombre completo...', required:true } ] },
+    { id:'nombre', type:'text', q:'Nombre y apellido', placeholder:'Nombre completo...', required:true },
+    { id:'email', type:'email', q:'Email', placeholder:'tucorreo@empresa.com', required:true } ] },
 
   { questions:[
     { id:'area', type:'multi', q:'Área desde la que utilizás YiQi', hint:'(Podés seleccionar más de una opción)', required:true,
@@ -249,6 +250,8 @@ function renderQuestion(qd){
 
   if(qd.type === 'text'){
     out += `<div class="field"><input class="s-input" type="text" name="${qd.id}" placeholder="${esc(qd.placeholder||'')}" aria-labelledby="lbl-${qd.id}" value="${esc(answers[qd.id]||'')}" oninput="onText('${qd.id}', this.value)"></div>`;
+  } else if(qd.type === 'email'){
+    out += `<div class="field"><input class="s-input" type="email" inputmode="email" autocomplete="email" name="${qd.id}" placeholder="${esc(qd.placeholder||'')}" aria-labelledby="lbl-${qd.id}" value="${esc(answers[qd.id]||'')}" oninput="onText('${qd.id}', this.value)"></div>`;
   } else if(qd.type === 'textarea'){
     out += `<div class="field"><textarea class="s-textarea" name="${qd.id}" placeholder="${esc(qd.placeholder||'')}" aria-labelledby="lbl-${qd.id}" oninput="onText('${qd.id}', this.value)">${esc(answers[qd.id]||'')}</textarea></div>`;
   } else if(qd.type === 'single'){
@@ -341,11 +344,18 @@ function validateStep(){
   const s = STEPS[current];
   if(s.intro) return true;
   let ok = true, firstBad = null;
+  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   s.questions.forEach(qd => {
-    if(qd.required && !isAnswered(qd)){
+    const val = answers[qd.id];
+    let bad = false, msg = 'Introduce un valor';
+    if(qd.required && !isAnswered(qd)) bad = true;
+    else if(qd.type === 'email' && val && !emailOk(val)) { bad = true; msg = 'Introduce un email válido'; }
+    if(bad){
       ok = false;
       const qb = document.getElementById('qb-'+qd.id);
       qb?.classList.add('invalid');
+      const err = document.getElementById('err-'+qd.id);
+      if(err) err.textContent = msg;
       if(!firstBad) firstBad = qb;
     }
   });
@@ -368,7 +378,7 @@ function submitToSheet(){
   const j = k => Array.isArray(answers[k]) ? answers[k].join('; ') : (answers[k] || '');
   const payload = {
     fecha: new Date().toISOString(),
-    empresa: j('empresa'), nombre: j('nombre'), area: j('area'),
+    empresa: j('empresa'), nombre: j('nombre'), email: j('email'), area: j('area'),
     frecuencia: j('frecuencia'), nps: j('nps'), atencion: j('atencion'),
     tiempos: j('tiempos'), resolucion: j('resolucion'), acompana: j('acompana'),
     mejora: j('mejora'), oportunidades: j('oportunidades'),
