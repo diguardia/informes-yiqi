@@ -162,8 +162,10 @@
   .result-sub{ font:400 14.5px var(--sans); color:var(--muted); line-height:1.6; max-width:440px; margin:0 auto; }
   .result-cta{ margin-top:auto; padding-top:24px; }   /* empuja los botones bien abajo */
   .result-cta-label{ font:600 11px var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted-2); margin:0 0 14px; }
-  .result-cta-btns{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
-  .result-cta .btn{ text-decoration:none; border-radius:12px; padding:13px 20px; font:600 13px var(--sans); }
+  .result-cta-btns{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; align-items:center; }
+  /* hug: los botones abrazan su contenido (no se estiran) */
+  .result-cta .btn{ flex:0 0 auto; width:auto; text-decoration:none; border-radius:12px; padding:13px 20px; font:600 13px var(--sans); }
+  .result-cta .btn-ghost{ background:transparent; border-color:transparent; }
   .result-cta .btn svg{ width:15px; height:15px; }
   @keyframes popIn{ from{opacity:0; transform:scale(.55);} to{opacity:1; transform:none;} }
   @keyframes ring{ 0%{opacity:.55; transform:scale(.92);} 100%{opacity:0; transform:scale(1.35);} }
