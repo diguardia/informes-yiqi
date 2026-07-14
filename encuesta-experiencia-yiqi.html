@@ -403,7 +403,7 @@ function next(){
 function prev(){ clearTimeout(_advTimer); if(current > 0){ current--; render(); window.scrollTo({top:0, behavior:'smooth'}); } }
 /* Destino de los datos: URL del Web App de Google Apps Script (termina en /exec).
    Pegar acá la URL que te da Apps Script al implementar. Si queda vacío, no envía. */
-const SHEET_ENDPOINT = 'https://script.google.com/a/macros/yiqi.com.ar/s/AKfycbwZi6aEGEnM_qvvEJfToWaO7Tnm0lLxv_lwFVmv5gGaVBPIK7Jq_9FzIqMN9DA3AiymlA/exec';
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxgTVox84CAe1Zi31W43eX2HJkdWjwO9MIcFm0AylMe0nQ7W3lMLshASx423eoBzM6mww/exec';
 
 function submitToSheet(){
   if(!SHEET_ENDPOINT) return;
