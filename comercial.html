@@ -29,13 +29,13 @@
       --cyan-label:      rgba(0,204,255,.52);
       --text-cyan-muted: rgba(0,195,240,.45);
 
-      --green:           #00c48c;
+      --green:           #15d49c;
       --green-soft:      rgba(0,196,140,.12);
-      --amber:           #f6a623;
+      --amber:           #ffb020;
       --amber-soft:      rgba(246,166,35,.12);
-      --red:             #f25f5c;
+      --red:             #ff637d;
       --red-soft:        rgba(242,95,92,.12);
-      --blue:            #7ab7ff;
+      --blue:            #4d9fff;
       --purple:          #a78bfa;
       --purple-soft:     rgba(167,139,250,.12);
       --warm:            #b5a090;
@@ -232,7 +232,6 @@
       font: 700 12px var(--display); color: var(--text); letter-spacing: -.01em;
       white-space: nowrap;
     }
-    .period-brand .meta-logo { flex-shrink: 0; display: block; }
     .period-info {
       font: 500 11px var(--mono); color: var(--muted-2); white-space: nowrap;
     }
@@ -363,19 +362,19 @@
     }
     .kpi-cyan  {
       background: var(--cyan-soft);
-      box-shadow: 0 0 0 1px rgba(0,204,255,.22) inset, var(--shadow-sm);
+      box-shadow: var(--shadow-sm);
     }
     .kpi-green {
       background: var(--green-soft);
-      box-shadow: 0 0 0 1px rgba(0,196,140,.22) inset, var(--shadow-sm);
+      box-shadow: var(--shadow-sm);
     }
     .kpi-amber {
       background: var(--amber-soft);
-      box-shadow: 0 0 0 1px rgba(246,166,35,.22) inset, var(--shadow-sm);
+      box-shadow: var(--shadow-sm);
     }
     .kpi-red   {
       background: var(--red-soft);
-      box-shadow: 0 0 0 1px rgba(242,95,92,.22) inset, var(--shadow-sm);
+      box-shadow: var(--shadow-sm);
     }
     .kpi-muted {
       background: var(--bg-elev-2);
@@ -404,7 +403,7 @@
       padding: 22px 24px;
     }
     .card:hover {
-      box-shadow: 0 0 0 1px rgba(0,204,255,.10) inset, var(--shadow-md);
+      box-shadow: var(--shadow-md);
     }
 
     /* ── BADGES ──────────────────────────────────────────────── */
@@ -418,7 +417,8 @@
     .badge-green { color: var(--green); background: var(--green-soft); }
     .badge-amber { color: var(--amber); background: var(--amber-soft); }
     .badge-red   { color: var(--red);   background: var(--red-soft); }
-    .badge-muted { color: var(--muted); background: var(--bg-soft); border-color: var(--line); }
+    .badge-muted { color: var(--muted); background: var(--bg-soft); border-color: transparent; }
+    html[data-theme="light"] .badge-muted { border-color: var(--line); }
 
     /* ── TABLE ───────────────────────────────────────────────── */
     .table-toolbar {
@@ -919,23 +919,6 @@
 
       <div class="period-meta">
         <span class="period-brand">
-          <svg class="meta-logo" width="21" height="14" viewBox="0 0 287.56 191" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <linearGradient id="metaGrad1" x1="62.34" y1="101.45" x2="260.34" y2="91.45" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#0064e1"/>
-                <stop offset=".4" stop-color="#0064e1"/>
-                <stop offset=".83" stop-color="#0073ee"/>
-                <stop offset="1" stop-color="#0082fb"/>
-              </linearGradient>
-              <linearGradient id="metaGrad2" x1="41.42" y1="53" x2="41.42" y2="126" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#0082fb"/>
-                <stop offset="1" stop-color="#0064e0"/>
-              </linearGradient>
-            </defs>
-            <path fill="#0081fb" d="M31.06,126c0,11,2.41,19.41,5.56,24.51C40.6,157.05,46.53,159.82,52.57,159.82c7.79,0,14.92-1.93,28.66-20.93,11-15.23,24-36.61,32.73-50.05L128.7,66.29c10.35-15.9,22.33-33.58,36.06-45.58C176,11,188.11,5.32,200.31,5.32c20.49,0,40,11.88,54.94,34.15C271.62,64,279.72,94.72,279.72,126.46c0,18.86-3.72,32.71-10,43.65-6.11,10.58-18,21.15-38.05,21.15V159.82c17.16,0,21.44-15.76,21.44-33.79,0-25.7-6-54.23-19.2-74.63-9.37-14.47-21.52-23.31-34.89-23.31-14.46,0-26.09,10.9-39.16,30.34-6.95,10.32-14.08,22.9-22.09,37.1l-9.68,17.15c-19.45,34.51-24.38,42.36-34.11,55.34C82.42,183.09,68.35,191,52.57,191c-20.69,0-33.78-9-41.89-22.51C4,157.65,1,143.82,1,128.06Z"/>
-            <path fill="url(#metaGrad1)" d="M24.49,41.84C38.36,20.45,58.37,5.5,81.32,5.5,94.61,5.5,107.83,9.43,121.63,20.76c15.1,12.39,31.2,32.79,51.29,66.43l7.2,12c17.39,29.11,27.28,44.09,33.07,51.15,7.44,9.07,12.65,11.78,19.42,11.78,17.16,0,21.44-15.76,21.44-33.79l27.48-.86c0,18.86-3.72,32.71-10,43.65-6.11,10.58-18,21.15-38.05,21.15-12.48,0-23.54-2.71-35.77-14.25-9.4-8.84-20.39-24.54-28.85-38.69L170.62,110c-12.34-20.62-23.66-36-30.21-43C133.36,59.34,124.23,50.16,109.7,50.16c-11.76,0-21.75,8.25-30.11,20.88Z"/>
-            <path fill="url(#metaGrad2)" d="M81.32,50.16c-11.76,0-21.75,8.25-30.11,20.88C39.35,88.85,31.06,115.66,31.06,140.79c0,11,2.41,19.41,5.56,24.51L10.13,182.77C4,157.65,1,143.82,1,128.06,1,98.16,9.16,67,24.49,41.84,38.36,20.45,58.37,5.5,81.32,5.5Z"/>
-          </svg>
           Meta + CRM
         </span>
         <div class="topbar-divider" aria-hidden="true"></div>
@@ -1624,7 +1607,7 @@
 <div class="ds-overlay" id="overlay" onclick="closeNav()" aria-hidden="true"></div>
 
 <footer class="page-footer" role="contentinfo">
-  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7</a> · Meta Ads ID 370211010327709 · Actualizado 6 jul 2026
+  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7.2</a> · Meta Ads ID 370211010327709 · Actualizado 6 jul 2026
 </footer>
 
 <script>

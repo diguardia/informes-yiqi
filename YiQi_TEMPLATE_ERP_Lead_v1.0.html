@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 ============================================================
-  YiQi · TEMPLATE de propuesta ERP para leads · DS v1.2.7
+  YiQi · TEMPLATE de propuesta ERP para leads · DS v1.2.7.2
   Base despersonalizada. Reemplazar los {{PLACEHOLDER}} y el
   copy marcado con comentarios "PERSONALIZAR".
 ------------------------------------------------------------
@@ -108,13 +108,7 @@ html[data-theme="light"] .topbar{background:rgba(238,236,231,.88)}
 @media(max-width:560px){.nb{white-space:normal}}
 .section .lead{color:var(--muted);font-size:clamp(14px,1.6vw,16px);max-width:680px;line-height:1.7}
 
-/* botones */
-.btn{display:inline-flex;align-items:center;gap:7px;font:500 14px var(--sans);padding:11px 20px;border-radius:var(--radius);transition:all var(--tr);cursor:pointer;border:1px solid transparent}
-.btn-primary{background:var(--cyan-soft-2);border-color:rgba(0,204,255,.28);color:var(--cyan);font-weight:600}
-.btn-primary:hover{background:var(--cyan-soft)}
-html[data-theme="light"] .btn-primary{border-color:rgba(0,159,199,.32)}
-.btn-ghost{background:transparent;color:var(--muted);border-color:var(--line)}
-.btn-ghost:hover{background:var(--bg-soft);color:var(--text)}
+/* botones — .btn/.btn-primary/.btn-ghost: set canónico del DS vía CDN. .btn-mini es propio de la página. */
 .btn-mini{font:500 12px var(--sans);color:var(--cyan);background:var(--cyan-soft-2);border:1px solid rgba(0,204,255,.28);padding:7px 14px;border-radius:var(--radius-pill);transition:all var(--tr)}
 .btn-mini:hover{background:var(--cyan-soft)}
 @media(max-width:520px){.btn-mini{display:none}}
@@ -1152,7 +1146,7 @@ html[data-theme="light"] .dev-feature{background:#fff}
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 YiQi S.A. · {{CLIENTE}} · Todos los derechos reservados</p>
-      <span class="footer-version">DS v1.2.7</span>
+      <span class="footer-version">DS v1.2.7.2</span>
     </div>
   </div>
 </footer>
