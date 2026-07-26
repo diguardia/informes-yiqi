@@ -921,6 +921,8 @@
         <span class="period-info" id="topbar-period">1 ene – 13 jul 2026</span>
         <div class="topbar-divider" aria-hidden="true"></div>
         <span class="period-info" title="ID de cuenta publicitaria Meta">Meta ID · 370211010327709</span>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <span class="period-info" id="meta-fuente" aria-live="polite">datos embebidos</span>
       </div>
     </div>
 
@@ -967,7 +969,7 @@
       <!-- Gráfico evolución mensual -->
       <div class="card card-reveal" style="margin-top:18px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-          <div class="card-subtitle" style="margin:0">Evolución mensual · Ene–Jun 2026</div>
+          <div class="card-subtitle" style="margin:0" id="meta-chart-sub">Evolución mensual · Ene–Jun 2026</div>
           <div style="display:flex;gap:5px;flex-wrap:wrap">
             <button class="month-pill active" data-meta-metric="conv"    onclick="toggleMetaLine('conv')">Conversaciones</button>
             <button class="month-pill active" data-meta-metric="inter"   onclick="toggleMetaLine('inter')">Interacciones</button>
@@ -1833,7 +1835,7 @@ function setPeriodo(key) {
 }
 
 // Filtra las tablas de Nuevas ONs (fecha creación) y Concretadas (fecha concreción) por el período
-const _MES_NUM = { '01':'ene','02':'feb','03':'mar','04':'abr','05':'may','06':'jun' };
+const _MES_NUM = { '01':'ene','02':'feb','03':'mar','04':'abr','05':'may','06':'jun','07':'jul','08':'ago','09':'sep','10':'oct','11':'nov','12':'dic' };
 function filterOnsByPeriodo(key) {
   // [tabla, índice de columna con la fecha, input de búsqueda, empty, subtítulo, sufijo del subtítulo]
   const tablas = [
@@ -1892,7 +1894,9 @@ function setMes(key) {
     const [dir, txt] = d['d' + m.charAt(0).toUpperCase() + m.slice(1)];
     const val = d[m];
 
-    // Valor
+    // Valor · invalida cualquier count-up en vuelo antes de escribir, para que
+    // una animación a medio camino no pise el dato recién sincronizado.
+    valEl._cuGen = (valEl._cuGen || 0) + 1;
     valEl.textContent = val ?? '—';
 
     // Delta
@@ -2706,7 +2710,11 @@ function runCountUp(el, duration = 900) {
   if (!parsed) return;
   const { num, fmt } = parsed;
   const start = performance.now();
+  // Token de generación: si otro render reescribe el valor mientras la
+  // animación está en vuelo, esta se aborta y no pisa el dato nuevo.
+  const gen = (el._cuGen = (el._cuGen || 0) + 1);
   const step = (now) => {
+    if (el._cuGen !== gen) return;
     const t = Math.min((now - start) / duration, 1);
     const ease = 1 - Math.pow(1 - t, 3);
     el.textContent = fmt(num * ease);
@@ -2732,6 +2740,188 @@ function initReveal() {
   cards.forEach(c => obs.observe(c));
 }
 
+
+/* ─── SINCRONIZACIÓN CON LA MARKETING API ───────────────────────
+   GitHub Actions corre scripts/fetch-meta.mjs y publica data/meta.json
+   con números crudos. Acá se los convierte en META_DATA, META_SERIES,
+   ANUNCIOS_BY_PERIOD y ANUNCIOS_TABLA, que es lo que dibuja el informe.
+
+   Si el JSON no está (o el HTML se abre por file://) quedan los valores
+   embebidos más arriba y el informe se ve igual que antes.
+
+   Contactos nuevos NO viene de la API de Ads: es el panel de Business
+   Suite. Se carga a mano acá abajo.                                  */
+
+const META_DATA_URL = 'data/meta.json';
+
+const CONTACTOS_MANUALES = {
+  may: 86,   // nuevos contactos reportados por campañas · mayo 2026
+};
+
+const _MES_LARGO = {
+  ene: 'Enero', feb: 'Febrero', mar: 'Marzo',      abr: 'Abril',
+  may: 'Mayo',  jun: 'Junio',   jul: 'Julio',      ago: 'Agosto',
+  sep: 'Septiembre', oct: 'Octubre', nov: 'Noviembre', dic: 'Diciembre',
+};
+const _UNIDAD = {
+  conversaciones: ['conversación', 'conversaciones', 'conv'],
+  clics:          ['clic',         'clics',          'clic'],
+  leads:          ['lead',         'leads',          'lead'],
+};
+
+const _fInt = v => (v == null ? null : Math.round(v).toLocaleString('es-AR'));
+const _fArs = v => (v == null ? null : '$' + Math.round(v).toLocaleString('es-AR'));
+const _cap  = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+function _metaDelta(actual, previo, etiquetaPrevia) {
+  if (actual == null) return ['neutral', 'sin dato'];
+  if (previo == null) return ['neutral', 'sin mes previo'];
+  if (!previo)        return ['neutral', 'sin base de comparación'];
+  const p = ((actual - previo) / previo) * 100;
+  const flecha = p >= 0 ? '↑' : '↓';
+  const txt = `${flecha} ${Math.abs(p).toFixed(1).replace('.', ',')}% vs ${etiquetaPrevia}`;
+  return [p >= 0 ? 'positive' : 'negative', txt];
+}
+
+function _diaMes(iso) { return Number(iso.slice(8, 10)); }
+
+function _filaAnuncio(c) {
+  let resultado = 'Sin resultados en el período';
+  let costo = '—';
+  if (c.resultadoTipo && c.resultado) {
+    const [sing, plur, abrev] = _UNIDAD[c.resultadoTipo] || ['resultado', 'resultados', 'res'];
+    resultado = `${_fInt(c.resultado)} ${c.resultado === 1 ? sing : plur}`;
+    if (c.costoResultado) costo = `${_fArs(c.costoResultado)}/${abrev}`;
+  }
+  return [c.nombre, c.gasto, resultado, costo, c.impresiones];
+}
+
+function _rehacerPills(keys, anio) {
+  const bar = document.querySelector('.period-bar');
+  if (!bar) return;
+  bar.querySelectorAll('.month-pill').forEach(b => b.remove());
+  const ref = bar.querySelector('.period-meta');
+  const pill = (k, txt) => {
+    const b = document.createElement('button');
+    b.className = 'month-pill' + (k === _currentMes ? ' active' : '');
+    b.setAttribute('onclick', `setPeriodo('${k}')`);
+    b.textContent = txt;
+    return b;
+  };
+  const frag = document.createDocumentFragment();
+  frag.appendChild(pill('ytd', `Todo ${anio}`));
+  keys.forEach(k => frag.appendChild(pill(k, _cap(k))));
+  bar.insertBefore(frag, ref);
+}
+
+function hydrateMeta(j) {
+  const meses = j.meses.filter(m => m && m.key);
+  if (!meses.length) return;
+  const keys = meses.map(m => m.key);
+  const ultimo = meses[meses.length - 1];
+  const anio = j.anio || new Date().getFullYear();
+
+  /* ── 1. KPIs por mes ─────────────────────────────────────── */
+  Object.keys(META_DATA).forEach(k => delete META_DATA[k]);
+
+  const rangoTxt = m => {
+    const d1 = _diaMes(m.desde), d2 = _diaMes(m.hasta);
+    return `${d1}–${d2} ${m.key}` + (m.parcial ? ' (parcial)' : '');
+  };
+
+  meses.forEach((m, i) => {
+    const prev = i > 0 ? meses[i - 1] : null;
+    const cont = CONTACTOS_MANUALES[m.key] ?? null;
+    const contPrev = prev ? (CONTACTOS_MANUALES[prev.key] ?? null) : null;
+    const pl = prev ? prev.key : null;
+
+    META_DATA[m.key] = {
+      period: `${_MES_LARGO[m.key]} ${anio} · Instagram · ${rangoTxt(m)}`,
+      alcance: _fInt(m.alcance), dAlcance: _metaDelta(m.alcance, prev && prev.alcance, pl),
+      conv:    _fInt(m.conv),    dConv:    _metaDelta(m.conv,    prev && prev.conv,    pl),
+      cont:    _fInt(cont),      dCont:    cont == null
+                                             ? ['neutral', 'no proviene de Meta Ads · carga manual']
+                                             : _metaDelta(cont, contPrev, pl),
+      gasto:   _fArs(m.gasto),   dGasto:   _metaDelta(m.gasto,   prev && prev.gasto,   pl),
+      inter:   _fInt(m.inter),   dInter:   _metaDelta(m.inter,   prev && prev.inter,   pl),
+      clics:   _fInt(m.clics),   dClics:   _metaDelta(m.clics,   prev && prev.clics,   pl),
+    };
+  });
+
+  /* ── 2. Acumulado del año ────────────────────────────────── */
+  const y = j.ytd || {};
+  const contYtd = Object.entries(CONTACTOS_MANUALES)
+    .filter(([k]) => keys.includes(k))
+    .reduce((s, [, v]) => s + v, 0) || null;
+  const spanTxt = `ene–${ultimo.key} ${anio}`;
+
+  META_DATA.ytd = {
+    period:  `1 ene – ${_diaMes(ultimo.hasta)} ${ultimo.key} ${anio} · Instagram · acumulado`,
+    alcance: _fInt(y.alcance), dAlcance: ['neutral', `alcance único · ${spanTxt}`],
+    conv:    _fInt(y.conv),    dConv:    ['neutral', `campañas de mensajes · ${spanTxt}`],
+    cont:    _fInt(contYtd),   dCont:    ['neutral', contYtd == null ? 'sin carga manual' : 'carga manual · Business Suite'],
+    gasto:   _fArs(y.gasto),   dGasto:   ['neutral', `acumulado ${spanTxt} · ARS`],
+    inter:   _fInt(y.inter),   dInter:   ['neutral', `acumulado ${spanTxt}`],
+    clics:   _fInt(y.clics),   dClics:   ['neutral', `acumulado ${spanTxt}`],
+  };
+
+  /* ── 3. Serie del gráfico mensual ────────────────────────── */
+  META_MONTHS.length = 0;
+  keys.forEach(k => META_MONTHS.push(_cap(k)));
+
+  META_SERIES.conv.data    = meses.map(m => m.conv);
+  META_SERIES.inter.data   = meses.map(m => m.inter);
+  META_SERIES.clics.data   = meses.map(m => m.clics);
+  META_SERIES.gasto.data   = meses.map(m => Math.round(m.gasto / 1000));
+  META_SERIES.alcance.data = meses.map(m => Number((m.alcance / 1000).toFixed(1)));
+
+  /* ── 4. Anuncios: gráfico y tabla ────────────────────────── */
+  Object.keys(ANUNCIOS_BY_PERIOD).forEach(k => delete ANUNCIOS_BY_PERIOD[k]);
+  Object.keys(ANUNCIOS_TABLA).forEach(k => delete ANUNCIOS_TABLA[k]);
+  Object.keys(PERIODO_LABEL).forEach(k => delete PERIODO_LABEL[k]);
+
+  const cargar = (clave, campanas, etiqueta) => {
+    const conGasto = campanas.filter(c => c.gasto > 0).slice(0, 10);
+    ANUNCIOS_BY_PERIOD[clave] = { labels: conGasto.map(c => c.nombre), data: conGasto.map(c => c.gasto) };
+    ANUNCIOS_TABLA[clave] = campanas.map(_filaAnuncio);
+    PERIODO_LABEL[clave] = etiqueta;
+  };
+
+  cargar('ytd', y.campanas || [], spanTxt);
+  meses.forEach(m => cargar(m.key, m.campanas || [], _MES_LARGO[m.key].toLowerCase() + (m.parcial ? ` (${rangoTxt(m)})` : '')));
+
+  const sub = document.getElementById('meta-chart-sub');
+  if (sub) sub.textContent = `Evolución mensual · ${_cap(keys[0])}–${_cap(ultimo.key)} ${anio}`;
+
+  /* ── 5. Repintar ─────────────────────────────────────────── */
+  _rehacerPills(keys, anio);
+  setPeriodo(META_DATA[_currentMes] ? _currentMes : 'ytd');
+  renderMetaChart();
+}
+
+async function loadMetaJSON() {
+  const el = document.getElementById('meta-fuente');
+  try {
+    const res = await fetch(META_DATA_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    if (!j || !Array.isArray(j.meses) || !j.meses.length) throw new Error('JSON sin meses');
+    hydrateMeta(j);
+    if (el) {
+      const d = j.generado ? new Date(j.generado) : null;
+      el.textContent = d && !isNaN(d)
+        ? 'API · ' + d.toLocaleString('es-AR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
+        : 'API';
+      el.title = 'Datos sincronizados desde la Marketing API de Meta';
+    }
+  } catch (e) {
+    if (el) {
+      el.textContent = 'datos embebidos';
+      el.title = 'No se pudo leer data/meta.json — se muestran los valores escritos en el archivo';
+    }
+  }
+}
+
 /* ─── INIT ──────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   const stored = localStorage.getItem('yiqi-theme') || 'system';
@@ -2753,6 +2943,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAnunciosChart();
   renderOnsCharts();
   renderConcretadasChart();
+
+  loadMetaJSON();   // no bloquea: si falla, quedan los datos embebidos
 });
 </script>
 </body>

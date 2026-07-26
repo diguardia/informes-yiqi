@@ -1,0 +1,49 @@
+name: Meta · sincronizar informe comercial
+
+# Actualiza data/meta.json con los datos de la Marketing API.
+# comercial.html lo lee al cargar y con eso arma Resumen Meta, el gráfico
+# mensual y la tabla de Anuncios. Si el JSON falta, el HTML cae en los
+# valores embebidos y se ve igual que antes.
+
+on:
+  schedule:
+    # 09:00 UTC = 06:00 en Buenos Aires. El cron de GitHub siempre es UTC.
+    # Para más frecuencia: '0 */6 * * *' (cada 6 horas).
+    - cron: '0 9 * * *'
+  workflow_dispatch:        # botón "Run workflow" en la pestaña Actions
+
+concurrency:
+  group: meta-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Traer datos de Meta
+        env:
+          META_TOKEN:         ${{ secrets.META_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ vars.META_AD_ACCOUNT_ID || '370211010327709' }}
+          META_API_VERSION:   ${{ vars.META_API_VERSION   || 'v25.0' }}
+        run: node scripts/fetch-meta.mjs
+
+      - name: Commitear si cambió
+        run: |
+          if [ -z "$(git status --porcelain data/meta.json)" ]; then
+            echo "Sin cambios en data/meta.json."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/meta.json
+          git commit -m "Meta: sincronizar datos del informe ($(date -u +%Y-%m-%d))"
+          git push
