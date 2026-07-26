@@ -639,6 +639,14 @@
     }
     .kpi-placeholder { opacity: .35; }
 
+    /* Selector de año: solo aparece cuando el JSON trae más de un año */
+    .year-group { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .year-pill { font-weight: 700; }
+    .year-sep {
+      display: inline-block; width: 1px; height: 18px;
+      background: var(--line-strong); margin: 0 4px; flex-shrink: 0;
+    }
+
     /* ── FOOTER ──────────────────────────────────────────────── */
     .page-footer {
       padding: 20px 32px;
@@ -1816,8 +1824,15 @@ function setPeriodo(key, manual) {
     p.classList.toggle('active', p.getAttribute('onclick').includes(`'${key}'`));
   });
   setMes(key);
-  setFunnelPeriod(key);
-  filterOnsByPeriodo(key);
+  if (_anioActivo === null || _anioActivo === CRM_ANIO) {
+    setFunnelPeriod(key);
+    filterOnsByPeriodo(key);
+  } else {
+    // Año sin datos de CRM: se muestran completos y se aclara de qué año son.
+    setFunnelPeriod('ytd');
+    filterOnsByPeriodo('ytd');
+    _marcarCrmDeOtroAnio();
+  }
 
   keepScroll();
   requestAnimationFrame(keepScroll);   // tras el reflow de los charts
@@ -1909,6 +1924,16 @@ function setMes(key) {
   if (typeof renderAnunciosTable === 'function') renderAnunciosTable();
 }
 
+// Aclara en las secciones de CRM que sus datos son de CRM_ANIO, no del año
+// que se está mirando en Resumen Meta.
+function _marcarCrmDeOtroAnio() {
+  const nota = ` · datos de CRM ${CRM_ANIO}`;
+  ['funnel-period-sub', 'nuevas-sub', 'concretadas-sub'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.textContent.includes(nota)) el.textContent += nota;
+  });
+}
+
 /* ─── UTILS ──────────────────────────────────────────────────── */
 function getCSSVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -1940,6 +1965,13 @@ function val(id) {
 const _charts = {};
 let _currentMes = 'ytd';   // período activo de Resumen Meta (alimenta el gráfico de anuncios)
 let _periodoManual = false;   // true en cuanto el usuario toca un pill de período
+let _anioActivo = null;       // año que se está mirando en Resumen Meta / Anuncios
+let _metaJSON = null;         // último JSON sincronizado, para cambiar de año sin refetch
+
+// Año al que pertenecen los datos de CRM cargados a mano (Funnel, ONs).
+// Si se mira otro año, esas secciones no se filtran por mes: no tendría sentido
+// cruzar meses de 2027 con ONs de 2026.
+const CRM_ANIO = 2026;
 
 // Último mes con datos. Es el período que se muestra al abrir el informe:
 // cuando arranca un mes nuevo, la sincronización lo agrega y pasa a ser este.
@@ -2787,11 +2819,12 @@ function _filaAnuncio(c) {
   return [c.nombre, c.gasto, resultado, costo, c.impresiones];
 }
 
-function _rehacerPills(keys, anio) {
+function _rehacerPills(keys, anio, anios) {
   const bar = document.querySelector('.period-bar');
   if (!bar) return;
-  bar.querySelectorAll('.month-pill').forEach(b => b.remove());
+  bar.querySelectorAll('.month-pill, .year-group').forEach(b => b.remove());
   const ref = bar.querySelector('.period-meta');
+
   const pill = (k, txt) => {
     const b = document.createElement('button');
     b.className = 'month-pill' + (k === _currentMes ? ' active' : '');
@@ -2799,18 +2832,66 @@ function _rehacerPills(keys, anio) {
     b.textContent = txt;
     return b;
   };
+
+  // Selector de año, solo si hay más de uno con datos. Va antes del rótulo
+  // "Período", para que se lea "Año 2026 2027 | Período Todo 2027 Ene".
+  if (Array.isArray(anios) && anios.length > 1) {
+    const g = document.createElement('span');
+    g.className = 'year-group';
+    const lbl = document.createElement('span');
+    lbl.className = 'period-bar-label';
+    lbl.textContent = 'Año';
+    g.appendChild(lbl);
+    anios.forEach(a => {
+      const b = document.createElement('button');
+      b.className = 'month-pill year-pill' + (String(a) === String(anio) ? ' active' : '');
+      b.setAttribute('onclick', `setAnio('${a}')`);
+      b.setAttribute('aria-pressed', String(a) === String(anio));
+      b.textContent = a;
+      g.appendChild(b);
+    });
+    const sep = document.createElement('span');
+    sep.className = 'year-sep';
+    sep.setAttribute('aria-hidden', 'true');
+    g.appendChild(sep);
+    bar.insertBefore(g, bar.querySelector('.period-bar-label') || ref);
+  }
+
   const frag = document.createDocumentFragment();
   frag.appendChild(pill('ytd', `Todo ${anio}`));
   keys.forEach(k => frag.appendChild(pill(k, _cap(k))));
   bar.insertBefore(frag, ref);
 }
 
-function hydrateMeta(j) {
-  const meses = j.meses.filter(m => m && m.key);
+// Cambia el año mostrado sin volver a pedir el JSON.
+function setAnio(anio) {
+  if (!_metaJSON) return;
+  _periodoManual = false;     // al cambiar de año se va al último mes de ese año
+  hydrateMeta(_metaJSON, anio);
+}
+
+function hydrateMeta(j, anioPedido) {
+  _metaJSON = j;
+
+  // El JSON puede traer varios años en j.datos. Sin esa clave, se usa el
+  // formato viejo de un solo año (j.meses / j.ytd).
+  const porAnio = (j.datos && typeof j.datos === 'object') ? j.datos : null;
+  const anios = porAnio
+    ? Object.keys(porAnio).filter(a => (porAnio[a].meses || []).length).sort()
+    : [];
+  const anio = String(
+    anioPedido && (!anios.length || anios.includes(String(anioPedido)))
+      ? anioPedido
+      : (anios.length ? anios[anios.length - 1] : (j.anio || new Date().getFullYear()))
+  );
+  const bloque = porAnio ? porAnio[anio] : j;
+  if (!bloque || !Array.isArray(bloque.meses)) return;
+
+  const meses = bloque.meses.filter(m => m && m.key);
   if (!meses.length) return;
   const keys = meses.map(m => m.key);
   const ultimo = meses[meses.length - 1];
-  const anio = j.anio || new Date().getFullYear();
+  _anioActivo = Number(anio);
 
   /* ── 1. KPIs por mes ─────────────────────────────────────── */
   Object.keys(META_DATA).forEach(k => delete META_DATA[k]);
@@ -2835,7 +2916,7 @@ function hydrateMeta(j) {
   });
 
   /* ── 2. Acumulado del año ────────────────────────────────── */
-  const y = j.ytd || {};
+  const y = bloque.ytd || {};
   const spanTxt = `ene–${ultimo.key} ${anio}`;
 
   META_DATA.ytd = {
@@ -2876,7 +2957,7 @@ function hydrateMeta(j) {
   if (sub) sub.textContent = `Evolución mensual · ${_cap(keys[0])}–${_cap(ultimo.key)} ${anio}`;
 
   /* ── 5. Repintar ─────────────────────────────────────────── */
-  _rehacerPills(keys, anio);
+  _rehacerPills(keys, anio, anios);
   setPeriodo(_periodoManual && META_DATA[_currentMes] ? _currentMes : ultimo.key);
   renderMetaChart();
 }
