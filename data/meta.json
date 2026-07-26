@@ -1,0 +1,549 @@
+{
+  "generado": "2026-07-26T14:19:10.849Z",
+  "cuenta": "370211010327709",
+  "version": "v25.0",
+  "anio": 2026,
+  "desde": "2026-01-01",
+  "hasta": "2026-07-26",
+  "ytd": {
+    "alcance": 357617,
+    "gasto": 2591619,
+    "impresiones": 898938,
+    "conv": 656,
+    "inter": 44877,
+    "clics": 17228,
+    "campanas": [
+      {
+        "nombre": "Publicación de Instagram: @interbanking  ahora...",
+        "gasto": 700080,
+        "impresiones": 237874,
+        "resultadoTipo": "conversaciones",
+        "resultado": 405,
+        "costoResultado": 1729
+      },
+      {
+        "nombre": "Instagram Post",
+        "gasto": 462885,
+        "impresiones": 385587,
+        "resultadoTipo": "conversaciones",
+        "resultado": 7211,
+        "costoResultado": 64
+      },
+      {
+        "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
+        "gasto": 244563,
+        "impresiones": 16745,
+        "resultadoTipo": "clics",
+        "resultado": 18,
+        "costoResultado": 13587
+      },
+      {
+        "nombre": "Publicación de Instagram: El sistema que opera...",
+        "gasto": 177464,
+        "impresiones": 21275,
+        "resultadoTipo": "conversaciones",
+        "resultado": 41,
+        "costoResultado": 4328
+      },
+      {
+        "nombre": "Publicación de Instagram: Con @interbanking...",
+        "gasto": 174331,
+        "impresiones": 29393,
+        "resultadoTipo": "conversaciones",
+        "resultado": 12,
+        "costoResultado": 14528
+      },
+      {
+        "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
+        "gasto": 149830,
+        "impresiones": 8737,
+        "resultadoTipo": "leads",
+        "resultado": 12,
+        "costoResultado": 12486
+      },
+      {
+        "nombre": "Puedes vender más / costos · Julio–Agosto",
+        "gasto": 120320,
+        "impresiones": 75112,
+        "resultadoTipo": "clics",
+        "resultado": 3692,
+        "costoResultado": 33
+      },
+      {
+        "nombre": "Publicación de Instagram: Interbanking en YiQi....",
+        "gasto": 79835,
+        "impresiones": 12617,
+        "resultadoTipo": "conversaciones",
+        "resultado": 23,
+        "costoResultado": 3471
+      },
+      {
+        "nombre": "Publicación de Instagram: YiQi ERP, 15 años al...",
+        "gasto": 79588,
+        "impresiones": 9674,
+        "resultadoTipo": "conversaciones",
+        "resultado": 11,
+        "costoResultado": 7235
+      },
+      {
+        "nombre": "Publicación de Instagram: La automatización...",
+        "gasto": 73604,
+        "impresiones": 34167,
+        "resultadoTipo": "conversaciones",
+        "resultado": 637,
+        "costoResultado": 116
+      },
+      {
+        "nombre": "Publicación de Instagram: Menos tareas manuales....",
+        "gasto": 69165,
+        "impresiones": 10055,
+        "resultadoTipo": "conversaciones",
+        "resultado": 8,
+        "costoResultado": 8646
+      },
+      {
+        "nombre": "[15/5/2026] Promoción de https://facebook.com/yiqi.com.ar",
+        "gasto": 63984,
+        "impresiones": 17687,
+        "resultadoTipo": "conversaciones",
+        "resultado": 24,
+        "costoResultado": 2666
+      },
+      {
+        "nombre": "Publicación: \"Reserva tu demo. Link en bio. #erp #importaciones\"",
+        "gasto": 57861,
+        "impresiones": 11897,
+        "resultadoTipo": "conversaciones",
+        "resultado": 24,
+        "costoResultado": 2411
+      },
+      {
+        "nombre": "Publicación de Instagram: Construye con IA,...",
+        "gasto": 45974,
+        "impresiones": 5988,
+        "resultadoTipo": "conversaciones",
+        "resultado": 14,
+        "costoResultado": 3284
+      },
+      {
+        "nombre": "Mensajes IG · placas · Julio–Agosto",
+        "gasto": 21925,
+        "impresiones": 8969,
+        "resultadoTipo": "conversaciones",
+        "resultado": 20,
+        "costoResultado": 1096
+      },
+      {
+        "nombre": "Publicación de Instagram: Gestiona tu empresa con...",
+        "gasto": 20807,
+        "impresiones": 3613,
+        "resultadoTipo": "conversaciones",
+        "resultado": 10,
+        "costoResultado": 2081
+      },
+      {
+        "nombre": "Publicación de Instagram: YiQi ERP tiene algo que...",
+        "gasto": 19631,
+        "impresiones": 3739,
+        "resultadoTipo": "conversaciones",
+        "resultado": 6,
+        "costoResultado": 3272
+      },
+      {
+        "nombre": "Publicación de Instagram: Mercado Libre, Frávega,...",
+        "gasto": 17785,
+        "impresiones": 3567,
+        "resultadoTipo": "conversaciones",
+        "resultado": 5,
+        "costoResultado": 3557
+      },
+      {
+        "nombre": "Publicación de Instagram: Mitos vs realidad...",
+        "gasto": 11985,
+        "impresiones": 2242,
+        "resultadoTipo": "conversaciones",
+        "resultado": 1,
+        "costoResultado": 11985
+      }
+    ]
+  },
+  "meses": [
+    {
+      "key": "ene",
+      "mes": 1,
+      "desde": "2026-01-01",
+      "hasta": "2026-01-31",
+      "parcial": false,
+      "alcance": 3605,
+      "gasto": 61911,
+      "impresiones": 5597,
+      "conv": 5,
+      "inter": 887,
+      "clics": 48,
+      "campanas": [
+        {
+          "nombre": "Publicación de Instagram: YiQi ERP, 15 años al...",
+          "gasto": 49926,
+          "impresiones": 3355,
+          "resultadoTipo": "conversaciones",
+          "resultado": 4,
+          "costoResultado": 12482
+        },
+        {
+          "nombre": "Publicación de Instagram: Mitos vs realidad...",
+          "gasto": 11985,
+          "impresiones": 2242,
+          "resultadoTipo": "conversaciones",
+          "resultado": 1,
+          "costoResultado": 11985
+        }
+      ]
+    },
+    {
+      "key": "feb",
+      "mes": 2,
+      "desde": "2026-02-01",
+      "hasta": "2026-02-28",
+      "parcial": false,
+      "alcance": 45484,
+      "gasto": 265850,
+      "impresiones": 74488,
+      "conv": 103,
+      "inter": 5212,
+      "clics": 1408,
+      "campanas": [
+        {
+          "nombre": "Publicación: \"Reserva tu demo. Link en bio. #erp #importaciones\"",
+          "gasto": 57861,
+          "impresiones": 11897,
+          "resultadoTipo": "conversaciones",
+          "resultado": 24,
+          "costoResultado": 2411
+        },
+        {
+          "nombre": "Publicación de Instagram: Interbanking en YiQi....",
+          "gasto": 45353,
+          "impresiones": 6996,
+          "resultadoTipo": "conversaciones",
+          "resultado": 17,
+          "costoResultado": 2668
+        },
+        {
+          "nombre": "Publicación de Instagram: La automatización...",
+          "gasto": 29998,
+          "impresiones": 27264,
+          "resultadoTipo": "clics",
+          "resultado": 620,
+          "costoResultado": 48
+        },
+        {
+          "nombre": "Publicación de Instagram: YiQi ERP, 15 años al...",
+          "gasto": 29662,
+          "impresiones": 6319,
+          "resultadoTipo": "conversaciones",
+          "resultado": 7,
+          "costoResultado": 4237
+        },
+        {
+          "nombre": "Publicación de Instagram: La automatización...",
+          "gasto": 23736,
+          "impresiones": 4243,
+          "resultadoTipo": "conversaciones",
+          "resultado": 10,
+          "costoResultado": 2374
+        },
+        {
+          "nombre": "Publicación de Instagram: Gestiona tu empresa con...",
+          "gasto": 20807,
+          "impresiones": 3613,
+          "resultadoTipo": "conversaciones",
+          "resultado": 10,
+          "costoResultado": 2081
+        },
+        {
+          "nombre": "Instagram Post",
+          "gasto": 20776,
+          "impresiones": 7929,
+          "resultadoTipo": "conversaciones",
+          "resultado": 23,
+          "costoResultado": 903
+        },
+        {
+          "nombre": "Publicación de Instagram: La automatización...",
+          "gasto": 19870,
+          "impresiones": 2660,
+          "resultadoTipo": "conversaciones",
+          "resultado": 7,
+          "costoResultado": 2839
+        },
+        {
+          "nombre": "Publicación de Instagram: Mercado Libre, Frávega,...",
+          "gasto": 17785,
+          "impresiones": 3567,
+          "resultadoTipo": "conversaciones",
+          "resultado": 5,
+          "costoResultado": 3557
+        }
+      ]
+    },
+    {
+      "key": "mar",
+      "mes": 3,
+      "desde": "2026-03-01",
+      "hasta": "2026-03-31",
+      "parcial": false,
+      "alcance": 74139,
+      "gasto": 568390,
+      "impresiones": 141295,
+      "conv": 199,
+      "inter": 2610,
+      "clics": 2017,
+      "campanas": [
+        {
+          "nombre": "Publicación de Instagram: @interbanking  ahora...",
+          "gasto": 270781,
+          "impresiones": 92487,
+          "resultadoTipo": "conversaciones",
+          "resultado": 167,
+          "costoResultado": 1621
+        },
+        {
+          "nombre": "Publicación de Instagram: Con @interbanking...",
+          "gasto": 174331,
+          "impresiones": 29393,
+          "resultadoTipo": "conversaciones",
+          "resultado": 12,
+          "costoResultado": 14528
+        },
+        {
+          "nombre": "Publicación de Instagram: Menos tareas manuales....",
+          "gasto": 69165,
+          "impresiones": 10055,
+          "resultadoTipo": "conversaciones",
+          "resultado": 8,
+          "costoResultado": 8646
+        },
+        {
+          "nombre": "Publicación de Instagram: Interbanking en YiQi....",
+          "gasto": 34482,
+          "impresiones": 5621,
+          "resultadoTipo": "conversaciones",
+          "resultado": 6,
+          "costoResultado": 5747
+        },
+        {
+          "nombre": "Publicación de Instagram: YiQi ERP tiene algo que...",
+          "gasto": 19631,
+          "impresiones": 3739,
+          "resultadoTipo": "conversaciones",
+          "resultado": 6,
+          "costoResultado": 3272
+        }
+      ]
+    },
+    {
+      "key": "abr",
+      "mes": 4,
+      "desde": "2026-04-01",
+      "hasta": "2026-04-30",
+      "parcial": false,
+      "alcance": 129222,
+      "gasto": 526277,
+      "impresiones": 301183,
+      "conv": 187,
+      "inter": 5668,
+      "clics": 4856,
+      "campanas": [
+        {
+          "nombre": "Publicación de Instagram: @interbanking  ahora...",
+          "gasto": 344332,
+          "impresiones": 115325,
+          "resultadoTipo": "conversaciones",
+          "resultado": 184,
+          "costoResultado": 1871
+        },
+        {
+          "nombre": "Instagram Post",
+          "gasto": 170258,
+          "impresiones": 184961,
+          "resultadoTipo": "clics",
+          "resultado": 3192,
+          "costoResultado": 53
+        },
+        {
+          "nombre": "Publicación de Instagram: Construye con IA,...",
+          "gasto": 11687,
+          "impresiones": 897,
+          "resultadoTipo": "conversaciones",
+          "resultado": 2,
+          "costoResultado": 5844
+        }
+      ]
+    },
+    {
+      "key": "may",
+      "mes": 5,
+      "desde": "2026-05-01",
+      "hasta": "2026-05-31",
+      "parcial": false,
+      "alcance": 109675,
+      "gasto": 544821,
+      "impresiones": 253808,
+      "conv": 101,
+      "inter": 9159,
+      "clics": 4806,
+      "campanas": [
+        {
+          "nombre": "Instagram Post",
+          "gasto": 233406,
+          "impresiones": 187880,
+          "resultadoTipo": "clics",
+          "resultado": 3986,
+          "costoResultado": 59
+        },
+        {
+          "nombre": "Publicación de Instagram: @interbanking  ahora...",
+          "gasto": 84967,
+          "impresiones": 30062,
+          "resultadoTipo": "conversaciones",
+          "resultado": 54,
+          "costoResultado": 1573
+        },
+        {
+          "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
+          "gasto": 69392,
+          "impresiones": 7219,
+          "resultadoTipo": "leads",
+          "resultado": 8,
+          "costoResultado": 8674
+        },
+        {
+          "nombre": "[15/5/2026] Promoción de https://facebook.com/yiqi.com.ar",
+          "gasto": 63984,
+          "impresiones": 17687,
+          "resultadoTipo": "conversaciones",
+          "resultado": 24,
+          "costoResultado": 2666
+        },
+        {
+          "nombre": "Instagram Post",
+          "gasto": 38445,
+          "impresiones": 4817,
+          "resultadoTipo": "conversaciones",
+          "resultado": 10,
+          "costoResultado": 3845
+        },
+        {
+          "nombre": "Publicación de Instagram: Construye con IA,...",
+          "gasto": 34287,
+          "impresiones": 5091,
+          "resultadoTipo": "conversaciones",
+          "resultado": 12,
+          "costoResultado": 2857
+        },
+        {
+          "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
+          "gasto": 20340,
+          "impresiones": 1052,
+          "resultadoTipo": "leads",
+          "resultado": 5,
+          "costoResultado": 4068
+        }
+      ]
+    },
+    {
+      "key": "jun",
+      "mes": 6,
+      "desde": "2026-06-01",
+      "hasta": "2026-06-30",
+      "parcial": false,
+      "alcance": 19327,
+      "gasto": 475715,
+      "impresiones": 38222,
+      "conv": 41,
+      "inter": 9267,
+      "clics": 247,
+      "campanas": [
+        {
+          "nombre": "Publicación de Instagram: El sistema que opera...",
+          "gasto": 177464,
+          "impresiones": 21275,
+          "resultadoTipo": "conversaciones",
+          "resultado": 41,
+          "costoResultado": 4328
+        },
+        {
+          "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
+          "gasto": 171837,
+          "impresiones": 9385,
+          "resultadoTipo": "leads",
+          "resultado": 9,
+          "costoResultado": 19093
+        },
+        {
+          "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
+          "gasto": 126414,
+          "impresiones": 7562,
+          "resultadoTipo": "leads",
+          "resultado": 6,
+          "costoResultado": 21069
+        }
+      ]
+    },
+    {
+      "key": "jul",
+      "mes": 7,
+      "desde": "2026-07-01",
+      "hasta": "2026-07-26",
+      "parcial": true,
+      "alcance": 49017,
+      "gasto": 148655,
+      "impresiones": 84345,
+      "conv": 20,
+      "inter": 12074,
+      "clics": 3846,
+      "campanas": [
+        {
+          "nombre": "Puedes vender más / costos · Julio–Agosto",
+          "gasto": 120320,
+          "impresiones": 75112,
+          "resultadoTipo": "clics",
+          "resultado": 3692,
+          "costoResultado": 33
+        },
+        {
+          "nombre": "Mensajes IG · placas · Julio–Agosto",
+          "gasto": 21925,
+          "impresiones": 8969,
+          "resultadoTipo": "conversaciones",
+          "resultado": 20,
+          "costoResultado": 1096
+        },
+        {
+          "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
+          "gasto": 3334,
+          "impresiones": 141,
+          "resultadoTipo": "clics",
+          "resultado": 1,
+          "costoResultado": 3334
+        },
+        {
+          "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
+          "gasto": 3076,
+          "impresiones": 123,
+          "resultadoTipo": "leads",
+          "resultado": 1,
+          "costoResultado": 3076
+        },
+        {
+          "nombre": "Publicación de Instagram: El sistema que opera...",
+          "gasto": 0,
+          "impresiones": 0,
+          "resultadoTipo": null,
+          "resultado": 0,
+          "costoResultado": null
+        }
+      ]
+    }
+  ]
+}
