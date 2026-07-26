@@ -904,14 +904,14 @@
     <!-- ── SELECTOR DE PERÍODO · sticky global ──────────────────── -->
     <div class="period-bar" role="group" aria-label="Período del informe">
       <span class="period-bar-label">Período</span>
-      <button class="month-pill active" onclick="setPeriodo('ytd')">Todo 2026</button>
-      <button class="month-pill" onclick="setPeriodo('ene')">Ene</button>
-      <button class="month-pill" onclick="setPeriodo('feb')">Feb</button>
-      <button class="month-pill" onclick="setPeriodo('mar')">Mar</button>
-      <button class="month-pill" onclick="setPeriodo('abr')">Abr</button>
-      <button class="month-pill" onclick="setPeriodo('may')">May</button>
-      <button class="month-pill" onclick="setPeriodo('jun')">Jun</button>
-      <button class="month-pill" onclick="setPeriodo('jul')">Jul</button>
+      <button class="month-pill active" onclick="setPeriodo('ytd', true)\">Todo 2026</button>
+      <button class="month-pill" onclick="setPeriodo('ene', true)\">Ene</button>
+      <button class="month-pill" onclick="setPeriodo('feb', true)\">Feb</button>
+      <button class="month-pill" onclick="setPeriodo('mar', true)\">Mar</button>
+      <button class="month-pill" onclick="setPeriodo('abr', true)\">Abr</button>
+      <button class="month-pill" onclick="setPeriodo('may', true)\">May</button>
+      <button class="month-pill" onclick="setPeriodo('jun', true)\">Jun</button>
+      <button class="month-pill" onclick="setPeriodo('jul', true)\">Jul</button>
 
       <div class="period-meta">
         <span class="period-brand">
@@ -1802,7 +1802,11 @@ const KPI_COLORS = {
 };
 
 // Selector de período global (controla Resumen Meta, Anuncios, Funnel CRM y tablas de ONs)
-function setPeriodo(key) {
+function setPeriodo(key, manual) {
+  // manual=true marca que el período lo eligió el usuario, para que la
+  // sincronización posterior no le mueva la vista de abajo.
+  if (manual) _periodoManual = true;
+
   // Preservar la posición de scroll: los re-render de charts/tablas cambian el alto
   // de la página y el navegador reajustaría el scroll hacia arriba.
   const y = window.scrollY;
@@ -1935,6 +1939,14 @@ function val(id) {
 /* ─── CHARTS STATE ──────────────────────────────────────────── */
 const _charts = {};
 let _currentMes = 'ytd';   // período activo de Resumen Meta (alimenta el gráfico de anuncios)
+let _periodoManual = false;   // true en cuanto el usuario toca un pill de período
+
+// Último mes con datos. Es el período que se muestra al abrir el informe:
+// cuando arranca un mes nuevo, la sincronización lo agrega y pasa a ser este.
+function _ultimoMes() {
+  const keys = Object.keys(META_DATA).filter(k => k !== 'ytd');
+  return keys.length ? keys[keys.length - 1] : 'ytd';
+}
 
 function sortDonutDesc(labels, data, colors) {
   const idx = data.map((_, i) => i).sort((a, b) => data[b] - data[a]);
@@ -2783,7 +2795,7 @@ function _rehacerPills(keys, anio) {
   const pill = (k, txt) => {
     const b = document.createElement('button');
     b.className = 'month-pill' + (k === _currentMes ? ' active' : '');
-    b.setAttribute('onclick', `setPeriodo('${k}')`);
+    b.setAttribute('onclick', `setPeriodo('${k}', true)`);
     b.textContent = txt;
     return b;
   };
@@ -2865,7 +2877,7 @@ function hydrateMeta(j) {
 
   /* ── 5. Repintar ─────────────────────────────────────────── */
   _rehacerPills(keys, anio);
-  setPeriodo(META_DATA[_currentMes] ? _currentMes : 'ytd');
+  setPeriodo(_periodoManual && META_DATA[_currentMes] ? _currentMes : ultimo.key);
   renderMetaChart();
 }
 
@@ -2900,7 +2912,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyCollapse(localStorage.getItem('yiqi-nav-collapsed') === '1');
 
-  setPeriodo('ytd');
+  setPeriodo(_ultimoMes());
   setupSearch('search-anuncios',     'tabla-anuncios',     'empty-anuncios');
   setupSearch('search-concretadas', 'tabla-concretadas', 'empty-concretadas');
   setupSearch('search-nuevas',      'tabla-nuevas',      'empty-nuevas');
