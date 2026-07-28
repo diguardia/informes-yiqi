@@ -268,7 +268,7 @@
     }
     .nav-link {
       display: flex; align-items: center; gap: 8px;
-      padding: 8px 10px; border-radius: var(--radius-sm);
+      padding: 8px 10px; margin-bottom: 6px; border-radius: var(--radius-sm);
       font: 500 13px var(--sans); color: var(--muted);
       text-decoration: none; transition: background var(--tr), color var(--tr);
     }
@@ -282,8 +282,10 @@
       margin-top: auto; padding-top: 16px;
       border-top: 1px solid var(--line);
     }
-    /* DS 1.2.7 — theme switch en el menú: oculto en desktop (vive en el header) */
-    .sidebar-theme { display: none; }
+    /* DS 1.2.7.3 — theme switch al pie del sidebar (modelo .sb-theme-switch, como Analytics Pro) */
+    .sidebar-theme { display: block; }
+    .sidebar-theme .theme-toggle { width: 100%; background: transparent; }
+    .sidebar-theme .theme-opt { flex: 1; }
     .sidebar-theme-label {
       display: block; margin-bottom: 8px;
       font: 600 9px var(--mono); letter-spacing: .12em; text-transform: uppercase;
@@ -293,7 +295,7 @@
     /* ── SIDEBAR COLAPSABLE ──────────────────────────────────── */
     .sidebar-collapse {
       display: flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px; margin: auto 0 0 auto;
+      width: 30px; height: 30px; margin: 12px 0 0 auto;
       position: sticky; bottom: 0;
       background: transparent; border: 1px solid var(--line); cursor: pointer;
       color: var(--muted); border-radius: var(--radius-sm);
@@ -305,10 +307,10 @@
 
     .ds-layout.nav-collapsed { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
     .nav-collapsed .sidebar { padding: 16px 10px; }
-    .nav-collapsed .sidebar-collapse { margin: auto auto 0; }
+    .nav-collapsed .sidebar-collapse { margin: 12px auto 0; }
     .nav-collapsed .sidebar-collapse svg { transform: rotate(180deg); }
     .nav-collapsed .nav-section-label { visibility: hidden; height: 6px; padding: 0; }
-    .nav-collapsed .nav-link { justify-content: center; padding: 8px; gap: 0; }
+    .nav-collapsed .nav-link { justify-content: center; padding: 0; gap: 0; width: 40px; height: 40px; margin: 4px auto; }
     .nav-collapsed .nav-link span:not(.nav-icon) {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -333,6 +335,35 @@
     .nav-collapsed .nav-link:focus-visible::after {
       opacity: 1; transform: translateY(-50%) scale(1);
     }
+
+    /* ── HOVER-PEEK: colapsado, al pasar el mouse se despliega como overlay ── */
+    .ds-layout.nav-collapsed .sidebar { transition: width var(--tr), padding var(--tr); }
+    .ds-layout.nav-collapsed.nav-peek .sidebar {
+      width: var(--sidebar-w);
+      padding: 16px 12px;
+      z-index: 97;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    }
+    html[data-theme="light"] .ds-layout.nav-collapsed.nav-peek .sidebar {
+      box-shadow: 0 24px 60px rgba(16,36,54,.18);
+    }
+    .nav-collapsed.nav-peek .nav-section-label { visibility: visible; height: auto; padding: 12px 8px 6px; }
+    .nav-collapsed.nav-peek .nav-link { justify-content: flex-start; padding: 8px 10px; gap: 8px; }
+    .nav-collapsed.nav-peek .nav-link span:not(.nav-icon) {
+      position: static; width: auto; height: auto; padding: 0; margin: 0;
+      overflow: visible; clip: auto; white-space: nowrap; border: 0;
+    }
+    .nav-collapsed.nav-peek .nav-link::after { display: none; }  /* sin tooltip cuando ya está desplegado */
+    .nav-collapsed.nav-peek .sidebar-collapse { margin: 12px 0 0 auto; }
+    .nav-collapsed.nav-peek .sidebar-collapse svg { transform: rotate(0deg); }  /* desplegado: chevron apunta a colapsar */
+    .nav-collapsed.nav-peek .nav-link { width: auto; height: auto; margin: 0 0 6px; }
+    /* switch de tema: apilado vertical cuando está colapsado, ancho completo en el peek */
+    .nav-collapsed .sidebar-theme-label { display: none; }
+    .nav-collapsed .sidebar-theme .theme-toggle { flex-direction: column; background: transparent; padding: 0; gap: 4px; }
+    .nav-collapsed .sidebar-theme .theme-opt { flex: none; width: 40px; height: 40px; margin: 0 auto; }
+    .nav-collapsed.nav-peek .sidebar-theme-label { display: block; }
+    .nav-collapsed.nav-peek .sidebar-theme .theme-toggle { flex-direction: row; background: transparent; padding: 3px; gap: 2px; }
+    .nav-collapsed.nav-peek .sidebar-theme .theme-opt { flex: 1; width: 28px; height: 28px; }
 
     /* ── CONTENT ─────────────────────────────────────────────── */
     .content { min-width: 0; padding: 28px 32px 64px; }
@@ -692,9 +723,11 @@
       .content { padding: 20px 16px 64px; }
       .period-bar { margin: 16px -16px; padding: 8px 16px; }
       .topbar-period { display: none; }
-      /* DS 1.2.7 — en mobile el theme switch sale del header y vive en el menú */
-      .topbar .theme-toggle { display: none; }
+      /* DS 1.2.7 — en mobile el theme switch vive al pie del menú (ancho completo, sin apilar) */
       .sidebar-theme { display: block; }
+      .nav-collapsed .sidebar-theme-label { display: block; }
+      .nav-collapsed .sidebar-theme .theme-toggle { flex-direction: row; background: transparent; padding: 3px; gap: 2px; }
+      .nav-collapsed .sidebar-theme .theme-opt { flex: 1; width: 28px; height: 28px; margin: 0; }
     }
     @media (max-width: 760px) {
       .two-col     { grid-template-columns: 1fr; }
@@ -725,7 +758,7 @@
   <div class="topbar-brand">
     <!-- Logo YiQi — enlaza a yiqi.com.ar -->
     <a href="https://yiqi.com.ar" target="_blank" rel="noopener" class="topbar-logo-link" aria-label="Ir a yiqi.com.ar">
-    <svg viewBox="15 14 75 36" width="60" height="39" xmlns="http://www.w3.org/2000/svg"
+    <svg viewBox="0 0 100 65" width="60" height="39" xmlns="http://www.w3.org/2000/svg"
          aria-hidden="true" style="flex-shrink:0;display:block"
          preserveAspectRatio="xMidYMid meet">
       <!-- Y -->
@@ -740,31 +773,6 @@
     </a>
   </div>
   <div class="topbar-actions">
-    <div class="theme-toggle" role="group" aria-label="Tema">
-      <!-- Luna: oscuro -->
-      <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-      <!-- Monitor: sistema -->
-      <button class="theme-opt" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-        </svg>
-      </button>
-      <!-- Sol: claro -->
-      <button class="theme-opt" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      </button>
-    </div>
-
     <a class="topbar-login" href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" aria-label="YiQi Design System">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
@@ -848,15 +856,8 @@
       <span>ONs Concretadas</span>
     </a>
 
-    <button class="sidebar-collapse" id="collapse-btn" onclick="toggleCollapse()" aria-label="Colapsar menú" aria-expanded="true" title="Colapsar menú">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </button>
-
-    <!-- DS 1.2.7 — theme switch del menú (visible solo en mobile) -->
+    <!-- DS 1.2.7.3 — theme switch al pie del sidebar (modelo .sb-theme-switch) -->
     <div class="sidebar-footer sidebar-theme">
-      <span class="sidebar-theme-label">Tema</span>
       <div class="theme-toggle" role="group" aria-label="Tema">
         <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -879,6 +880,12 @@
         </button>
       </div>
     </div>
+
+    <button class="sidebar-collapse" id="collapse-btn" onclick="toggleCollapse()" aria-label="Colapsar menú" aria-expanded="true" title="Colapsar menú">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
 
   </nav>
 
@@ -2433,6 +2440,7 @@ function applyCollapse(collapsed) {
   const layout = document.querySelector('.ds-layout');
   const btn = document.getElementById('collapse-btn');
   layout?.classList.toggle('nav-collapsed', collapsed);
+  if (!collapsed) layout?.classList.remove('nav-peek');
   if (btn) {
     btn.setAttribute('aria-expanded', String(!collapsed));
     btn.setAttribute('aria-label', collapsed ? 'Expandir menú' : 'Colapsar menú');
@@ -2444,6 +2452,18 @@ function toggleCollapse() {
   applyCollapse(collapsed);
   try { localStorage.setItem('yiqi-nav-collapsed', collapsed ? '1' : '0'); } catch (e) {}
 }
+
+/* ─── HOVER-PEEK: despliega el sidebar colapsado al pasar el mouse (solo desktop) ─── */
+(function () {
+  const sidebar = document.getElementById('sidebar');
+  const layout = document.querySelector('.ds-layout');
+  if (!sidebar || !layout) return;
+  const isDesktop = () => window.matchMedia('(min-width: 981px)').matches;
+  sidebar.addEventListener('mouseenter', () => {
+    if (isDesktop() && layout.classList.contains('nav-collapsed')) layout.classList.add('nav-peek');
+  });
+  sidebar.addEventListener('mouseleave', () => layout.classList.remove('nav-peek'));
+})();
 
 /* ─── SMOOTH SCROLL ─────────────────────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
