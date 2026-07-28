@@ -293,10 +293,13 @@
     }
 
     /* ── SIDEBAR COLAPSABLE ──────────────────────────────────── */
+    .sidebar-ctrls {
+      position: sticky; bottom: 0; margin-top: 12px; padding-top: 8px;
+      display: flex; justify-content: flex-end; gap: 6px; flex-shrink: 0;
+    }
     .sidebar-collapse {
       display: flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px; margin: 12px 0 0 auto;
-      position: sticky; bottom: 0;
+      width: 30px; height: 30px;
       background: transparent; border: 1px solid var(--line); cursor: pointer;
       color: var(--muted); border-radius: var(--radius-sm);
       transition: background var(--tr), color var(--tr), transform var(--tr);
@@ -304,11 +307,18 @@
     }
     .sidebar-collapse:hover { background: var(--bg-soft); color: var(--text); }
     .sidebar-collapse svg { transition: transform var(--tr); }
+    /* Candado: 🔓 sin lock, 🔒 (cyan) lockeado */
+    .sb-lock .ico-locked { display: none; }
+    .sb-lock .ico-unlocked { display: block; }
+    .nav-locked .sb-lock .ico-unlocked { display: none; }
+    .nav-locked .sb-lock .ico-locked { display: block; }
+    .nav-locked .sb-lock { color: var(--cyan); border-color: var(--cyan); }
+    /* Flecha: chevron ">" en rail, "<" expandido */
+    .nav-collapsed .sb-arrow svg { transform: rotate(180deg); }
 
     .ds-layout.nav-collapsed { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
     .nav-collapsed .sidebar { padding: 16px 10px; }
-    .nav-collapsed .sidebar-collapse { margin: 12px auto 0; }
-    .nav-collapsed .sidebar-collapse svg { transform: rotate(180deg); }
+    .nav-collapsed .sidebar-ctrls { flex-direction: column; align-items: center; gap: 8px; }
     .nav-collapsed .nav-section-label { visibility: hidden; height: 6px; padding: 0; }
     .nav-collapsed .nav-link { justify-content: center; padding: 0; gap: 0; width: 40px; height: 40px; margin: 4px auto; }
     .nav-collapsed .nav-link span:not(.nav-icon) {
@@ -317,7 +327,6 @@
     }
     /* Tooltip con la etiqueta al pasar el mouse (solo colapsado) */
     .nav-collapsed .sidebar { overflow: visible; z-index: 96; }
-    .nav-collapsed .sidebar-collapse { position: static; }
     .nav-collapsed .nav-link { position: relative; }
     .nav-collapsed .nav-link::after {
       content: attr(title);
@@ -354,8 +363,7 @@
       overflow: visible; clip: auto; white-space: nowrap; border: 0;
     }
     .nav-collapsed.nav-peek .nav-link::after { display: none; }  /* sin tooltip cuando ya está desplegado */
-    .nav-collapsed.nav-peek .sidebar-collapse { margin: 12px 0 0 auto; }
-    .nav-collapsed.nav-peek .sidebar-collapse svg { transform: rotate(0deg); }  /* desplegado: chevron apunta a colapsar */
+    .nav-collapsed.nav-peek .sidebar-ctrls { flex-direction: row; align-items: center; }
     .nav-collapsed.nav-peek .nav-link { width: auto; height: auto; margin: 0 0 6px; }
     /* switch de tema: apilado vertical cuando está colapsado, ancho completo en el peek */
     .nav-collapsed .sidebar-theme-label { display: none; }
@@ -695,7 +703,7 @@
     /* ── MOBILE ──────────────────────────────────────────────── */
     @media (max-width: 980px) {
       .hamburger { display: flex; }
-      .sidebar-collapse { display: none; }
+      .sidebar-ctrls { display: none; }
       .ds-layout,
       .ds-layout.nav-collapsed { grid-template-columns: 1fr; }
       .nav-collapsed .sidebar { padding: 16px 12px; }
@@ -881,11 +889,15 @@
       </div>
     </div>
 
-    <button class="sidebar-collapse" id="collapse-btn" onclick="toggleCollapse()" aria-label="Colapsar menú" aria-expanded="true" title="Colapsar menú">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </button>
+    <div class="sidebar-ctrls">
+      <button class="sidebar-collapse sb-arrow" id="collapse-btn" onclick="toggleCollapse()" aria-label="Colapsar menú" title="Colapsar menú">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="sidebar-collapse sb-lock" id="lock-btn" onclick="toggleLock()" aria-pressed="false" aria-label="Lockear estado" title="Lockear estado">
+        <svg class="ico-unlocked" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+        <svg class="ico-locked" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </button>
+    </div>
 
   </nav>
 
@@ -2442,7 +2454,6 @@ function applyCollapse(collapsed) {
   layout?.classList.toggle('nav-collapsed', collapsed);
   if (!collapsed) layout?.classList.remove('nav-peek');
   if (btn) {
-    btn.setAttribute('aria-expanded', String(!collapsed));
     btn.setAttribute('aria-label', collapsed ? 'Expandir menú' : 'Colapsar menú');
     btn.setAttribute('title', collapsed ? 'Expandir menú' : 'Colapsar menú');
   }
@@ -2452,17 +2463,35 @@ function toggleCollapse() {
   applyCollapse(collapsed);
   try { localStorage.setItem('yiqi-nav-collapsed', collapsed ? '1' : '0'); } catch (e) {}
 }
+function toggleLock() {
+  const layout = document.querySelector('.ds-layout'); if (!layout) return;
+  const locked = layout.classList.toggle('nav-locked');
+  if (locked) layout.classList.remove('nav-peek');
+  const b = document.getElementById('lock-btn');
+  if (b) { b.setAttribute('aria-pressed', String(locked)); b.title = locked ? 'Desbloquear estado' : 'Lockear estado'; b.setAttribute('aria-label', b.title); }
+  try { localStorage.setItem('yiqi-nav-locked', locked ? '1' : '0'); } catch (e) {}
+}
 
-/* ─── HOVER-PEEK: despliega el sidebar colapsado al pasar el mouse (solo desktop) ─── */
+/* ─── HOVER-PEEK: se dispara desde el nav; footer (tema + controles) = zona sin peek ─── */
 (function () {
   const sidebar = document.getElementById('sidebar');
   const layout = document.querySelector('.ds-layout');
   if (!sidebar || !layout) return;
   const isDesktop = () => window.matchMedia('(min-width: 981px)').matches;
-  sidebar.addEventListener('mouseenter', () => {
-    if (isDesktop() && layout.classList.contains('nav-collapsed')) layout.classList.add('nav-peek');
+  const canPeek = () => isDesktop() && layout.classList.contains('nav-collapsed') && !layout.classList.contains('nav-locked');
+  sidebar.addEventListener('mouseover', (e) => {
+    // el peek se activa SOLO sobre los ítems del nav; tema, controles y espacios quedan muertos
+    if (canPeek() && e.target.closest('.nav-link')) layout.classList.add('nav-peek');
   });
   sidebar.addEventListener('mouseleave', () => layout.classList.remove('nav-peek'));
+  // restaurar lock persistido
+  try {
+    if (localStorage.getItem('yiqi-nav-locked') === '1') {
+      layout.classList.add('nav-locked');
+      const b = document.getElementById('lock-btn');
+      if (b) { b.setAttribute('aria-pressed', 'true'); b.title = 'Desbloquear estado'; b.setAttribute('aria-label', 'Desbloquear estado'); }
+    }
+  } catch (e) {}
 })();
 
 /* ─── SMOOTH SCROLL ─────────────────────────────────────────── */
@@ -3011,7 +3040,7 @@ document.addEventListener('DOMContentLoaded', () => {
   applyTheme(stored);
   updateSwitch(stored);
 
-  applyCollapse(localStorage.getItem('yiqi-nav-collapsed') === '1');
+  applyCollapse(localStorage.getItem('yiqi-nav-collapsed') !== '0');  // colapsado por default
 
   setPeriodo(_ultimoMes());
   setupSearch('search-anuncios',     'tabla-anuncios',     'empty-anuncios');
