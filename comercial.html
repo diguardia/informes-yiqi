@@ -889,13 +889,13 @@
         </button>
         <div class="ds-picker-menu" role="listbox" aria-label="Período" hidden>
         <button type="button" class="ds-picker-option is-active" role="option" data-value="ytd" aria-selected="true">Todo 2026</button>
-        <button type="button" class="ds-picker-option" role="option" data-value="ene" aria-selected="false">Enero 2026</button>
-        <button type="button" class="ds-picker-option" role="option" data-value="feb" aria-selected="false">Febrero 2026</button>
-        <button type="button" class="ds-picker-option" role="option" data-value="mar" aria-selected="false">Marzo 2026</button>
-        <button type="button" class="ds-picker-option" role="option" data-value="abr" aria-selected="false">Abril 2026</button>
-        <button type="button" class="ds-picker-option" role="option" data-value="may" aria-selected="false">Mayo 2026</button>
-        <button type="button" class="ds-picker-option" role="option" data-value="jun" aria-selected="false">Junio 2026</button>
         <button type="button" class="ds-picker-option" role="option" data-value="jul" aria-selected="false">Julio 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="jun" aria-selected="false">Junio 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="may" aria-selected="false">Mayo 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="abr" aria-selected="false">Abril 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="mar" aria-selected="false">Marzo 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="feb" aria-selected="false">Febrero 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="ene" aria-selected="false">Enero 2026</button>
         </div>
       </div>
 
@@ -2870,7 +2870,9 @@ function _rehacerPills(keys, anio, anios) {
     return o;
   };
   menu.appendChild(opt('ytd', `Todo ${anio}`));
-  keys.forEach(k => menu.appendChild(opt(k, `${_MES_LARGO[k] || _cap(k)} ${anio}`)));
+  /* Descendente: el mes mas nuevo arriba, que es el que se mira primero.
+     'Todo' queda en la cabecera porque es el agregado, no un mes mas. */
+  [...keys].reverse().forEach(k => menu.appendChild(opt(k, `${_MES_LARGO[k] || _cap(k)} ${anio}`)));
   if (window.YiQi && YiQi.picker) YiQi.picker.set(pick, _currentMes);
 }
 
