@@ -125,14 +125,18 @@
     /* DS 1.2.7 — selector de período sticky global */
     .period-bar {
       position: sticky; top: var(--topbar-h); z-index: 95;
-      display: flex; align-items: center; gap: 6px; flex-wrap: nowrap;
-      overflow-x: auto; scrollbar-width: none;
+      display: flex; align-items: center; gap: 6px;
+      /* Sin overflow: si un eje no es visible, el otro tampoco puede serlo
+         (CSS Overflow 3, §3), asi que la barra recortaba el menu del
+         .ds-picker a su propio alto. El overflow-x:auto estaba para que
+         las nueve pills de mes no la rompieran; con tres controles la
+         barra envuelve, que ademas en mobile se lee mejor que scrollear. */
+      flex-wrap: wrap; row-gap: 8px;
       margin: -28px -32px 20px; padding: 10px 32px;
       background: rgba(12,12,14,.82);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line);
     }
-    .period-bar::-webkit-scrollbar { display: none; }
     .period-bar > * { flex-shrink: 0; }
     html[data-theme="light"] .period-bar { background: rgba(238,236,231,.88); }
     .period-bar-label {
