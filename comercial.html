@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Design System — fuente única, servido desde el CDN (yiqi-imagen). Provee todos los tokens (:root + tema claro). -->
   <link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
@@ -588,6 +589,10 @@
       white-space: nowrap;
     }
     .month-pill:hover { color: var(--text); background: var(--bg-elev); }
+
+    /* Unico ajuste local: un ancho minimo para que la etiqueta no salte
+       entre "Todo 2026" y "Septiembre 2026". Todo lo demas es del DS. */
+    .period-picker { min-width: 150px; }
     .month-pill.active {
       background: var(--cyan-soft-2);
       color: var(--cyan);
@@ -847,14 +852,24 @@
     <!-- ── SELECTOR DE PERÍODO · sticky global ──────────────────── -->
     <div class="period-bar" role="group" aria-label="Período del informe">
       <span class="period-bar-label">Período</span>
-      <button class="month-pill active" onclick="setPeriodo('ytd', true)\">Todo 2026</button>
-      <button class="month-pill" onclick="setPeriodo('ene', true)\">Ene</button>
-      <button class="month-pill" onclick="setPeriodo('feb', true)\">Feb</button>
-      <button class="month-pill" onclick="setPeriodo('mar', true)\">Mar</button>
-      <button class="month-pill" onclick="setPeriodo('abr', true)\">Abr</button>
-      <button class="month-pill" onclick="setPeriodo('may', true)\">May</button>
-      <button class="month-pill" onclick="setPeriodo('jun', true)\">Jun</button>
-      <button class="month-pill" onclick="setPeriodo('jul', true)\">Jul</button>
+      <!-- Los meses estaticos son el fallback: si el JSON no carga (file://,
+           red caida), el informe sigue teniendo su selector. _rehacerPills
+           los reemplaza por los que el JSON traiga. -->
+      <div class="ds-picker period-picker" id="period-picker" data-ds-picker>
+        <button type="button" class="ds-picker-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Período del informe">
+          <span class="ds-picker-value">Todo 2026</span><svg class="ds-picker-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="ds-picker-menu" role="listbox" aria-label="Período" hidden>
+        <button type="button" class="ds-picker-option is-active" role="option" data-value="ytd" aria-selected="true">Todo 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="ene" aria-selected="false">Enero 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="feb" aria-selected="false">Febrero 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="mar" aria-selected="false">Marzo 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="abr" aria-selected="false">Abril 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="may" aria-selected="false">Mayo 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="jun" aria-selected="false">Junio 2026</button>
+        <button type="button" class="ds-picker-option" role="option" data-value="jul" aria-selected="false">Julio 2026</button>
+        </div>
+      </div>
 
       <div class="period-meta">
         <span class="period-brand">
@@ -1755,9 +1770,6 @@ function setPeriodo(key, manual) {
   const y = window.scrollY;
   const keepScroll = () => window.scrollTo(0, y);
 
-  document.querySelectorAll('.period-bar .month-pill').forEach(p => {
-    p.classList.toggle('active', p.getAttribute('onclick').includes(`'${key}'`));
-  });
   setMes(key);
   if (_anioActivo === null || _anioActivo === CRM_ANIO) {
     setFunnelPeriod(key);
@@ -1813,10 +1825,9 @@ function setMes(key) {
   const d = META_DATA[key];
   if (!d) return;
 
-  // Resaltar el pill activo en la barra de período sticky
-  document.querySelectorAll('.period-bar .month-pill').forEach(p => {
-    p.classList.toggle('active', p.getAttribute('onclick').includes(`'${key}'`));
-  });
+  // Sincronizar el selector de período sticky
+  const _pp = document.getElementById('period-picker');
+  if (_pp && window.YiQi && YiQi.picker) YiQi.picker.set(_pp, key);
 
   // Actualizar subtítulo
   document.getElementById('resumen-period').textContent = d.period;
@@ -2787,16 +2798,8 @@ function _filaAnuncio(c) {
 function _rehacerPills(keys, anio, anios) {
   const bar = document.querySelector('.period-bar');
   if (!bar) return;
-  bar.querySelectorAll('.month-pill, .year-group').forEach(b => b.remove());
+  bar.querySelectorAll('.year-group').forEach(b => b.remove());
   const ref = bar.querySelector('.period-meta');
-
-  const pill = (k, txt) => {
-    const b = document.createElement('button');
-    b.className = 'month-pill' + (k === _currentMes ? ' active' : '');
-    b.setAttribute('onclick', `setPeriodo('${k}', true)`);
-    b.textContent = txt;
-    return b;
-  };
 
   // Selector de año, solo si hay más de uno con datos. Va antes del rótulo
   // "Período", para que se lea "Año 2026 2027 | Período Todo 2027 Ene".
@@ -2822,10 +2825,25 @@ function _rehacerPills(keys, anio, anios) {
     bar.insertBefore(g, bar.querySelector('.period-bar-label') || ref);
   }
 
-  const frag = document.createDocumentFragment();
-  frag.appendChild(pill('ytd', `Todo ${anio}`));
-  keys.forEach(k => frag.appendChild(pill(k, _cap(k))));
-  bar.insertBefore(frag, ref);
+  /* Los meses van en un selector, no en pills: con dos años y doce meses la
+     barra pasaba de veinte controles y desbordaba el ancho. Un solo control
+     dice cual esta activo sin que haya que leer cual esta resaltado. */
+  const pick = document.getElementById('period-picker');
+  const menu = pick && pick.querySelector('.ds-picker-menu');
+  if (!menu) return;
+  menu.innerHTML = '';
+  const opt = (k, txt) => {
+    const o = document.createElement('button');
+    o.type = 'button';
+    o.className = 'ds-picker-option';
+    o.setAttribute('role', 'option');
+    o.dataset.value = k;
+    o.textContent = txt;
+    return o;
+  };
+  menu.appendChild(opt('ytd', `Todo ${anio}`));
+  keys.forEach(k => menu.appendChild(opt(k, `${_MES_LARGO[k] || _cap(k)} ${anio}`)));
+  if (window.YiQi && YiQi.picker) YiQi.picker.set(pick, _currentMes);
 }
 
 // Cambia el año mostrado sin volver a pedir el JSON.
@@ -2923,7 +2941,9 @@ function hydrateMeta(j, anioPedido) {
 
   /* ── 5. Repintar ─────────────────────────────────────────── */
   _rehacerPills(keys, anio, anios);
-  setPeriodo(_periodoManual && META_DATA[_currentMes] ? _currentMes : ultimo.key);
+  /* Por defecto abre el período anual, no el último mes: el anual es la
+     lectura de cabecera del informe; el mes es el detalle. */
+  setPeriodo(_periodoManual && META_DATA[_currentMes] ? _currentMes : 'ytd');
   renderMetaChart();
 }
 
@@ -2960,7 +2980,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyCollapse(localStorage.getItem('yiqi-nav-collapsed') !== '0');  // colapsado por default
 
-  setPeriodo(_ultimoMes());
+  setPeriodo('ytd');
+  const _pk = document.getElementById('period-picker');
+  if (_pk) _pk.addEventListener('ds-picker:change', e => setPeriodo(e.detail.value, true));
   setupSearch('search-anuncios',     'tabla-anuncios',     'empty-anuncios');
   setupSearch('search-concretadas', 'tabla-concretadas', 'empty-concretadas');
   setupSearch('search-nuevas',      'tabla-nuevas',      'empty-nuevas');
