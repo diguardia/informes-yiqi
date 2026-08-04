@@ -2723,6 +2723,15 @@ function initScrollSpy() {
           active.classList.add('active');
           active.scrollIntoView({ block: 'nearest' });
         }
+        /* La URL sigue a la seccion visible, asi la barra del navegador
+           siempre tiene el link listo para copiar y compartir. Va por
+           replaceState y no por location.hash: hash mueve el scroll y
+           llena el historial —el boton de atras terminaria recorriendo
+           las siete secciones una por una. */
+        const nuevoHash = '#' + entry.target.id;
+        if (location.hash !== nuevoHash) {
+          history.replaceState(null, '', nuevoHash);
+        }
       }
     });
   }, { rootMargin: `-${offset} 0px -60% 0px` });
