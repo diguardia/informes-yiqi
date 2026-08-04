@@ -252,12 +252,9 @@
     }
     .sidebar-collapse:hover { background: var(--bg-soft); color: var(--text); }
     .sidebar-collapse svg { transition: transform var(--tr); }
-    /* Candado: 🔓 sin lock, 🔒 (cyan) lockeado */
-    .sb-lock .ico-locked { display: none; }
-    .sb-lock .ico-unlocked { display: block; }
-    .nav-locked .sb-lock .ico-unlocked { display: none; }
-    .nav-locked .sb-lock .ico-locked { display: block; }
-    .nav-locked .sb-lock { color: var(--cyan); border-color: var(--cyan); }
+    /* Candado: el canonico ya lo resuelve — cambio de icono abierto/cerrado
+       y estado fijado por fondo tonal. Esta copia local repetia las cuatro
+       reglas y ademas pintaba el fijado en cyan, pisando al sistema. */
     /* Flecha: chevron ">" en rail, "<" expandido */
     .nav-collapsed .sb-arrow svg { transform: rotate(180deg); }
 
