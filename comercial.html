@@ -496,7 +496,10 @@
        en currentColor y la A en el cyan del sistema, para que funcione en los
        dos temas; el archivo original los trae fijos en #F3F5F7. Se dimensiona
        por alto: el ancho sale del viewBox 256x68. */
-    .iaready-logo { height: 22px; width: auto; display: block; fill: currentColor; }
+    .iaready-logo-link { display: inline-block; color: inherit; text-decoration: none; }
+    .iaready-logo-link:hover .iaready-logo { opacity: .78; }
+    .iaready-logo-link:focus-visible { outline: 2px solid var(--cyan-night); outline-offset: 3px; border-radius: var(--radius-sm); }
+    .iaready-logo { height: 22px; width: auto; display: block; fill: currentColor; transition: opacity .18s ease; }
     .iaready-logo .iaready-logo-a { fill: var(--cyan); }
 
     /* Fila unica de la tabla de iAready cuando todavia no hay casos. */
@@ -1612,6 +1615,8 @@
          CSV no carga, la seccion queda con los guiones y lo dice. -->
     <section id="iaready" aria-label="iAready">
       <div class="section-title">
+        <!-- El logo de iAready siempre enlaza a la pagina del producto. -->
+        <a href="https://www.yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener" class="iaready-logo-link">
         <svg class="iaready-logo" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="iAready">
         <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
         <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z"/>
@@ -1621,6 +1626,7 @@
         <path class="iaready-logo-a" d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z"/>
         <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z"/>
       </svg>
+        </a>
       </div>
       <div class="section-sub">Casos cargados desde el formulario de <a href="https://www.yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">ia-ready.html</a> · <a href="https://docs.google.com/spreadsheets/d/14w2DEfbIpL5HvhuisVnL7c9M2MGcOZ5b8cLZy7EN3lU/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
 
@@ -2705,6 +2711,62 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (window.innerWidth < 980) closeNav();
   });
 });
+
+/* ─── ANCLAS DE SECCION ─────────────────────────────────────────────
+   La topbar y la barra de periodo son sticky: sin margen de anclaje, todo
+   salto a un #id deja el titulo debajo de ellas. scroll-margin-top lo
+   resuelve para cualquier salto —el del navegador al entrar por el link, el
+   del clic en el sidebar y el nuestro—, que es mas confiable que corregir a
+   mano cada camino. Se mide en vez de hardcodear: las dos barras cambian de
+   alto segun el ancho. */
+(function () {
+  const medir = () => {
+    const off = (document.querySelector('.topbar')?.offsetHeight || 54)
+              + (document.querySelector('.period-bar')?.offsetHeight || 0) + 12;
+    document.querySelectorAll('main section[id]').forEach(sec => {
+      sec.style.scrollMarginTop = off + 'px';
+    });
+  };
+  medir();
+  addEventListener('resize', medir);
+})();
+
+/* ─── ENTRAR POR UN ANCLA (comercial.html#iaready) ──────────────────
+   El navegador salta al ancla al terminar de parsear, pero para entonces
+   todavia no llegaron los graficos, meta.json ni los CSV. Cuando llegan,
+   las secciones de arriba crecen, la pagina se estira y el destino queda
+   lejos: el link parecia no funcionar.
+   Se reintenta el scroll mientras el contenido se acomoda, y se corta al
+   primer gesto del usuario para no pelearle el scroll si decidio irse a
+   otro lado. Mismo offset que el smooth scroll: la topbar y la barra de
+   periodo son sticky y taparian el titulo. */
+(function () {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id) return;
+  const destino = document.getElementById(id);
+  if (!destino) return;
+
+  /* El corte va por gesto real del usuario, no por evento de scroll: el
+     scrollTo propio tambien dispara scroll y se auto-cancelaba en el primer
+     reintento. Que la pagina se mueva sola —cards que aparecen, graficos que
+     se dibujan— no es un gesto y tiene que seguir corrigiendose. */
+  let gestoDelUsuario = false;
+  const marcar = () => { gestoDelUsuario = true; };
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev =>
+    addEventListener(ev, marcar, { passive: true, once: true }));
+
+  const ir = () => {
+    if (gestoDelUsuario) return;
+    const offset = (document.querySelector('.topbar')?.offsetHeight || 54)
+                 + (document.querySelector('.period-bar')?.offsetHeight || 0);
+    const destinoY = destino.getBoundingClientRect().top + window.scrollY - offset - 12;
+    if (Math.abs(destinoY - window.scrollY) < 4) return;   // ya esta donde va
+    window.scrollTo({ top: destinoY });
+  };
+
+  ir();
+  [120, 500, 1200, 2400].forEach(t => setTimeout(ir, t));
+})();
 
 /* ─── SCROLL-SPY ────────────────────────────────────────────── */
 function initScrollSpy() {
