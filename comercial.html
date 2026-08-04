@@ -223,6 +223,18 @@
       width: 16px; height: 16px; flex-shrink: 0;
       display: grid; place-items: center;
     }
+    /* El badge de aviso es .alert-badge-dot, componente del canonico: pildora
+       roja con la cuenta adentro. Aca solo se le da el ancla —el badge se
+       posiciona absoluto contra el .nav-link— y se lo saca del flujo del
+       flex para que no corra la etiqueta. Nada de caja ni color: eso lo
+       define el DS. */
+    .nav-link { position: relative; }
+    .nav-link > .alert-badge-dot { top: 4px; right: 6px; left: auto; pointer-events: none; }
+    /* Colapsado el link mide 40px y solo se ve el icono: el badge sube a la
+       esquina, como en el resto del sistema. */
+    .nav-collapsed .nav-link > .alert-badge-dot { top: -2px; right: -2px; }
+    .alert-badge-dot[hidden] { display: none; }
+
     .sidebar-footer {
       margin-top: auto; padding-top: 16px;
       border-top: 1px solid var(--line);
@@ -263,7 +275,7 @@
     .nav-collapsed .sidebar-ctrls { flex-direction: column; align-items: center; gap: 8px; }
     .nav-collapsed .nav-section-label { visibility: hidden; height: 6px; padding: 0; }
     .nav-collapsed .nav-link { justify-content: center; padding: 0; gap: 0; width: 40px; height: 40px; margin: 4px auto; }
-    .nav-collapsed .nav-link span:not(.nav-icon) {
+    .nav-collapsed .nav-link span:not(.nav-icon):not(.alert-badge-dot) {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
     }
@@ -300,7 +312,7 @@
     }
     .nav-collapsed.nav-peek .nav-section-label { visibility: visible; height: auto; padding: 12px 8px 6px; }
     .nav-collapsed.nav-peek .nav-link { justify-content: flex-start; padding: 8px 10px; gap: 8px; }
-    .nav-collapsed.nav-peek .nav-link span:not(.nav-icon) {
+    .nav-collapsed.nav-peek .nav-link span:not(.nav-icon):not(.alert-badge-dot) {
       position: static; width: auto; height: auto; padding: 0; margin: 0;
       overflow: visible; clip: auto; white-space: nowrap; border: 0;
     }
@@ -657,7 +669,7 @@
       .ds-layout.nav-collapsed { grid-template-columns: 1fr; }
       .nav-collapsed .sidebar { padding: 16px 12px; }
       .nav-collapsed .nav-link { justify-content: flex-start; padding: 8px 10px; gap: 8px; }
-      .nav-collapsed .nav-link span:not(.nav-icon) {
+      .nav-collapsed .nav-link span:not(.nav-icon):not(.alert-badge-dot) {
         position: static; width: auto; height: auto; margin: 0;
         clip: auto; overflow: visible; white-space: normal;
       }
@@ -815,7 +827,8 @@
 
     <div class="nav-section-label">Proyectos</div>
 
-    <a class="nav-link" href="#iaready" title="iAready">
+    <a class="nav-link" href="#iaready" id="nav-iaready" title="iAready">
+      <span class="alert-badge-dot" id="iaready-dot" hidden></span>
       <span class="nav-icon" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="7" y="7" width="10" height="10" rx="2"/>
@@ -2389,6 +2402,51 @@ function _iaFallo(motivo) {
   if (d) d.textContent = motivo;
 }
 
+/* ── Aviso de casos nuevos ─────────────────────────────────────────
+   "Nuevo" = fila que todavia no viste. Se guarda cuantas habia la ultima
+   vez que abriste la seccion y se compara contra el total de ahora. No
+   depende de que la planilla tenga columna de estado, que puede no estar.
+   La primera vez que se abre el informe no hay marca previa, asi que
+   todos los casos cuentan como nuevos: es lo correcto, no los viste. */
+const IAREADY_VISTOS_KEY = 'yiqi-iaready-vistos';
+
+function _iaVistos() {
+  try { return parseInt(localStorage.getItem(IAREADY_VISTOS_KEY) || '0', 10) || 0; }
+  catch (e) { return 0; }
+}
+function _iaMarcarVistos(total) {
+  try { localStorage.setItem(IAREADY_VISTOS_KEY, String(total)); } catch (e) {}
+}
+function _iaPintarAviso(nuevos) {
+  const dot  = document.getElementById('iaready-dot');
+  const link = document.getElementById('nav-iaready');
+  if (!dot || !link) return;
+  dot.hidden = nuevos <= 0;
+  /* El componente del canonico lleva la cuenta adentro. Arriba de 9 pasa a
+     "9+": con dos digitos la pildora crece y empuja la etiqueta del nav. */
+  dot.textContent = nuevos > 9 ? '9+' : String(nuevos);
+  link.title = nuevos > 0
+    ? 'iAready — ' + nuevos + (nuevos === 1 ? ' caso nuevo' : ' casos nuevos')
+    : 'iAready';
+  link.setAttribute('aria-label', link.title);
+}
+
+/* Se limpia cuando la seccion entra en pantalla, no al hacer clic: tambien
+   vale cuando llegaste scrolleando. */
+function _iaVigilarVisita(total) {
+  const sec = document.getElementById('iaready');
+  if (!sec) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      _iaMarcarVistos(total);
+      _iaPintarAviso(0);
+      obs.disconnect();
+    });
+  }, { threshold: 0.2 });
+  obs.observe(sec);
+}
+
 async function loadIaReadySheet() {
   const tbl = document.getElementById('tabla-iaready');
   if (!tbl || !IAREADY_SHEET_CSV) { _iaFallo('sin planilla configurada'); return; }
@@ -2455,6 +2513,9 @@ async function loadIaReadySheet() {
 
   kpis.innerHTML = cards.join('');
   if (typeof initReveal === 'function') initReveal();
+
+  _iaPintarAviso(body.length - _iaVistos());
+  _iaVigilarVisita(body.length);
 }
 
 function setupSearch(inputId, tableId, emptyId) {
