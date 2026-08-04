@@ -192,7 +192,9 @@
     /* ── SIDEBAR ─────────────────────────────────────────────── */
     .sidebar {
       position: sticky; top: var(--topbar-h);
-      height: calc(100dvh - var(--topbar-h));
+      /* La statusbar es fija y de ancho completo: si el sidebar llega hasta
+         abajo, le tapa el pie —tema y controles de colapsar/lockear—. */
+      height: calc(100dvh - var(--topbar-h) - var(--statusbar-h));
       overflow-y: auto; overflow-x: clip;
       background: linear-gradient(180deg, rgba(24,24,28,.96), rgba(17,17,20,.92));
       backdrop-filter: blur(18px);
@@ -694,6 +696,9 @@
       .nav-collapsed .nav-section-label { visibility: visible; height: auto; padding: 12px 8px 6px; }
       .sidebar {
         position: fixed; top: var(--topbar-h); right: 0; left: auto; z-index: 90;
+        /* Bajo 980px el DS oculta la statusbar, asi que el sidebar recupera
+           el alto completo: si no, quedaba 28px corto sin motivo. */
+        height: calc(100dvh - var(--topbar-h));
         width: min(var(--sidebar-w), 85vw);
         transform: translateX(110%);
         transition: transform .26s cubic-bezier(.4,0,.2,1);
@@ -1685,7 +1690,10 @@
   <div class="statusbar-left">
     <span class="ldot ldot-g" aria-hidden="true"></span>
     <strong>Meta + CRM</strong>
-    <span class="statusbar-desc">Meta Ads ID 370211010327709 · última actualización: <span id="footer-updated">13 jul 2026</span></span>
+    <span class="statusbar-desc">Meta Ads ID 370211010327709<!-- La fecha la escribe loadMetaJSON con la del propio JSON. Arranca
+         vacia a proposito: si el JSON no carga, la barra no puede afirmar
+         cuando fue la ultima sincronizacion. Antes habia una fecha fija en
+         el HTML y quedaba mintiendo cada vez que la carga fallaba. --><span id="footer-updated"></span></span>
   </div>
   <div class="statusbar-right">
     <span class="sb-item">© 2026 YiQi S.A.</span>
@@ -3319,12 +3327,19 @@ async function loadMetaJSON() {
         : 'API';
       el.title = 'Datos sincronizados desde la Marketing API de Meta';
       const fu = document.getElementById('footer-updated');
-      if (fu && d && !isNaN(d)) fu.textContent = d.toLocaleString('es-AR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      if (fu && d && !isNaN(d)) {
+        fu.textContent = ' · última actualización: ' + d.toLocaleString('es-AR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
     }
   } catch (e) {
     if (el) {
       el.textContent = 'datos embebidos';
       el.title = 'No se pudo leer data/meta.json — se muestran los valores escritos en el archivo';
+    }
+    const fu = document.getElementById('footer-updated');
+    if (fu) {
+      fu.textContent = ' · sin sincronizar';
+      fu.title = 'No se pudo leer data/meta.json: no hay fecha de última sincronización';
     }
   }
 }
