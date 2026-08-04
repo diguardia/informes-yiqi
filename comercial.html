@@ -316,7 +316,8 @@
     .nav-collapsed.nav-peek .sidebar-theme .theme-opt { flex: 1; width: 28px; height: 28px; }
 
     /* ── CONTENT ─────────────────────────────────────────────── */
-    .content { min-width: 0; padding: 28px 32px 64px; }
+    /* El padding de abajo reserva el alto de la statusbar, que es fija. */
+    .content { min-width: 0; padding: 28px 32px calc(64px + var(--statusbar-h)); }
 
     section { margin-bottom: 44px; }
 
@@ -479,6 +480,15 @@
       font: 400 13px var(--sans); color: var(--muted-2);
     }
     .num { font: 500 13px var(--mono); }
+    /* Logo iAready — fuente: yiqi-imagen/Fuentes/iAready.svg. Los trazos van
+       en currentColor y la A en el cyan del sistema, para que funcione en los
+       dos temas; el archivo original los trae fijos en #F3F5F7. Se dimensiona
+       por alto: el ancho sale del viewBox 256x68. */
+    .iaready-logo { height: 22px; width: auto; display: block; fill: currentColor; }
+    .iaready-logo .iaready-logo-a { fill: var(--cyan); }
+
+    /* Fila unica de la tabla de iAready cuando todavia no hay casos. */
+    .iaready-placeholder { text-align: center; color: var(--muted-2); }
 
     /* DS — Planificación timeline */
     .plan-table th, .plan-table td { white-space: nowrap; vertical-align: top; }
@@ -632,13 +642,6 @@
       background: var(--line-strong); margin: 0 4px; flex-shrink: 0;
     }
 
-    /* ── FOOTER ──────────────────────────────────────────────── */
-    .page-footer {
-      padding: 20px 32px;
-      border-top: 1px solid var(--line);
-      font: 400 11px var(--mono); color: var(--muted-2);
-    }
-
 
     /* ── CHART WRAPPERS ─────────────────────────────────────── */
     .chart-wrap { position: relative; height: 260px; }
@@ -674,7 +677,7 @@
         backdrop-filter: blur(2px);
       }
       .ds-overlay.show { display: block; }
-      .content { padding: 20px 16px 64px; }
+      .content { padding: 20px 16px calc(64px + var(--statusbar-h)); }
       .period-bar { margin: 16px -16px; padding: 8px 16px; }
       .topbar-period { display: none; }
       /* DS 1.2.7 — en mobile el theme switch vive al pie del menú (ancho completo, sin apilar) */
@@ -808,6 +811,18 @@
         </svg>
       </span>
       <span>ONs Concretadas</span>
+    </a>
+
+    <div class="nav-section-label">Proyectos</div>
+
+    <a class="nav-link" href="#iaready" title="iAready">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="7" y="7" width="10" height="10" rx="2"/>
+          <path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>
+        </svg>
+      </span>
+      <span>iAready</span>
     </a>
 
     <!-- DS 1.2.7.3 — theme switch al pie del sidebar (modelo .sb-theme-switch) -->
@@ -1577,13 +1592,74 @@
       </div>
     </section>
 
+    <!-- ── SECCIÓN 6: iA READY ──────────────────────────────────── -->
+    <!-- Los casos llegan del formulario Tally de ia-ready.html y caen en el
+         sheet. La tabla y los indicadores se arman con las columnas que la
+         planilla traiga: no hay nombres de columna hardcodeados aca. Si el
+         CSV no carga, la seccion queda con los guiones y lo dice. -->
+    <section id="iaready" aria-label="iAready">
+      <div class="section-title">
+        <svg class="iaready-logo" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="iAready">
+        <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
+        <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z"/>
+        <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z"/>
+        <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z"/>
+        <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z"/>
+        <path class="iaready-logo-a" d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z"/>
+        <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z"/>
+      </svg>
+      </div>
+      <div class="section-sub">Casos cargados desde el formulario de <a href="https://www.yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">ia-ready.html</a> · <a href="https://docs.google.com/spreadsheets/d/14w2DEfbIpL5HvhuisVnL7c9M2MGcOZ5b8cLZy7EN3lU/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
+
+      <div class="kpi-grid" id="iaready-kpis">
+        <div class="kpi-card card-reveal">
+          <div class="kpi-label">Casos cargados</div>
+          <div class="kpi-value" id="v-iaready-total">—</div>
+          <div class="kpi-delta" id="d-iaready-total">leyendo la planilla…</div>
+        </div>
+      </div>
+
+      <div class="card card-reveal" style="margin-top:24px">
+        <div class="table-toolbar">
+          <span class="search-wrap">
+            <input class="table-search" id="search-iaready" placeholder="Buscar caso…" aria-label="Buscar en casos de iAready">
+            <button class="search-clear" type="button" aria-label="Limpiar búsqueda" title="Limpiar (Esc)">×</button>
+            <span class="search-kbd" aria-hidden="true">⌘K</span>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table class="ds-table" id="tabla-iaready">
+            <thead><tr></tr></thead>
+            <tbody><tr><td class="iaready-placeholder">Sin datos todavía.</td></tr></tbody>
+          </table>
+          <div class="table-empty" id="empty-iaready" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
+        </div>
+      </div>
+    </section>
+
   </main><!-- /content -->
 </div><!-- /ds-layout -->
 
 <div class="ds-overlay" id="overlay" onclick="closeNav()" aria-hidden="true"></div>
 
-<footer class="page-footer" role="contentinfo">
-  © 2026 YiQi S.A. · Dashboard Meta + CRM · <a href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7.9</a> · Meta Ads ID 370211010327709 · Última actualización: <span id="footer-updated">13 jul 2026</span>
+<!-- Barra de estado inferior — componente canonico del DS (§44). Reemplaza
+     al pie que estaba antes: la statusbar es fija, asi que el pie le quedaba
+     debajo y no se leia. Lleva la misma informacion. Bajo 980px el DS la
+     oculta, por eso el aviso de origen de datos vive tambien en la barra de
+     periodo, que si se ve en mobile. -->
+<footer class="statusbar" id="statusbar" role="contentinfo">
+  <div class="statusbar-left">
+    <span class="ldot ldot-g" aria-hidden="true"></span>
+    <strong>Meta + CRM</strong>
+    <span class="statusbar-desc">Meta Ads ID 370211010327709 · última actualización: <span id="footer-updated">13 jul 2026</span></span>
+  </div>
+  <div class="statusbar-right">
+    <span class="sb-item">© 2026 YiQi S.A.</span>
+    <span class="sb-sep" aria-hidden="true">·</span>
+    <span class="sb-item"><a href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7.10</a></span>
+    <span class="sb-sep" aria-hidden="true">·</span>
+    <span class="sb-item sb-clock" id="statusbar-clock">--:--</span>
+  </div>
 </footer>
 
 <script>
@@ -2186,6 +2262,13 @@ function sortTable(tableId, colIdx) {
    Si queda vacío, se usan las filas cargadas a mano en el HTML.            */
 const PLAN_SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-IYXaCBvVHCNPfWoPHo5BdO3DzakMs3lMyPrefo5RqqeEk6DWA-0bm4h2r--P9XiIqmqB5OEGH6fL/pub?gid=0&single=true&output=csv';
 
+/* ─── iA READY · casos del formulario Tally de ia-ready.html ──────
+   El sheet se publica por Archivo > Compartir > Publicar en la web, hoja
+   puntual y formato CSV. La URL de /edit no sirve: el navegador no la deja
+   leer desde otro dominio; solo la de /pub manda los encabezados que lo
+   permiten. Si queda vacia, la seccion muestra que no hay datos.          */
+const IAREADY_SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRPPxXhmyPFIC0y5GkaKLm9TobU27TAto8JRoo1KY3gL_u7N2D3xM_YK_xP6Kj4-4ZGeRXLMK6K9Jt0/pub?gid=0&single=true&output=csv';
+
 function parseCSV(text) {
   const rows = []; let row = [], cur = '', q = false;
   for (let i = 0; i < text.length; i++) {
@@ -2282,6 +2365,98 @@ async function loadPlanSheet() {
   }
 }
 
+/* Arma la seccion iAready con lo que traiga la planilla. No conoce los
+   nombres de las columnas: detecta por patron cual es la de estado, la de
+   empresa y la de fecha, y si no las encuentra muestra solo el total. */
+function _iaEsc(v) {
+  return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function _iaCol(head, patron) {
+  const i = head.findIndex(h => patron.test(h.trim()));
+  return i < 0 ? null : i;
+}
+function _iaKpi(label, valor, detalle) {
+  return '<div class="kpi-card card-reveal">'
+       + '<div class="kpi-label">' + _iaEsc(label) + '</div>'
+       + '<div class="kpi-value">' + _iaEsc(valor) + '</div>'
+       + '<div class="kpi-delta">' + _iaEsc(detalle) + '</div>'
+       + '</div>';
+}
+function _iaFallo(motivo) {
+  const v = document.getElementById('v-iaready-total');
+  const d = document.getElementById('d-iaready-total');
+  if (v) v.textContent = '—';
+  if (d) d.textContent = motivo;
+}
+
+async function loadIaReadySheet() {
+  const tbl = document.getElementById('tabla-iaready');
+  if (!tbl || !IAREADY_SHEET_CSV) { _iaFallo('sin planilla configurada'); return; }
+  let rows;
+  try {
+    const res = await fetch(IAREADY_SHEET_CSV, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    rows = parseCSV(await res.text()).filter(r => r.some(c => c.trim() !== ''));
+  } catch (e) {
+    _iaFallo('no se pudo leer la planilla');
+    return;
+  }
+  if (!rows.length) { _iaFallo('la planilla está vacía'); return; }
+
+  const head = rows[0].map(h => h.trim());
+  const body = rows.slice(1);
+
+  /* ── Tabla ── */
+  const thr = tbl.querySelector('thead tr');
+  const tb  = tbl.querySelector('tbody');
+  thr.innerHTML = head.map(h => '<th>' + _iaEsc(h) + '</th>').join('');
+  tb.innerHTML = body.length
+    ? body.map(r => '<tr>' + head.map((_, i) => '<td>' + _iaEsc((r[i] || '').trim()) + '</td>').join('') + '</tr>').join('')
+    : '<tr><td class="iaready-placeholder" colspan="' + head.length + '">Todavía no hay casos cargados.</td></tr>';
+
+  /* ── Indicadores ── */
+  const kpis = document.getElementById('iaready-kpis');
+  if (!kpis) return;
+
+  const iEstado  = _iaCol(head, /estado|status|etapa/i);
+  const iEmpresa = _iaCol(head, /empresa|compa|raz[oó]n|cliente|organizaci/i);
+  const iFecha   = _iaCol(head, /fecha|timestamp|marca temporal|date/i);
+
+  /* La fecha va en la linea de detalle, no en .kpi-value: el count-up del
+     informe convierte a numero todo lo que encuentre ahi y una fecha sale
+     deformada. */
+  const ultima = iFecha === null ? '' : body.map(r => (r[iFecha] || '').trim()).filter(Boolean).pop() || '';
+
+  const cards = [];
+  cards.push(_iaKpi(
+    'Casos cargados',
+    String(body.length),
+    ultima ? 'última: ' + ultima : (body.length === 1 ? 'un caso' : 'total de la planilla')
+  ));
+
+  if (iEmpresa !== null) {
+    const empresas = new Set(body.map(r => (r[iEmpresa] || '').trim().toLowerCase()).filter(Boolean));
+    cards.push(_iaKpi('Empresas distintas', String(empresas.size), _iaEsc(head[iEmpresa])));
+  }
+
+  if (iEstado !== null) {
+    const cuenta = new Map();
+    body.forEach(r => {
+      const v = (r[iEstado] || '').trim() || 'Sin estado';
+      cuenta.set(v, (cuenta.get(v) || 0) + 1);
+    });
+    /* Los cuatro estados mas frecuentes; el resto se agrupa para no romper la
+       grilla de 4 columnas con una lista larga. */
+    const orden = [...cuenta.entries()].sort((a, b) => b[1] - a[1]);
+    orden.slice(0, 4).forEach(([v, n]) => cards.push(_iaKpi(v, String(n), _iaEsc(head[iEstado]))));
+    const resto = orden.slice(4).reduce((acc, [, n]) => acc + n, 0);
+    if (resto) cards.push(_iaKpi('Otros estados', String(resto), orden.length - 4 + ' valores'));
+  }
+
+  kpis.innerHTML = cards.join('');
+  if (typeof initReveal === 'function') initReveal();
+}
+
 function setupSearch(inputId, tableId, emptyId) {
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -2326,6 +2501,7 @@ function initSearchShortcut() {
     'nuevas-ons':   'search-nuevas',
     'concretadas':  'search-concretadas',
     'planificacion':'search-plan',
+    'iaready':      'search-iaready',
   };
   const findActiveSearchId = () => {
     // 1) Sección con scroll-spy activo
@@ -2432,8 +2608,15 @@ function toggleLock() {
   const isDesktop = () => window.matchMedia('(min-width: 981px)').matches;
   const canPeek = () => isDesktop() && layout.classList.contains('nav-collapsed') && !layout.classList.contains('nav-locked');
   sidebar.addEventListener('mouseover', (e) => {
-    // el peek se activa SOLO sobre los ítems del nav; tema, controles y espacios quedan muertos
-    if (canPeek() && e.target.closest('.nav-link')) layout.classList.add('nav-peek');
+    /* El peek se dispara en toda la zona de navegacion —items, huecos entre
+       items, la etiqueta de seccion y el espacio vacio de abajo—, no solo
+       sobre el .nav-link. Con el rail colapsado el link mide 40px y los
+       huecos entre uno y otro dejaban al usuario sin blanco al que apuntar.
+       El pie sigue muerto a proposito: ahi viven el tema y los controles, y
+       desplegar el rail al ir a tocarlos molesta mas de lo que ayuda. */
+    if (canPeek() && !e.target.closest('.sidebar-footer, .sidebar-ctrls')) {
+      layout.classList.add('nav-peek');
+    }
   });
   sidebar.addEventListener('mouseleave', () => layout.classList.remove('nav-peek'));
   // restaurar lock persistido
@@ -3014,7 +3197,9 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearch('search-concretadas', 'tabla-concretadas', 'empty-concretadas');
   setupSearch('search-nuevas',      'tabla-nuevas',      'empty-nuevas');
   setupSearch('search-plan',         'tabla-plan',         'empty-plan');
+  setupSearch('search-iaready',      'tabla-iaready',      'empty-iaready');
   loadPlanSheet();
+  loadIaReadySheet();
   initScrollSpy();
   initReveal();
   initSearchShortcut();
@@ -3024,6 +3209,17 @@ document.addEventListener('DOMContentLoaded', () => {
   renderConcretadasChart();
 
   loadMetaJSON();   // no bloquea: si falla, quedan los datos embebidos
+
+  /* Reloj de la statusbar. Cada 15s alcanza: solo muestra hora y minutos. */
+  (function () {
+    const el = document.getElementById('statusbar-clock');
+    if (!el) return;
+    const tick = () => {
+      const n = new Date();
+      el.textContent = ('0' + n.getHours()).slice(-2) + ':' + ('0' + n.getMinutes()).slice(-2);
+    };
+    tick(); setInterval(tick, 15000);
+  })();
 });
 </script>
 </body>
