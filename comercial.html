@@ -492,6 +492,21 @@
       font: 400 13px var(--sans); color: var(--muted-2);
     }
     .num { font: 500 13px var(--mono); }
+    /* Fila de indicadores compacta. El .kpi-grid del canonico es
+       repeat(4, 1fr): con tres cards se estiran a todo el ancho y una card
+       enorme para mostrar "2" es peor que no mostrarlo. Aca las cards toman
+       el ancho que necesitan, se apoyan a la izquierda y bajan de linea si
+       no entran. Candidato a subir al DS como variante. */
+    .kpi-grid-auto {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      grid-template-columns: none;
+    }
+    .kpi-grid-auto .kpi-card {
+      flex: 0 0 auto; min-width: 150px; max-width: 240px;
+      padding: 14px 16px;
+    }
+    .kpi-grid-auto .kpi-value { font-size: 22px; }
+
     /* Logo iAready — fuente: yiqi-imagen/Fuentes/iAready.svg. Los trazos van
        en currentColor y la A en el cyan del sistema, para que funcione en los
        dos temas; el archivo original los trae fijos en #F3F5F7. Se dimensiona
@@ -1630,7 +1645,7 @@
       </div>
       <div class="section-sub">Casos cargados desde el formulario de <a href="https://www.yiqi.com.ar/ia-ready.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">ia-ready.html</a> · <a href="https://docs.google.com/spreadsheets/d/14w2DEfbIpL5HvhuisVnL7c9M2MGcOZ5b8cLZy7EN3lU/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
 
-      <div class="kpi-grid" id="iaready-kpis">
+      <div class="kpi-grid kpi-grid-auto" id="iaready-kpis">
         <div class="kpi-card card-reveal">
           <div class="kpi-label">Casos cargados</div>
           <div class="kpi-value" id="v-iaready-total">—</div>
