@@ -681,6 +681,95 @@
     .chart-half { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
     @media (max-width: 640px) { .chart-half { grid-template-columns: 1fr; } }
 
+    /* ── RESUMEN META EN PANTALLA CHICA ───────────────────────────
+       Medido a 390px: las cinco cards ocupaban tres filas gigantes —la
+       etiqueta se partia en dos lineas y el delta en tres— y la barra de
+       periodo se cortaba a la derecha. Se compacta la card, se acorta el
+       delta y la meta de la barra envuelve en vez de recortarse. */
+    @media (max-width: 640px) {
+      .period-meta {
+        flex-wrap: wrap; row-gap: 4px;
+        margin-left: 0; padding-left: 0; border-left: 0;
+        width: 100%;
+      }
+      /* La ID de la cuenta no se lee en el telefono y es lo que empuja la
+         barra: queda en el informe pero fuera de la vista chica. */
+      .period-meta .period-info[title] { display: none; }
+      .period-meta .topbar-divider { display: none; }
+
+      .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .kpi-card { padding: 12px 12px 13px; }
+      .kpi-label { font-size: 9px; letter-spacing: .05em; }
+      .kpi-value { font-size: 22px; margin-top: 4px; }
+      .kpi-delta { font-size: 10px; line-height: 1.45; margin-top: 4px; }
+      /* Cinco metricas en dos columnas dejan la ultima sola: ocupa el ancho
+         completo y la fila cierra pareja. */
+      #resumen-kpis .kpi-card:last-child { grid-column: 1 / -1; }
+
+      #resumen .card-subtitle { font-size: 11px; }
+    }
+
+    /* ── NAVEGACIÓN MÓVIL — §67 del DS ────────────────────────────
+       Las siete secciones se agrupan en cuatro destinos siguiendo la
+       estructura que el informe ya tiene en el nombre, Meta + CRM:
+       Plan · Meta (resumen, anuncios) · Funnel · ONs (nuevas, concretadas)
+       · iAready. Los que agrupan abren una hoja; los que no, van directo.
+       El quinto lugar se usa para partir CRM, que era la pantalla mas
+       larga —7.526px, el triple que Meta— y ahora son dos cortas.
+       Con la barra inferior el drawer sobra: dos navegaciones para lo
+       mismo es peor que una. Se oculta, y el tema pasa a la topbar. */
+    .ds-bottomnav, .nav-sheet, .nav-scrim, .topbar-theme { display: none; }
+
+    /* Una seccion por vez. Una barra inferior promete pantallas; si el
+       destino es un ancla dentro de una pagina de diez mil pixeles, el
+       salto recorre todo lo que no pediste y despues cualquier scroll te
+       muda de seccion sin querer. Bajo 980px cada destino es una pantalla
+       corta: se muestra su grupo y se ocultan los demas. En escritorio no
+       cambia nada, sigue siendo el informe largo. */
+    @media (max-width: 980px) {
+      .ds-layout[data-grupo] main > section { display: none; }
+      .ds-layout[data-grupo="plan"]    #planificacion,
+      .ds-layout[data-grupo="meta"]    #resumen,
+      .ds-layout[data-grupo="meta"]    #anuncios,
+      .ds-layout[data-grupo="funnel"]  #funnel,
+      .ds-layout[data-grupo="ons"]     #nuevas-ons,
+      .ds-layout[data-grupo="ons"]     #concretadas,
+      .ds-layout[data-grupo="iaready"] #iaready { display: block; }
+      /* Con una seccion por vez la barra de periodo puede quedar arriba de
+         todo: su margen superior dejaba una banda vacia bajo la topbar. */
+      .ds-layout[data-grupo] .period-bar { margin-top: 0; }
+    }
+
+    @media (max-width: 980px) {
+      .ds-bottomnav {
+        display: grid;
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 96;
+        box-shadow: 0 -1px 0 var(--line), var(--shadow);
+      }
+      .ds-bottomnav-item { cursor: pointer; border: 0; background: transparent; font: inherit; }
+
+      .topbar-theme { display: flex; align-items: center; margin-left: auto; }
+
+      .nav-scrim {
+        display: block; position: fixed; inset: 0; z-index: 97;
+        background: rgba(0,0,0,.45); opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s ease;
+      }
+      .nav-scrim.is-open { opacity: 1; visibility: visible; }
+
+      .nav-sheet {
+        display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 98;
+        transform: translateY(100%);
+        transition: transform .26s cubic-bezier(.4,0,.2,1);
+      }
+      .nav-sheet.is-open { transform: none; }
+      .ds-sheet-item.is-active { color: var(--text); }
+      .ds-sheet-item.is-active::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); margin-left: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-sheet, .nav-scrim { transition: none; }
+    }
+
     /* ── MOBILE ──────────────────────────────────────────────── */
     @media (max-width: 980px) {
       .hamburger { display: flex; }
@@ -712,7 +801,11 @@
         backdrop-filter: blur(2px);
       }
       .ds-overlay.show { display: block; }
-      .content { padding: 20px 16px calc(64px + var(--statusbar-h)); }
+      /* La barra inferior reemplaza al drawer: dos navegaciones para lo
+         mismo es peor que una. El padding reserva su alto —la statusbar no
+         cuenta, el DS la oculta bajo 980px—. */
+      .hamburger { display: none; }
+      .content { padding: 20px 16px calc(78px + env(safe-area-inset-bottom, 12px)); }
       .period-bar { margin: 16px -16px; padding: 8px 16px; }
       .topbar-period { display: none; }
       /* DS 1.2.7 — en mobile el theme switch vive al pie del menú (ancho completo, sin apilar) */
@@ -779,6 +872,17 @@
       </svg>
       Ingresar
     </a>
+  </div>
+  <!-- Control de tema para mobile: en pantalla chica el drawer se oculta y
+       con el se iria el selector, que vive en el pie del sidebar. El shim de
+       yiqi-runtime.js convierte este .theme-toggle en el boton unico del
+       canonico, igual que al del sidebar; los dos quedan sincronizados. -->
+  <div class="topbar-theme">
+    <div class="theme-toggle" role="group" aria-label="Tema">
+      <button class="theme-opt" type="button" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
+      <button class="theme-opt" type="button" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+      <button class="theme-opt" type="button" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
+    </div>
   </div>
 </header>
 
@@ -1680,6 +1784,39 @@
 </div><!-- /ds-layout -->
 
 <div class="ds-overlay" id="overlay" onclick="closeNav()" aria-hidden="true"></div>
+
+<!-- ── Navegación móvil — §67 del DS ──────────────────────────
+     Cuatro destinos. Meta y CRM agrupan varias secciones y abren la hoja;
+     Plan e iAready llevan directo. Solo se ve bajo 980px. -->
+<nav class="ds-bottomnav" id="bottomnav" aria-label="Secciones del informe">
+  <button class="ds-bottomnav-item" type="button" data-grupo="plan">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Plan</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="meta" aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span>Meta</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="funnel">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+    <span>Funnel</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="ons" aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span>ONs</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="iaready">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg>
+    <span>iAready</span>
+  </button>
+</nav>
+
+<div class="nav-scrim" id="nav-scrim" hidden></div>
+<div class="nav-sheet ds-sheet" id="nav-sheet" role="dialog" aria-modal="true" aria-labelledby="nav-sheet-t" hidden>
+  <div class="ds-sheet-grab" aria-hidden="true"></div>
+  <p class="ds-sheet-title" id="nav-sheet-t"></p>
+  <div id="nav-sheet-body"></div>
+</div>
 
 <!-- Barra de estado inferior — componente canonico del DS (§44). Reemplaza
      al pie que estaba antes: la statusbar es fija, asi que el pie le quedaba
@@ -2718,6 +2855,126 @@ function toggleLock() {
     }
   } catch (e) {}
 })();
+
+/* ─── NAVEGACIÓN MÓVIL (§67) ─────────────────────────────────────
+   Las siete secciones agrupadas en cuatro destinos. El grupo con una
+   sola sección lleva directo; el que agrupa abre la hoja inferior.
+   El activo lo marca el mismo scroll-spy que el sidebar, para que las
+   dos navegaciones no se contradigan. */
+const NAV_GRUPOS = {
+  plan:    { titulo: "Planificación", secs: [["planificacion","Planificación"]] },
+  meta:    { titulo: "Meta",  secs: [["resumen","Resumen Meta"], ["anuncios","Anuncios"]] },
+  funnel:  { titulo: "Funnel", secs: [["funnel","Funnel CRM"]] },
+  ons:     { titulo: "ONs",    secs: [["nuevas-ons","Nuevas ONs"], ["concretadas","ONs concretadas"]] },
+  iaready: { titulo: "iAready", secs: [["iaready","iAready"]] },
+};
+const SEC_GRUPO = Object.fromEntries(
+  Object.entries(NAV_GRUPOS).flatMap(([g,v]) => v.secs.map(([id]) => [id, g])));
+
+const navEsMobile = () => window.matchMedia('(max-width: 980px)').matches;
+
+/* En mobile no se scrollea: se cambia de pantalla. El grupo activo se
+   declara en el layout y el CSS oculta el resto. En escritorio sigue
+   siendo scroll, que ahi la pagina larga funciona. */
+function navMostrarGrupo(g, idFoco){
+  const layout = document.querySelector('.ds-layout');
+  if (!navEsMobile()) { navScrollA(idFoco || NAV_GRUPOS[g].secs[0][0]); return; }
+  layout.dataset.grupo = g;
+  window.scrollTo({ top: 0 });
+  if (idFoco && NAV_GRUPOS[g].secs.length > 1) navScrollA(idFoco);
+  /* Chart.js mide el canvas al crearlo: los que estaban ocultos nacieron
+     con ancho cero y quedan en blanco hasta que se les avisa. */
+  requestAnimationFrame(() => {
+    Object.values(_charts).forEach(c => { try { c.resize(); } catch(e){} });
+  });
+  navMarcarActivo(g);
+}
+
+function navScrollA(id){
+  const el = document.getElementById(id);
+  if (!el) return;
+  const off = (document.querySelector('.topbar')?.offsetHeight || 54)
+            + (document.querySelector('.period-bar')?.offsetHeight || 0);
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - off - 12, behavior: 'smooth' });
+}
+
+function navIrA(id){
+  const g = SEC_GRUPO[id];
+  if (g) navMostrarGrupo(g, id); else navScrollA(id);
+}
+
+function navSheetCerrar(){
+  const sh = document.getElementById('nav-sheet'), sc = document.getElementById('nav-scrim');
+  sh.classList.remove('is-open'); sc.classList.remove('is-open');
+  setTimeout(() => { sh.hidden = true; sc.hidden = true; }, 240);
+}
+
+function navSheetAbrir(g){
+  const grupo = NAV_GRUPOS[g]; if (!grupo) return;
+  const sh = document.getElementById('nav-sheet'), sc = document.getElementById('nav-scrim');
+  document.getElementById('nav-sheet-t').textContent = grupo.titulo;
+  const activa = navSeccionVisible();
+  document.getElementById('nav-sheet-body').innerHTML = grupo.secs.map(([id,label]) =>
+    `<button class="ds-sheet-item${id===activa?' is-active':''}" type="button" data-ir="${id}">${label}</button>`).join("");
+  sh.hidden = false; sc.hidden = false;
+  requestAnimationFrame(() => { sh.classList.add('is-open'); sc.classList.add('is-open'); });
+}
+
+function navSeccionVisible(){
+  const activo = document.querySelector('.nav-link.active');
+  return activo ? (activo.getAttribute('href')||'').replace(/^#/,'') : '';
+}
+
+function navMarcarActivo(forzado){
+  /* En mobile manda el grupo elegido, no el scroll-spy: con una sola
+     seccion en pantalla el spy diria lo mismo, pero al cambiar de grupo
+     tarda un frame en actualizarse y el activo parpadea. */
+  const g = forzado || (navEsMobile()
+    ? document.querySelector('.ds-layout').dataset.grupo
+    : SEC_GRUPO[navSeccionVisible()]);
+  document.querySelectorAll('.ds-bottomnav-item').forEach(b =>
+    b.classList.toggle('is-active', b.dataset.grupo === g));
+}
+
+document.addEventListener('click', e => {
+  const item = e.target.closest('.ds-bottomnav-item');
+  if (item) {
+    const g = item.dataset.grupo;
+    navMostrarGrupo(g);
+    /* La hoja solo tiene sentido si hay a donde elegir. Se abre despues de
+       mostrar el grupo: primero llegas, despues afinas. */
+    if (NAV_GRUPOS[g].secs.length > 1) navSheetAbrir(g);
+    return;
+  }
+  const ir = e.target.closest('[data-ir]');
+  if (ir) { navSheetCerrar(); navIrA(ir.dataset.ir); return; }
+  if (e.target.closest('#nav-scrim')) navSheetCerrar();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !document.getElementById('nav-sheet').hidden) navSheetCerrar();
+});
+/* El scroll-spy escribe .active en el sidebar; se lee de ahi para no tener
+   dos fuentes de verdad sobre cual es la seccion visible. */
+new MutationObserver(() => navMarcarActivo()).observe(document.querySelector('.sidebar'), {
+  subtree: true, attributes: true, attributeFilter: ['class'] });
+
+/* Arranque: en mobile hay que elegir un grupo, si no se ven las siete
+   secciones apiladas y la barra no marca ninguna. Si la URL trae un
+   ancla, gana esa. */
+(function navInicio(){
+  const layout = document.querySelector('.ds-layout');
+  const delHash = SEC_GRUPO[decodeURIComponent(location.hash.slice(1))];
+  if (navEsMobile()) layout.dataset.grupo = delHash || 'meta';
+  navMarcarActivo();
+})();
+
+/* Al pasar de escritorio a mobile —girar la tablet, achicar la ventana—
+   el layout puede quedar sin grupo y no se veria ninguna seccion. */
+addEventListener('resize', () => {
+  const layout = document.querySelector('.ds-layout');
+  if (navEsMobile() && !layout.dataset.grupo) layout.dataset.grupo = 'meta';
+  navMarcarActivo();
+});
 
 /* ─── SMOOTH SCROLL ─────────────────────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
