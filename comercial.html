@@ -678,6 +678,27 @@
     /* ── CHART WRAPPERS ─────────────────────────────────────── */
     .chart-wrap { position: relative; height: 260px; }
     .chart-wrap-tall { position: relative; height: 320px; }
+    .chart-wrap-meta { position: relative; height: 230px; }
+
+    /* ── MOBILE · KPIs y graficos compactos ──────────────────
+       En telefono la card de escritorio gastaba 126px por KPI: la grilla de
+       cinco pedia 670px y el grafico 320 — Resumen Meta solo entraba a
+       pedazos. La card se compacta (90px), la cifra se alinea a la
+       izquierda, el delta pierde el chip y se corta a una linea, y los
+       graficos bajan a 180–200px. Solo telefono: el escritorio no cambia. */
+    @media (max-width: 640px) {
+      .kpi-grid { gap: 8px; }
+      /* min-width:0 — el delta en nowrap infla el min-content de la card
+         y sin esto la grilla desborda el viewport en vez de recortarlo. */
+      .kpi-card { padding: 10px 12px; gap: 4px; min-width: 0; }
+      .kpi-value { font-size: 19px; text-align: left; }
+      .kpi-label { font-size: 8.5px; }
+      .kpi-delta { padding: 0; background: none; font-size: 9.5px;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+      .chart-wrap { height: 190px; }
+      .chart-wrap-tall { height: 200px; }
+      .chart-wrap-meta { height: 180px; }
+    }
     .chart-half { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
     @media (max-width: 640px) { .chart-half { grid-template-columns: 1fr; } }
 
@@ -1129,7 +1150,7 @@
             <button class="month-pill"        data-meta-metric="alcance" onclick="toggleMetaLine('alcance')" title="Personas únicas que vieron los anuncios al menos una vez (distinto de impresiones).">Alcance</button>
           </div>
         </div>
-        <div style="position:relative;height:230px">
+        <div class="chart-wrap-meta">
           <canvas id="meta-line-chart" aria-label="Gráfico de evolución mensual de métricas Meta"></canvas>
         </div>
       </div>
