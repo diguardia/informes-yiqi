@@ -738,6 +738,12 @@
       /* Con una seccion por vez la barra de periodo puede quedar arriba de
          todo: su margen superior dejaba una banda vacia bajo la topbar. */
       .ds-layout[data-grupo] .period-bar { margin-top: 0; }
+      /* La barra global filtra Meta y CRM. En Planificacion y en iAready no
+         gobierna nada, y como no es un <section> quedaba colgada al pie de
+         esas pantallas, encima de la nav inferior. Cada una trae su propio
+         selector si lo necesita. */
+      .ds-layout[data-grupo="plan"]    .period-bar,
+      .ds-layout[data-grupo="iaready"] .period-bar { display: none; }
     }
 
     @media (max-width: 980px) {
@@ -1009,7 +1015,19 @@
     <section id="planificacion" aria-label="Planificación">
       <div class="section-title">Planificación</div>
       <div class="section-sub">Planificación comercial · grilla semanal · <a href="https://docs.google.com/spreadsheets/d/1x4QDp3fsBcz9gQhjNfiyCG9MJL8NmHG5UvwHcyntym0/edit" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">editar en Google Sheets ↗</a></div>
-      <div class="month-filter" id="plan-mes-filter" role="group" aria-label="Filtrar planificación por mes" style="margin-top:12px"></div>
+      <!-- El período se elige con el mismo control que en Meta: un .ds-picker.
+           Las opciones reales las escribe _buildPlanFilter cuando carga la hoja. -->
+      <div class="month-filter" id="plan-mes-filter" style="margin-top:12px">
+        <span class="period-bar-label">Período</span>
+        <div class="ds-picker period-picker" id="plan-picker" data-ds-picker>
+          <button type="button" class="ds-picker-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Período de la planificación">
+            <span class="ds-picker-value">Todo el año</span><svg class="ds-picker-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="ds-picker-menu" role="listbox" aria-label="Período de la planificación" hidden>
+            <button type="button" class="ds-picker-option is-active" role="option" data-value="all" aria-selected="true">Todo el año</button>
+          </div>
+        </div>
+      </div>
 
       <div class="card card-reveal" style="margin-top:24px">
         <div class="table-toolbar">
@@ -2082,7 +2100,8 @@ function filterOnsByPeriodo(key) {
     document.querySelectorAll(`#${tid} tbody tr`).forEach(tr => {
       const dn = (tr.cells[col] && tr.cells[col].dataset.num || '').replace(/\D/g, '');
       const mes = _MES_NUM[dn.slice(4, 6)];
-      const inPeriod = (key === 'ytd') || (mes === key);
+      const inPeriod = (key === 'ytd') || (mes === key)
+                    || (esTrimestre(key) && _Q_KEY[key].includes(mes));
       tr.dataset.periodHide = inPeriod ? '' : '1';
       if (inPeriod) inPeriodCount++;
       const show = inPeriod && tr.textContent.toLowerCase().includes(q);
@@ -2470,20 +2489,38 @@ const _MES_ABBR = { '01':'Ene','02':'Feb','03':'Mar','04':'Abr','05':'May','06':
 const _Q_MESES = { Q1:['01','02','03'], Q2:['04','05','06'], Q3:['07','08','09'], Q4:['10','11','12'] };
 let _planMeses = new Set();   // vacío = todos
 let _planDisp  = new Set();   // meses presentes en la hoja
+/* El período de Planificación usa el mismo control que el de Meta: un
+   .ds-picker de selección única. Antes era una fila de pills con
+   multi-selección, y en la misma página convivían dos controles distintos
+   para la misma decisión. Los trimestres, que eran lo único que la
+   multi-selección resolvía de verdad, quedan como opciones del menú. */
 function buildPlanFilter(head) {
-  const cont = document.getElementById('plan-mes-filter');
-  if (!cont) return;
+  const pick = document.getElementById('plan-picker');
+  const menu = pick && pick.querySelector('.ds-picker-menu');
+  if (!menu) return;
   const meses = [];
   head.forEach((h,i) => { if (i < 2) return; const mm = (h.split('/')[1]||'').trim().padStart(2,'0'); if (mm && !meses.includes(mm)) meses.push(mm); });
   _planDisp = new Set(meses); _planMeses = new Set();
-  const sep = '<span style="display:inline-block;width:1px;height:18px;background:var(--line-strong);margin:0 6px;vertical-align:middle"></span>';
-  const qBtns = Object.keys(_Q_MESES)
-    .map(q => ({ q, ms: _Q_MESES[q].filter(m => _planDisp.has(m)) }))
-    .filter(o => o.ms.length)
-    .map(o => `<button class="month-pill" data-q="${o.ms.join(',')}" onclick="planQ('${o.ms.join(',')}')">${o.q}</button>`).join('');
-  cont.innerHTML = `<button class="month-pill active" id="plan-all-btn" onclick="planAll()">Todo el año</button>`
-    + meses.map(mm => `<button class="month-pill" data-mes="${mm}" onclick="planMes('${mm}')">${_MES_ABBR[mm]||mm}</button>`).join('')
-    + (qBtns ? sep + qBtns : '');
+
+  const opt = (v, txt) => {
+    const o = document.createElement('button');
+    o.type = 'button';
+    o.className = 'ds-picker-option';
+    o.setAttribute('role', 'option');
+    o.dataset.value = v;
+    o.textContent = txt;
+    return o;
+  };
+  menu.innerHTML = '';
+  menu.appendChild(opt('all', 'Todo el año'));
+  Object.keys(_Q_MESES).forEach(q => {
+    const ms = _Q_MESES[q].filter(m => _planDisp.has(m));
+    if (ms.length) menu.appendChild(opt('q:' + ms.join(','), q));
+  });
+  /* Ascendente: la planificación se lee hacia adelante, al revés que el
+     informe de Meta, donde el mes más nuevo va arriba. */
+  meses.forEach(mm => menu.appendChild(opt('m:' + mm, _MES_LARGO[(_MES_ABBR[mm]||'').toLowerCase()] || mm)));
+  if (window.YiQi && YiQi.picker) YiQi.picker.set(pick, 'all');
   _planApply();
 }
 function _planApply() {
@@ -2491,23 +2528,15 @@ function _planApply() {
   document.querySelectorAll('#tabla-plan [data-mes]').forEach(el => {
     el.style.display = (all || _planMeses.has(el.dataset.mes)) ? '' : 'none';
   });
-  document.querySelectorAll('#plan-mes-filter [data-mes]').forEach(p =>
-    p.classList.toggle('active', _planMeses.has(p.dataset.mes)));
-  document.querySelectorAll('#plan-mes-filter [data-q]').forEach(p => {
-    const ms = p.dataset.q.split(',');
-    p.classList.toggle('active', ms.length > 0 && ms.every(m => _planMeses.has(m)));
-  });
-  const allBtn = document.getElementById('plan-all-btn');
-  if (allBtn) allBtn.classList.toggle('active', all);
 }
-function planMes(m) { _planMeses.has(m) ? _planMeses.delete(m) : _planMeses.add(m); _planApply(); }
-function planQ(list) {
-  const ms = list.split(',');
-  const allIn = ms.length > 0 && ms.every(m => _planMeses.has(m));
-  ms.forEach(m => allIn ? _planMeses.delete(m) : _planMeses.add(m));
+function planSet(v) {
+  _planMeses = new Set(
+    v === 'all'            ? [] :
+    v.indexOf('q:') === 0  ? v.slice(2).split(',') :
+                             [v.slice(2)]
+  );
   _planApply();
 }
-function planAll() { _planMeses.clear(); _planApply(); }
 
 async function loadPlanSheet() {
   if (!PLAN_SHEET_CSV) return;  // sin URL → quedan las filas estáticas
@@ -3176,6 +3205,40 @@ const FUNNEL_DATA = {
   may: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [109675,100,86,8,0] },
   jun: { labels: ['Alcance','Conversaciones','Contactos','ONs nuevas','Concretadas'], data: [14457,32,11,0,0] },
 };
+/* El funnel del CRM se carga a mano por mes. El trimestre suma lo que es
+   numero — ONs y concretadas — pero NO el alcance: es alcance unico y sumar
+   tres meses cuenta dos veces a quien vio anuncios en mas de uno, asi que
+   la barra de Alcance sale del grafico del trimestre. Los montos en ARS
+   viven adentro del texto del delta y no se suman sin parsearlo: en
+   trimestres el delta dice el acumulado, sin monto. */
+function _armarTrimestresCrm() {
+  Object.keys(_Q_KEY).forEach(q => {
+    const ms = _Q_KEY[q].filter(k => COTIZ_DATA[k]);
+    if (!ms.length) return;
+    const ons = ms.reduce((a, k) => a + (COTIZ_DATA[k].ons     || 0), 0);
+    const gan = ms.reduce((a, k) => a + (COTIZ_DATA[k].ganadas || 0), 0);
+    const rango = ms.length > 1 ? `${ms[0]}–${ms[ms.length - 1]}` : ms[0];
+    const plural = n => n === 1 ? '' : 's';
+    COTIZ_DATA[q] = {
+      period: `${q.toUpperCase()} ${CRM_ANIO} · ${ons} ONs nuevas · ${gan} concretada${plural(gan)}`,
+      ons, enCurso: null, enviadas: null, ganadas: gan, vencidas: null,
+      dOns:  `${ons} ONs nuevas · acumulado ${rango}`,                dOnsDir:  'neutral',
+      dEnv:  'pendiente · ingresar manualmente',
+      dGan:  `${gan} concretada${plural(gan)} · acumulado ${rango}`,  dGanDir:  'neutral',
+      dTasa: ons ? `${fmtPct((gan / ons) * 100)} conversión (${gan} / ${ons})` : 'sin base de comparación',
+      dTasaDir: 'neutral',
+    };
+
+    const fs = ms.map(k => FUNNEL_DATA[k]).filter(Boolean);
+    if (!fs.length) return;
+    /* Se recorta la primera fila (Alcance) en las etiquetas y en los datos. */
+    FUNNEL_DATA[q] = {
+      labels: fs[0].labels.slice(1),
+      data:   fs[0].data.slice(1).map((_, i) => fs.reduce((a, f) => a + (f.data[i + 1] || 0), 0)),
+    };
+  });
+}
+
 function renderFunnelChart(key) {
   const ctx = document.getElementById('chart-funnel');
   if (!ctx) return;
@@ -3392,9 +3455,9 @@ const _fInt = v => (v == null ? null : Math.round(v).toLocaleString('es-AR'));
 const _fArs = v => (v == null ? null : '$' + Math.round(v).toLocaleString('es-AR'));
 const _cap  = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-function _metaDelta(actual, previo, etiquetaPrevia) {
+function _metaDelta(actual, previo, etiquetaPrevia, sinPrevio) {
   if (actual == null) return ['neutral', 'sin dato'];
-  if (previo == null) return ['neutral', 'sin mes previo'];
+  if (previo == null) return ['neutral', sinPrevio || 'sin mes previo'];
   if (!previo)        return ['neutral', 'sin base de comparación'];
   const p = ((actual - previo) / previo) * 100;
   const flecha = p >= 0 ? '↑' : '↓';
@@ -3403,6 +3466,42 @@ function _metaDelta(actual, previo, etiquetaPrevia) {
 }
 
 function _diaMes(iso) { return Number(iso.slice(8, 10)); }
+
+/* ── Trimestres ─────────────────────────────────────────────────────────
+   El JSON de Meta trae los numeros por mes, asi que el trimestre se calcula.
+   La excepcion es alcance: es alcance UNICO — personas distintas. Sumar tres
+   meses cuenta dos veces a quien vio anuncios en mas de uno, y Meta no
+   permite derivar el unico trimestral de los mensuales. Va sin dato. */
+const _Q_KEY = { q1: ['ene','feb','mar'], q2: ['abr','may','jun'],
+                 q3: ['jul','ago','sep'], q4: ['oct','nov','dic'] };
+const esTrimestre = k => Object.prototype.hasOwnProperty.call(_Q_KEY, k);
+
+const _sumaCampo = (arr, campo) => arr.reduce((a, m) => a + (Number(m[campo]) || 0), 0);
+
+/* Una campana aparece en varios meses del trimestre: se junta por nombre.
+   Gasto e impresiones suman. Los resultados solo suman si la campana mantuvo
+   el mismo objetivo — conversaciones y clics no son la misma unidad. */
+function _fusionarCampanas(meses) {
+  const acc = new Map();
+  meses.forEach(m => (m.campanas || []).forEach(c => {
+    const e = acc.get(c.nombre) || { nombre: c.nombre, gasto: 0, impresiones: 0,
+                                     resultado: 0, resultadoTipo: null, _mixto: false };
+    e.gasto       += Number(c.gasto) || 0;
+    e.impresiones += Number(c.impresiones) || 0;
+    if (c.resultadoTipo) {
+      if (e.resultadoTipo && e.resultadoTipo !== c.resultadoTipo) e._mixto = true;
+      e.resultadoTipo = e.resultadoTipo || c.resultadoTipo;
+      e.resultado += Number(c.resultado) || 0;
+    }
+    acc.set(c.nombre, e);
+  }));
+  return [...acc.values()].map(e => {
+    if (e._mixto) { e.resultado = 0; e.resultadoTipo = null; }
+    e.costoResultado = e.resultado ? e.gasto / e.resultado : null;
+    delete e._mixto;
+    return e;
+  }).sort((a, b) => b.gasto - a.gasto);
+}
 
 function _filaAnuncio(c) {
   let resultado = 'Sin resultados en el período';
@@ -3415,7 +3514,7 @@ function _filaAnuncio(c) {
   return [c.nombre, c.gasto, resultado, costo, c.impresiones];
 }
 
-function _rehacerPills(keys, anio, anios) {
+function _rehacerPills(keys, anio, anios, trimestres) {
   const bar = document.querySelector('.period-bar');
   if (!bar) return;
   bar.querySelectorAll('.year-group').forEach(b => b.remove());
@@ -3462,6 +3561,9 @@ function _rehacerPills(keys, anio, anios) {
     return o;
   };
   menu.appendChild(opt('ytd', `Todo ${anio}`));
+  /* Los trimestres van entre el anual y los meses: son el escalon intermedio
+     de agregacion, y en descendente igual que los meses. */
+  [...(trimestres || [])].reverse().forEach(t => menu.appendChild(opt(t.key, `${t.label} ${anio}`)));
   /* Descendente: el mes mas nuevo arriba, que es el que se mira primero.
      'Todo' queda en la cabecera porque es el agregado, no un mes mas. */
   [...keys].reverse().forEach(k => menu.appendChild(opt(k, `${_MES_LARGO[k] || _cap(k)} ${anio}`)));
@@ -3520,6 +3622,27 @@ function hydrateMeta(j, anioPedido) {
     };
   });
 
+  /* ── 1bis. KPIs por trimestre ────────────────────────────── */
+  const trimestres = [];
+  Object.keys(_Q_KEY).forEach(q => {
+    const ms = meses.filter(m => _Q_KEY[q].includes(m.key));
+    if (!ms.length) return;
+    const prev = trimestres.length ? trimestres[trimestres.length - 1] : null;
+    const tot = { conv:  _sumaCampo(ms, 'conv'),  gasto: _sumaCampo(ms, 'gasto'),
+                  inter: _sumaCampo(ms, 'inter'), clics: _sumaCampo(ms, 'clics') };
+    const QL    = q.toUpperCase();
+    const rango = `${ms[0].key}–${ms[ms.length - 1].key}`;
+    META_DATA[q] = {
+      period:  `${QL} ${anio} · Instagram · ${rango}${ms.some(m => m.parcial) ? ' (parcial)' : ''}`,
+      alcance: null,             dAlcance: ['neutral', 'alcance único · no se suma por trimestre'],
+      conv:    _fInt(tot.conv),  dConv:    _metaDelta(tot.conv,  prev && prev.tot.conv,  prev && prev.label, 'sin trimestre previo'),
+      gasto:   _fArs(tot.gasto), dGasto:   _metaDelta(tot.gasto, prev && prev.tot.gasto, prev && prev.label, 'sin trimestre previo'),
+      inter:   _fInt(tot.inter), dInter:   _metaDelta(tot.inter, prev && prev.tot.inter, prev && prev.label, 'sin trimestre previo'),
+      clics:   _fInt(tot.clics), dClics:   _metaDelta(tot.clics, prev && prev.tot.clics, prev && prev.label, 'sin trimestre previo'),
+    };
+    trimestres.push({ key: q, label: QL, tot, meses: ms, rango });
+  });
+
   /* ── 2. Acumulado del año ────────────────────────────────── */
   const y = bloque.ytd || {};
   const spanTxt = `ene–${ultimo.key} ${anio}`;
@@ -3557,12 +3680,13 @@ function hydrateMeta(j, anioPedido) {
 
   cargar('ytd', y.campanas || [], spanTxt);
   meses.forEach(m => cargar(m.key, m.campanas || [], _MES_LARGO[m.key].toLowerCase() + (m.parcial ? ` (${rangoTxt(m)})` : '')));
+  trimestres.forEach(t => cargar(t.key, _fusionarCampanas(t.meses), `${t.label} · ${t.rango} ${anio}`));
 
   const sub = document.getElementById('meta-chart-sub');
   if (sub) sub.textContent = `Evolución mensual · ${_cap(keys[0])}–${_cap(ultimo.key)} ${anio}`;
 
   /* ── 5. Repintar ─────────────────────────────────────────── */
-  _rehacerPills(keys, anio, anios);
+  _rehacerPills(keys, anio, anios, trimestres);
   /* Por defecto abre el período anual, no el último mes: el anual es la
      lectura de cabecera del informe; el mes es el detalle. */
   setPeriodo(_periodoManual && META_DATA[_currentMes] ? _currentMes : 'ytd');
@@ -3609,9 +3733,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyCollapse(localStorage.getItem('yiqi-nav-collapsed') !== '0');  // colapsado por default
 
+  _armarTrimestresCrm();
   setPeriodo('ytd');
   const _pk = document.getElementById('period-picker');
   if (_pk) _pk.addEventListener('ds-picker:change', e => setPeriodo(e.detail.value, true));
+  const _pkPlan = document.getElementById('plan-picker');
+  if (_pkPlan) _pkPlan.addEventListener('ds-picker:change', e => planSet(e.detail.value));
   setupSearch('search-anuncios',     'tabla-anuncios',     'empty-anuncios');
   setupSearch('search-concretadas', 'tabla-concretadas', 'empty-concretadas');
   setupSearch('search-nuevas',      'tabla-nuevas',      'empty-nuevas');
