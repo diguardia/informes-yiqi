@@ -48,12 +48,6 @@
     .view-opt.active { background:var(--cyan-soft); color:var(--cyan); }
     .view-opt svg { width:13px; height:13px; }
 
-    .theme-toggle { display:inline-flex; gap:2px; background:var(--bg-soft); border-radius:var(--radius-pill); padding:3px; }
-    .theme-opt { display:inline-flex; align-items:center; justify-content:center; width:30px; height:28px;
-      color:var(--muted-2); border-radius:var(--radius-pill); background:transparent; border:none; cursor:pointer; transition:all var(--tr); }
-    .theme-opt:hover:not(.active) { color:var(--text); }
-    .theme-opt.active { background:var(--cyan-soft); color:var(--cyan); }
-
     /* ── STATS STRIP ── */
     .stats { display:flex; flex-wrap:wrap; gap:22px; padding:12px 22px; border-bottom:1px solid var(--line);
       background:var(--bg-elev); flex-shrink:0; }
@@ -178,38 +172,6 @@
     }
 
     /* ── VISTA 4 · FLUJO (configurador iA Ready) ── */
-    .flowwrap { flex:1; overflow-y:auto; padding:34px 22px;
-      background:radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0/26px 26px; }
-    .flow { max-width:600px; margin:0 auto; }
-    .flow-kick { margin:0; font:600 11px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--cyan); }
-    .flow-title { margin:10px 0 6px; font:800 30px/1.1 var(--display); letter-spacing:-.02em; color:var(--text); }
-    .flow-sub { margin:0 0 24px; font:400 14px/1.55 var(--sans); color:var(--muted); }
-    .flow-sub b { color:var(--text); font-weight:600; }
-    .flow-steps { display:flex; flex-direction:column; gap:8px; position:relative; }
-    .flow-conn { position:absolute; left:19px; top:34px; bottom:34px; width:2px; background:var(--line-strong); opacity:.5; z-index:0; }
-    .flow-step { --c:var(--muted); position:relative; z-index:1; display:flex; align-items:center; gap:12px;
-      padding:12px 14px; border-radius:var(--radius); background:var(--bg-elev-2); transition:background var(--tr); }
-    .flow-step.api { background:var(--cyan-soft); }
-    .flow-dot { width:12px; height:12px; border-radius:50%; background:var(--c); flex-shrink:0; }
-    .flow-body { flex:1; min-width:0; }
-    .flow-lbl { font:600 10px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2); margin-bottom:5px; }
-    .flow-sel { width:100%; appearance:none; -webkit-appearance:none; background:var(--bg-elev); color:var(--text);
-      border:1px solid var(--line); border-radius:var(--radius-sm); padding:8px 30px 8px 11px; font:600 13px var(--sans); cursor:pointer;
-      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238a8f99' stroke-width='2'><path d='M2 4l4 4 4-4'/></svg>");
-      background-repeat:no-repeat; background-position:right 11px center; }
-    .flow-sel:focus { outline:none; border-color:var(--c); box-shadow:0 0 0 3px var(--bg-soft); }
-    .flow-api { flex-shrink:0; display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border-radius:var(--radius-pill);
-      border:1px solid var(--line); background:transparent; color:var(--muted); font:600 11px var(--mono); letter-spacing:.06em; cursor:pointer; transition:all var(--tr); }
-    .flow-api .sw { width:26px; height:15px; border-radius:var(--radius-pill); background:var(--line-strong); position:relative; transition:background var(--tr); }
-    .flow-api .sw::after { content:''; position:absolute; top:2px; left:2px; width:11px; height:11px; border-radius:50%; background:var(--text); transition:transform var(--tr); }
-    .flow-step.api .flow-api { color:var(--cyan); border-color:var(--cyan); }
-    .flow-step.api .flow-api .sw { background:var(--cyan); }
-    .flow-step.api .flow-api .sw::after { transform:translateX(11px); }
-    .flow-sum { margin-top:18px; padding:14px 16px; border-radius:var(--radius); background:var(--cyan-soft); font:400 13px/1.6 var(--sans); color:var(--text); }
-    .flow-sum .path { font-weight:600; }
-    .flow-sum .api-n { color:var(--cyan); font-weight:700; }
-    .flow-sum .note { display:block; margin-top:5px; color:var(--muted); }
-
     @media (max-width:760px) {
       .legend { display:none; }
       .stats { gap:16px; }
@@ -235,7 +197,7 @@
       .view-toggle { flex-direction:column; background:transparent; padding:0; gap:4px; }
       .view-opt { justify-content:flex-start; padding:11px 12px; gap:10px; }
       .view-opt svg { display:inline-block; }
-      .theme-toggle { align-self:center; }
+      .theme-cycle { align-self:center; }
       /* Alcance: filtro y controles compactos */
       .scope-bottombar { left:10px; right:10px; bottom:10px; gap:8px; }
       .scope-tags { gap:6px; }
@@ -243,9 +205,6 @@
       .scope-ctls { gap:6px; }
       .scope-ctl { width:34px; height:34px; }
       .scope-style { font-size:11px; padding:7px 26px 7px 10px; }
-      /* Flujo */
-      .flowwrap { padding:22px 16px; }
-      .flow-title { font-size:24px; }
     }
   </style>
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -286,22 +245,8 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/></svg>
         Alcance
       </button>
-      <button class="view-opt" data-view="flow" onclick="setView('flow')" aria-label="Vista configurador de flujo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h6a4 4 0 0 1 4 4M7 18h6a4 4 0 0 0 4-4"/></svg>
-        Flujo
-      </button>
     </div>
-    <div class="theme-toggle" role="group" aria-label="Tema">
-      <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <button class="theme-opt" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </button>
-      <button class="theme-opt" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </button>
-    </div>
+    <button class="theme-cycle" type="button" data-theme-cycle aria-label="Cambiar tema"><svg class="tc-dark" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg><svg class="tc-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><svg class="tc-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
   </div>
 
 
@@ -377,18 +322,6 @@
     </div>
   </section>
 
-  <!-- Vista 4: Flujo — configurador del ciclo de una orden + iA Ready -->
-  <section class="view" id="view-flow" aria-label="Configurador de flujo iA Ready" hidden>
-    <div class="flowwrap">
-      <div class="flow">
-        <p class="flow-kick">iA Ready · Platform</p>
-        <h2 class="flow-title">Configurá el flujo de una orden.</h2>
-        <p class="flow-sub">YiQi orquesta cada etapa del ciclo. Elegí la integración de cada paso — o conectalo por <b>API</b> para que lo opere una app o un partner externo, sin tocar el core.</p>
-        <div class="flow-steps" id="flowSteps"></div>
-        <div class="flow-sum" id="flowSum"></div>
-      </div>
-    </div>
-  </section>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1023,55 +956,6 @@ function scopeRebuild(){       // re-crear materiales con colores del tema actua
   scopeStartLoop();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   VISTA 4 · Flujo — configurador del ciclo de una orden + iA Ready
-   ═══════════════════════════════════════════════════════════════ */
-const FLOW_STEPS = [
-  { c:'var(--green)',  label:'Entra la orden',     opts:['Mercado Libre','Shopify','Tienda Nube','VTEX','WooCommerce','Magento','Tornado Store','Drubbit','Frávega','Megatone','OnCity','IRSA','Provincia Compras'] },
-  { c:'var(--amber)',  label:'Se procesa',         opts:['Reserva de stock','Costeo y pricing','Reposición (orden de compra)','Pedido en depósito'] },
-  { c:'var(--violet)', label:'Se factura',         opts:['ARCA (Argentina)','DGI (Uruguay)'] },
-  { c:'var(--blue)',   label:'Se despacha',        opts:['Mercado Envíos','Sell2Ship','Enviopack','Pulpo','Krikos360'] },
-  { c:'var(--cyan)',   label:'Se cobra y asienta', opts:['Interbanking','Asiento contable automático','Conciliación bancaria'] },
-];
-let flowState=null;
-
-function buildFlow(){
-  const cont=document.getElementById('flowSteps');
-  if(!cont || cont.dataset.built) return;
-  flowState=FLOW_STEPS.map(()=>({sel:0, api:false}));
-  const conn=document.createElement('div'); conn.className='flow-conn'; cont.appendChild(conn);
-  FLOW_STEPS.forEach((s,i)=>{
-    const row=document.createElement('div'); row.className='flow-step'; row.style.setProperty('--c', s.c);
-    const dot=document.createElement('div'); dot.className='flow-dot';
-    const body=document.createElement('div'); body.className='flow-body';
-    const lab=document.createElement('div'); lab.className='flow-lbl'; lab.textContent=s.label;
-    const sel=document.createElement('select'); sel.className='flow-sel'; sel.setAttribute('aria-label', s.label);
-    s.opts.forEach((o,j)=>{ const op=document.createElement('option'); op.value=j; op.textContent=o; sel.appendChild(op); });
-    sel.addEventListener('change',()=>{ flowState[i].sel=+sel.value; renderFlow(); });
-    body.appendChild(lab); body.appendChild(sel);
-    const api=document.createElement('button'); api.className='flow-api'; api.type='button';
-    api.innerHTML='<span class="sw"></span>API'; api.setAttribute('aria-pressed','false');
-    api.title='iA Ready: conectar este paso por API (app o partner externo)';
-    api.addEventListener('click',()=>{ flowState[i].api=!flowState[i].api; api.setAttribute('aria-pressed', String(flowState[i].api)); renderFlow(); });
-    row.appendChild(dot); row.appendChild(body); row.appendChild(api);
-    cont.appendChild(row);
-  });
-  cont.dataset.built='1';
-  renderFlow();
-}
-
-function renderFlow(){
-  const rows=document.querySelectorAll('#flowSteps .flow-step');
-  rows.forEach((r,i)=> r.classList.toggle('api', flowState[i].api));
-  const path=FLOW_STEPS.map((s,i)=> s.opts[flowState[i].sel]).join(' → ');
-  const n=flowState.filter(s=>s.api).length;
-  const note = n>0
-    ? 'Esos '+n+' paso'+(n>1?'s':'')+' los puede operar una app o un partner sobre YiQi, sin tocar el core.'
-    : 'Prendé “API” en cualquier paso para exponerlo a una app externa (iA Ready).';
-  document.getElementById('flowSum').innerHTML =
-    '<span class="path">'+path+'</span><span class="note">Pasos por API (iA Ready): <span class="api-n">'+n+'</span> · '+note+'</span>';
-}
-
 /* ── Menú hamburguesa (mobile) ────────────────────────────────── */
 function setMenu(open){
   const a=document.getElementById('topbarActions'), bd=document.getElementById('menuBackdrop'), b=document.querySelector('.topbar-burger');
@@ -1084,25 +968,45 @@ function closeMenu(){ setMenu(false); }
 window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeMenu(); });   // Esc cierra
 
 /* ── Selector de vista ────────────────────────────────────────── */
+const VIEWS = ['map','grid','scope'];
 function setView(v){
+  // 'flow' se elimino el 07/08/2026: un localStorage viejo puede traerlo y
+  // dejaria las tres vistas ocultas.
+  if(!VIEWS.includes(v)) v = 'scope';
   closeMenu();
   document.getElementById('view-map').hidden   = (v !== 'map');
   document.getElementById('view-grid').hidden  = (v !== 'grid');
   document.getElementById('view-scope').hidden = (v !== 'scope');
-  document.getElementById('view-flow').hidden  = (v !== 'flow');
   document.querySelectorAll('.view-opt').forEach(b => b.classList.toggle('active', b.dataset.view === v));
   localStorage.setItem('yiqi-view', v);
   if(v === 'map') fit();
   if(v === 'scope'){ if(!scope3dInited) scopeInit(); else scopeStartLoop(); }
   else scopeStopLoop();
-  if(v === 'flow') buildFlow();
 }
 
 /* ── Tema ─────────────────────────────────────────────────────── */
 const _mq=window.matchMedia('(prefers-color-scheme: dark)');
 function resolveTheme(v){ return v==='system' ? (_mq.matches?'dark':'light') : v; }
 function applyTheme(v){ document.documentElement.dataset.theme=resolveTheme(v); }
-function updateSwitch(v){ document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.val===v)); }
+/* El control canonico (.theme-cycle) muestra un solo glifo y cicla
+   Oscuro -> Sistema -> Claro. El estado viaja en data-pref, que es lo que el
+   CSS del DS lee para elegir que svg mostrar. La conducta esta replicada aca
+   porque este archivo no carga yiqi-runtime.js. 07/08/2026. */
+const THEME_CYCLE = ['dark','system','light'];
+const THEME_LABEL = {dark:'Tema oscuro', system:'Tema del sistema', light:'Tema claro'};
+function updateSwitch(v){
+  document.querySelectorAll('[data-theme-cycle]').forEach(b=>{
+    b.dataset.pref = v;
+    b.setAttribute('aria-label', THEME_LABEL[v] + ' — clic para cambiar');
+    b.title = THEME_LABEL[v];
+  });
+}
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-theme-cycle]');
+  if(!b) return;
+  const cur = localStorage.getItem('yiqi-theme') || 'system';
+  setTheme(THEME_CYCLE[(THEME_CYCLE.indexOf(cur) + 1) % THEME_CYCLE.length]);
+});
 function setTheme(v){ localStorage.setItem('yiqi-theme',v); applyTheme(v); updateSwitch(v);
   if(scope3dInited) setTimeout(scopeRebuild, 60); }   // re-colorear la escena 3D (skill yiqi-3d)
 _mq.addEventListener('change',()=>{ if((localStorage.getItem('yiqi-theme')||'system')==='system'){ applyTheme('system'); if(scope3dInited) setTimeout(scopeRebuild,60); } });

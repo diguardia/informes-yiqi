@@ -162,22 +162,39 @@ const CAT='https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html';
 
 /* ── Datos: SITIO ── */
 const ROOT_SITE={label:'Home',sub:'/',url:BASE+'/',st:'root',children:[
- {label:'Navegación',st:'grp',children:[
-  {label:'IA Ready',sub:'/ia-ready.html',st:'pub'},{label:'API Docs',sub:'/api-docs.html',st:'pub'},
+ {label:'Navegación',desc:'menú de site-header.js · 07/08/2026',st:'grp',children:[
+  {label:'iAready',sub:'/ia-ready.html',st:'pub'},{label:'API',sub:'/api-docs.html',desc:'subió a primer nivel del menú',st:'pub'},
   {label:'Novedades',sub:'/novedades.html',st:'pub'},{label:'Capacitaciones',sub:'/capacitaciones.html',st:'pub'},
   {label:'FAQ',sub:'/faq.html',st:'pub'},{label:'Acerca de',sub:'/acerca-de.html',st:'pub'},
-  {label:'Ayuda ERP',sub:'/ayuda-erp.html',st:'pub',children:[{label:'Centro de ayuda (Google Sites)',sub:'sites.google.com/yiqi.com.ar/ayudaerp',url:'https://sites.google.com/yiqi.com.ar/ayudaerp/inicio',st:'ext'}]},{label:'Contacto',sub:'/contacto.html',st:'pub'}]},
+  {label:'Ayuda ERP',sub:'/ayuda-erp.html',desc:'el menú ya no apunta acá',st:'pub',children:[{label:'Centro de ayuda ERP',sub:'ayudaerp.yiqi.com.ar',url:'https://ayudaerp.yiqi.com.ar/',desc:'reemplaza a la wiki de Google Sites',st:'ext'}]},{label:'Contacto',sub:'/contacto.html',st:'pub'}]},
  {label:'Showcase',desc:'embebidas en Home',st:'grp',children:[
   {label:'Panel ERP',sub:'/erp-panel.html',st:'pub'},{label:'Panel mobile',sub:'/erp-mobile.html',st:'pub'}]},
+ {label:'Partners',desc:'el menú lleva las 6 a En construcción',st:'grp',children:[
+  {label:'Tiendanube',sub:'/tiendanube.html',st:'pre'},{label:'Enviopack',sub:'/enviopack.html',st:'pre'},
+  {label:'Interbanking',sub:'/interbanking.html',st:'pre'},{label:'Drubbit',sub:'/drubbit.html',st:'pre'},
+  {label:'Sell2Ship',sub:'/sell2ship.html',st:'pre'},{label:'TornadoStore',sub:'/tornado.html',st:'pre'}]},
  {label:'Pre-lanzamiento',desc:'fuera del sitemap',st:'grp',children:[
-  {label:'Marketplace',sub:'/marketplace.html',st:'pre',children:[{label:'Ficha app · Inventariado Mobile',sub:'/app.html',st:'pre'}]},{label:'Tienda Nube',sub:'/tiendanube.html',st:'pre'},
-  {label:'Enviopack',sub:'/enviopack.html',st:'pre'},{label:'Interbanking',sub:'/interbanking.html',st:'pre'},
-  {label:'Drubbit',sub:'/drubbit.html',st:'pre'},{label:'Sell2Ship',sub:'/sell2ship.html',st:'pre'},
-  {label:'Tornado',sub:'/tornado.html',st:'pre'}]},
+  {label:'Marketplace',sub:'/marketplace.html',st:'pre',children:[
+   {label:'YiQi Analytics Pro',sub:'/app.html?id=yiqi-analytics-pro',st:'pre'},
+   {label:'Front de Proveedores OCR',sub:'/app.html?id=front-de-proveedores-ocr',st:'pre'},
+   {label:'YiQi POS',sub:'/app.html?id=yiqi-pos',st:'pre'},
+   {label:'Picking List',sub:'/app.html?id=picking-list',st:'pre'},
+   {label:'Consulta de pedidos',sub:'/app.html?id=consulta-de-pedidos',st:'pre'},
+   {label:'Inventariado Mobile',sub:'/app.html?id=inventariado-mobile',desc:'en desarrollo',st:'pre'},
+   {label:'vantig.ai',sub:'/app.html?id=vantig-ai',desc:'app de partner · en desarrollo',st:'pre'}]},
+  {label:'Precotizador',sub:'/precotizador.html',st:'pre'}]},
  {label:'Borradores',st:'grp',children:[
-  {label:'SplitText',sub:'/efecto-splittext.html',st:'draft'}]},
+  {label:'SplitText',sub:'/efecto-splittext.html',st:'draft'},
+  {label:'Staging',sub:'/staging.html',st:'draft'},
+  {label:'Ayuda (prueba Docusaurus)',sub:'/ayuda-docusaurus.html',st:'draft'}]},
  {label:'Sistema',st:'grp',children:[
-  {label:'Gracias',sub:'/gracias.html',st:'sys'},{label:'404',sub:'/404.html',st:'sys'}]},
+  {label:'Gracias',sub:'/gracias.html',st:'sys'},{label:'404',sub:'/404.html',st:'sys'},
+  {label:'En construcción',sub:'/en-construccion.html',desc:'destino de los 6 partners',st:'sys'}]},
+ {label:'Otras propiedades',desc:'subdominios fuera de yiqi.com.ar',st:'grp',children:[
+  {label:'Centro de ayuda',sub:'ayudaerp.yiqi.com.ar',url:'https://ayudaerp.yiqi.com.ar/',st:'ext'},
+  {label:'Analytics Pro',sub:'analytics.yiqi.com.ar',url:'https://analytics.yiqi.com.ar/',st:'ext'},
+  {label:'POS',sub:'pos.yiqi.com.ar',url:'https://pos.yiqi.com.ar/publish.htm',st:'ext'},
+  {label:'Informes',sub:'informes.yiqi.com.ar',url:'https://informes.yiqi.com.ar/',desc:'acá vive este árbol',st:'ext'}]},
  {label:'Externos',st:'grp',children:[
   {label:'Login',sub:'me.yiqi.com.ar',url:'https://me.yiqi.com.ar',st:'ext'},
   {label:'Demo',sub:'calendly',url:'https://calendly.com/javierperez/meet-30-demo',st:'ext'},
@@ -188,7 +205,6 @@ const ROOT_SITE={label:'Home',sub:'/',url:BASE+'/',st:'root',children:[
 ]};
 
 /* ── Datos: DESIGN SYSTEM (catálogo) ── */
-const D=(label,a,children)=>({label,a,st:children?'grp':'comp',children});
 const ROOT_DS={label:'Catálogo DS',sub:'v1.2.7',url:CAT,st:'root',children:[
  {label:'Inicio',st:'grp',children:[{label:'00 Novedades',a:'release-notes',st:'comp'},{label:'Showcase de ejemplos',a:'',url:CAT.replace('yiqi-design-system.html','examples/showcase.html'),st:'comp'}]},
  {label:'Fundamentos',st:'grp',children:[
@@ -247,12 +263,14 @@ const ROOT_INF={label:'Informes',sub:'carpeta /Informes',st:'root',children:[
   {label:'ECOSAN · Junio 2026',sub:'YiQi_Informe_ECOSAN_202606.html',url:'YiQi_Informe_ECOSAN_202606.html',st:'pre'}]},
  {label:'Otros',st:'grp',children:[
   {label:'Ecosistema',sub:'YiQi_Ecosistema.html',url:'YiQi_Ecosistema.html',st:'pub'},
+  {label:'Conceptos de API',sub:'YiQi_Conceptos_API_v1.0.html',url:'YiQi_Conceptos_API_v1.0.html',st:'pub'},
+  {label:'Encuesta de experiencia',sub:'encuesta-experiencia-yiqi.html',url:'encuesta-experiencia-yiqi.html',st:'pub'},
   {label:'Comercial (Meta + CRM)',sub:'comercial.html',url:'comercial.html',st:'ext'},
   {label:'Árbol del sitio (este)',sub:'YiQi_Arbol_del_Sitio.html',url:'YiQi_Arbol_del_Sitio.html',st:'ext'}]}
 ]};
 
 const SUBJ={
- site:{root:ROOT_SITE,kind:'site',title:'Árbol del sitio — yiqi.com.ar',sub:'22 páginas · 11 públicas · 8 pre-lanzamiento · 1 borrador · 2 de sistema',
+ site:{root:ROOT_SITE,kind:'site',title:'Árbol del sitio — yiqi.com.ar',sub:'31 páginas · 10 públicas · 15 pre-lanzamiento · 3 borradores · 3 de sistema',
    legend:'<span class="badge badge-green">Pública</span><span class="badge badge-amber">Pre-lanzamiento</span><span class="badge badge-cyan">Borrador</span><span class="badge">Sistema</span><span class="badge badge-blue">Externo</span>'},
  ds:{root:ROOT_DS,kind:'ds',title:'Árbol del Design System — catálogo v1.2.7',sub:'8 grupos · 47 secciones documentadas · fuente: yiqi-imagen',
    legend:'<span class="badge badge-cyan">Grupo</span><span class="badge">Componente</span><span class="badge badge-blue">Sub-componente</span>'},
