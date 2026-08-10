@@ -206,6 +206,12 @@
       .scope-ctl { width:34px; height:34px; }
       .scope-style { font-size:11px; padding:7px 26px 7px 10px; }
     }
+
+    /* Incrustado en un iframe: solo la escena. */
+    html.incrustado .topbar,
+    html.incrustado .legend,
+    html.incrustado .hint { display: none; }
+    html.incrustado body { height: 100vh; }
   </style>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -1018,6 +1024,13 @@ function setView(v){
   else scopeStopLoop();
 }
 
+/* Cuando corre incrustado, el tema lo manda la pagina de arriba. */
+window.addEventListener('message', function (e) {
+  if (!e.data || e.data.tipo !== 'yiqi-tema') return;
+  applyTheme(e.data.valor);
+  if (typeof scope3dInited !== 'undefined' && scope3dInited) setTimeout(scopeRebuild, 60);
+});
+
 /* ── Tema ─────────────────────────────────────────────────────── */
 const _mq=window.matchMedia('(prefers-color-scheme: dark)');
 function resolveTheme(v){ return v==='system' ? (_mq.matches?'dark':'light') : v; }
@@ -1050,7 +1063,14 @@ document.addEventListener('DOMContentLoaded',()=>{
   applyTheme(stored); updateSwitch(stored);
   render();
   buildGrid();
-  setView(localStorage.getItem('yiqi-view')||'scope');
+  /* Modo incrustado: ?vista=scope&chrome=0&tema=dark deja la escena sola,
+     sin topbar ni leyenda, para embeberla en la home por iframe. La vista y
+     el tema vienen del anfitrion y no se guardan en localStorage.
+     10/08/2026. */
+  var q = new URLSearchParams(location.search);
+  if (q.get('chrome') === '0') document.documentElement.classList.add('incrustado');
+  if (q.get('tema')) applyTheme(q.get('tema'));
+  setView(q.get('vista') || localStorage.getItem('yiqi-view') || 'scope');
 });
 </script>
 </body>
