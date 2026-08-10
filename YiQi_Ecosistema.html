@@ -207,11 +207,23 @@
       .scope-style { font-size:11px; padding:7px 26px 7px 10px; }
     }
 
-    /* Incrustado en un iframe: solo la escena. */
+    /* Incrustado en un iframe: solo la escena, sin nada de cromo. La barra de
+       vistas, los filtros por categoria, el selector de estilo, los controles
+       de zoom y el cartel de ayuda se esconden — quien mira la home no vino a
+       configurar la visualizacion. 10/08/2026. */
     html.incrustado .topbar,
     html.incrustado .legend,
-    html.incrustado .hint { display: none; }
+    html.incrustado .hint,
+    html.incrustado .scope-copy,
+    html.incrustado .scope-tags,
+    html.incrustado .scope-hint,
+    html.incrustado .scope-bottombar,
+    html.incrustado .scope-style,
+    html.incrustado .scope-ctls { display: none; }
     html.incrustado body { height: 100vh; }
+    /* Sin barras, el lienzo ocupa todo. */
+    html.incrustado .scope,
+    html.incrustado .scope-canvas { inset: 0; height: 100%; }
   </style>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
