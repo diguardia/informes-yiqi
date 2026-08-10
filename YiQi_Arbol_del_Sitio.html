@@ -100,11 +100,7 @@ html{color-scheme:dark} html[data-theme="light"]{color-scheme:light}
       <div class="sub" id="subtitle"></div>
     </div>
     <div class="toolbar">
-      <div class="sb-theme-switch" role="group" aria-label="Tema de color">
-        <button class="theme-opt" type="button" data-val="dark" aria-label="Oscuro"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
-        <button class="theme-opt" type="button" data-val="system" aria-label="Sistema"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
-        <button class="theme-opt" type="button" data-val="light" aria-label="Claro"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
-      </div>
+      <button class="theme-cycle" type="button" data-theme-cycle aria-label="Cambiar tema"><svg class="tc-dark" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg><svg class="tc-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><svg class="tc-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
     </div>
   </div>
 
@@ -426,6 +422,34 @@ document.getElementById('tree').addEventListener('click',function(e){ const a=e.
 applySubject(SUBJ.site);
 syncWide();
 requestAnimationFrame(()=>render('r'));
+</script>
+
+<!-- Control de tema canonico (.theme-cycle). Reemplaza al toggle de tres
+     botones (.theme-opt / .sb-theme-switch), que no existe en styles.css.
+     El estado va en data-pref. Si la pagina define setTheme(), se delega. 07/08/2026. -->
+<script>
+(function(){
+  var CY=['dark','system','light'], KEY='yiqi-theme';
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');
+  function pref(){ try{ return localStorage.getItem(KEY)||'system'; }catch(e){ return 'system'; } }
+  function paint(v){ document.querySelectorAll('[data-theme-cycle]').forEach(function(b){
+    b.dataset.pref=v; b.title=({dark:'Tema oscuro',system:'Tema del sistema',light:'Tema claro'})[v]; }); }
+  function apply(v){
+    if (typeof window.setTheme === 'function') { window.setTheme(v); }
+    else {
+      try{ localStorage.setItem(KEY,v); }catch(e){}
+      document.documentElement.dataset.theme = (v==='system' ? (mq.matches?'dark':'light') : v);
+    }
+    paint(v);
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-theme-cycle]');
+    if(!b) return;
+    apply(CY[(CY.indexOf(pref())+1) % CY.length]);
+  });
+  function init(){ paint(pref()); }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
 </script>
 </body>
 </html>

@@ -905,11 +905,7 @@
        yiqi-runtime.js convierte este .theme-toggle en el boton unico del
        canonico, igual que al del sidebar; los dos quedan sincronizados. -->
   <div class="topbar-theme">
-    <div class="theme-toggle" role="group" aria-label="Tema">
-      <button class="theme-opt" type="button" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
-      <button class="theme-opt" type="button" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
-      <button class="theme-opt" type="button" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
-    </div>
+    <button class="theme-cycle" type="button" data-theme-cycle aria-label="Cambiar tema"><svg class="tc-dark" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg><svg class="tc-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><svg class="tc-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
   </div>
 </header>
 
@@ -994,27 +990,7 @@
 
     <!-- DS 1.2.7.3 — theme switch al pie del sidebar (modelo .sb-theme-switch) -->
     <div class="sidebar-footer sidebar-theme">
-      <div class="theme-toggle" role="group" aria-label="Tema">
-        <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
-        <button class="theme-opt" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-          </svg>
-        </button>
-        <button class="theme-opt" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-        </button>
-      </div>
+      <button class="theme-cycle" type="button" data-theme-cycle aria-label="Cambiar tema"><svg class="tc-dark" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg><svg class="tc-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><svg class="tc-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
     </div>
 
     <div class="sidebar-ctrls">
@@ -3788,6 +3764,36 @@ document.addEventListener('DOMContentLoaded', () => {
     tick(); setInterval(tick, 15000);
   })();
 });
+</script>
+
+<!-- Control de tema canonico (.theme-cycle). Reemplaza al toggle de tres
+     botones (.theme-opt / .yqsw), que no existe en styles.css. El estado va en
+     data-pref, que es lo que el CSS del DS lee para elegir el glifo. Si la
+     pagina ya define setTheme(), se delega en ella para no romper lo que haga
+     ademas (recolorear escenas 3D, graficos). 07/08/2026. -->
+<script>
+(function(){
+  var CY=['dark','system','light'], KEY='yiqi-theme';
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');
+  function pref(){ try{ return localStorage.getItem(KEY)||'system'; }catch(e){ return 'system'; } }
+  function paint(v){ document.querySelectorAll('[data-theme-cycle]').forEach(function(b){
+    b.dataset.pref=v; b.title=({dark:'Tema oscuro',system:'Tema del sistema',light:'Tema claro'})[v]; }); }
+  function apply(v){
+    if (typeof window.setTheme === 'function') { window.setTheme(v); }
+    else {
+      try{ localStorage.setItem(KEY,v); }catch(e){}
+      document.documentElement.dataset.theme = (v==='system' ? (mq.matches?'dark':'light') : v);
+    }
+    paint(v);
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-theme-cycle]');
+    if(!b) return;
+    apply(CY[(CY.indexOf(pref())+1) % CY.length]);
+  });
+  function init(){ paint(pref()); }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
 </script>
 </body>
 </html>

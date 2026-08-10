@@ -386,15 +386,49 @@ function prepare(root){
   return {nodes,L:l,maxD:Math.max.apply(null,nodes.map(n=>n.depth))};
 }
 
-const DR=175;
+const DR=175, GAP=16;
+/* El reparto angular ya no es uniforme: cada hoja recibe un arco proporcional
+   a lo que ocupa *sobre la tangente*, que no es su ancho sino
+   |w·cos(a)| + |h·sin(a)| — arriba y abajo la caja se apoya de costado y come
+   mucho arco; a los lados, casi nada. Como esa extension depende del angulo y
+   el angulo depende de la extension, converge en tres iteraciones. El radio de
+   las hojas sale del perimetro que hace falta, no de una constante: con arcos
+   iguales, "Clientes y Proveedores" (176px) entraba en una ranura de 55px y se
+   pisaba con sus vecinos. Medido: 15 pares solapados antes. 07/08/2026. */
 function layout(M){
-  const R=M.maxD*DR, cx=R+170, cy=R+170;
-  M.nodes.forEach(n=>{
-    const r=n.depth*DR, a=(n.pos/M.L)*2*Math.PI;
-    n.x = cx + r*Math.sin(a);
-    n.y = cy - r*Math.cos(a);
+  const hojas = M.nodes.filter(n => !n.children.length);
+  const n1 = hojas.length || 1;
+  let ang = hojas.map((n, i) => (i / n1) * 2 * Math.PI);
+  let rHoja = M.maxD * DR;
+
+  for (let it = 0; it < 3; it++) {
+    const ext = hojas.map((n, i) =>
+      Math.abs(n.w * Math.cos(ang[i])) + Math.abs(n.h * Math.sin(ang[i])) + GAP);
+    const total = ext.reduce((a, b) => a + b, 0);
+    rHoja = Math.max(M.maxD * DR, total / (2 * Math.PI));
+    let acc = 0;
+    ang = ext.map(e => { const a = ((acc + e / 2) / total) * 2 * Math.PI; acc += e; return a; });
+  }
+
+  hojas.forEach((n, i) => { n.ang = ang[i]; });
+  /* Los padres se centran entre sus hijos; se recorre de hoja a raiz. */
+  for (let d = M.maxD - 1; d >= 0; d--) {
+    M.nodes.filter(n => n.depth === d && n.children.length).forEach(n => {
+      const as = n.children.map(c => c.ang);
+      n.ang = as.reduce((a, b) => a + b, 0) / as.length;
+    });
+  }
+
+  const anchoMax = Math.max.apply(null, M.nodes.map(n => n.w));
+  const R = rHoja + anchoMax / 2 + 40;
+  const cx = R, cy = R;
+  M.nodes.forEach(n => {
+    const r = M.maxD ? (n.depth / M.maxD) * rHoja : 0;
+    const a = n.ang || 0;
+    n.x = cx + r * Math.sin(a);
+    n.y = cy - r * Math.cos(a);
   });
-  return {w:cx*2, h:cy*2};
+  return {w: cx * 2, h: cy * 2};
 }
 function edge(p,n){ const mx=(p.x+n.x)/2, my=(p.y+n.y)/2; return `M${p.x} ${p.y} Q ${mx} ${my} ${n.x} ${n.y}`; }
 
