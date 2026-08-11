@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+  /* El tema llega por querystring en la carga (sin flash) y despues por
+     postMessage desde index.html, que manda el INVERTIDO al del sitio. */
+  (function(){var p=new URLSearchParams(location.search).get("theme");
+   if(p==="dark"||p==="light")document.documentElement.dataset.theme=p;})();
+</script>
+<title>YiQi Analytics Pro — vista de producto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- El canonico manda: la paleta, la tipografia y las sombras salen de
+     styles.css. Antes esta maqueta redeclaraba los 27 tokens de color en
+     un :root propio, asi que el dia que el sistema cambiaba un valor el
+     hero de la home se quedaba con el viejo y nadie se enteraba. -->
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   Maqueta de YiQi Analytics Pro para el hero de la home.
+   Datos ficticios. No es la app: es una ilustracion de la app.
+
+   Los tokens de abajo pisan SOLO geometria. El mockup se dibuja a
+   escala reducida dentro del frame del hero, asi que el radio, el alto
+   de topbar y el ancho de sidebar van un escalon abajo del canonico.
+   Color y tipografia salen del Design System.
+
+   Acento unico: cyan. El verde y el rojo aparecen SOLO en el chip de
+   variacion, donde significan algo. Los graficos son monocromos por
+   luminosidad: un ranking se lee mejor en una sola familia de color
+   que en seis. Sin bordes: profundidad por fondo y sombra.
+   ═══════════════════════════════════════════════════════════════════ */
+html
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+  font-size:12px;line-height:1.4;-webkit-font-smoothing:antialiased}
+
+/* ── Shell ───────────────────────────────────────────────────── */
+/* AP real: .topbar es fixed left:0 right:0 y .sidebar arranca en top:var(--topbar-h).
+   La barra cruza todo el ancho; la sidebar cuelga debajo. */
+.shell{display:grid;grid-template-rows:var(--topbar-h) 1fr;min-height:100vh}
+.under{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:0}
+.side{background:var(--bg-elev);display:flex;flex-direction:column;padding:8px 10px;
+  border-right:1px solid var(--line)}
+.main{display:flex;flex-direction:column;min-width:0}
+
+/* ── Topbar ──────────────────────────────────────────────────── */
+.top{height:var(--topbar-h);display:flex;align-items:center;gap:10px;
+  padding:0 20px;background:var(--bg-elev);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo{display:block;height:26px;width:auto;flex:none}
+/* .t-pill de Analytics Pro, tal cual: fondo neutro y texto muted.
+   No lleva el acento: es una etiqueta fija, no el dato que importa. */
+.tag{height:22px;display:inline-flex;align-items:center;padding:0 9px;
+  background:var(--bg-elev-2);border-radius:var(--radius-pill);
+  font:600 9px var(--mono);color:var(--muted-2);text-transform:uppercase;
+  letter-spacing:.08em;white-space:nowrap}
+.periodo{display:flex;align-items:center;gap:2px;background:var(--bg-soft);
+  padding:3px;border-radius:var(--radius-pill)}
+.periodo b{font:500 10.5px var(--sans);color:var(--muted);padding:4px 11px;
+  border-radius:var(--radius-pill);cursor:default}
+.periodo b.on{color:var(--text);background:var(--bg-elev-2);box-shadow:var(--shadow-sm)}
+.top-r{margin-left:auto;display:flex;align-items:center;gap:8px}
+.chip{display:flex;align-items:center;gap:7px;background:var(--bg-soft);
+  padding:4px 10px 4px 4px;border-radius:var(--radius-pill)}
+.av{width:20px;height:20px;border-radius:var(--radius-pill);background:var(--cyan-soft);
+  color:var(--cyan);font:600 8.5px var(--mono);display:grid;place-items:center}
+.chip span{font:500 10.5px var(--sans);color:var(--muted)}
+.act{font:600 10.5px var(--sans);color:var(--cyan);background:var(--cyan-soft);
+  padding:5px 12px;border-radius:var(--radius-pill)}
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+.grp{font:600 8px var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-2);padding:14px 10px 6px}
+.nl{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:var(--radius-sm);
+  color:var(--muted);font:500 11.5px var(--sans);cursor:default}
+.nl.on{background:var(--cyan-soft);color:var(--cyan)}
+.nl svg{width:13px;height:13px;color:currentColor;flex:none}
+.nl em{margin-left:auto;font:500 9px var(--mono);color:var(--muted-2);font-style:normal}
+.side-f{margin-top:auto;padding:10px;font:400 9px var(--mono);color:var(--muted-2);line-height:1.6}
+
+/* ── Contenido ───────────────────────────────────────────────── */
+/* Grilla de 12 columnas. Con 4 KPI y filas de 2-3 paneles las cards quedaban
+   enormes a 1440; con 6 KPI y 3-4 paneles por fila la densidad sube y cada
+   card baja de tamano sin achicar la tipografia. */
+.body{padding:12px 14px 16px;display:grid;gap:10px;align-content:start;overflow:hidden}
+.row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.c4{grid-column:span 4}
+.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c12{grid-column:span 12}
+
+.card{background:var(--bg-elev-2);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm);padding:11px 12px;min-width:0}
+
+/* KPI — la cifra es neutra; el color vive solo en el chip */
+.k-lab{font:600 8px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted-2)}
+.k-val{font:500 18px var(--display);letter-spacing:-.025em;color:var(--text);margin:7px 0 0}
+.k-foot{display:flex;align-items:center;gap:7px;margin-top:9px}
+.d{font:500 9.5px var(--mono);padding:2px 6px;border-radius:var(--radius-xs)}
+.d.up{color:var(--green);background:var(--green-soft)}
+.d.dn{color:var(--red);background:var(--red-soft)}
+.d.eq{color:var(--muted-2);background:var(--bg-soft)}
+.k-note{font:400 9.5px var(--mono);color:var(--muted-2)}
+.spark{margin-top:10px;display:block;width:100%;height:22px;overflow:visible}
+
+/* Cabecera de panel */
+.hd{display:flex;align-items:baseline;gap:9px;margin-bottom:2px}
+.kick{font:600 8px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.hd em{margin-left:auto;font:400 9px var(--mono);color:var(--muted-2);font-style:normal}
+.ttl{font:600 12px var(--sans);letter-spacing:-.02em;color:var(--text);margin:1px 0 10px}
+
+/* Barras horizontales — monocromas, jerarquia por opacidad */
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:98px 1fr 76px 42px;align-items:center;gap:10px}
+.bar>u{font:400 10.5px var(--sans);color:var(--muted);text-decoration:none;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trk{height:5px;border-radius:var(--radius-pill);background:var(--bg-soft);overflow:hidden}
+.fil{height:100%;border-radius:var(--radius-pill);background:var(--cyan)}
+.bar>b{font:500 10.5px var(--mono);color:var(--text);text-align:right}
+.bar>i{font:500 9.5px var(--mono);font-style:normal;text-align:right}
+.pos{color:var(--green)} .neg{color:var(--red)} .neu{color:var(--muted-2)}
+
+/* Franjas horarias */
+.slots{display:grid;gap:7px}
+.slot{display:grid;grid-template-columns:46px 1fr 30px;align-items:center;gap:9px}
+.slot>u{font:400 9.5px var(--mono);color:var(--muted-2);text-decoration:none}
+.slot>b{font:500 9.5px var(--mono);color:var(--muted);text-align:right}
+
+
+/* Radiales — arcos SVG, sin Chart.js: esto es una maqueta estatica dentro
+   del hero, no vale meterle 200 KB de libreria a la home. Mismas formas que
+   el showcase (cGauge cutout 74% / semicirculo, cDonutKpi cutout 72%). */
+.rad{display:grid;place-items:center;padding:2px 0 0}
+.rad svg{width:100%;max-width:190px;height:auto;display:block}
+.rad-v{font:500 26px var(--display);letter-spacing:-.03em;fill:var(--text)}
+.rad-l{font:600 8px var(--mono);letter-spacing:.14em;fill:var(--muted-2)}
+.leg{display:grid;gap:6px;margin-top:10px}
+.leg div{display:grid;grid-template-columns:8px 1fr auto;align-items:center;gap:8px;
+  font:400 10px var(--sans);color:var(--muted)}
+.leg s{width:8px;height:8px;border-radius:2px;background:var(--cyan);text-decoration:none}
+.leg b{font:500 10px var(--mono);color:var(--text)}
+/* Bullet — barra real contra marca de objetivo (cBullet del showcase) */
+.blt{display:grid;gap:11px}
+.bl{display:grid;grid-template-columns:70px 1fr 42px;align-items:center;gap:10px}
+.bl>u{font:400 10.5px var(--sans);color:var(--muted);text-decoration:none}
+.bl-t{position:relative;height:11px;border-radius:var(--radius-xs);background:var(--bg-soft);overflow:visible}
+.bl-f{position:absolute;left:0;top:2px;height:7px;border-radius:var(--radius-pill);background:var(--cyan)}
+.bl-f.ok{background:var(--green)}
+.bl-m{position:absolute;top:-1px;width:2px;height:13px;border-radius:1px;background:var(--text);opacity:.55}
+.bl>b{font:500 10px var(--mono);text-align:right;color:var(--text)}
+
+/* Tabla */
+table{width:100%;border-collapse:collapse}
+th{font:600 8px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted-2);
+  text-align:left;padding:0 0 8px;font-weight:600}
+th.n,td.n{text-align:right}
+td{font:400 10.5px var(--sans);color:var(--muted);padding:7px 0;border-top:1px solid var(--line)}
+td.k{color:var(--text);font-weight:500}
+td.n{font:500 10.5px var(--mono);color:var(--text)}
+tr:first-child td{border-top:0}
+
+/* Semaforo — el punto es el unico color */
+.sig{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid var(--line)}
+.sig:first-child{border-top:0;padding-top:0}
+.dot{width:6px;height:6px;border-radius:var(--radius-pill);flex:none}
+.dot.g{background:var(--green)} .dot.a{background:var(--cyan)} .dot.r{background:var(--red)}
+.sig p{margin:0;font:400 10.5px var(--sans);color:var(--muted)}
+.sig p b{color:var(--text);font-weight:500}
+.sig em{margin-left:auto;font:500 9.5px var(--mono);font-style:normal;color:var(--muted-2)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 256 256"><path d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77Z" fill="currentColor"></path></symbol>
+  <symbol id="i-chart" viewBox="0 0 256 256"><polyline points="232 208 128 104 96 136 24 64" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline><polyline points="232 144 232 208 168 208" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline></symbol>
+  <symbol id="i-globe" viewBox="0 0 256 256"><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" stroke-width="16"></circle><line x1="32" y1="128" x2="224" y2="128" fill="none" stroke="currentColor" stroke-width="16"></line><ellipse cx="128" cy="128" rx="40" ry="96" fill="none" stroke="currentColor" stroke-width="16"></ellipse></symbol>
+  <symbol id="i-act" viewBox="0 0 256 256"><polyline points="24 128 56 128 96 40 160 208 200 128 232 128" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline></symbol>
+  <symbol id="i-calc" viewBox="0 0 256 256"><rect x="40" y="40" width="176" height="176" rx="8" fill="none" stroke="currentColor" stroke-width="16"></rect><line x1="40" y1="112" x2="216" y2="112" fill="none" stroke="currentColor" stroke-width="16"></line><line x1="128" y1="112" x2="128" y2="216" fill="none" stroke="currentColor" stroke-width="16"></line><line x1="72" y1="72" x2="184" y2="72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><circle cx="84" cy="152" r="12" fill="currentColor"></circle><circle cx="84" cy="192" r="12" fill="currentColor"></circle><circle cx="172" cy="152" r="12" fill="currentColor"></circle><circle cx="172" cy="192" r="12" fill="currentColor"></circle></symbol>
+  <symbol id="i-shield" viewBox="0 0 256 256"><path d="M40,114.79V56a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8v58.77c0,84.18-71.31,112.07-85.54,116.8a7.54,7.54,0,0,1-4.92,0C111.31,226.86,40,199,40,114.79Z" fill="none" stroke="currentColor" stroke-width="16"></path><polyline points="88 136 112 160 168 104" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline></symbol>
+  <symbol id="i-clip" viewBox="0 0 256 256"><path d="M160,40h40a8,8,0,0,1,8,8V216a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H96" fill="none" stroke="currentColor" stroke-width="16"></path><path d="M160,40a32,32,0,0,0-64,0H88a8,8,0,0,0-8,8v16a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V48A8,8,0,0,0,168,40Z" fill="none" stroke="currentColor" stroke-width="16"></path><line x1="96" y1="152" x2="160" y2="152" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="96" y1="120" x2="160" y2="120" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line></symbol>
+  <symbol id="i-pie" viewBox="0 0 256 256"><path d="M128,128,81.66,34.51A96,96,0,1,0,224,128Z" fill="none" stroke="currentColor" stroke-width="16"></path><path d="M128,128,224,128A96,96,0,0,0,81.66,34.51Z" fill="none" stroke="currentColor" stroke-width="16"></path></symbol>
+  <symbol id="i-store" viewBox="0 0 256 256"><path d="M48,139.59V208a8,8,0,0,0,8,8H200a8,8,0,0,0,8-8V139.59" fill="none" stroke="currentColor" stroke-width="16"></path><path d="M32,48H224l16,80H16Z" fill="none" stroke="currentColor" stroke-width="16" stroke-linejoin="round"></path><line x1="104" y1="128" x2="104" y2="216" fill="none" stroke="currentColor" stroke-width="16"></line><path d="M16,128a40,40,0,0,0,80,0" fill="none" stroke="currentColor" stroke-width="16"></path><path d="M96,128a40,40,0,0,0,80,0" fill="none" stroke="currentColor" stroke-width="16"></path><path d="M176,128a40,40,0,0,0,80,0" fill="none" stroke="currentColor" stroke-width="16"></path></symbol>
+  <symbol id="i-sun" viewBox="0 0 256 256"><circle cx="128" cy="128" r="60" fill="none" stroke="currentColor" stroke-width="16"></circle><line x1="128" y1="24" x2="128" y2="48" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="128" y1="208" x2="128" y2="232" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="24" y1="128" x2="48" y2="128" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="208" y1="128" x2="232" y2="128" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="55.51" y1="55.51" x2="72.95" y2="72.95" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="183.05" y1="183.05" x2="200.49" y2="200.49" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="200.49" y1="55.51" x2="183.05" y2="72.95" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="72.95" y1="183.05" x2="55.51" y2="200.49" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line></symbol>
+  <symbol id="i-moon" viewBox="0 0 256 256"><path d="M216.7,132.5A91.86,91.86,0,0,1,124,40a91.14,91.14,0,0,1,8.36.44A92.14,92.14,0,1,0,215.56,124.14,92.9,92.9,0,0,1,216.7,132.5Z" fill="none" stroke="currentColor" stroke-width="16"></path></symbol>
+  <symbol id="i-menu" viewBox="0 0 256 256"><line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="40" y1="64" x2="216" y2="64" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="40" y1="192" x2="216" y2="192" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line></symbol>
+  <symbol id="i-warn" viewBox="0 0 256 256"><path d="M142.74,40l93.19,160A16,16,0,0,1,222.19,224H33.81A16,16,0,0,1,20.07,200l93.19-160A16,16,0,0,1,142.74,40Z" fill="none" stroke="currentColor" stroke-width="16"></path><line x1="128" y1="136" x2="128" y2="104" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><circle cx="128" cy="168" r="12" fill="currentColor"></circle></symbol>
+  <symbol id="i-ok" viewBox="0 0 256 256"><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" stroke-width="16"></circle><polyline points="88 136 112 160 168 104" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline></symbol>
+  <symbol id="i-users" viewBox="0 0 256 256"><circle cx="88" cy="108" r="52" fill="none" stroke="currentColor" stroke-width="16"></circle><path d="M155.41,57.6a52,52,0,1,1,0,100.8" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></path><path d="M16,197.42a88,88,0,0,1,144,0" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></path><path d="M172.17,144A88,88,0,0,1,240,197.42" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></path></symbol>
+  <symbol id="i-bank" viewBox="0 0 256 256"><line x1="16" y1="216" x2="240" y2="216" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><path d="M128,40,24,88H232Z" fill="none" stroke="currentColor" stroke-width="16" stroke-linejoin="round"></path><line x1="56" y1="88" x2="56" y2="176" fill="none" stroke="currentColor" stroke-width="16"></line><line x1="104" y1="88" x2="104" y2="176" fill="none" stroke="currentColor" stroke-width="16"></line><line x1="152" y1="88" x2="152" y2="176" fill="none" stroke="currentColor" stroke-width="16"></line><line x1="200" y1="88" x2="200" y2="176" fill="none" stroke="currentColor" stroke-width="16"></line></symbol>
+  <symbol id="i-pkg" viewBox="0 0 256 256"><path d="M224,177.32V78.68a8,8,0,0,0-4.07-7l-88-48.43a7.94,7.94,0,0,0-7.86,0l-88,48.43a8,8,0,0,0-4.07,7V177.32a8,8,0,0,0,4.07,7l88,48.43a7.94,7.94,0,0,0,7.86,0l88-48.43A8,8,0,0,0,224,177.32Z" fill="none" stroke="currentColor" stroke-width="16"></path><polyline points="222.9 74.6 128 128 33.1 74.6" fill="none" stroke="currentColor" stroke-width="16"></polyline><line x1="128" y1="128" x2="128" y2="240" fill="none" stroke="currentColor" stroke-width="16"></line></symbol>
+  <symbol id="i-sort" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="224" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><polyline points="56 160 128 232 200 160" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline><polyline points="56 96 128 24 200 96" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline></symbol>
+  <symbol id="i-headset" viewBox="0 0 256 256"><path d="M200,120h-8V112a64,64,0,0,0-128,0v8H56a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H72a8,8,0,0,0,8-8V128a8,8,0,0,0-8-8H80V112a48,48,0,0,1,96,0v8h-8a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h8a32,32,0,0,1-32,32H128a8,8,0,0,0,0,16h16a48.05,48.05,0,0,0,48-48,16,16,0,0,0,24-13.86V136A16,16,0,0,0,200,120Z" fill="currentColor"></path></symbol>
+  <symbol id="i-plane" viewBox="0 0 256 256"><path d="M223.94,32.06a8,8,0,0,0-10-10L19.62,79.5a8,8,0,0,0-.69,15l85.92,40.62L145.5,220a8,8,0,0,0,15-.69l63.44-194.25Z" fill="none" stroke="currentColor" stroke-width="20" stroke-linejoin="round"></path></symbol>
+  <symbol id="i-trend-up" viewBox="0 0 256 256"><polyline points="32 184 96 120 144 168 224 88" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline><polyline points="160 88 224 88 224 152" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline></symbol>
+  <symbol id="i-repeat" viewBox="0 0 256 256"><polyline points="184 24 224 64 184 104" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline><path d="M32,128V96a32,32,0,0,1,32-32H224" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path><polyline points="72 232 32 192 72 152" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></polyline><path d="M224,128v32a32,32,0,0,1-32,32H32" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+  <symbol id="i-projector" viewBox="0 0 256 256"><rect x="24" y="64" width="208" height="128" rx="16" fill="none" stroke="currentColor" stroke-width="16"></rect><circle cx="160" cy="128" r="40" fill="none" stroke="currentColor" stroke-width="16"></circle><circle cx="72" cy="104" r="12" fill="currentColor"></circle><line x1="56" y1="216" x2="80" y2="192" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line><line x1="200" y1="216" x2="176" y2="192" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"></line></symbol>
+</defs></svg>
+
+<div class="shell">
+
+  <header class="top">
+    <div class="brand"><svg class="logo" width="58" height="38" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi">
+          <path fill="var(--text)" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+          <path fill="var(--text)" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+          <path fill="var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+          <path fill="var(--text)" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        </svg><span class="tag">Analytics Pro</span></div>
+    <div class="periodo"><b>Hoy</b><b>7 días</b><b class="on">Mes en curso</b><b>30 días</b></div>
+    <div class="top-r">
+      <div class="chip"><span class="av">JG</span><span>Casa Central</span></div>
+      <span class="act">Actualizar</span>
+    </div>
+  </header>
+
+  <div class="under">
+  <aside class="side">
+    <div class="grp">Visión general</div>
+    <div class="nl on"><svg viewBox="0 0 256 256"><use href="#i-home"></use></svg>Resumen ejecutivo</div>
+    <div class="grp">Módulos</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-chart"></use></svg>Ventas</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-globe"></use></svg>Canales</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-act"></use></svg>Operación</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-bank"></use></svg>Finanzas</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-pie"></use></svg>Rentabilidad</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-clip"></use></svg>Backlog<em>7</em></div>
+    <div class="grp">Fuentes YiQi</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-store"></use></svg>Reporte de ventas</div>
+    <div class="nl"><svg viewBox="0 0 256 256"><use href="#i-pkg"></use></svg>Reporte de pedidos</div>
+    <div class="side-f">© 2026 YiQi S.A.<br>Analytics Pro · DS v1.2.7</div>
+  </aside>
+
+  <!-- ── Panel ───────────────────────────────────────────── -->
+  <div class="main">
+
+    <div class="body">
+
+      <!-- KPIs -->
+      <div class="row">
+        <div class="card c2">
+          <div class="k-lab">Facturación</div>
+          <div class="k-val">$ 125,3 M</div>
+          <div class="k-foot"><span class="d up">+12,4 %</span><span class="k-note">vs mes ant.</span></div>
+          <svg class="spark" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 19 L15 17 L30 18 L45 13 L60 14 L75 9 L90 10 L105 5 L120 3" fill="none" stroke="var(--cyan)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="120" cy="3" r="2.2" fill="var(--cyan)"/>
+          </svg>
+        </div>
+        <div class="card c2">
+          <div class="k-lab">Margen bruto</div>
+          <div class="k-val">37,8 %</div>
+          <div class="k-foot"><span class="d up">+1,6 pp</span><span class="k-note">vs mes ant.</span></div>
+          <svg class="spark" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 15 L15 16 L30 12 L45 14 L60 11 L75 12 L90 8 L105 9 L120 6" fill="none" stroke="var(--cyan)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+            <circle cx="120" cy="6" r="2.2" fill="var(--cyan)"/>
+          </svg>
+        </div>
+        <div class="card c2">
+          <div class="k-lab">Pedidos</div>
+          <div class="k-val">3.184</div>
+          <div class="k-foot"><span class="d dn">−3,1 %</span><span class="k-note">vs mes ant.</span></div>
+          <svg class="spark" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 8 L15 6 L30 9 L45 8 L60 12 L75 11 L90 14 L105 13 L120 16" fill="none" stroke="var(--muted-2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="120" cy="16" r="2.2" fill="var(--muted-2)"/>
+          </svg>
+        </div>
+        <div class="card c2">
+          <div class="k-lab">Ticket promedio</div>
+          <div class="k-val">$ 39.350</div>
+          <div class="k-foot"><span class="d up">+16,0 %</span><span class="k-note">vs mes ant.</span></div>
+          <svg class="spark" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 18 L15 16 L30 17 L45 12 L60 13 L75 8 L90 9 L105 6 L120 4" fill="none" stroke="var(--cyan)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+            <circle cx="120" cy="4" r="2.2" fill="var(--cyan)"/>
+          </svg>
+        </div>
+        <div class="card c2">
+          <div class="k-lab">Cobranzas</div>
+          <div class="k-val">$ 81,6 M</div>
+          <div class="k-foot"><span class="d up">+9,1 %</span><span class="k-note">del mes</span></div>
+          <svg class="spark" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 17 L15 15 L30 16 L45 12 L60 13 L75 10 L90 8 L105 7 L120 5" fill="none" stroke="var(--cyan)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+            <circle cx="120" cy="5" r="2.2" fill="var(--cyan)"/>
+          </svg>
+        </div>
+        <div class="card c2">
+          <div class="k-lab">Stock crítico</div>
+          <div class="k-val">14</div>
+          <div class="k-foot"><span class="d dn">+4</span><span class="k-note">vs ayer</span></div>
+          <svg class="spark" viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 14 L15 15 L30 12 L45 13 L60 10 L75 11 L90 8 L105 6 L120 4" fill="none" stroke="var(--muted-2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="120" cy="4" r="2.2" fill="var(--muted-2)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Tendencia + franjas -->
+      <div class="row">
+        <div class="card c7">
+          <div class="hd"><span class="kick">Tendencia</span><em>Ingresos · 12 meses</em></div>
+          <div class="ttl">Facturación mensual</div>
+          <svg viewBox="0 0 700 190" style="width:100%;height:auto;display:block" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="var(--cyan)" stop-opacity=".28"/>
+                <stop offset="100%" stop-color="var(--cyan)" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="42" y1="16"  x2="700" y2="16"/>
+              <line x1="42" y1="56"  x2="700" y2="56"/>
+              <line x1="42" y1="96"  x2="700" y2="96"/>
+              <line x1="42" y1="136" x2="700" y2="136"/>
+              <line x1="42" y1="160" x2="700" y2="160"/>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="8.5" fill="var(--muted-2)">
+              <text x="0" y="19">$130M</text><text x="0" y="59">$100M</text>
+              <text x="0" y="99">$70M</text><text x="0" y="139">$40M</text>
+            </g>
+            <path d="M62 132 L118 126 L174 134 L230 112 L286 118 L342 96 L398 101 L454 78 L510 72 L566 58 L622 44 L678 26 L678 160 L62 160 Z" fill="url(#g)"/>
+            <path d="M62 132 L118 126 L174 134 L230 112 L286 118 L342 96 L398 101 L454 78 L510 72 L566 58 L622 44 L678 26"
+                  fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="678" cy="26" r="4"   fill="var(--cyan)"/>
+            <circle cx="678" cy="26" r="8.5" fill="var(--cyan)" opacity=".18"/>
+            <g font-family="IBM Plex Mono, monospace" font-size="8.5" fill="var(--muted-2)" text-anchor="middle">
+              <text x="62" y="178">Ago</text><text x="174" y="178">Oct</text><text x="286" y="178">Dic</text>
+              <text x="398" y="178">Feb</text><text x="510" y="178">Abr</text><text x="622" y="178">Jun</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="card c5">
+          <div class="hd"><span class="kick">Actividad</span><em>Hoy</em></div>
+          <div class="ttl">Flujo por franja horaria</div>
+          <div class="slots">
+            <div class="slot"><u>08–10</u><div class="trk"><div class="fil" style="width:34%;opacity:.45"></div></div><b>8 %</b></div>
+            <div class="slot"><u>10–12</u><div class="trk"><div class="fil" style="width:76%;opacity:.7"></div></div><b>18 %</b></div>
+            <div class="slot"><u>12–14</u><div class="trk"><div class="fil" style="width:60%;opacity:.55"></div></div><b>14 %</b></div>
+            <div class="slot"><u>14–16</u><div class="trk"><div class="fil" style="width:47%;opacity:.5"></div></div><b>11 %</b></div>
+            <div class="slot"><u>16–18</u><div class="trk"><div class="fil" style="width:64%;opacity:.6"></div></div><b>15 %</b></div>
+            <div class="slot"><u>18–20</u><div class="trk"><div class="fil" style="width:94%;opacity:1"></div></div><b>22 %</b></div>
+            <div class="slot"><u>20–22</u><div class="trk"><div class="fil" style="width:38%;opacity:.45"></div></div><b>9 %</b></div>
+            <div class="slot"><u>22–00</u><div class="trk"><div class="fil" style="width:13%;opacity:.35"></div></div><b>3 %</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canales + tabla + semaforo -->
+      <div class="row">
+        <div class="card c5">
+          <div class="hd"><span class="kick">Canales</span><em>Acumulado</em></div>
+          <div class="ttl">Participación por origen de pedido</div>
+          <div class="bars">
+            <div class="bar"><u>Punto de venta</u><div class="trk"><div class="fil" style="width:100%"></div></div><b>$ 47,8 M</b><i class="pos">+12,3%</i></div>
+            <div class="bar"><u>Tienda online</u><div class="trk"><div class="fil" style="width:62%;opacity:.78"></div></div><b>$ 29,6 M</b><i class="pos">+8,1%</i></div>
+            <div class="bar"><u>Mercado Libre</u><div class="trk"><div class="fil" style="width:44%;opacity:.62"></div></div><b>$ 21,1 M</b><i class="pos">+5,4%</i></div>
+            <div class="bar"><u>Mayorista</u><div class="trk"><div class="fil" style="width:31%;opacity:.5"></div></div><b>$ 14,8 M</b><i class="neg">−2,2%</i></div>
+            <div class="bar"><u>WhatsApp</u><div class="trk"><div class="fil" style="width:18%;opacity:.42"></div></div><b>$ 8,6 M</b><i class="pos">+1,8%</i></div>
+            <div class="bar"><u>Otros</u><div class="trk"><div class="fil" style="width:7%;opacity:.35"></div></div><b>$ 3,4 M</b><i class="neu">—</i></div>
+          </div>
+        </div>
+
+        <div class="card c4">
+          <div class="hd"><span class="kick">Señales</span><em>Últimas 24 h</em></div>
+          <div class="ttl">Qué mirar hoy</div>
+          <div class="sig"><span class="dot g"></span><p><b>Margen</b> sobre objetivo</p><em>+1,6 pp</em></div>
+          <div class="sig"><span class="dot r"></span><p><b>14 artículos</b> bajo mínimo</p><em>Stock</em></div>
+          <div class="sig"><span class="dot a"></span><p><b>$ 5,5 M</b> por cobrar vencido</p><em>+6 días</em></div>
+          <div class="sig"><span class="dot g"></span><p><b>98,4 %</b> entregas a tiempo</p><em>Logística</em></div>
+          <div class="sig"><span class="dot a"></span><p><b>7 pedidos</b> esperando aprobación</p><em>Backlog</em></div>
+        </div>
+        <div class="card c3">
+          <div class="hd"><span class="kick">Operación</span><em>Capacidad</em></div>
+          <div class="ttl">Utilización de depósito</div>
+          <div class="rad">
+            <svg viewBox="0 0 130 78" aria-hidden="true">
+              <path d="M13 65 A52 52 0 0 1 117 65" fill="none" stroke="var(--bg-soft)" stroke-width="13" stroke-linecap="round"/>
+              <path d="M13 65 A52 52 0 0 1 117 65" fill="none" stroke="var(--cyan)" stroke-width="13" stroke-linecap="round"
+                    stroke-dasharray="119.3 163.4"/>
+              <text class="rad-v" x="65" y="58" text-anchor="middle">73 %</text>
+              <text class="rad-l" x="65" y="72" text-anchor="middle">UTILIZACIÓN</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Radiales + cumplimiento -->
+      <div class="row">
+
+
+        <div class="card c4">
+          <div class="hd"><span class="kick">Canales</span><em>Mes en curso</em></div>
+          <div class="ttl">Composición de ingresos</div>
+          <div class="rad">
+            <svg viewBox="0 0 120 120" style="max-width:132px" aria-hidden="true">
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--bg-soft)" stroke-width="15"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--cyan)" stroke-opacity="1" stroke-width="15" stroke-dasharray="105.1 171.4" stroke-dashoffset="0.0" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--cyan)" stroke-opacity=".78" stroke-width="15" stroke-dasharray="66.4 210.1" stroke-dashoffset="-105.1" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--cyan)" stroke-opacity=".62" stroke-width="15" stroke-dasharray="47.0 229.5" stroke-dashoffset="-171.4" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--cyan)" stroke-opacity=".5" stroke-width="15" stroke-dasharray="33.2 243.3" stroke-dashoffset="-218.4" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--cyan)" stroke-opacity=".42" stroke-width="15" stroke-dasharray="19.4 257.1" stroke-dashoffset="-251.6" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="var(--cyan)" stroke-opacity=".32" stroke-width="15" stroke-dasharray="5.5 270.9" stroke-dashoffset="-270.9" transform="rotate(-90 60 60)"/>
+              <text class="rad-v" style="font-size:15px" x="60" y="58" text-anchor="middle">$ 125,3 M</text>
+              <text class="rad-l" x="60" y="71" text-anchor="middle">TOTAL</text>
+            </svg>
+          </div>
+          <div class="leg">
+            <div><s style="opacity:1"></s>Punto de venta<b>38 %</b></div>
+            <div><s style="opacity:.78"></s>Tienda online<b>24 %</b></div>
+            <div><s style="opacity:.62"></s>Mercado Libre<b>17 %</b></div>
+            <div><s style="opacity:.5"></s>Mayorista<b>12 %</b></div>
+            <div><s style="opacity:.42"></s>WhatsApp<b>7 %</b></div>
+            <div><s style="opacity:.32"></s>Otros<b>2 %</b></div>
+          </div>
+        </div>
+
+        <div class="card c4">
+          <div class="hd"><span class="kick">Comercial</span><em>Cuota del mes</em></div>
+          <div class="ttl">Cumplimiento por sucursal</div>
+          <div class="blt">
+            <div class="bl"><u>Casa Central</u><div class="bl-t"><div class="bl-f ok" style="width:104%;max-width:100%"></div><div class="bl-m" style="left:83%"></div></div><b>104 %</b></div>
+            <div class="bl"><u>Norte</u><div class="bl-t"><div class="bl-f ok" style="width:96%"></div><div class="bl-m" style="left:83%"></div></div><b>96 %</b></div>
+            <div class="bl"><u>Sur</u><div class="bl-t"><div class="bl-f" style="width:78%"></div><div class="bl-m" style="left:83%"></div></div><b>78 %</b></div>
+            <div class="bl"><u>Oeste</u><div class="bl-t"><div class="bl-f" style="width:64%"></div><div class="bl-m" style="left:83%"></div></div><b>64 %</b></div>
+            <div class="bl"><u>Online</u><div class="bl-t"><div class="bl-f ok" style="width:91%"></div><div class="bl-m" style="left:83%"></div></div><b>91 %</b></div>
+          </div>
+        </div>
+
+        <div class="card c4">
+          <div class="hd"><span class="kick">Cobranzas</span><em>Cartera</em></div>
+          <div class="ttl">Estado de la cartera</div>
+          <div class="bars">
+            <div class="bar"><u>Al día</u><div class="trk"><div class="fil" style="width:100%"></div></div><b>$ 63,9 M</b><i class="neu">78 %</i></div>
+            <div class="bar"><u>1 a 30 días</u><div class="trk"><div class="fil" style="width:29%;opacity:.7"></div></div><b>$ 11,2 M</b><i class="neu">14 %</i></div>
+            <div class="bar"><u>31 a 60 días</u><div class="trk"><div class="fil" style="width:11%;opacity:.55"></div></div><b>$ 4,2 M</b><i class="neu">5 %</i></div>
+            <div class="bar"><u>Más de 60</u><div class="trk"><div class="fil" style="width:6%;opacity:.42"></div></div><b>$ 2,3 M</b><i class="neg">3 %</i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="row">
+        <div class="card c12">
+        <div class="hd"><span class="kick">Rentabilidad</span><em>Mes en curso</em></div>
+        <div class="ttl">Líneas de producto</div>
+        <table>
+          <tr><th>Línea</th><th class="n">Facturación</th><th class="n">Margen</th><th class="n">Unidades</th><th class="n">vs mes ant.</th></tr>
+          <tr><td class="k">Refrigeración</td><td class="n">$ 38,7 M</td><td class="n">41,2 %</td><td class="n">612</td><td class="n"><span class="d up">+18,4 %</span></td></tr>
+          <tr><td class="k">Línea blanca</td><td class="n">$ 29,1 M</td><td class="n">33,7 %</td><td class="n">488</td><td class="n"><span class="d up">+9,1 %</span></td></tr>
+          <tr><td class="k">Climatización</td><td class="n">$ 25,0 M</td><td class="n">38,5 %</td><td class="n">341</td><td class="n"><span class="d up">+4,6 %</span></td></tr>
+          <tr><td class="k">Pequeños electro</td><td class="n">$ 20,3 M</td><td class="n">29,4 %</td><td class="n">1.204</td><td class="n"><span class="d dn">−5,2 %</span></td></tr>
+          <tr><td class="k">Repuestos</td><td class="n">$ 12,2 M</td><td class="n">52,1 %</td><td class="n">539</td><td class="n"><span class="d up">+22,8 %</span></td></tr>
+        </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+window.addEventListener('message', function(e){
+  if(!e.data || e.data.type !== 'yiqi-theme') return;
+  if(e.data.theme === 'dark' || e.data.theme === 'light')
+    document.documentElement.dataset.theme = e.data.theme;
+});
+</script>
+</body>
+</html>
