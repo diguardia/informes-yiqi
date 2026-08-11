@@ -531,7 +531,7 @@
   }
 
   /* PROPOSAL CARD */
-  .pricing-grid-wrap{display:flex;justify-content:center;margin-top:28px;}
+  .pricing-grid-wrap{display:flex;flex-direction:column;align-items:center;margin-top:28px;}
   .pricing-card-yiqi{
     width:100%;max-width:460px;padding:30px;border-radius:28px;
     border:1px solid rgba(255,255,255,.10);
@@ -552,6 +552,30 @@
     box-shadow:0 10px 24px rgba(255,176,32,.20) !important;transition:.18s ease;
   }
   .pricing-cta:hover{transform:translateY(-1px);background:linear-gradient(180deg, #ffc14a, #e29a00) !important;border-color:rgba(255,176,32,.46) !important;color:#1a1200 !important;box-shadow:0 14px 30px rgba(255,176,32,.28) !important;}
+
+  /* ── Fee inicial · condicion vigente (v1.9) ─────────────── */
+  .fee-card{
+    width:100%;max-width:460px;margin-top:20px;padding:30px;border-radius:28px;
+    background:var(--bg-elev);box-shadow:var(--shadow-soft);
+    position:relative;overflow:hidden;
+  }
+  .fee-tag{
+    display:inline-block;padding:6px 12px;border-radius:var(--radius-pill);
+    background:var(--cyan-soft);color:var(--cyan);
+    font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  }
+  .fee-card h3{margin:16px 0 0;font-family:var(--title);font-size:26px;line-height:1.2;color:var(--text);}
+  .fee-card p{margin:12px 0 0;color:var(--muted);font-size:15px;line-height:1.65;}
+  .fee-list{margin:18px 0 0;padding:0;list-style:none;}
+  .fee-list li{padding:11px 0;color:var(--text);font-size:14px;line-height:1.5;}
+  .fee-list li + li{border-top:1px solid var(--line);}
+  .fee-list b{color:var(--text);}
+  .fee-note{
+    margin-top:18px;padding:16px;border-radius:var(--radius-md);
+    background:var(--cyan-soft);color:var(--text);font-size:14px;line-height:1.6;
+  }
+  .fee-terms{margin-top:14px;color:var(--muted-2);font-size:12px;line-height:1.55;}
+
   .pricing-divider{margin:22px 0 12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.42);}
   .pricing-features{list-style:none;padding:0;margin:0;display:grid;gap:12px;}
   .pricing-features li{position:relative;padding-left:30px;color:#ffffff;font-size:14px;line-height:1.55;}
@@ -1163,6 +1187,25 @@ YiQi integra Interbanking y consolida una nueva etapa en la conexión entre oper
         <li>Implementación guiada</li>
         <li>Soporte especializado</li>
       </ul>
+    </article>
+
+    <article class="fee-card">
+      <span class="fee-tag">Condición vigente</span>
+      <h3>El fee inicial, a mitad de precio.</h3>
+      <p>El fee inicial cubre el trabajo de puesta en marcha: relevar la operación, configurar YiQi según su estructura, migrar datos, conectar los canales y acompañar el arranque. Se paga una vez.</p>
+
+      <ul class="fee-list">
+        <li><b>En Mel City ese trabajo ya está empezado.</b> En la reunión de abril quedó relevado el modelo: 4 locales propios que facturan con la razón social de Mel City S.A. y 6 franquicias que facturan cada una con la suya, sobre una misma base B2B.</li>
+        <li><b>Menos relevamiento, menos implementación.</b> No arrancamos de cero: sabemos qué hay que configurar y en qué orden.</li>
+        <li><b>La cuota mensual no cambia.</b> El descuento es sobre el fee inicial, no sobre el servicio.</li>
+      </ul>
+
+      <div class="fee-note">
+        <b>50 % sobre el fee inicial</b> para su operación. El monto exacto sale de la propuesta,
+        que se arma sobre el alcance real — B2B, B2C, franquicias, logística e integraciones.
+      </div>
+
+      <p class="fee-terms">Válida hasta {{VIGENCIA}} · {{CUPO}}</p>
     </article>
   </div>
 </section>
