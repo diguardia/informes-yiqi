@@ -1,0 +1,9 @@
+# robots.txt — informes.yiqi.com.ar
+# Los informes con nombre de cliente NO se listan aca: publicarlos en este
+# archivo seria publicar la lista de clientes. Cada uno lleva su propio
+# <meta name="robots" content="noindex, nofollow">, que el buscador lee al
+# rastrear y respeta. Mismo criterio que www.yiqi.com.ar/robots.txt.
+# Por eso el rastreo queda permitido: si se bloqueara aca, el buscador nunca
+# leeria el meta y podria indexar la URL igual desde un enlace externo.
+User-agent: *
+Allow: /
