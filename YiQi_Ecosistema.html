@@ -212,6 +212,9 @@
        de zoom y el cartel de ayuda se esconden — quien mira la home no vino a
        configurar la visualizacion. 10/08/2026. */
     html.incrustado .topbar,
+    html.incrustado .topbar-actions,
+    html.incrustado .menu-backdrop,
+    html.incrustado .stats,
     html.incrustado .legend,
     html.incrustado .hint,
     html.incrustado .scope-copy,
@@ -220,6 +223,16 @@
     html.incrustado .scope-bottombar,
     html.incrustado .scope-style,
     html.incrustado .scope-ctls { display: none; }
+    /* ?ctls=1 devuelve los controles: incrustado la rueda ya no hace zoom,
+       asi que sin estos botones no habria forma de acercar. Grilla 3D y
+       exportar video quedan afuera: son herramientas del informe, no de
+       una pagina publica. 12/08/2026. */
+    html.incrustado.con-ctls .scope-ctls { display: flex; }
+    html.incrustado.con-ctls #scopeGridBtn,
+    html.incrustado.con-ctls #scopeRec { display: none; }
+    /* la bottombar esta en la lista de arriba: sin devolverle el display,
+       .scope-ctls quedaria dentro de un contenedor oculto. */
+    html.incrustado.con-ctls .scope-bottombar { display: flex; justify-content: flex-end; }
     html.incrustado body { height: 100vh; }
     /* Sin barras, el lienzo ocupa todo. */
     html.incrustado .scope,
@@ -667,7 +680,12 @@ function scopeIntegLogo(src, chipBg){
 let R3=null, scope3dAnim=null, scope3dInited=false, scopeParticles=null, scopeFontsReady=false, scopeWorld=null, scopeRings=[], scopeNodes=[];
 let scopeStyle={ gray:false, chip:false }, scopeGrid=null, scopeGridOn=false;
 let scopeLayerOn=[true,true,true,true];
-let camTheta=0.7, camPhi=1.12, camRadius=14;
+/* La camara arranca en 14. Incrustado en un marco ancho y bajo el encuadre
+   vertical aprieta la escena y los logos se pisan: ?cam=18 la aleja sin tocar
+   el default del informe. Se respeta el rango del zoom (7-24). 12/08/2026. */
+const CAM_INI=(function(){ const v=parseFloat(new URLSearchParams(location.search).get('cam'));
+  return isFinite(v) ? Math.max(7, Math.min(24, v)) : 14; })();
+let camTheta=0.7, camPhi=1.12, camRadius=CAM_INI;
 
 function getCSSraw(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
 function getCSSColor(n){ return new THREE.Color(getCSSraw(n) || '#888'); }
@@ -802,12 +820,22 @@ function scopeInit(){
   const camera=new THREE.PerspectiveCamera(45, W/H, 0.1, 100);
   R3={ renderer, scene, camera, canvas, wrap, dragging:false, paused:false, recording:false,
        reduce: window.matchMedia('(prefers-reduced-motion: reduce)').matches };
-  const stStyle=localStorage.getItem('yiqi-scope-style')||'color';
+  /* Incrustado, el estilo lo elige el anfitrion por ?estilo=logos y NO se
+     guarda: la pagina que incrusta decide como se ve la escena en su
+     contexto sin pisar la preferencia del usuario dentro del informe.
+     12/08/2026. */
+  const qEstilo=new URLSearchParams(location.search).get('estilo');
+  const stStyle=qEstilo||localStorage.getItem('yiqi-scope-style')||'color';
   scopeApplyStyle(stStyle);
   const styleSel=document.getElementById('scopeStyle'); if(styleSel) styleSel.value=stStyle;
   scopeBuild(scene); scopeCamUpdate();
   // controles (orbit manual, según skill yiqi-3d)
   let lx=0,ly=0;
+  /* Incrustado: la rueda scrollea la pagina de arriba (no hace zoom) y el
+     arrastre en touch no bloquea el scroll vertical. El zoom sigue
+     disponible por los controles, que el anfitrion enciende con ?ctls=1.
+     12/08/2026. */
+  const suelto=document.documentElement.classList.contains('incrustado');
   canvas.addEventListener('mousedown', e=>{ R3.dragging=true; lx=e.clientX; ly=e.clientY; });
   window.addEventListener('mouseup', ()=> R3.dragging=false);
   window.addEventListener('mousemove', e=>{ if(!R3.dragging) return;
@@ -816,9 +844,11 @@ function scopeInit(){
   canvas.addEventListener('touchstart', e=>{ R3.dragging=true; lx=e.touches[0].clientX; ly=e.touches[0].clientY; }, {passive:true});
   canvas.addEventListener('touchmove', e=>{ camTheta-=(e.touches[0].clientX-lx)*0.01;
     camPhi=Math.max(0.18,Math.min(Math.PI-0.18, camPhi-(e.touches[0].clientY-ly)*0.01));
-    lx=e.touches[0].clientX; ly=e.touches[0].clientY; scopeCamUpdate(); e.preventDefault(); }, {passive:false});
+    lx=e.touches[0].clientX; ly=e.touches[0].clientY; scopeCamUpdate();
+    if(!suelto) e.preventDefault(); }, {passive:false});
   canvas.addEventListener('touchend', ()=> R3.dragging=false, {passive:true});
-  canvas.addEventListener('wheel', e=>{ camRadius=Math.max(7,Math.min(24, camRadius+e.deltaY*0.02)); scopeCamUpdate(); e.preventDefault(); }, {passive:false});
+  canvas.addEventListener('wheel', e=>{ if(suelto) return;
+    camRadius=Math.max(7,Math.min(24, camRadius+e.deltaY*0.02)); scopeCamUpdate(); e.preventDefault(); }, {passive:false});
   const ro=new ResizeObserver(()=>{ const w=wrap.clientWidth, h=wrap.clientHeight; if(!w||!h) return;
     renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); scopeCamUpdate(); });
   ro.observe(wrap); R3.ro=ro;
@@ -975,7 +1005,7 @@ function scopeStep(dir){ if(!R3) return; const d=dir||1;
   R3.renderer.render(R3.scene, R3.camera);
 }
 function scopeZoom(f){ if(!R3) return; camRadius=Math.max(7, Math.min(24, camRadius*f)); scopeCamUpdate(); }
-function scopeFit(){ camTheta=0.7; camPhi=1.12; camRadius=14; if(scopeWorld) scopeWorld.rotation.set(0,0,0); if(R3) scopeCamUpdate(); }
+function scopeFit(){ camTheta=0.7; camPhi=1.12; camRadius=CAM_INI; if(scopeWorld) scopeWorld.rotation.set(0,0,0); if(R3) scopeCamUpdate(); }
 function scopeFullscreen(){ const el=document.getElementById('scope'); if(!el) return;
   if(!document.fullscreenElement){ (el.requestFullscreen||el.webkitRequestFullscreen||function(){}).call(el); }
   else { (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document); } }
@@ -1081,6 +1111,7 @@ document.addEventListener('DOMContentLoaded',()=>{
      10/08/2026. */
   var q = new URLSearchParams(location.search);
   if (q.get('chrome') === '0') document.documentElement.classList.add('incrustado');
+  if (q.get('ctls') === '1') document.documentElement.classList.add('con-ctls');
   if (q.get('tema')) applyTheme(q.get('tema'));
   setView(q.get('vista') || localStorage.getItem('yiqi-view') || 'scope');
 });

@@ -6,3 +6,6 @@
 ehthumbs.db
 Thumbs.db
 .DS_Store
+
+# scratch de un parche aplicado el 12/08/2026 — borrar a mano
+.tmp-parche/
