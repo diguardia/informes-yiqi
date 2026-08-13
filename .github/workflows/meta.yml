@@ -1,9 +1,13 @@
 name: Meta · sincronizar informe comercial
 
-# Actualiza data/meta.json con los datos de la Marketing API.
-# comercial.html lo lee al cargar y con eso arma Resumen Meta, el gráfico
-# mensual y la tabla de Anuncios. Si el JSON falta, el HTML cae en los
-# valores embebidos y se ve igual que antes.
+# Actualiza data/meta.json con los datos de la Marketing API y data/pixel.json
+# con los eventos del píxel. comercial.html los lee al cargar y con eso arma
+# Resumen Meta, el gráfico mensual y la tabla de Anuncios. Si el JSON falta,
+# el HTML cae en los valores embebidos y se ve igual que antes.
+#
+# El paso del píxel avisa por issue cuando aparece un Lead o un
+# InitiateCheckout: GitHub le manda mail a quien siga el repositorio, así que
+# no hace falta configurar SMTP ni sumar secretos nuevos.
 
 on:
   schedule:
@@ -18,6 +22,7 @@ concurrency:
 
 permissions:
   contents: write
+  issues: write             # necesario para el aviso del píxel
 
 jobs:
   sincronizar:
@@ -36,14 +41,43 @@ jobs:
           META_API_VERSION:   ${{ vars.META_API_VERSION   || 'v25.0' }}
         run: node scripts/fetch-meta.mjs
 
+      # Va después y con continue-on-error: si la consulta del píxel falla, la
+      # sincronización del informe ya está hecha y no se pierde la corrida.
+      - name: Traer eventos del píxel
+        id: pixel
+        continue-on-error: true
+        env:
+          META_TOKEN:       ${{ secrets.META_TOKEN }}
+          META_PIXEL_ID:    ${{ vars.META_PIXEL_ID    || '455192279196875' }}
+          META_API_VERSION: ${{ vars.META_API_VERSION || 'v25.0' }}
+        run: node scripts/fetch-pixel.mjs
+
       - name: Commitear si cambió
         run: |
-          if [ -z "$(git status --porcelain data/meta.json)" ]; then
-            echo "Sin cambios en data/meta.json."
+          if [ -z "$(git status --porcelain data/)" ]; then
+            echo "Sin cambios en data/."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/meta.json
+          git add data/meta.json data/pixel.json
           git commit -m "Meta: sincronizar datos del informe ($(date -u +%Y-%m-%d))"
           git push
+
+      - name: Avisar si el píxel registró conversiones
+        if: steps.pixel.outputs.avisar == 'si'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENTOS:  ${{ steps.pixel.outputs.eventos }}
+          FECHA:    ${{ steps.pixel.outputs.fecha }}
+          DETALLE:  ${{ steps.pixel.outputs.detalle }}
+        run: |
+          gh issue create \
+            --title "Píxel: $EVENTOS el $FECHA" \
+            --body "El píxel registró **$EVENTOS** el $FECHA (hora de Buenos Aires).
+
+          Detalle del día: \`$DETALLE\`
+
+          Serie completa en \`data/pixel.json\`. Recordá que los bots que hacen POST directo al endpoint no disparan el píxel, así que este conteo mide conversiones de personas con navegador — es más honesto que el conteo de ONs del CRM.
+
+          _Generado por el workflow \`meta.yml\`._"
