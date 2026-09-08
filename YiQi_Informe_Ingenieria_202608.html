@@ -4,12 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>Informe de Ingeniería y Producto — Agosto 2026 · YiQi ERP</title>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      Informe de Ingeniería y Producto · Agosto 2026
-     Volcado del PDF "Ing Agosto 2026". Todo lo que dice "sin dato" es un
-     campo que ese reporte no cubre — no se estimó ni se completó nada.
+     Datos del reporte de resultados de Ingeniería de agosto 2026. Todo lo que
+     dice "sin dato" es un campo que ese reporte no cubre — no se estimó ni se
+     completó nada.
      Mismo esqueleto que el informe de ATC, a propósito: los dos se leen
      uno al lado del otro y la sección 06 los cruza.
 
@@ -64,15 +67,16 @@
     <span class="t-pill">Informe Ingeniería</span>
   </div>
 
-  <div class="topbar-c">
+  <!-- Centrado a mano: en escritorio el DS deja fluir .topbar-c a la
+       izquierda aunque el nombre prometa centro (styles.css:2734). "Julio" no
+       existe todavía como informe; el botón vuelve cuando haya adónde llevar. -->
+  <div class="topbar-c" style="justify-content:center">
     <div class="range-filter" role="group" aria-label="Período del informe">
-      <button class="range-btn is-active" type="button">Agosto 2026</button>
-      <button class="range-btn" type="button">Julio</button>
+      <button class="range-btn is-active" type="button" aria-current="page">Agosto 2026</button>
     </div>
   </div>
 
   <div class="topbar-r">
-    <button class="btn-exit" type="button" onclick="window.print()">Imprimir</button>
     <button class="nav-hamburger" type="button" aria-label="Abrir menú"
       aria-expanded="false" aria-controls="app-sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
@@ -95,23 +99,16 @@
            columna de iconos. -->
       <section class="nav-section">
         <p class="nav-lbl">El mes</p>
-        <a class="nav-link is-active" href="#kpis" title="Métricas" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span>Métricas</span></a>
+        <a class="nav-link is-active" href="#kpis" title="Tickets" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span>Tickets</span></a>
         <a class="nav-link" href="#resumen" title="Resumen"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/></svg></span><span>Resumen</span></a>
       </section>
       <section class="nav-section">
         <p class="nav-lbl">Qué se hizo</p>
-        <a class="nav-link" href="#entregas" title="Entregas"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Entregas</span></a>
-        <a class="nav-link" href="#esfuerzo" title="Esfuerzo"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 4"/></svg></span><span>Esfuerzo</span></a>
+        <a class="nav-link" href="#entregas" title="Novedades"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Novedades</span></a>
+        <a class="nav-link" href="#modulos" title="Por módulo"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 4"/></svg></span><span>Por módulo</span></a>
+        <a class="nav-link" href="#esquemas" title="Por esquema"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span><span>Por esquema</span></a>
         <a class="nav-link" href="#responsables" title="Por responsable"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span>Por responsable</span></a>
-        <a class="nav-link" href="#incidentes" title="Incidentes"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span><span>Incidentes</span></a>
         <a class="nav-link" href="#triage" title="Triage"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span>Triage</span></a>
-      </section>
-      <section class="nav-section">
-        <p class="nav-lbl">Qué falta</p>
-        <a class="nav-link" href="#atencion" title="Lo que pide Atención"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg></span><span>Lo que pide Atención</span></a>
-        <a class="nav-link" href="#trabado" title="Trabado"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span>Trabado</span></a>
-        <a class="nav-link" href="#proximo" title="El mes que viene"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span>El mes que viene</span></a>
-        <a class="nav-link" href="#indicadores" title="Indicadores"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/></svg></span><span>Indicadores</span></a>
       </section>
     </nav>
 
@@ -138,57 +135,77 @@
         </button>
       </div>
 
-      <div class="sb-copy">&copy; 2026 YiQi S.A.<br>Ingeniería y Producto &middot; <span data-ds-version>DS</span></div>
+      <!-- Solo el copyright: el nombre del informe y la versión del DS ya
+           están en la barra de estado; repetirlos acá es ruido. -->
+      <div class="sb-copy">&copy; 2026 YiQi S.A.</div>
     </div>
   </aside>
 
   <!-- ── Contenido ──────────────────────────────────────────────── -->
   <main class="content">
 
-    <!-- 01 · Métricas ─────────────────────────────────────────── -->
+    <!-- 01 · Tickets ─────────────────────────────────────────── -->
     <section class="panel" id="kpis">
       <div class="panel-header">
         <div>
-          <div class="panel-kicker">01 · Métricas</div>
-          <h3>El mes en números</h3>
+          <div class="panel-kicker">01 · Tickets</div>
+          <h3>Tickets</h3>
         </div>
         <span class="badge badge-cyan">Agosto 2026</span>
       </div>
-
-      <!-- Toda cifra va contra el mes anterior. .is-positive / .is-negative
-           según convenga AL NEGOCIO, no al signo: más issues abiertos al
-           cierre no es una buena noticia aunque el número suba. -->
       <div class="kpi-grid">
         <article class="kpi-card">
-          <div class="kpi-label">Tickets recibidos</div>
+          <div class="kpi-label">Tickets recibidos en el mes</div>
           <div class="kpi-value">398</div>
-          <div class="kpi-note">así figura en el reporte, sin aclarar el alcance</div>
         </article>
         <article class="kpi-card">
-          <div class="kpi-label">Llegaron a Ingeniería</div>
-          <div class="kpi-value">172</div>
-          <div class="kpi-note">99 del mes + 73 de meses anteriores</div>
+          <div class="kpi-label">Pasados a Ing</div>
+          <div class="kpi-value">99</div>
+          <div class="kpi-note">mes actual · más 73 anteriores</div>
         </article>
         <article class="kpi-card">
-          <div class="kpi-label">Cerrados por Ingeniería</div>
-          <div class="kpi-value">160</div>
-          <div class="kpi-note">88 del mes + 72 de meses anteriores</div>
+          <div class="kpi-label">Cerrados por Ing</div>
+          <div class="kpi-value">88</div>
+          <div class="kpi-note">mes actual · más 72 anteriores</div>
         </article>
-        <article class="kpi-card">
-          <div class="kpi-label">Entregas</div>
-          <div class="kpi-value">8</div>
-          <div class="kpi-note">las novedades del mes</div>
-        </article>
-        <article class="kpi-card">
-          <div class="kpi-label">Esquemas alcanzados</div>
-          <div class="kpi-value">23</div>
-          <div class="kpi-note">con 2 tickets o más</div>
-        </article>
-        <article class="kpi-card">
-          <div class="kpi-label">Incidentes en producción</div>
-          <div class="kpi-value">sin dato</div>
-          <div class="kpi-note">el reporte no los registra</div>
-        </article>
+      </div>
+
+      <!-- Los dos gráficos del reporte, lado a lado. -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px">
+        <div>
+          <div class="panel-kicker">Pasados a Ing</div>
+          <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+            <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">Mes actual</span><span class="legend-pct">99</span></div>
+            <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--violet)"></span><span class="legend-label">Anteriores</span><span class="legend-pct">73</span></div>
+          </div>
+          <div class="trend-chart" role="img" aria-label="Pasados a Ingeniería: 99 del mes actual y 73 anteriores">
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:100%">
+              <div class="trend-bar" style="background:var(--cyan);min-height:0;height:150px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">99</span></div>
+              <div class="trend-bar" style="background:var(--violet);min-height:0;height:111px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">73</span></div>
+            </div>
+            <div class="trend-day"></div>
+          </div>
+          </div>
+        </div>
+        <div>
+          <div class="panel-kicker">Cerrados por Ing</div>
+          <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+            <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">Mes actual</span><span class="legend-pct">88</span></div>
+            <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--violet)"></span><span class="legend-label">Anteriores</span><span class="legend-pct">72</span></div>
+          </div>
+          <div class="trend-chart" role="img" aria-label="Cerrados por Ingeniería: 88 del mes actual y 72 anteriores">
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:100%">
+              <div class="trend-bar" style="background:var(--cyan);min-height:0;height:133px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">88</span></div>
+              <div class="trend-bar" style="background:var(--violet);min-height:0;height:109px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">72</span></div>
+            </div>
+            <div class="trend-day"></div>
+          </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -197,314 +214,689 @@
       <div class="panel-header">
         <div>
           <div class="panel-kicker">02 · Resumen</div>
-          <h3>Tres cosas que hay que saber</h3>
+          <h3>Resumen</h3>
         </div>
       </div>
-      <!-- Se escribe al final, aunque vaya primero. Si lo incómodo del mes
-           no está en estas tres líneas, el resumen no sirve. -->
       <ul class="signal-list">
-        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>A Ingeniería llegaron 172 tickets (99 del mes y 73 arrastrados) y se cerraron 160: quedaron 12 sin cerrar. Del mes entraron 99 y se cerraron 88; de los arrastrados, 73 y 72.</p></li>
-        <li><span class="signal signal-amber" aria-hidden="true"></span><p>Ventas concentra 58 de los 172 tickets: un tercio del trabajo del área sale de un solo módulo. Con Compras (27) llegan a 85, casi la mitad.</p></li>
-        <li><span class="signal signal-red" aria-hidden="true"></span><p>El reporte no dice si hubo incidentes, qué quedó trabado ni qué está comprometido para septiembre. Sin eso, dirección no tiene ninguna decisión que tomar leyéndolo.</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Se recibieron 398 tickets. Pasaron a Ingeniería 99 del mes y 73 anteriores; se cerraron 88 del mes y 72 anteriores.</p></li>
+        <li><span class="signal signal-amber" aria-hidden="true"></span><p>Ventas (58) y Compras (27) son los módulos con más tickets. TMC (24) y ERP (20), los esquemas.</p></li>
+        <li><span class="signal signal-red" aria-hidden="true"></span><p>En el triage se cerraron 177 tickets en 21 días, 130 a término y 47 fuera de término.</p></li>
       </ul>
     </section>
 
-    <!-- 03 · Entregas ─────────────────────────────────────────── -->
+    <!-- 03 · Novedades ─────────────────────────────────────────── -->
+    <!-- Dos grafías se corrigieron respecto del reporte: "TIenda Nube" → Tiendanube
+         (es el nombre de la marca) y "ML" → Mercado Libre. Todo lo demás es
+         textual. -->
     <section class="panel" id="entregas">
       <div class="panel-header">
         <div>
-          <div class="panel-kicker">03 · Entregas</div>
-          <h3>Qué se entregó</h3>
+          <div class="panel-kicker">03 · Novedades</div>
+          <h3>Novedades</h3>
         </div>
         <span class="badge badge-muted">8 en el mes</span>
       </div>
-      <!-- En orden de impacto para el cliente, no cronológico. La columna
-           que importa es "para quién cambia algo": una entrega que no
-           cambia nada para nadie es deuda, y va en Esfuerzo. -->
-      <div class="table-wrap">
-        <table class="data-table" data-ds-sortable>
-          <thead><tr><th>Entrega</th><th>Qué resuelve</th><th>Para quién</th><th>Fecha</th></tr></thead>
-          <tbody>
-            <tr><td>Homologación de Tiendanube</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Valoración de stock a una fecha</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Tratamiento de devoluciones según la condición del producto</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Asignar número de despacho a artículo</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Precio por variante en Mercado Libre</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Proyección automática de Orden de Servicio</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Apertura temporal del período contable</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-            <tr><td>Agrupar servicios similares</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <ul class="signal-list">
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Homologación de Tiendanube</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Valoración de stock a una fecha</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Tratamiento de devoluciones según la condición del producto</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Asignar número de despacho a artículo</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Precio por variante en Mercado Libre</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Proyección automática de Orden de Servicio</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Apertura temporal del período contable</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>Agrupar servicios similares</p></li>
+      </ul>
     </section>
 
-    <!-- 04 · Dónde se concentró ──────────────────────────────── -->
-    <section class="panel" id="esfuerzo">
+    <!-- 04 · Por módulo ─────────────────────────────────────── -->
+    <section class="panel" id="modulos">
       <div class="panel-header">
         <div>
-          <div class="panel-kicker">04 · Concentración</div>
-          <h3>Dónde se fue el mes</h3>
+          <div class="panel-kicker">04 · Módulos</div>
+          <h3>Por módulo</h3>
         </div>
         <span class="badge badge-muted">172 tickets</span>
       </div>
-      <!-- Esta sección debería mostrar el reparto entre producto nuevo,
-           corrección, soporte y deuda técnica. Ese dato no existe. Lo que sí
-           existe es la distribución por módulo, que contesta una pregunta
-           parecida pero no la misma: dice DÓNDE se trabajó, no EN QUÉ. -->
+      <div class="funnel" role="img" aria-label="Tickets por módulo: Ventas 58, Compras 27, Finanzas 15, Contabilidad 14, General 14, Stock 9, Integraciones 7, Comercial 6, RRHH 6, Clientes y proveedores 5, Producción 4, A medida 3, Parámetro 2, YiQi Services 2">
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Ventas</span><span class="funnel-step-count">58</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:100%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:100.0%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Compras</span><span class="funnel-step-count">27</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:47%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:46.6%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Finanzas</span><span class="funnel-step-count">15</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:26%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:25.9%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Contabilidad</span><span class="funnel-step-count">14</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:24%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:24.1%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">General</span><span class="funnel-step-count">14</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:24%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:24.1%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Stock</span><span class="funnel-step-count">9</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:16%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:15.5%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Integraciones</span><span class="funnel-step-count">7</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:12%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:12.1%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Comercial</span><span class="funnel-step-count">6</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:10%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:10.3%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">RRHH</span><span class="funnel-step-count">6</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:10%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:10.3%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Clientes y proveedores</span><span class="funnel-step-count">5</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:9%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:8.6%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Producción</span><span class="funnel-step-count">4</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:7%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:6.9%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">A medida</span><span class="funnel-step-count">3</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:5%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:5.2%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">Parámetro</span><span class="funnel-step-count">2</span></div>
-          <div class="funnel-track"><div class="funnel-fill" style="width:3%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:3.4%"></div></div>
         </div>
         <div>
           <div class="funnel-step-top"><span class="funnel-step-name">YiQi Services</span><span class="funnel-step-count">2</span></div>
-          <div class="funnel-track"><div class="funnel-fill is-end" style="width:3%"></div></div>
+          <div class="funnel-track"><div class="funnel-fill is-end" style="width:3.4%"></div></div>
         </div>
-      <p class="funnel-note">Los catorce módulos suman <strong>172</strong>, que es exactamente lo que llegó a Ingeniería (99 del mes más 73 arrastrados). Ventas y Compras suman 85 de esos 172, casi la mitad. El reparto entre producto nuevo, corrección y deuda técnica no se mide.</p>
-
-      <div class="table-wrap">
-        <table class="data-table" data-ds-sortable>
-          <thead><tr><th>Esquema</th><th class="num">Tickets</th></tr></thead>
-          <tbody>
-            <tr><td>TMC</td><td class="num">24</td></tr>
-            <tr><td>ERP</td><td class="num">20</td></tr>
-            <tr><td>EspacioMarketing</td><td class="num">18</td></tr>
-            <tr><td>Febo</td><td class="num">18</td></tr>
-            <tr><td>CentroDeDistribuciónSur</td><td class="num">10</td></tr>
-            <tr><td>DentalLab</td><td class="num">7</td></tr>
-            <tr><td>NORDAR</td><td class="num">7</td></tr>
-            <tr><td>LATCAU</td><td class="num">6</td></tr>
-            <tr><td>Arphgroup</td><td class="num">5</td></tr>
-            <tr><td>DxElectronica</td><td class="num">5</td></tr>
-          </tbody>
-        </table>
       </div>
-      <p class="funnel-note">Los diez esquemas de arriba concentran <strong>120 de los 160</strong> tickets cerrados. Los 23 esquemas listados suman 160, que coincide con el total de cerrados.</p>
+      <p class="funnel-note">Los catorce módulos suman <strong>172</strong>. Ventas y Compras suman 85.</p>
     </section>
 
-    <!-- 04b · Por responsable ─────────────────────────────────── -->
+    <!-- 05 · Por esquema ─────────────────────────────────────── -->
+    <section class="panel" id="esquemas">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">05 · Esquemas</div>
+          <h3>Por esquema</h3>
+        </div>
+        <span class="badge badge-muted">23 esquemas</span>
+      </div>
+      <div class="funnel" role="img" aria-label="Tickets cerrados por esquema, 23 esquemas, de TMC con 24 a ZapateriaGuido con 2">
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">TMC</span><span class="funnel-step-count">24</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:100.0%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">ERP</span><span class="funnel-step-count">20</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:83.3%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">EspacioMarketing</span><span class="funnel-step-count">18</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:75.0%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Febo</span><span class="funnel-step-count">18</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:75.0%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">CentroDeDistribuciónSur</span><span class="funnel-step-count">10</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:41.7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">DentalLab</span><span class="funnel-step-count">7</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:29.2%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">NORDAR</span><span class="funnel-step-count">7</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:29.2%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">LATCAU</span><span class="funnel-step-count">6</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:25.0%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Arphgroup</span><span class="funnel-step-count">5</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:20.8%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">DxElectronica</span><span class="funnel-step-count">5</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:20.8%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">BairesRocks</span><span class="funnel-step-count">4</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:16.7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">DXCERCINALO</span><span class="funnel-step-count">4</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:16.7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">ecosan</span><span class="funnel-step-count">4</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:16.7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">WineSupply</span><span class="funnel-step-count">4</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:16.7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">YiQi</span><span class="funnel-step-count">4</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:16.7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Metroblanc</span><span class="funnel-step-count">3</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:12.5%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Peniel</span><span class="funnel-step-count">3</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:12.5%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">VinotecaMasis</span><span class="funnel-step-count">3</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:12.5%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Voces de Areco</span><span class="funnel-step-count">3</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:12.5%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Mutis</span><span class="funnel-step-count">2</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:8.3%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Pracau</span><span class="funnel-step-count">2</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:8.3%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Sell2Ship</span><span class="funnel-step-count">2</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:8.3%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">ZapateriaGuido</span><span class="funnel-step-count">2</span></div>
+          <div class="funnel-track"><div class="funnel-fill is-end" style="width:8.3%"></div></div>
+        </div>
+      </div>
+      <p class="funnel-note">Los cuatro primeros suman <strong>80</strong>; los 23 suman 160.</p>
+    </section>
+
+    <!-- 06 · Por responsable ─────────────────────────────────── -->
     <section class="panel" id="responsables">
       <div class="panel-header">
         <div>
-          <div class="panel-kicker">04b · Equipo</div>
+          <div class="panel-kicker">06 · Responsables</div>
           <h3>Por responsable</h3>
         </div>
       </div>
-      <!-- Esta lámina viene tal cual del reporte de agosto. Mide personas con
-           nombre: tickets, días de demora y satisfacción individual, en un
-           informe que lee dirección. Es evaluación de desempeño, no lectura de
-           área — vale tenerlo como decisión consciente, no heredada. -->
-      <div class="table-wrap">
-        <table class="data-table" data-ds-sortable>
-          <thead><tr><th>Responsable</th><th class="num">Del mes</th><th class="num">Anteriores</th><th class="num">Demora (días)</th><th class="num">Satisfacción</th></tr></thead>
-          <tbody>
-            <tr><td>Samuel</td><td class="num">55</td><td class="num">33</td><td class="num">4,24</td><td class="num">4,90</td></tr>
-            <tr><td>Gabriel</td><td class="num">38</td><td class="num">27</td><td class="num">6,40</td><td class="num">4,80</td></tr>
-            <tr><td>Andrés</td><td class="num">21</td><td class="num">14</td><td class="num">4,07</td><td class="num">4,10</td></tr>
-          </tbody>
-        </table>
+      <div class="panel-kicker">Tickets: mes actual y anteriores</div>
+      <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+        <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">Mes actual</span><span class="legend-pct">114</span></div>
+        <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--violet)"></span><span class="legend-label">Anteriores</span><span class="legend-pct">74</span></div>
       </div>
-      <p class="funnel-note"><strong>Las cuentas no cierran.</strong> Los tres responsables suman <strong>114</strong> tickets del mes, pero a Ingeniería llegaron <strong>99</strong>. Los de meses anteriores suman 74 contra 73. Y el triage diario suma <strong>177</strong> cerrados contra los 160 del total. O las tres láminas miden cosas distintas, o hay un problema de base: hay que definir cuál es la cifra buena antes de comparar septiembre contra agosto.</p>
-    </section>
-
-    <!-- 05 · Incidentes ───────────────────────────────────────── -->
-    <section class="panel" id="incidentes">
-      <div class="panel-header">
-        <div>
-          <div class="panel-kicker">05 · Incidentes</div>
-          <h3>Qué se cayó</h3>
+      <div class="trend-chart" role="img" aria-label="Tickets por responsable, mes actual y anteriores: Samuel 55 y 33, Gabriel 38 y 27, Andrés 21 y 14">
+        <div class="trend-bar-wrap">
+          <div class="trend-value"></div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:150px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">55</span></div>
+            <div class="trend-bar" style="background:var(--violet);min-height:0;height:90px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">33</span></div>
+          </div>
+          <div class="trend-day">Samuel</div>
         </div>
-        <span class="badge badge-red">sin dato</span>
+        <div class="trend-bar-wrap">
+          <div class="trend-value"></div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:104px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">38</span></div>
+            <div class="trend-bar" style="background:var(--violet);min-height:0;height:74px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">27</span></div>
+          </div>
+          <div class="trend-day">Gabriel</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value"></div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:57px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">21</span></div>
+            <div class="trend-bar" style="background:var(--violet);min-height:0;height:38px;flex:1;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">14</span></div>
+          </div>
+          <div class="trend-day">Andrés</div>
+        </div>
       </div>
-      <!-- Si no hubo incidentes, se borra la tabla y queda una línea:
-           "Sin incidentes en el período." Eso es una sección terminada.
-           Lo que NO va acá son justificaciones: qué pasó, cuánto duró,
-           a quién afectó, qué se cambió para que no se repita. -->
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Qué pasó</th><th>Duración</th><th class="num">Clientes</th><th>Qué se cambió</th></tr></thead>
-          <tbody>
-            <tr><td>sin dato</td><td>—</td><td class="num">—</td><td>El reporte de agosto no registra incidentes en producción.</td></tr>
-          </tbody>
-        </table>
+
+      <!-- Los dos gráficos van lado a lado como en el reporte. Un color por
+           persona, el mismo en los dos, para poder leerlos cruzados. -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px">
+        <div>
+          <div class="panel-kicker">Tardanza (días)</div>
+          <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+          <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">Samuel</span><span class="legend-pct">4,24</span></div>
+          <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--violet)"></span><span class="legend-label">Gabriel</span><span class="legend-pct">6,40</span></div>
+          <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--blue)"></span><span class="legend-label">Andrés</span><span class="legend-pct">4,07</span></div>
+          </div>
+          <div class="trend-chart" role="img" aria-label="Tardanza en días: Samuel 4,24, Gabriel 6,40, Andrés 4,07">
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+              <div class="trend-bar" style="background:var(--cyan);min-height:0;height:91px;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4,24</span></div>
+            </div>
+            <div class="trend-day">Samuel</div>
+          </div>
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+              <div class="trend-bar" style="background:var(--violet);min-height:0;height:137px;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">6,40</span></div>
+            </div>
+            <div class="trend-day">Gabriel</div>
+          </div>
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+              <div class="trend-bar" style="background:var(--blue);min-height:0;height:87px;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4,07</span></div>
+            </div>
+            <div class="trend-day">Andrés</div>
+          </div>
+          </div>
+        </div>
+        <div>
+          <div class="panel-kicker">Satisfacción promedio</div>
+          <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+          <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">Samuel</span><span class="legend-pct">4,90</span></div>
+          <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--violet)"></span><span class="legend-label">Gabriel</span><span class="legend-pct">4,80</span></div>
+          <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--blue)"></span><span class="legend-label">Andrés</span><span class="legend-pct">4,10</span></div>
+          </div>
+          <div class="trend-chart" role="img" aria-label="Satisfacción promedio: Samuel 4,90, Gabriel 4,80, Andrés 4,10">
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+              <div class="trend-bar" style="background:var(--cyan);min-height:0;height:147px;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4,90</span></div>
+            </div>
+            <div class="trend-day">Samuel</div>
+          </div>
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+              <div class="trend-bar" style="background:var(--violet);min-height:0;height:144px;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4,80</span></div>
+            </div>
+            <div class="trend-day">Gabriel</div>
+          </div>
+          <div class="trend-bar-wrap">
+            <div class="trend-value"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+              <div class="trend-bar" style="background:var(--blue);min-height:0;height:123px;display:flex;align-items:center;justify-content:center"><span style="font:600 12px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4,10</span></div>
+            </div>
+            <div class="trend-day">Andrés</div>
+          </div>
+          </div>
+        </div>
       </div>
+      <p class="funnel-note">Los tres responsables suman <strong>114</strong> tickets del mes y 74 de meses anteriores.</p>
     </section>
 
-    <!-- 05b · Triage ─────────────────────────────────────────── -->
+    <!-- 07 · Triage ─────────────────────────────────────────── -->
     <section class="panel" id="triage">
       <div class="panel-header">
         <div>
-          <div class="panel-kicker">05b · Triage</div>
-          <h3>El triage día por día</h3>
+          <div class="panel-kicker">07 · Triage</div>
+          <h3>Triage</h3>
         </div>
-        <span class="badge badge-muted">21 días hábiles</span>
+        <span class="badge badge-muted">21 días</span>
       </div>
-      <!-- Los dos valores de cada día están etiquetados en la lámina, así que
-           se transcriben tal cual. La segunda lámina del PDF —a término y
-           fuera de término— tiene varias barras SIN número: no se transcribe,
-           porque leerla midiendo alturas es inventar. -->
-      <div class="table-wrap">
-        <table class="data-table" data-ds-sortable>
-          <thead><tr><th>Día</th><th class="num">Cerrados</th><th class="num">Pendientes</th><th class="num">Total</th></tr></thead>
-          <tbody>
-            <tr><td>03/08</td><td class="num">19</td><td class="num">4</td><td class="num">23</td></tr>
-            <tr><td>04/08</td><td class="num">5</td><td class="num">3</td><td class="num">8</td></tr>
-            <tr><td>05/08</td><td class="num">7</td><td class="num">4</td><td class="num">11</td></tr>
-            <tr><td>06/08</td><td class="num">5</td><td class="num">5</td><td class="num">10</td></tr>
-            <tr><td>07/08</td><td class="num">8</td><td class="num">4</td><td class="num">12</td></tr>
-            <tr><td>10/08</td><td class="num">5</td><td class="num">4</td><td class="num">9</td></tr>
-            <tr><td>11/08</td><td class="num">9</td><td class="num">5</td><td class="num">14</td></tr>
-            <tr><td>12/08</td><td class="num">7</td><td class="num">3</td><td class="num">10</td></tr>
-            <tr><td>13/08</td><td class="num">9</td><td class="num">6</td><td class="num">15</td></tr>
-            <tr><td>14/08</td><td class="num">9</td><td class="num">3</td><td class="num">12</td></tr>
-            <tr><td>17/08</td><td class="num">12</td><td class="num">3</td><td class="num">15</td></tr>
-            <tr><td>18/08</td><td class="num">8</td><td class="num">4</td><td class="num">12</td></tr>
-            <tr><td>19/08</td><td class="num">5</td><td class="num">1</td><td class="num">6</td></tr>
-            <tr><td>20/08</td><td class="num">10</td><td class="num">3</td><td class="num">13</td></tr>
-            <tr><td>21/08</td><td class="num">10</td><td class="num">3</td><td class="num">13</td></tr>
-            <tr><td>24/08</td><td class="num">5</td><td class="num">8</td><td class="num">13</td></tr>
-            <tr><td>25/08</td><td class="num">10</td><td class="num">3</td><td class="num">13</td></tr>
-            <tr><td>26/08</td><td class="num">6</td><td class="num">4</td><td class="num">10</td></tr>
-            <tr><td>27/08</td><td class="num">11</td><td class="num">2</td><td class="num">13</td></tr>
-            <tr><td>28/08</td><td class="num">10</td><td class="num">5</td><td class="num">15</td></tr>
-            <tr><td>31/08</td><td class="num">7</td><td class="num">5</td><td class="num">12</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="funnel-note">Suma <strong>177</strong> cerrados y 82 pendientes en 21 días hábiles. Esos 177 <strong>no coinciden con los 160</strong> del total del mes: son 17 de diferencia y hay que definir cuál es la cifra buena. El <strong>24/08</strong> es el único día del mes con más pendientes (8) que cerrados (5). El pico fue el <strong>03/08</strong>, con 19 cerrados: el arranque del mes se llevó la cola de julio.</p>
-      <p class="funnel-note">La lámina de <em>a término / fuera de término</em> queda afuera: varias barras no tienen el número escrito y no se puede transcribir sin medirlas.</p>
-    </section>
 
-    <!-- 06 · Lo que pide Atención ─────────────────────────────── -->
-    <section class="panel" id="atencion">
-      <div class="panel-header">
-        <div>
-          <div class="panel-kicker">06 · Atención</div>
-          <h3>Lo que Atención espera de Producto</h3>
-        </div>
+      <!-- Columnas apiladas, como en el reporte. El DS publica .trend-chart, que
+           es de una serie: el apilado se arma con dos .trend-bar dentro de la
+           columna. Un .trend-stack canónico es lo que falta. -->
+      <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+        <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--green)"></span><span class="legend-label">Cerrados</span><span class="legend-pct">177</span></div>
+        <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--red)"></span><span class="legend-label">Pendientes</span><span class="legend-pct">82</span></div>
       </div>
-      <!-- ESTA ES LA SECCIÓN QUE CRUZA LOS DOS INFORMES.
-           Sale de "Lo que se puede dejar de contestar" del informe de ATC:
-           cada fila es un ticket que, resuelto, elimina consultas repetidas.
-           La columna de casos es del mes de ATC, no una estimación.
-           Si esta tabla se copia igual tres meses seguidos, eso es el dato. -->
-      <div class="table-wrap">
-        <table class="data-table" data-ds-sortable>
-          <thead><tr><th>Ticket</th><th>Qué elimina</th><th class="num">Casos/mes</th><th>Estado</th><th>Meses abierto</th></tr></thead>
-          <tbody>
-            <tr><td>sin dato</td><td>No hay informe de Atención al cliente de agosto: el último es el de abril.</td><td class="num">—</td><td><span class="badge badge-amber">Sin informe</span></td><td>4</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
 
-    <!-- 07 · Trabado ──────────────────────────────────────────── -->
-    <section class="panel" id="trabado">
-      <div class="panel-header">
-        <div>
-          <div class="panel-kicker">07 · Trabado</div>
-          <h3>Lo que no avanzó y qué lo destraba</h3>
+      <div class="table-wrap">
+      <div class="trend-chart" style="min-width:720px" role="img" aria-label="Triage por día: cerrados y pendientes en 21 días, 177 cerrados y 82 pendientes">
+        <div class="trend-bar-wrap">
+          <div class="trend-value">23</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:26px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:124px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">19</span></div>
+          </div>
+          <div class="trend-day">03</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">8</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:33px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">04</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">11</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:26px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:46px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">05</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:33px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:33px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">06</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">12</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:26px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:52px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">8</span></div>
+          </div>
+          <div class="trend-day">07</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">9</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:26px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:33px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">10</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">14</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:33px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:59px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">9</span></div>
+          </div>
+          <div class="trend-day">11</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:46px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">12</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">15</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:39px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">6</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:59px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">9</span></div>
+          </div>
+          <div class="trend-day">13</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">12</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:59px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">9</span></div>
+          </div>
+          <div class="trend-day">14</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">15</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:78px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">12</span></div>
+          </div>
+          <div class="trend-day">17</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">12</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:26px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:52px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">8</span></div>
+          </div>
+          <div class="trend-day">18</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">6</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:7px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:33px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">19</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">13</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:65px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">10</span></div>
+          </div>
+          <div class="trend-day">20</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">13</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:65px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">10</span></div>
+          </div>
+          <div class="trend-day">21</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">13</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:52px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">8</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:33px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">24</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">13</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:20px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:65px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">10</span></div>
+          </div>
+          <div class="trend-day">25</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:26px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:39px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">6</span></div>
+          </div>
+          <div class="trend-day">26</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">13</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:13px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:72px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">11</span></div>
+          </div>
+          <div class="trend-day">27</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">15</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:33px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:65px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">10</span></div>
+          </div>
+          <div class="trend-day">28</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">12</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--red);min-height:0;height:33px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--green);min-height:0;height:46px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">31</div>
         </div>
       </div>
-      <!-- Si necesita una decisión de dirección, la columna "Quién destraba"
-           lleva un nombre. "Se está evaluando" no es un destrabador. -->
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Qué</th><th>Por qué no avanza</th><th>Quién destraba</th><th>Desde</th></tr></thead>
-          <tbody>
-            <tr><td>sin dato</td><td>El reporte de agosto no incluye una sección de trabado.</td><td>—</td><td>—</td></tr>
-          </tbody>
-        </table>
       </div>
-    </section>
+      <p class="funnel-note">Suma <strong>177</strong> cerrados y 82 pendientes en 21 días.</p>
+      <div class="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 14px">
+        <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">A término</span><span class="legend-pct">130</span></div>
+        <div class="legend-row" style="grid-template-columns:10px auto auto;gap:6px 8px"><span class="legend-dot" style="background:var(--amber)"></span><span class="legend-label">Fuera de término</span><span class="legend-pct">47</span></div>
+      </div>
 
-    <!-- 08 · El mes que viene ─────────────────────────────────── -->
-    <section class="panel" id="proximo">
-      <div class="panel-header">
-        <div>
-          <div class="panel-kicker">08 · Próximo mes</div>
-          <h3>Qué está comprometido</h3>
+      <div class="table-wrap">
+      <div class="trend-chart" style="min-width:720px" role="img" aria-label="Triage por día: a término y fuera de término, 130 a término y 47 fuera">
+        <div class="trend-bar-wrap">
+          <div class="trend-value">19</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:126px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">16</span></div>
+          </div>
+          <div class="trend-day">03</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">5</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:16px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">2</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:24px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+          </div>
+          <div class="trend-day">04</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">7</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:32px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">4</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:24px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+          </div>
+          <div class="trend-day">05</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">5</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:16px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">2</span></div>
+          </div>
+          <div class="trend-day">06</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">8</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:39px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">07</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">5</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:39px;border-radius:var(--radius-sm) var(--radius-sm) 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">10</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">9</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:39px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:32px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">4</span></div>
+          </div>
+          <div class="trend-day">11</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">7</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:8px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:47px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">6</span></div>
+          </div>
+          <div class="trend-day">12</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">9</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:16px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">2</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:55px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">13</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">9</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:47px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">6</span></div>
+          </div>
+          <div class="trend-day">14</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">12</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:39px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:55px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">17</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">8</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:39px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">5</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:24px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">3</span></div>
+          </div>
+          <div class="trend-day">18</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">5</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:16px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">2</span></div>
+          </div>
+          <div class="trend-day">19</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:55px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">20</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:24px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--text-on-amber);font-variant-numeric:tabular-nums">3</span></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:55px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">21</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">5</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:39px;border-radius:var(--radius-sm) var(--radius-sm) 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">5</span></div>
+          </div>
+          <div class="trend-day">24</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:8px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:71px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">9</span></div>
+          </div>
+          <div class="trend-day">25</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">6</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:47px;border-radius:var(--radius-sm) var(--radius-sm) 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">6</span></div>
+          </div>
+          <div class="trend-day">26</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">11</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:87px;border-radius:var(--radius-sm) var(--radius-sm) 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">11</span></div>
+          </div>
+          <div class="trend-day">27</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">10</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--amber);min-height:0;height:8px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;display:flex;align-items:center;justify-content:center"></div>
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:71px;border-radius:0 0 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">9</span></div>
+          </div>
+          <div class="trend-day">28</div>
+        </div>
+        <div class="trend-bar-wrap">
+          <div class="trend-value">7</div>
+          <div style="display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div class="trend-bar" style="background:var(--cyan);min-height:0;height:55px;border-radius:var(--radius-sm) var(--radius-sm) 2px 2px;display:flex;align-items:center;justify-content:center"><span style="font:600 11px var(--kpi-num);color:var(--accent-ink);font-variant-numeric:tabular-nums">7</span></div>
+          </div>
+          <div class="trend-day">31</div>
         </div>
       </div>
-      <!-- Lo comprometido con un cliente va separado del plan interno:
-           son dos cosas distintas y solo una tiene a alguien esperando. -->
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Compromiso</th><th>Tipo</th><th>Con quién</th><th>Cuándo</th></tr></thead>
-          <tbody>
-            <tr><td>sin dato</td><td><span class="badge badge-red">Con cliente</span></td><td>—</td><td>—</td></tr>          </tbody>
-        </table>
       </div>
-    </section>
-
-    <!-- 09 · Indicadores ──────────────────────────────────────── -->
-    <section class="panel" id="indicadores">
-      <div class="panel-header">
-        <div>
-          <div class="panel-kicker">09 · Indicadores</div>
-          <h3>Lo que hay que seguir midiendo</h3>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Indicador</th><th>Para qué sirve</th><th class="num">Este mes</th></tr></thead>
-          <tbody>
-            <tr><td>Tiempo medio de resolución</td><td>Cuánto tarda un problema en dejar de existir.</td><td class="num">sin dato</td></tr>
-            <tr><td>Incidentes en producción</td><td>Estabilidad de lo que ya está entregado.</td><td class="num">sin dato</td></tr>
-            <tr><td>Issues abiertos al cierre</td><td>Si la cola crece, el mes que viene arranca en rojo.</td><td class="num">sin dato</td></tr>
-            <tr><td>Esfuerzo en producto nuevo</td><td>Cuánto del mes fue construir y no apagar incendios.</td><td class="num">58</td></tr>
-            <tr><td>Tickets de Atención resueltos</td><td>Cuánta carga de soporte se eliminó de raíz.</td><td class="num">sin dato</td></tr>
-            <tr><td>Compromisos cumplidos en fecha</td><td>Si lo prometido al cliente llega cuando se dijo.</td><td class="num">sin dato</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <p class="funnel-note">Suma <strong>130</strong> a término y 47 fuera de término. En doce días (04, 06, 10, 12, 13, 19, 24, 25, 26, 27, 28 y 31) el reporte escribe un solo valor; el otro es la diferencia contra los cerrados de ese día.</p>
     </section>
 
   </main>
@@ -517,7 +909,7 @@
   <div class="statusbar-left">
     <strong>Informe Ingeniería</strong>
     <span class="sb-sep">&middot;</span>
-    <span class="statusbar-desc">172 tickets a Ingeniería &middot; 160 cerrados &middot; 8 entregas &middot; agosto 2026</span>
+    <span class="statusbar-desc">398 recibidos &middot; 99 pasados a Ing &middot; 88 cerrados por Ing &middot; 8 novedades</span>
   </div>
   <div class="statusbar-right">
     <span class="sb-item">Agosto 2026</span>
