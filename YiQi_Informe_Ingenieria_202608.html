@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="es" data-theme="system">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Informe de Ingeniería y Producto — Agosto 2026 · YiQi ERP</title>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     Informe de Ingeniería y Producto · Agosto 2026
+     Volcado del PDF "Ing Agosto 2026". Todo lo que dice "sin dato" es un
+     campo que ese reporte no cubre — no se estimó ni se completó nada.
+     Mismo esqueleto que el informe de ATC, a propósito: los dos se leen
+     uno al lado del otro y la sección 06 los cruza.
+
+     REGLA DE ESTE ARCHIVO: no define una sola línea de CSS propio.
+     Todo sale del canónico. Si algo que necesitás no está en styles.css,
+     se agrega al Design System — no acá. Un <style> local es lo que hace
+     que el sistema diverja.
+
+     El original traía 98 clases propias, 34 estilos inline y dos
+     gradientes decorativos. De esas 98, veintiocho redefinían
+     componentes que el DS ya publica (.card, .kpi-card, .badge,
+     .topbar, .sidebar, .table-wrap…): la app le estaba pisando
+     el estilo al sistema. Acá no queda ninguna.
+
+     Cómo se llena: buscá {{ }} y reemplazá. Nada más.
+     ═══════════════════════════════════════════════════════════════════ -->
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+
+<script>
+/* ── Tema claro por defecto ────────────────────────────────────────
+   El <html> se queda en data-theme="system" (§13: nunca se hardcodea
+   el tema, porque hardcodearlo rompe el switch del pie). Lo que se
+   cambia es OTRA cosa: la preferencia inicial.
+
+   El runtime resuelve el tema con getTheme(), que lee localStorage,
+   después la cookie de .yiqi.com.ar, y recién ahí cae en 'system'.
+   Sobreescribir el atributo en el HTML no sirve: el runtime lo pisa
+   al cargar. Lo que sí funciona es sembrar la preferencia antes.
+
+   Se siembra SOLO si el visitante no eligió nada en ninguna parte de
+   YiQi — ni en este origen ni en el resto del dominio. A quien ya
+   eligió oscuro no se le cambia el tema por abrir un informe.
+
+   Va antes del runtime y sin defer, a propósito: después no llega. */
+(function () {
+  try {
+    if (localStorage.getItem('yiqi-theme')) return;
+    if (/(?:^|;\s*)yiqi-theme=/.test(document.cookie)) return;
+    localStorage.setItem('yiqi-theme', 'light');
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<!-- ── Topbar: cruza de lado a lado, por encima del sidebar ────────── -->
+<header class="topbar app-topbar">
+  <div class="topbar-l">
+    <a class="topbar-logo" href="#" onclick="return false" aria-label="Ir al inicio">
+      <svg class="topbar-logo-svg" data-yiqi-logo viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YiQi"><g><path style="fill:currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path style="fill:currentColor" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/><path style="fill:currentColor" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path style="fill:currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/><path style="fill:currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/></g></svg>
+    </a>
+    <span class="t-pill">Informe Ingeniería</span>
+  </div>
+
+  <div class="topbar-c">
+    <div class="range-filter" role="group" aria-label="Período del informe">
+      <button class="range-btn is-active" type="button">Agosto 2026</button>
+      <button class="range-btn" type="button">Julio</button>
+    </div>
+  </div>
+
+  <div class="topbar-r">
+    <button class="btn-exit" type="button" onclick="window.print()">Imprimir</button>
+    <button class="nav-hamburger" type="button" aria-label="Abrir menú"
+      aria-expanded="false" aria-controls="app-sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<!-- La barra de estado es position:fixed y el DS no reserva su alto en
+     ningún lado: sin este relleno, los últimos 28px del contenido y los
+     controles del sidebar quedan tapados. Se reserva con el token, no
+     con un número. -->
+<div class="app-shell" id="app-shell" style="padding-bottom:var(--statusbar-h)">
+
+  <!-- ── Sidebar: navegación + controles de colapso ──────────────── -->
+  <aside class="sidebar" id="app-sidebar" aria-label="Secciones del informe">
+    <button class="nav-close" type="button" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+
+    <nav class="nav" aria-label="Secciones">
+      <!-- .nav-lbl, no .nav-label: las reglas de colapso y de peek del DS
+           (styles.css:2953 y :3757) solo contemplan .nav-lbl. Con .nav-label
+           el rótulo del grupo se queda visible en el rail y desarma la
+           columna de iconos. -->
+      <section class="nav-section">
+        <p class="nav-lbl">El mes</p>
+        <a class="nav-link is-active" href="#kpis" title="Métricas" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span>Métricas</span></a>
+        <a class="nav-link" href="#resumen" title="Resumen"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/></svg></span><span>Resumen</span></a>
+      </section>
+      <section class="nav-section">
+        <p class="nav-lbl">Qué se hizo</p>
+        <a class="nav-link" href="#entregas" title="Entregas"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Entregas</span></a>
+        <a class="nav-link" href="#esfuerzo" title="Esfuerzo"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 4"/></svg></span><span>Esfuerzo</span></a>
+        <a class="nav-link" href="#responsables" title="Por responsable"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span>Por responsable</span></a>
+        <a class="nav-link" href="#incidentes" title="Incidentes"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span><span>Incidentes</span></a>
+      </section>
+      <section class="nav-section">
+        <p class="nav-lbl">Qué falta</p>
+        <a class="nav-link" href="#atencion" title="Lo que pide Atención"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg></span><span>Lo que pide Atención</span></a>
+        <a class="nav-link" href="#trabado" title="Trabado"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span>Trabado</span></a>
+        <a class="nav-link" href="#proximo" title="El mes que viene"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span>El mes que viene</span></a>
+        <a class="nav-link" href="#indicadores" title="Indicadores"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/></svg></span><span>Indicadores</span></a>
+      </section>
+    </nav>
+
+    <div class="sb-footer">
+      <div class="sb-theme-switch" role="group" aria-label="Tema de color">
+        <button class="theme-opt" type="button" data-val="dark" aria-label="Tema oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
+        <button class="theme-opt" type="button" data-val="system" aria-label="Tema del sistema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+        <button class="theme-opt" type="button" data-val="light" aria-label="Tema claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
+      </div>
+
+      <!-- Controles del sidebar (§34). Fijar cancela el hover-peek. -->
+      <div class="sidebar-ctrls">
+        <!-- .sidebar-collapse además de .sb-lock: en el DS .sb-lock solo
+             trae las reglas que muestran u ocultan cada candado
+             (styles.css:3734). No tiene caja propia — ni medida, ni radio,
+             ni tamaño de ícono — así que sola se dibuja como un botón
+             desnudo. La caja se la presta .sidebar-collapse. -->
+        <button class="sidebar-collapse sb-lock" type="button" aria-pressed="false" aria-label="Fijar el menú abierto" title="Fijar el menú">
+          <svg class="ico-unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          <svg class="ico-locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </button>
+        <button class="sidebar-collapse sb-arrow" type="button" aria-label="Colapsar el menú" title="Colapsar el menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="sb-copy">&copy; 2026 YiQi S.A.<br>Ingeniería y Producto &middot; <span data-ds-version>DS</span></div>
+    </div>
+  </aside>
+
+  <!-- ── Contenido ──────────────────────────────────────────────── -->
+  <main class="content">
+
+    <!-- 01 · Métricas ─────────────────────────────────────────── -->
+    <section class="panel" id="kpis">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">01 · Métricas</div>
+          <h3>El mes en números</h3>
+        </div>
+        <span class="badge badge-cyan">3/8/2026 – 31/8/2026</span>
+      </div>
+
+      <!-- Toda cifra va contra el mes anterior. .is-positive / .is-negative
+           según convenga AL NEGOCIO, no al signo: más issues abiertos al
+           cierre no es una buena noticia aunque el número suba. -->
+      <div class="kpi-grid">
+        <article class="kpi-card">
+          <div class="kpi-label">Tickets recibidos</div>
+          <div class="kpi-value">398</div>
+          <div class="kpi-note">total de la empresa, no solo Ingeniería</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Llegaron a Ingeniería</div>
+          <div class="kpi-value">172</div>
+          <div class="kpi-note">99 del mes + 73 de meses anteriores</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Cerrados por Ingeniería</div>
+          <div class="kpi-value">160</div>
+          <div class="kpi-note">88 del mes + 72 de meses anteriores</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Entregas</div>
+          <div class="kpi-value">8</div>
+          <div class="kpi-note">las novedades del mes</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Esquemas alcanzados</div>
+          <div class="kpi-value">23</div>
+          <div class="kpi-note">con 2 tickets o más</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Incidentes en producción</div>
+          <div class="kpi-value">sin dato</div>
+          <div class="kpi-note">el reporte no los registra</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 02 · Resumen ──────────────────────────────────────────── -->
+    <section class="panel" id="resumen">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">02 · Resumen</div>
+          <h3>Tres cosas que hay que saber</h3>
+        </div>
+      </div>
+      <!-- Se escribe al final, aunque vaya primero. Si lo incómodo del mes
+           no está en estas tres líneas, el resumen no sirve. -->
+      <ul class="signal-list">
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>A Ingeniería llegaron 172 tickets (99 del mes y 73 arrastrados) y se cerraron 160. Se cerró más de lo que entró en el mes, pero la cola de meses anteriores sigue moviéndose.</p></li>
+        <li><span class="signal signal-amber" aria-hidden="true"></span><p>Ventas concentra 58 de los 172 tickets: un tercio del trabajo del área sale de un solo módulo. Compras suma 27. Entre los dos, la mitad del mes.</p></li>
+        <li><span class="signal signal-red" aria-hidden="true"></span><p>El reporte no dice si hubo incidentes, qué quedó trabado ni qué está comprometido para septiembre. Sin eso, dirección no tiene ninguna decisión que tomar leyéndolo.</p></li>
+      </ul>
+    </section>
+
+    <!-- 03 · Entregas ─────────────────────────────────────────── -->
+    <section class="panel" id="entregas">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">03 · Entregas</div>
+          <h3>Qué se entregó</h3>
+        </div>
+        <span class="badge badge-muted">8 en el mes</span>
+      </div>
+      <!-- En orden de impacto para el cliente, no cronológico. La columna
+           que importa es "para quién cambia algo": una entrega que no
+           cambia nada para nadie es deuda, y va en Esfuerzo. -->
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Entrega</th><th>Qué resuelve</th><th>Para quién</th><th>Fecha</th></tr></thead>
+          <tbody>
+            <tr><td>Homologación de Tiendanube</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Valoración de stock a una fecha</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Tratamiento de devoluciones según la condición del producto</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Asignar número de despacho a artículo</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Precio por variante en Mercado Libre</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Proyección automática de Orden de Servicio</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Apertura temporal del período contable</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+            <tr><td>Agrupar servicios similares</td><td>sin dato</td><td>sin dato</td><td>sin dato</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 · Dónde se concentró ──────────────────────────────── -->
+    <section class="panel" id="esfuerzo">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">04 · Concentración</div>
+          <h3>Dónde se fue el mes</h3>
+        </div>
+        <span class="badge badge-muted">172 tickets</span>
+      </div>
+      <!-- Esta sección debería mostrar el reparto entre producto nuevo,
+           corrección, soporte y deuda técnica. Ese dato no existe. Lo que sí
+           existe es la distribución por módulo, que contesta una pregunta
+           parecida pero no la misma: dice DÓNDE se trabajó, no EN QUÉ. -->
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Ventas</span><span class="funnel-step-count">58</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:100%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Compras</span><span class="funnel-step-count">27</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:47%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Finanzas</span><span class="funnel-step-count">15</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:26%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Contabilidad</span><span class="funnel-step-count">14</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:24%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">General</span><span class="funnel-step-count">14</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:24%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Stock</span><span class="funnel-step-count">9</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:16%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Integraciones</span><span class="funnel-step-count">7</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:12%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Comercial</span><span class="funnel-step-count">6</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:10%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">RRHH</span><span class="funnel-step-count">6</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:10%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Clientes y proveedores</span><span class="funnel-step-count">5</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:9%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Producción</span><span class="funnel-step-count">4</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:7%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">A medida</span><span class="funnel-step-count">3</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:5%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">Parámetro</span><span class="funnel-step-count">2</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:3%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">YiQi Services</span><span class="funnel-step-count">2</span></div>
+          <div class="funnel-track"><div class="funnel-fill is-end" style="width:3%"></div></div>
+        </div>
+      <p class="funnel-note">Los catorce módulos suman <strong>172</strong>, que es exactamente lo que llegó a Ingeniería (99 del mes más 73 arrastrados). Ventas y Compras explican la mitad del área. El reparto entre producto nuevo, corrección y deuda técnica no se mide.</p>
+
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Esquema</th><th class="num">Tickets</th></tr></thead>
+          <tbody>
+            <tr><td>TMC</td><td class="num">24</td></tr>
+            <tr><td>ERP</td><td class="num">20</td></tr>
+            <tr><td>EspacioMarketing</td><td class="num">18</td></tr>
+            <tr><td>Febo</td><td class="num">18</td></tr>
+            <tr><td>CentroDeDistribuciónSur</td><td class="num">10</td></tr>
+            <tr><td>DentalLab</td><td class="num">7</td></tr>
+            <tr><td>NORDAR</td><td class="num">7</td></tr>
+            <tr><td>LATCAU</td><td class="num">6</td></tr>
+            <tr><td>Arphgroup</td><td class="num">5</td></tr>
+            <tr><td>DxElectronica</td><td class="num">5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="funnel-note">Los diez esquemas de arriba concentran <strong>120 de los 160</strong> tickets cerrados. Los 23 esquemas listados suman 160, que coincide con el total de cerrados.</p>
+    </section>
+
+    <!-- 04b · Por responsable ─────────────────────────────────── -->
+    <section class="panel" id="responsables">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">04b · Equipo</div>
+          <h3>Por responsable</h3>
+        </div>
+      </div>
+      <!-- Esta lámina viene tal cual del reporte de agosto. Mide personas con
+           nombre: tickets, días de demora y satisfacción individual, en un
+           informe que lee dirección. Es evaluación de desempeño, no lectura de
+           área — vale tenerlo como decisión consciente, no heredada. -->
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Responsable</th><th class="num">Del mes</th><th class="num">Anteriores</th><th class="num">Demora (días)</th><th class="num">Satisfacción</th></tr></thead>
+          <tbody>
+            <tr><td>Samuel</td><td class="num">55</td><td class="num">33</td><td class="num">4,24</td><td class="num">4,90</td></tr>
+            <tr><td>Gabriel</td><td class="num">38</td><td class="num">27</td><td class="num">6,40</td><td class="num">4,80</td></tr>
+            <tr><td>Andrés</td><td class="num">21</td><td class="num">14</td><td class="num">4,07</td><td class="num">4,10</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="funnel-note"><strong>Las cuentas no cierran.</strong> Los tres responsables suman <strong>114</strong> tickets del mes, pero a Ingeniería llegaron <strong>99</strong>. Los de meses anteriores suman 74 contra 73. Y el triage diario suma <strong>177</strong> cerrados contra los 160 del total. O las tres láminas miden cosas distintas, o hay un problema de base: hay que definir cuál es la cifra buena antes de comparar septiembre contra agosto.</p>
+    </section>
+
+    <!-- 05 · Incidentes ───────────────────────────────────────── -->
+    <section class="panel" id="incidentes">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">05 · Incidentes</div>
+          <h3>Qué se cayó</h3>
+        </div>
+        <span class="badge badge-red">sin dato</span>
+      </div>
+      <!-- Si no hubo incidentes, se borra la tabla y queda una línea:
+           "Sin incidentes en el período." Eso es una sección terminada.
+           Lo que NO va acá son justificaciones: qué pasó, cuánto duró,
+           a quién afectó, qué se cambió para que no se repita. -->
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Qué pasó</th><th>Duración</th><th class="num">Clientes</th><th>Qué se cambió</th></tr></thead>
+          <tbody>
+            <tr><td>sin dato</td><td>—</td><td class="num">—</td><td>El reporte de agosto no registra incidentes en producción.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 · Lo que pide Atención ─────────────────────────────── -->
+    <section class="panel" id="atencion">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">06 · Atención</div>
+          <h3>Lo que Atención espera de Producto</h3>
+        </div>
+      </div>
+      <!-- ESTA ES LA SECCIÓN QUE CRUZA LOS DOS INFORMES.
+           Sale de "Lo que se puede dejar de contestar" del informe de ATC:
+           cada fila es un ticket que, resuelto, elimina consultas repetidas.
+           La columna de casos es del mes de ATC, no una estimación.
+           Si esta tabla se copia igual tres meses seguidos, eso es el dato. -->
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Ticket</th><th>Qué elimina</th><th class="num">Casos/mes</th><th>Estado</th><th>Meses abierto</th></tr></thead>
+          <tbody>
+            <tr><td>sin dato</td><td>No hay informe de Atención al cliente de agosto: el último es el de abril.</td><td class="num">—</td><td><span class="badge badge-amber">Sin informe</span></td><td>4</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 07 · Trabado ──────────────────────────────────────────── -->
+    <section class="panel" id="trabado">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">07 · Trabado</div>
+          <h3>Lo que no avanzó y qué lo destraba</h3>
+        </div>
+      </div>
+      <!-- Si necesita una decisión de dirección, la columna "Quién destraba"
+           lleva un nombre. "Se está evaluando" no es un destrabador. -->
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Qué</th><th>Por qué no avanza</th><th>Quién destraba</th><th>Desde</th></tr></thead>
+          <tbody>
+            <tr><td>sin dato</td><td>El reporte de agosto no incluye una sección de trabado.</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 08 · El mes que viene ─────────────────────────────────── -->
+    <section class="panel" id="proximo">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">08 · Próximo mes</div>
+          <h3>Qué está comprometido</h3>
+        </div>
+      </div>
+      <!-- Lo comprometido con un cliente va separado del plan interno:
+           son dos cosas distintas y solo una tiene a alguien esperando. -->
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Compromiso</th><th>Tipo</th><th>Con quién</th><th>Cuándo</th></tr></thead>
+          <tbody>
+            <tr><td>sin dato</td><td><span class="badge badge-red">Con cliente</span></td><td>—</td><td>—</td></tr>          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 09 · Indicadores ──────────────────────────────────────── -->
+    <section class="panel" id="indicadores">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">09 · Indicadores</div>
+          <h3>Lo que hay que seguir midiendo</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Indicador</th><th>Para qué sirve</th><th class="num">Este mes</th></tr></thead>
+          <tbody>
+            <tr><td>Tiempo medio de resolución</td><td>Cuánto tarda un problema en dejar de existir.</td><td class="num">sin dato</td></tr>
+            <tr><td>Incidentes en producción</td><td>Estabilidad de lo que ya está entregado.</td><td class="num">sin dato</td></tr>
+            <tr><td>Issues abiertos al cierre</td><td>Si la cola crece, el mes que viene arranca en rojo.</td><td class="num">sin dato</td></tr>
+            <tr><td>Esfuerzo en producto nuevo</td><td>Cuánto del mes fue construir y no apagar incendios.</td><td class="num">58</td></tr>
+            <tr><td>Tickets de Atención resueltos</td><td>Cuánta carga de soporte se eliminó de raíz.</td><td class="num">sin dato</td></tr>
+            <tr><td>Compromisos cumplidos en fecha</td><td>Si lo prometido al cliente llega cuando se dijo.</td><td class="num">sin dato</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="nav-overlay" id="app-overlay"></div>
+
+<!-- ── Barra de estado (§44): fija abajo, se esconde bajo 980px ──── -->
+<footer class="statusbar">
+  <div class="statusbar-left">
+    <strong>Informe Ingeniería</strong>
+    <span class="sb-sep">&middot;</span>
+    <span class="statusbar-desc">8 entregas &middot; 160 issues cerrados &middot; 3/8/2026 – 31/8/2026</span>
+  </div>
+  <div class="statusbar-right">
+    <span class="sb-item">Agosto 2026</span>
+    <span class="sb-sep">&middot;</span>
+    <span class="sb-item" data-ds-version>DS</span>
+    <span class="sb-sep">&middot;</span>
+    <span class="sb-item sb-clock" id="sb-clock">--:--</span>
+  </div>
+</footer>
+
+<!-- Runtime del DS: tema, drawer mobile, tablas ordenables. -->
+<script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js"></script>
+
+<script>
+/* Lo único que el runtime todavía no cubre. Tres cosas, ninguna de estilo:
+   el colapso del sidebar, el fijado, y los dos datos vivos de la barra. */
+(function () {
+  var shell = document.getElementById('app-shell');
+  var col   = document.querySelector('.sidebar-collapse');
+  var lock  = document.querySelector('.sb-lock');
+  var KEY   = 'yiqi-nav-collapsed', KEYL = 'yiqi-nav-locked';
+
+  function read(k) { try { return localStorage.getItem(k) === '1'; } catch (e) { return false; } }
+  function write(k, v) { try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {} }
+
+  if (read(KEY))  shell.classList.add('nav-collapsed');
+  if (read(KEYL)) { shell.classList.add('nav-locked'); lock && lock.setAttribute('aria-pressed', 'true'); }
+
+  col && col.addEventListener('click', function () {
+    var on = shell.classList.toggle('nav-collapsed');
+    write(KEY, on);
+    col.setAttribute('aria-label', on ? 'Expandir el menú' : 'Colapsar el menú');
+  });
+
+  /* Fijado: cancela el hover-peek. Es preferencia del que lee, no estado
+     del informe, así que también se recuerda. */
+  lock && lock.addEventListener('click', function () {
+    var on = shell.classList.toggle('nav-locked');
+    write(KEYL, on);
+    lock.setAttribute('aria-pressed', String(on));
+    lock.setAttribute('title', on ? 'Soltar el menú' : 'Fijar el menú');
+  });
+
+  /* Hover-peek: en rail, el sidebar se despliega como overlay al pasar por
+     encima. No empuja el contenido. Se anula con el candado. */
+  var sb = document.getElementById('app-sidebar');
+  sb && sb.addEventListener('mouseenter', function () {
+    if (shell.classList.contains('nav-collapsed') && !shell.classList.contains('nav-locked')) shell.classList.add('nav-peek');
+  });
+  sb && sb.addEventListener('mouseleave', function () { shell.classList.remove('nav-peek'); });
+
+  /* Reloj de la barra de estado, en hora local. */
+  var clock = document.getElementById('sb-clock');
+  function tick() {
+    if (!clock) return;
+    var d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  tick(); setInterval(tick, 30000);
+
+  /* Versión del DS: se lee del token en runtime, así el pie nunca miente
+     sobre qué versión está corriendo. Si falla, queda el texto del HTML. */
+  try {
+    var v = getComputedStyle(document.documentElement).getPropertyValue('--ds-version').trim().replace(/"/g, '');
+    if (v) document.querySelectorAll('[data-ds-version]').forEach(function (el) { el.textContent = 'DS v' + v; });
+  } catch (e) {}
+})();
+</script>
+
+</body>
+</html>
