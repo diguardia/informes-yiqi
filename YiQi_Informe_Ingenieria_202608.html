@@ -104,6 +104,7 @@
         <a class="nav-link" href="#esfuerzo" title="Esfuerzo"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 4"/></svg></span><span>Esfuerzo</span></a>
         <a class="nav-link" href="#responsables" title="Por responsable"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span>Por responsable</span></a>
         <a class="nav-link" href="#incidentes" title="Incidentes"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span><span>Incidentes</span></a>
+        <a class="nav-link" href="#triage" title="Triage"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span>Triage</span></a>
       </section>
       <section class="nav-section">
         <p class="nav-lbl">Qué falta</p>
@@ -151,7 +152,7 @@
           <div class="panel-kicker">01 · Métricas</div>
           <h3>El mes en números</h3>
         </div>
-        <span class="badge badge-cyan">3/8/2026 – 31/8/2026</span>
+        <span class="badge badge-cyan">Agosto 2026</span>
       </div>
 
       <!-- Toda cifra va contra el mes anterior. .is-positive / .is-negative
@@ -161,7 +162,7 @@
         <article class="kpi-card">
           <div class="kpi-label">Tickets recibidos</div>
           <div class="kpi-value">398</div>
-          <div class="kpi-note">total de la empresa, no solo Ingeniería</div>
+          <div class="kpi-note">así figura en el reporte, sin aclarar el alcance</div>
         </article>
         <article class="kpi-card">
           <div class="kpi-label">Llegaron a Ingeniería</div>
@@ -202,8 +203,8 @@
       <!-- Se escribe al final, aunque vaya primero. Si lo incómodo del mes
            no está en estas tres líneas, el resumen no sirve. -->
       <ul class="signal-list">
-        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>A Ingeniería llegaron 172 tickets (99 del mes y 73 arrastrados) y se cerraron 160. Se cerró más de lo que entró en el mes, pero la cola de meses anteriores sigue moviéndose.</p></li>
-        <li><span class="signal signal-amber" aria-hidden="true"></span><p>Ventas concentra 58 de los 172 tickets: un tercio del trabajo del área sale de un solo módulo. Compras suma 27. Entre los dos, la mitad del mes.</p></li>
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>A Ingeniería llegaron 172 tickets (99 del mes y 73 arrastrados) y se cerraron 160: quedaron 12 sin cerrar. Del mes entraron 99 y se cerraron 88; de los arrastrados, 73 y 72.</p></li>
+        <li><span class="signal signal-amber" aria-hidden="true"></span><p>Ventas concentra 58 de los 172 tickets: un tercio del trabajo del área sale de un solo módulo. Con Compras (27) llegan a 85, casi la mitad.</p></li>
         <li><span class="signal signal-red" aria-hidden="true"></span><p>El reporte no dice si hubo incidentes, qué quedó trabado ni qué está comprometido para septiembre. Sin eso, dirección no tiene ninguna decisión que tomar leyéndolo.</p></li>
       </ul>
     </section>
@@ -306,7 +307,7 @@
           <div class="funnel-step-top"><span class="funnel-step-name">YiQi Services</span><span class="funnel-step-count">2</span></div>
           <div class="funnel-track"><div class="funnel-fill is-end" style="width:3%"></div></div>
         </div>
-      <p class="funnel-note">Los catorce módulos suman <strong>172</strong>, que es exactamente lo que llegó a Ingeniería (99 del mes más 73 arrastrados). Ventas y Compras explican la mitad del área. El reparto entre producto nuevo, corrección y deuda técnica no se mide.</p>
+      <p class="funnel-note">Los catorce módulos suman <strong>172</strong>, que es exactamente lo que llegó a Ingeniería (99 del mes más 73 arrastrados). Ventas y Compras suman 85 de esos 172, casi la mitad. El reparto entre producto nuevo, corrección y deuda técnica no se mide.</p>
 
       <div class="table-wrap">
         <table class="data-table" data-ds-sortable>
@@ -374,6 +375,51 @@
           </tbody>
         </table>
       </div>
+    </section>
+
+    <!-- 05b · Triage ─────────────────────────────────────────── -->
+    <section class="panel" id="triage">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">05b · Triage</div>
+          <h3>El triage día por día</h3>
+        </div>
+        <span class="badge badge-muted">21 días hábiles</span>
+      </div>
+      <!-- Los dos valores de cada día están etiquetados en la lámina, así que
+           se transcriben tal cual. La segunda lámina del PDF —a término y
+           fuera de término— tiene varias barras SIN número: no se transcribe,
+           porque leerla midiendo alturas es inventar. -->
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Día</th><th class="num">Cerrados</th><th class="num">Pendientes</th><th class="num">Total</th></tr></thead>
+          <tbody>
+            <tr><td>03/08</td><td class="num">19</td><td class="num">4</td><td class="num">23</td></tr>
+            <tr><td>04/08</td><td class="num">5</td><td class="num">3</td><td class="num">8</td></tr>
+            <tr><td>05/08</td><td class="num">7</td><td class="num">4</td><td class="num">11</td></tr>
+            <tr><td>06/08</td><td class="num">5</td><td class="num">5</td><td class="num">10</td></tr>
+            <tr><td>07/08</td><td class="num">8</td><td class="num">4</td><td class="num">12</td></tr>
+            <tr><td>10/08</td><td class="num">5</td><td class="num">4</td><td class="num">9</td></tr>
+            <tr><td>11/08</td><td class="num">9</td><td class="num">5</td><td class="num">14</td></tr>
+            <tr><td>12/08</td><td class="num">7</td><td class="num">3</td><td class="num">10</td></tr>
+            <tr><td>13/08</td><td class="num">9</td><td class="num">6</td><td class="num">15</td></tr>
+            <tr><td>14/08</td><td class="num">9</td><td class="num">3</td><td class="num">12</td></tr>
+            <tr><td>17/08</td><td class="num">12</td><td class="num">3</td><td class="num">15</td></tr>
+            <tr><td>18/08</td><td class="num">8</td><td class="num">4</td><td class="num">12</td></tr>
+            <tr><td>19/08</td><td class="num">5</td><td class="num">1</td><td class="num">6</td></tr>
+            <tr><td>20/08</td><td class="num">10</td><td class="num">3</td><td class="num">13</td></tr>
+            <tr><td>21/08</td><td class="num">10</td><td class="num">3</td><td class="num">13</td></tr>
+            <tr><td>24/08</td><td class="num">5</td><td class="num">8</td><td class="num">13</td></tr>
+            <tr><td>25/08</td><td class="num">10</td><td class="num">3</td><td class="num">13</td></tr>
+            <tr><td>26/08</td><td class="num">6</td><td class="num">4</td><td class="num">10</td></tr>
+            <tr><td>27/08</td><td class="num">11</td><td class="num">2</td><td class="num">13</td></tr>
+            <tr><td>28/08</td><td class="num">10</td><td class="num">5</td><td class="num">15</td></tr>
+            <tr><td>31/08</td><td class="num">7</td><td class="num">5</td><td class="num">12</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="funnel-note">Suma <strong>177</strong> cerrados y 82 pendientes en 21 días hábiles. Esos 177 <strong>no coinciden con los 160</strong> del total del mes: son 17 de diferencia y hay que definir cuál es la cifra buena. El <strong>24/08</strong> es el único día del mes con más pendientes (8) que cerrados (5). El pico fue el <strong>03/08</strong>, con 19 cerrados: el arranque del mes se llevó la cola de julio.</p>
+      <p class="funnel-note">La lámina de <em>a término / fuera de término</em> queda afuera: varias barras no tienen el número escrito y no se puede transcribir sin medirlas.</p>
     </section>
 
     <!-- 06 · Lo que pide Atención ─────────────────────────────── -->
@@ -471,7 +517,7 @@
   <div class="statusbar-left">
     <strong>Informe Ingeniería</strong>
     <span class="sb-sep">&middot;</span>
-    <span class="statusbar-desc">8 entregas &middot; 160 issues cerrados &middot; 3/8/2026 – 31/8/2026</span>
+    <span class="statusbar-desc">172 tickets a Ingeniería &middot; 160 cerrados &middot; 8 entregas &middot; agosto 2026</span>
   </div>
   <div class="statusbar-right">
     <span class="sb-item">Agosto 2026</span>
@@ -522,6 +568,40 @@
     if (shell.classList.contains('nav-collapsed') && !shell.classList.contains('nav-locked')) shell.classList.add('nav-peek');
   });
   sb && sb.addEventListener('mouseleave', function () { shell.classList.remove('nav-peek'); });
+
+  /* Ítem activo del sidebar según el scroll.
+     No se usa YiQi.initScrollSpy: marca la ÚLTIMA sección que intersecta, y
+     con paneles altos eso deja marcado el final de la página mientras estás
+     mirando el medio. Medido: al ir a "Trabado" marcaba "Indicadores".
+     Acá se elige la sección más alta que cruza la banda superior. */
+  var nav = document.querySelector('.nav');
+  var secs = [].slice.call(document.querySelectorAll('.panel[id]'));
+  function marcar() {
+    if (!nav || !secs.length) return;
+    var y = 140, elegida = secs[0];
+    for (var i = 0; i < secs.length; i++) {
+      if (secs[i].getBoundingClientRect().top <= y) elegida = secs[i];
+    }
+    /* Al final de la página la última sección puede no llegar nunca a la
+       banda superior: si no, el menú nunca la marca. */
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) {
+      elegida = secs[secs.length - 1];
+    }
+    nav.querySelectorAll('.nav-link').forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + elegida.id;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  var pedido = false;
+  addEventListener('scroll', function () {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(function () { pedido = false; marcar(); });
+  }, { passive: true });
+  addEventListener('resize', marcar);
+  marcar();
 
   /* Reloj de la barra de estado, en hora local. */
   var clock = document.getElementById('sb-clock');
