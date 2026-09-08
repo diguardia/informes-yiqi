@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es" data-theme="system">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Informe ATC — {{MES}} {{AÑO}} · YiQi ERP</title>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TEMPLATE · Informe mensual de Atención al Cliente
+     Derivado de YiQi_Informe_ATC_202604.html (abril 2026).
+
+     REGLA DE ESTE ARCHIVO: no define una sola línea de CSS propio.
+     Todo sale del canónico. Si algo que necesitás no está en styles.css,
+     se agrega al Design System — no acá. Un <style> local es lo que hace
+     que el sistema diverja.
+
+     El original traía 98 clases propias, 34 estilos inline y dos
+     gradientes decorativos. De esas 98, veintiocho redefinían
+     componentes que el DS ya publica (.card, .kpi-card, .badge,
+     .topbar, .sidebar, .table-wrap…): la app le estaba pisando
+     el estilo al sistema. Acá no queda ninguna.
+
+     Cómo se llena: buscá {{ }} y reemplazá. Nada más.
+     ═══════════════════════════════════════════════════════════════════ -->
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+
+<script>
+/* ── Tema claro por defecto ────────────────────────────────────────
+   El <html> se queda en data-theme="system" (§13: nunca se hardcodea
+   el tema, porque hardcodearlo rompe el switch del pie). Lo que se
+   cambia es OTRA cosa: la preferencia inicial.
+
+   El runtime resuelve el tema con getTheme(), que lee localStorage,
+   después la cookie de .yiqi.com.ar, y recién ahí cae en 'system'.
+   Sobreescribir el atributo en el HTML no sirve: el runtime lo pisa
+   al cargar. Lo que sí funciona es sembrar la preferencia antes.
+
+   Se siembra SOLO si el visitante no eligió nada en ninguna parte de
+   YiQi — ni en este origen ni en el resto del dominio. A quien ya
+   eligió oscuro no se le cambia el tema por abrir un informe.
+
+   Va antes del runtime y sin defer, a propósito: después no llega. */
+(function () {
+  try {
+    if (localStorage.getItem('yiqi-theme')) return;
+    if (/(?:^|;\s*)yiqi-theme=/.test(document.cookie)) return;
+    localStorage.setItem('yiqi-theme', 'light');
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<!-- ── Topbar: cruza de lado a lado, por encima del sidebar ────────── -->
+<header class="topbar app-topbar">
+  <div class="topbar-l">
+    <a class="topbar-logo" href="#" onclick="return false" aria-label="Ir al inicio">
+      <svg class="topbar-logo-svg" data-yiqi-logo viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YiQi"><g><path style="fill:currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path style="fill:currentColor" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/><path style="fill:currentColor" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path style="fill:currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/><path style="fill:currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/></g></svg>
+    </a>
+    <span class="t-pill">Informe ATC</span>
+  </div>
+
+  <div class="topbar-c">
+    <div class="range-filter" role="group" aria-label="Período del informe">
+      <button class="range-btn is-active" type="button">{{MES}} {{AÑO}}</button>
+      <button class="range-btn" type="button">{{MES_ANTERIOR}}</button>
+    </div>
+  </div>
+
+  <div class="topbar-r">
+    <button class="btn-exit" type="button" onclick="window.print()">Imprimir</button>
+    <button class="nav-hamburger" type="button" aria-label="Abrir menú"
+      aria-expanded="false" aria-controls="app-sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<!-- La barra de estado es position:fixed y el DS no reserva su alto en
+     ningún lado: sin este relleno, los últimos 28px del contenido y los
+     controles del sidebar quedan tapados. Se reserva con el token, no
+     con un número. -->
+<div class="app-shell" id="app-shell" style="padding-bottom:var(--statusbar-h)">
+
+  <!-- ── Sidebar: navegación + controles de colapso ──────────────── -->
+  <aside class="sidebar" id="app-sidebar" aria-label="Secciones del informe">
+    <button class="nav-close" type="button" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+
+    <nav class="nav" aria-label="Secciones">
+      <!-- .nav-lbl, no .nav-label: las reglas de colapso y de peek del DS
+           (styles.css:2953 y :3757) solo contemplan .nav-lbl. Con .nav-label
+           el rótulo del grupo se queda visible en el rail y desarma la
+           columna de iconos. -->
+      <section class="nav-section">
+        <p class="nav-lbl">El mes</p>
+        <a class="nav-link is-active" href="#kpis" title="Métricas" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span><span>Métricas</span></a>
+        <a class="nav-link" href="#resumen" title="Resumen"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/></svg></span><span>Resumen</span></a>
+      </section>
+      <section class="nav-section">
+        <p class="nav-lbl">Por qué nos escriben</p>
+        <a class="nav-link" href="#distribucion" title="Distribución"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 4"/></svg></span><span>Distribución</span></a>
+        <a class="nav-link" href="#clusters" title="Clusters"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span><span>Clusters</span></a>
+        <a class="nav-link" href="#repetitivas" title="Consultas repetitivas"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></span><span>Repetitivas</span></a>
+        <a class="nav-link" href="#clientes" title="Clientes"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg></span><span>Clientes</span></a>
+      </section>
+      <section class="nav-section">
+        <p class="nav-lbl">Qué hacemos</p>
+        <a class="nav-link" href="#lectura" title="Lectura del mes"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span><span>Lectura del mes</span></a>
+        <a class="nav-link" href="#acciones" title="Acciones"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Acciones</span></a>
+        <a class="nav-link" href="#indicadores" title="Indicadores"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/></svg></span><span>Indicadores</span></a>
+      </section>
+    </nav>
+
+    <div class="sb-footer">
+      <div class="sb-theme-switch" role="group" aria-label="Tema de color">
+        <button class="theme-opt" type="button" data-val="dark" aria-label="Tema oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
+        <button class="theme-opt" type="button" data-val="system" aria-label="Tema del sistema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+        <button class="theme-opt" type="button" data-val="light" aria-label="Tema claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
+      </div>
+
+      <!-- Controles del sidebar (§34). Fijar cancela el hover-peek. -->
+      <div class="sidebar-ctrls">
+        <!-- .sidebar-collapse además de .sb-lock: en el DS .sb-lock solo
+             trae las reglas que muestran u ocultan cada candado
+             (styles.css:3734). No tiene caja propia — ni medida, ni radio,
+             ni tamaño de ícono — así que sola se dibuja como un botón
+             desnudo. La caja se la presta .sidebar-collapse. -->
+        <button class="sidebar-collapse sb-lock" type="button" aria-pressed="false" aria-label="Fijar el menú abierto" title="Fijar el menú">
+          <svg class="ico-unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          <svg class="ico-locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </button>
+        <button class="sidebar-collapse sb-arrow" type="button" aria-label="Colapsar el menú" title="Colapsar el menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="sb-copy">&copy; {{AÑO}} YiQi S.A.<br>Informe ATC &middot; <span data-ds-version>DS</span></div>
+    </div>
+  </aside>
+
+  <!-- ── Contenido ──────────────────────────────────────────────── -->
+  <main class="content">
+
+    <!-- 01 · Métricas ─────────────────────────────────────────── -->
+    <section class="panel" id="kpis">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">01 · Métricas</div>
+          <h3>El mes en números</h3>
+        </div>
+        <span class="badge badge-cyan">{{FECHA_DESDE}} – {{FECHA_HASTA}}</span>
+      </div>
+
+      <!-- Toda cifra va contra el mes anterior. Un número solo no se lee.
+           .kpi-delta.is-positive / .is-negative según convenga AL NEGOCIO,
+           no al signo: más tickets recibidos no es una buena noticia. -->
+      <div class="kpi-grid">
+        <article class="kpi-card">
+          <div class="kpi-label">Tickets del período</div>
+          <div class="kpi-value">{{TICKETS_TOTAL}}</div>
+          <div class="kpi-delta is-positive">{{VAR_TICKETS}}</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Cerrados</div>
+          <div class="kpi-value">{{PCT_CERRADOS}}</div>
+          <div class="kpi-delta is-positive">{{VAR_CERRADOS}}</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Dentro de SLA</div>
+          <div class="kpi-value">{{PCT_SLA}}</div>
+          <div class="kpi-delta is-negative">{{VAR_SLA}}</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Satisfacción</div>
+          <div class="kpi-value">{{SATISFACCION}}</div>
+          <div class="kpi-delta is-positive">{{VAR_SATISFACCION}}</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Empresas alcanzadas</div>
+          <div class="kpi-value">{{ESQUEMAS}}</div>
+          <div class="kpi-note">esquemas con al menos un ticket</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Reabiertos</div>
+          <div class="kpi-value">{{REABIERTOS}}</div>
+          <div class="kpi-delta is-negative">{{VAR_REABIERTOS}}</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 02 · Resumen ──────────────────────────────────────────── -->
+    <section class="panel" id="resumen">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">02 · Resumen</div>
+          <h3>Tres cosas que hay que saber</h3>
+        </div>
+      </div>
+      <!-- Se escribe al final, aunque vaya primero. Si lo incómodo del mes
+           no está en estas tres líneas, el resumen no sirve. -->
+      <!-- .signal es el punto de 10px; el texto va al lado. El <li> del DS
+           ya es la grilla "punto + contenido". -->
+      <ul class="signal-list">
+        <li><span class="signal signal-cyan" aria-hidden="true"></span><p>{{RESUMEN_1}}</p></li>
+        <li><span class="signal signal-amber" aria-hidden="true"></span><p>{{RESUMEN_2}}</p></li>
+        <li><span class="signal signal-red" aria-hidden="true"></span><p>{{RESUMEN_3}}</p></li>
+      </ul>
+    </section>
+
+    <!-- 03 · Distribución ─────────────────────────────────────── -->
+    <section class="panel" id="distribucion">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">03 · Distribución</div>
+          <h3>De dónde salieron los tickets</h3>
+        </div>
+      </div>
+      <div class="donut-block">
+        <!-- Donut en SVG inline: cuatro tramos con stroke-dasharray sobre
+             una circunferencia de 100. Cambiá los dos números de cada
+             tramo (largo del arco, resto) y el desfase. Sin librería. -->
+        <div class="donut-chart">
+          <svg viewBox="0 0 42 42" role="img" aria-label="Distribución de tickets por cluster" style="width:100%;height:100%">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--line-strong)" stroke-width="5"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--cyan)"  stroke-width="5" stroke-dasharray="{{PCT_C1}} {{RESTO_C1}}" stroke-dashoffset="25"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--blue)"  stroke-width="5" stroke-dasharray="{{PCT_C2}} {{RESTO_C2}}" stroke-dashoffset="{{OFF_C2}}"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--amber)" stroke-width="5" stroke-dasharray="{{PCT_C3}} {{RESTO_C3}}" stroke-dashoffset="{{OFF_C3}}"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--green)" stroke-width="5" stroke-dasharray="{{PCT_C4}} {{RESTO_C4}}" stroke-dashoffset="{{OFF_C4}}"></circle>
+          </svg>
+        </div>
+        <div class="donut-legend">
+          <div class="legend-row"><span class="legend-dot" style="background:var(--cyan)"></span><span class="legend-label">{{CLUSTER_1}}</span><span class="legend-pct">{{PCT_C1}}%</span></div>
+          <div class="legend-row"><span class="legend-dot" style="background:var(--blue)"></span><span class="legend-label">{{CLUSTER_2}}</span><span class="legend-pct">{{PCT_C2}}%</span></div>
+          <div class="legend-row"><span class="legend-dot" style="background:var(--amber)"></span><span class="legend-label">{{CLUSTER_3}}</span><span class="legend-pct">{{PCT_C3}}%</span></div>
+          <div class="legend-row"><span class="legend-dot" style="background:var(--green)"></span><span class="legend-label">{{CLUSTER_4}}</span><span class="legend-pct">{{PCT_C4}}%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Clusters ─────────────────────────────────────────── -->
+    <section class="panel" id="clusters">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">04 · Clusters</div>
+          <h3>Por qué nos escriben</h3>
+        </div>
+        <span class="badge badge-muted">{{TICKETS_TOTAL}} tickets</span>
+      </div>
+
+      <!-- El embudo del DS es la barra horizontal del sistema: etiqueta,
+           cantidad y pista. No hace falta un componente de barras propio. -->
+      <div class="funnel">
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">{{CLUSTER_1}}</span><span class="funnel-step-count">{{TICKETS_C1}}</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:{{ANCHO_C1}}%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">{{CLUSTER_2}}</span><span class="funnel-step-count">{{TICKETS_C2}}</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:{{ANCHO_C2}}%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">{{CLUSTER_3}}</span><span class="funnel-step-count">{{TICKETS_C3}}</span></div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:{{ANCHO_C3}}%"></div></div>
+        </div>
+        <div>
+          <div class="funnel-step-top"><span class="funnel-step-name">{{CLUSTER_4}}</span><span class="funnel-step-count">{{TICKETS_C4}}</span></div>
+          <div class="funnel-track"><div class="funnel-fill is-end" style="width:{{ANCHO_C4}}%"></div></div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Cluster</th><th class="num">Tickets</th><th>Impacto</th><th>Lectura</th></tr></thead>
+          <tbody>
+            <tr><td>{{CLUSTER_1}}</td><td class="num">{{TICKETS_C1}}</td><td><span class="badge badge-red">Alto</span></td><td>{{LECTURA_C1}}</td></tr>
+            <tr><td>{{CLUSTER_2}}</td><td class="num">{{TICKETS_C2}}</td><td><span class="badge badge-red">Alto</span></td><td>{{LECTURA_C2}}</td></tr>
+            <tr><td>{{CLUSTER_3}}</td><td class="num">{{TICKETS_C3}}</td><td><span class="badge badge-amber">Medio</span></td><td>{{LECTURA_C3}}</td></tr>
+            <tr><td>{{CLUSTER_4}}</td><td class="num">{{TICKETS_C4}}</td><td><span class="badge badge-amber">Medio</span></td><td>{{LECTURA_C4}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 05 · Repetitivas ──────────────────────────────────────── -->
+    <section class="panel" id="repetitivas">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">05 · Repetitivas</div>
+          <h3>Lo que se puede dejar de contestar</h3>
+        </div>
+      </div>
+      <!-- La sección que convierte atención en mejoras: de los clusters de
+           arriba, cuáles se eliminan con un cambio de producto, de
+           documentación o de onboarding. Sin ticket asociado, es un deseo. -->
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Consulta</th><th class="num">Casos</th><th>Se elimina con</th><th>Ticket</th></tr></thead>
+          <tbody>
+            <tr><td>{{REPETITIVA_1}}</td><td class="num">{{CASOS_R1}}</td><td>{{SOLUCION_R1}}</td><td>{{TICKET_R1}}</td></tr>
+            <tr><td>{{REPETITIVA_2}}</td><td class="num">{{CASOS_R2}}</td><td>{{SOLUCION_R2}}</td><td>{{TICKET_R2}}</td></tr>
+            <tr><td>{{REPETITIVA_3}}</td><td class="num">{{CASOS_R3}}</td><td>{{SOLUCION_R3}}</td><td>{{TICKET_R3}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 · Clientes ─────────────────────────────────────────── -->
+    <section class="panel" id="clientes">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">06 · Clientes</div>
+          <h3>Quiénes concentran la atención</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" data-ds-sortable>
+          <thead><tr><th>Cliente / Esquema</th><th class="num">Tickets</th><th>Lectura</th></tr></thead>
+          <tbody>
+            <tr><td>{{CLIENTE_1}}</td><td class="num">{{TICKETS_CL1}}</td><td>{{LECTURA_CL1}}</td></tr>
+            <tr><td>{{CLIENTE_2}}</td><td class="num">{{TICKETS_CL2}}</td><td>{{LECTURA_CL2}}</td></tr>
+            <tr><td>{{CLIENTE_3}}</td><td class="num">{{TICKETS_CL3}}</td><td>{{LECTURA_CL3}}</td></tr>
+            <tr><td>{{CLIENTE_4}}</td><td class="num">{{TICKETS_CL4}}</td><td>{{LECTURA_CL4}}</td></tr>
+            <tr><td>{{CLIENTE_5}}</td><td class="num">{{TICKETS_CL5}}</td><td>{{LECTURA_CL5}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 07 · Lectura del mes ──────────────────────────────────── -->
+    <section class="panel" id="lectura">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">07 · Lectura</div>
+          <h3>Qué salió bien y qué preocupa</h3>
+        </div>
+      </div>
+      <!-- Lo incómodo va primero. Si no hay riesgos, se borra el bloque:
+           una sección vacía con "sin novedades" es relleno. -->
+      <ul class="signal-list">
+        <li><span class="signal signal-red" aria-hidden="true"></span><p>{{RIESGO_1}}</p></li>
+        <li><span class="signal signal-red" aria-hidden="true"></span><p>{{RIESGO_2}}</p></li>
+        <li><span class="signal signal-green" aria-hidden="true"></span><p>{{POSITIVO_1}}</p></li>
+        <li><span class="signal signal-green" aria-hidden="true"></span><p>{{POSITIVO_2}}</p></li>
+      </ul>
+    </section>
+
+    <!-- 08 · Acciones ─────────────────────────────────────────── -->
+    <section class="panel" id="acciones">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">08 · Acciones</div>
+          <h3>Qué hacemos el mes que viene</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Acción</th><th>Área</th><th>Impacto</th><th>Cuándo</th></tr></thead>
+          <tbody>
+            <tr><td>{{ACCION_1}}</td><td>{{AREA_1}}</td><td><span class="badge badge-green">Alto</span></td><td>{{CUANDO_1}}</td></tr>
+            <tr><td>{{ACCION_2}}</td><td>{{AREA_2}}</td><td><span class="badge badge-amber">Medio</span></td><td>{{CUANDO_2}}</td></tr>
+            <tr><td>{{ACCION_3}}</td><td>{{AREA_3}}</td><td><span class="badge badge-muted">Bajo</span></td><td>{{CUANDO_3}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 09 · Indicadores ──────────────────────────────────────── -->
+    <section class="panel" id="indicadores">
+      <div class="panel-header">
+        <div>
+          <div class="panel-kicker">09 · Indicadores</div>
+          <h3>Lo que hay que seguir midiendo</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Indicador</th><th>Para qué sirve</th><th class="num">Este mes</th></tr></thead>
+          <tbody>
+            <tr><td>Tiempo de primera respuesta</td><td>Cuánto espera el cliente antes de que alguien conteste.</td><td class="num">{{TPR}}</td></tr>
+            <tr><td>Tickets cerrados en SLA</td><td>Cumplimiento operativo del compromiso.</td><td class="num">{{PCT_SLA}}</td></tr>
+            <tr><td>Tickets reabiertos</td><td>Resolución incompleta: se cerró sin resolver.</td><td class="num">{{REABIERTOS}}</td></tr>
+            <tr><td>Tickets por cluster</td><td>Dónde le duele al producto, no al equipo.</td><td class="num">{{TICKETS_TOTAL}}</td></tr>
+            <tr><td>Clientes con recurrencia</td><td>Seguimiento preventivo antes de que escale.</td><td class="num">{{CLIENTES_RECURRENTES}}</td></tr>
+            <tr><td>Consultas resueltas por autoservicio</td><td>Adopción real de la ayuda y del asistente.</td><td class="num">{{AUTOSERVICIO}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="nav-overlay" id="app-overlay"></div>
+
+<!-- ── Barra de estado (§44): fija abajo, se esconde bajo 980px ──── -->
+<footer class="statusbar">
+  <div class="statusbar-left">
+    <strong>Informe ATC</strong>
+    <span class="sb-sep">&middot;</span>
+    <span class="statusbar-desc">{{TICKETS_TOTAL}} tickets &middot; {{ESQUEMAS}} esquemas &middot; {{FECHA_DESDE}} – {{FECHA_HASTA}}</span>
+  </div>
+  <div class="statusbar-right">
+    <span class="sb-item">{{MES}} {{AÑO}}</span>
+    <span class="sb-sep">&middot;</span>
+    <span class="sb-item" data-ds-version>DS</span>
+    <span class="sb-sep">&middot;</span>
+    <span class="sb-item sb-clock" id="sb-clock">--:--</span>
+  </div>
+</footer>
+
+<!-- Runtime del DS: tema, drawer mobile, tablas ordenables. -->
+<script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js"></script>
+
+<script>
+/* Lo único que el runtime todavía no cubre. Tres cosas, ninguna de estilo:
+   el colapso del sidebar, el fijado, y los dos datos vivos de la barra. */
+(function () {
+  var shell = document.getElementById('app-shell');
+  var col   = document.querySelector('.sidebar-collapse');
+  var lock  = document.querySelector('.sb-lock');
+  var KEY   = 'yiqi-nav-collapsed', KEYL = 'yiqi-nav-locked';
+
+  function read(k) { try { return localStorage.getItem(k) === '1'; } catch (e) { return false; } }
+  function write(k, v) { try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {} }
+
+  if (read(KEY))  shell.classList.add('nav-collapsed');
+  if (read(KEYL)) { shell.classList.add('nav-locked'); lock && lock.setAttribute('aria-pressed', 'true'); }
+
+  col && col.addEventListener('click', function () {
+    var on = shell.classList.toggle('nav-collapsed');
+    write(KEY, on);
+    col.setAttribute('aria-label', on ? 'Expandir el menú' : 'Colapsar el menú');
+  });
+
+  /* Fijado: cancela el hover-peek. Es preferencia del que lee, no estado
+     del informe, así que también se recuerda. */
+  lock && lock.addEventListener('click', function () {
+    var on = shell.classList.toggle('nav-locked');
+    write(KEYL, on);
+    lock.setAttribute('aria-pressed', String(on));
+    lock.setAttribute('title', on ? 'Soltar el menú' : 'Fijar el menú');
+  });
+
+  /* Hover-peek: en rail, el sidebar se despliega como overlay al pasar por
+     encima. No empuja el contenido. Se anula con el candado. */
+  var sb = document.getElementById('app-sidebar');
+  sb && sb.addEventListener('mouseenter', function () {
+    if (shell.classList.contains('nav-collapsed') && !shell.classList.contains('nav-locked')) shell.classList.add('nav-peek');
+  });
+  sb && sb.addEventListener('mouseleave', function () { shell.classList.remove('nav-peek'); });
+
+  /* Reloj de la barra de estado, en hora local. */
+  var clock = document.getElementById('sb-clock');
+  function tick() {
+    if (!clock) return;
+    var d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  tick(); setInterval(tick, 30000);
+
+  /* Versión del DS: se lee del token en runtime, así el pie nunca miente
+     sobre qué versión está corriendo. Si falla, queda el texto del HTML. */
+  try {
+    var v = getComputedStyle(document.documentElement).getPropertyValue('--ds-version').trim().replace(/"/g, '');
+    if (v) document.querySelectorAll('[data-ds-version]').forEach(function (el) { el.textContent = 'DS v' + v; });
+  } catch (e) {}
+})();
+</script>
+
+</body>
+</html>
