@@ -29,7 +29,7 @@
 
      Cómo se llena: buscá {{ }} y reemplazá. Nada más.
      ═══════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css?v=1.2.8.35">
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css?v=1.2.8.36">
 
 <script>
 /* ── Tema claro por defecto ────────────────────────────────────────
@@ -921,7 +921,7 @@
 </footer>
 
 <!-- Runtime del DS: tema, drawer mobile, tablas ordenables. -->
-<script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js?v=1.2.8.35"></script>
+<script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js?v=1.2.8.36"></script>
 
 <script>
 /* Lo único que el runtime todavía no cubre. Tres cosas, ninguna de estilo:
@@ -935,7 +935,19 @@
   function read(k) { try { return localStorage.getItem(k) === '1'; } catch (e) { return false; } }
   function write(k, v) { try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {} }
 
-  if (read(KEY))  shell.classList.add('nav-collapsed');
+  /* El rail es de escritorio. Abajo de 980px el sidebar es un cajon y el
+     boton de colapsar ni se muestra, asi que la clase guardada no tiene que
+     aplicarse: dejaba el cajon con estilos de rail y los items sin responder.
+     Se recalcula al cambiar el ancho porque la preferencia sigue guardada. */
+  var esRail = matchMedia('(min-width: 981px)');
+  function aplicarRail() {
+    var on = esRail.matches && read(KEY);
+    shell.classList.toggle('nav-collapsed', on);
+    if (!esRail.matches) shell.classList.remove('nav-peek');
+  }
+  aplicarRail();
+  esRail.addEventListener ? esRail.addEventListener('change', aplicarRail)
+                          : esRail.addListener(aplicarRail);
   if (read(KEYL)) { shell.classList.add('nav-locked'); lock && lock.setAttribute('aria-pressed', 'true'); }
 
   col && col.addEventListener('click', function () {
@@ -956,10 +968,21 @@
   /* Hover-peek: en rail, el sidebar se despliega como overlay al pasar por
      encima. No empuja el contenido. Se anula con el candado. */
   var sb = document.getElementById('app-sidebar');
+  /* El desplegado tiene transicion de ancho: mientras crece de 68 a 240px el
+     borde derecho pasa por debajo del puntero y disparaba mouseleave y
+     mouseenter en cadena — el panel titilaba. Se sale con histeresis: el
+     cierre espera y se cancela si el puntero vuelve a entrar. */
+  var salida = null;
   sb && sb.addEventListener('mouseenter', function () {
-    if (shell.classList.contains('nav-collapsed') && !shell.classList.contains('nav-locked')) shell.classList.add('nav-peek');
+    clearTimeout(salida);
+    if (esRail.matches && shell.classList.contains('nav-collapsed') && !shell.classList.contains('nav-locked')) {
+      shell.classList.add('nav-peek');
+    }
   });
-  sb && sb.addEventListener('mouseleave', function () { shell.classList.remove('nav-peek'); });
+  sb && sb.addEventListener('mouseleave', function () {
+    clearTimeout(salida);
+    salida = setTimeout(function () { shell.classList.remove('nav-peek'); }, 180);
+  });
 
   /* Ítem activo del sidebar según el scroll.
      No se usa YiQi.initScrollSpy: marca la ÚLTIMA sección que intersecta, y
