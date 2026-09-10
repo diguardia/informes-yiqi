@@ -2384,10 +2384,10 @@
           <table class="ds-table" id="tabla-apps-futuras">
             <thead><tr><th>Idea</th><th>Estado</th><th>Falta</th></tr></thead>
             <tbody>
-              <tr><td>Contabilidad</td><td>Idea</td><td>Nombre y alcance</td></tr>
+              <tr><td>YiQi para contadores</td><td>Idea</td><td>Nombre y alcance</td></tr>
               <tr><td>Textil</td><td>Idea</td><td>Nombre y alcance</td></tr>
-              <tr><td>Carga de precios</td><td>Idea</td><td>Nombre y alcance</td></tr>
-              <tr><td>Carga de tickets en la calle</td><td>Idea</td><td>Nombre y alcance</td></tr>
+              <tr><td>Toma de pedidos en la calle</td><td>Idea</td><td>Nombre y alcance</td></tr>
+              <tr><td>Carga rápida de gastos</td><td>Idea</td><td>Nombre y alcance</td></tr>
             </tbody>
           </table>
         </div>
@@ -2450,7 +2450,7 @@
   <div class="statusbar-right">
     <span class="sb-item">© 2026 YiQi S.A.</span>
     <span class="sb-sep" aria-hidden="true">·</span>
-    <span class="sb-item"><a href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">DS v1.2.7.10</a></span>
+    <span class="sb-item"><a href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none" data-ds-version>DS</a></span>
     <span class="sb-sep" aria-hidden="true">·</span>
     <span class="sb-item sb-clock" id="statusbar-clock">--:--</span>
   </div>
@@ -4468,6 +4468,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   function init(){ paint(pref()); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+
+<script>
+/* Versión del DS: se lee del token en runtime, así el pie nunca miente
+   sobre qué versión está corriendo. Si falla, queda el texto del HTML. */
+(function(){
+  try {
+    var v = getComputedStyle(document.documentElement).getPropertyValue('--ds-version').trim().replace(/"/g, '');
+    if (v) document.querySelectorAll('[data-ds-version]').forEach(function (el) { el.textContent = 'DS v' + v; });
+  } catch (e) {}
 })();
 </script>
 </body>
