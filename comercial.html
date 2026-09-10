@@ -758,6 +758,7 @@
       .ds-layout[data-grupo="funnel"]  #funnel,
       .ds-layout[data-grupo="ons"]     #nuevas-ons,
       .ds-layout[data-grupo="ons"]     #concretadas,
+      .ds-layout[data-grupo="iaready"] #apps,
       .ds-layout[data-grupo="iaready"] #iaready { display: block; }
       /* Con una seccion por vez la barra de periodo puede quedar arriba de
          todo: su margen superior dejaba una banda vacia bajo la topbar. */
@@ -989,6 +990,16 @@
         </svg>
       </span>
       <span>iAready</span>
+    </a>
+
+    <a class="nav-link" href="#apps" id="nav-apps" title="Apps del Marketplace">
+      <span class="nav-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+      </span>
+      <span>Apps</span>
     </a>
 
     <!-- DS 1.2.7.3 — theme switch al pie del sidebar (modelo .sb-theme-switch) -->
@@ -2333,6 +2344,57 @@
       </div>
     </section>
 
+    <section id="apps" aria-label="Apps del Marketplace">
+      <div class="section-title">Apps del Marketplace</div>
+      <div class="section-sub">Fuente única: <a href="https://www.yiqi.com.ar/marketplace.html" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">apps-data.js</a> del sitio. Se actualiza sola: acá no hay copia de los datos.</div>
+
+      <div class="kpi-grid kpi-grid-auto" id="apps-kpis">
+        <div class="kpi-card card-reveal">
+          <div class="kpi-label">Apps publicadas</div>
+          <div class="kpi-value" id="v-apps-total">—</div>
+          <div class="kpi-delta" id="d-apps-total">leyendo el catálogo…</div>
+        </div>
+      </div>
+
+      <div class="card card-reveal" style="margin-top:24px">
+        <div class="table-toolbar">
+          <span class="search-wrap">
+            <input class="table-search" id="search-apps" placeholder="Buscar app…" aria-label="Buscar en las apps del Marketplace">
+            <button class="search-clear" type="button" aria-label="Limpiar búsqueda" title="Limpiar (Esc)">×</button>
+            <span class="search-kbd" aria-hidden="true">⌘K</span>
+          </span>
+        </div>
+        <div class="table-wrap">
+          <table class="ds-table" id="tabla-apps">
+            <thead><tr><th>App</th><th>Estado</th><th>Categoría</th><th>Autor</th><th>Versión</th></tr></thead>
+            <tbody><tr><td class="iaready-placeholder" colspan="5">Sin datos todavía.</td></tr></tbody>
+          </table>
+          <div class="table-empty" id="empty-apps" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
+        </div>
+      </div>
+
+      <!-- En preparacion. NO sale de apps-data.js: son ideas de la reunion de
+           iAready del 10/09 y todavia no existen como app. Se escriben aca a
+           proposito, para no publicarlas en el sitio. Cuando haya una planilla
+           propia, esto pasa a leerse de ahi como el resto. -->
+      <div class="card card-reveal" style="margin-top:24px">
+        <div class="section-title" style="margin-top:0">En preparación</div>
+        <p class="section-sub" style="margin-bottom:18px">Salieron de la reunión de iAready del 10/09. Todavía no existen como app: falta definir nombre, alcance y quién la desarrolla.</p>
+        <div class="table-wrap">
+          <table class="ds-table" id="tabla-apps-futuras">
+            <thead><tr><th>Idea</th><th>Estado</th><th>Falta</th></tr></thead>
+            <tbody>
+              <tr><td>Contabilidad</td><td>Idea</td><td>Nombre y alcance</td></tr>
+              <tr><td>Textil</td><td>Idea</td><td>Nombre y alcance</td></tr>
+              <tr><td>Carga de precios</td><td>Idea</td><td>Nombre y alcance</td></tr>
+              <tr><td>Carga de tickets en la calle</td><td>Idea</td><td>Nombre y alcance</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
   </main><!-- /content -->
 </div><!-- /ds-layout -->
 
@@ -3190,6 +3252,66 @@ function _iaVigilarVisita(total) {
   obs.observe(sec);
 }
 
+/* ── Catalogo de apps del Marketplace ──────────────────────────────
+   Lee window.YIQI_APPS de apps-data.js, servido por www.yiqi.com.ar. Es la
+   fuente unica de las apps: cargarlo por script en vez de copiar los datos
+   evita que el informe quede desincronizado, que es lo que ya le paso a
+   ia-ready.html — publica "6 apps" contra las once que hay cargadas. */
+const APPS_DATA_URL = 'https://www.yiqi.com.ar/components/apps-data.js';
+
+function _appsFallo(motivo) {
+  const v = document.getElementById('v-apps-total');
+  const d = document.getElementById('d-apps-total');
+  if (v) v.textContent = '—';
+  if (d) d.textContent = motivo;
+}
+
+function loadAppsCatalogo() {
+  const tbl = document.getElementById('tabla-apps');
+  if (!tbl) return;
+  const sc = document.createElement('script');
+  sc.src = APPS_DATA_URL;
+  sc.onerror = () => _appsFallo('no se pudo leer el catálogo');
+  sc.onload = () => {
+    const apps = window.YIQI_APPS;
+    if (!Array.isArray(apps) || !apps.length) { _appsFallo('el catálogo vino vacío'); return; }
+
+    /* Disponibles primero, despues homologacion, despues desarrollo. */
+    const orden = { live: 0, homolog: 1, dev: 2 };
+    const filas = apps.slice().sort((a, b) =>
+      (orden[a.state] ?? 9) - (orden[b.state] ?? 9) || a.name.localeCompare(b.name, 'es'));
+
+    const version = a => {
+      const d = (a.details || []).find(x => x[0] === 'Versión');
+      return d ? d[1] : '—';
+    };
+
+    tbl.querySelector('tbody').innerHTML = filas.map(a =>
+      '<tr>'
+      + '<td>' + _iaEsc(a.name) + '</td>'
+      + '<td>' + _iaEsc(a.stateLabel || '') + '</td>'
+      + '<td>' + _iaEsc(a.cat || '') + '</td>'
+      + '<td>' + _iaEsc(a.prov || '') + '</td>'
+      + '<td style="font-family:var(--mono);font-size:12px">' + _iaEsc(version(a)) + '</td>'
+      + '</tr>').join('');
+
+    const cuenta = e => apps.filter(a => a.state === e).length;
+    const terceros = apps.filter(a => a.prov && a.prov !== 'YiQi').length;
+
+    const kpis = document.getElementById('apps-kpis');
+    if (!kpis) return;
+    kpis.innerHTML = [
+      _iaKpi('Apps publicadas', String(apps.length), 'en el Marketplace'),
+      _iaKpi('Disponibles', String(cuenta('live')), 'se pueden contratar'),
+      _iaKpi('En homologación', String(cuenta('homolog')), 'en revisión'),
+      _iaKpi('En desarrollo', String(cuenta('dev')), 'todavía sin habilitar'),
+      _iaKpi('De terceros', String(terceros), terceros === 1 ? 'un partner' : 'partners')
+    ].join('');
+    if (typeof initReveal === 'function') initReveal();
+  };
+  document.head.appendChild(sc);
+}
+
 async function loadIaReadySheet() {
   const tbl = document.getElementById('tabla-iaready');
   if (!tbl || !IAREADY_SHEET_CSV) { _iaFallo('sin planilla configurada'); return; }
@@ -3443,7 +3565,7 @@ const NAV_GRUPOS = {
   meta:    { titulo: "Meta",  secs: [["resumen","Resumen Meta"], ["anuncios","Anuncios"]] },
   funnel:  { titulo: "Funnel", secs: [["funnel","Funnel CRM"]] },
   ons:     { titulo: "ONs",    secs: [["nuevas-ons","Nuevas ONs"], ["concretadas","ONs concretadas"]] },
-  iaready: { titulo: "iAready", secs: [["iaready","iAready"]] },
+  iaready: { titulo: "iAready", secs: [["iaready","Casos cargados"], ["apps","Apps"]] },
 };
 const SEC_GRUPO = Object.fromEntries(
   Object.entries(NAV_GRUPOS).flatMap(([g,v]) => v.secs.map(([id]) => [id, g])));
@@ -4292,8 +4414,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearch('search-nuevas',      'tabla-nuevas',      'empty-nuevas');
   setupSearch('search-plan',         'tabla-plan',         'empty-plan');
   setupSearch('search-iaready',      'tabla-iaready',      'empty-iaready');
+  setupSearch('search-apps',         'tabla-apps',         'empty-apps');
   loadPlanSheet();
   loadIaReadySheet();
+  loadAppsCatalogo();
   initScrollSpy();
   initReveal();
   initSearchShortcut();
