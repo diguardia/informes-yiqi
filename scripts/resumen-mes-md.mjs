@@ -62,7 +62,7 @@ const FUENTES = {
       'Popup y toast: `components/app-promo-popup.js` (28/08), "un aviso por sesión" (31/08), `components/novedad-toast.js`.',
       'Páginas nuevas: `git log --diff-filter=A` de agosto: `app-tiendanube.html`, `shopify.html`, `eco-alcance.html`, `staging-partners.html`, `en-construccion.html`.',
     ],
-    'Clarity · medición': [
+    'El sitio por dentro': [
       'Export del Dashboard de Microsoft Clarity, proyecto YiQi, rango 01/08–31/08/2026, bajado el 11/09 (`Clarity_YiQi_Dashboard_09112026 12 09 PM.csv`).',
       'Los bloques Navegadores y Sistemas operativos del export suman 156 sesiones —quedaron en "últimos 3 días"— y no se usan.',
       'Home = yiqi.com.ar/ (2.410) + www (92) + index.html (53). Sesiones nuevas: 2.184 / 2.839 = 76,9 %.',
@@ -75,7 +75,7 @@ const FUENTES = {
       '`claude/Lanzamiento-app-Tiendanube-ago2026.md` (21/08) y `claude/Checklist-homologacion-TN-appID185.md` (19/08).',
       'WORK/CAMPAÑA/Tiendanube: diagrama de integración (mmd/svg/png/html), Capturas-ficha-Tiendanube, `Lanzamiento_Tiendanube_2026-08.pdf`.',
       '`claude/Auditoria-paginas-partners-ago2026.md` (12/08).',
-      'Grilla de Planificación: "S2S / Peipe: a la espera de respuesta"; Tornado y Drubbit programados para octubre.',
+      'Peipe pendiente: confirmado por Seba el 11/09. La grilla de Planificación decía "S2S / Peipe: a la espera de respuesta" y eso ya no aplica a los otros tres.',
     ],
     'Marketplace e iA Ready': [
       'Analytics Pro: `claude/Brief-capturas-Analytics-Pro.md` (06/08), `Capturas-Analytics-Pro-ago2026.md` (13/08), `Campana-Analytics-Pro-ago2026.md` (25/08), `Guion-locucion-Analytics-Pro-iAready-ago2026.md` (28/08).',
