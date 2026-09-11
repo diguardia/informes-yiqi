@@ -52,31 +52,28 @@
     /* clases para compatibilidad con DS — usadas en el SVG inline */
 
     /* ── TOPBAR ──────────────────────────────────────────────── */
+    /* El fondo y la capa los pone el DS (--bg-elev, --z-topbar). Aca solo
+       la altura fija, el gutter del informe y el desenfoque: el rgba fijo
+       que habia antes no adaptaba al tema y el z-index: 100 quedaba fuera
+       de la escala de capas del sistema. */
     .topbar {
-      position: sticky; top: 0; z-index: 100;
       height: var(--topbar-h);
-      display: flex; align-items: center; gap: 12px;
+      gap: 12px;
       padding: 0 28px;
-      background: rgba(12,12,14,.82);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line);
     }
-    html[data-theme="light"] .topbar { background: rgba(238,236,231,.88); }
 
     .topbar-brand   { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .topbar-logo-link { display: flex; align-items: center; }
     .topbar-divider { width: 1px; height: 20px; background: var(--line-strong); flex-shrink: 0; }
     .topbar-title   { font: 600 13px var(--sans); color: var(--muted); white-space: nowrap; }
     .topbar-period  { font: 500 11px var(--mono); color: var(--muted-2); white-space: nowrap; }
-    .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .topbar-actions { margin-left: auto; }
 
-    .theme-toggle {
-      display: flex; align-items: center;
-      background: var(--bg-elev-2);
-      border-radius: var(--radius-pill);
-      padding: 3px; gap: 2px;
-    }
+    /* .theme-toggle y .topbar-actions son del DS: la copia local solo
+       cambiaba el gap y el display, sin motivo. */
     .theme-opt {
       display: flex; align-items: center; justify-content: center;
       width: 28px; height: 28px;
@@ -382,15 +379,11 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .kpi-label {
-      font: 600 9px var(--mono); letter-spacing: .12em; text-transform: uppercase;
-      color: var(--muted-2);
-    }
-    .kpi-value {
-      font: 700 22px var(--display); letter-spacing: -.02em;
-      color: var(--text);
-    }
-    .kpi-delta          { font: 500 11px var(--mono); }
+    /* .kpi-label, .kpi-value y .kpi-delta salen del DS. Lo unico propio es
+       la escala: el informe apila muchas tarjetas por fila y la cifra
+       canonica —clamp(32px, 2.2vw, 42px)— no entra. El tamano se declara
+       aparte; familia, peso, color y tracking quedan los del sistema. */
+    .kpi-value { font-size: 22px; }
     .kpi-delta.positive { color: var(--green); }
     .kpi-delta.negative { color: var(--red); }
     .kpi-delta.neutral  { color: var(--muted-2); }
@@ -407,13 +400,10 @@
       box-shadow: var(--shadow-md);
     }
 
-    /* ── BADGES ──────────────────────────────────────────────── */
-    .badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 8px; border-radius: var(--radius-pill);
-      font: 600 11px var(--mono);
-      border: 1px solid transparent;
-    }
+    /* ── BADGES ──────────────────────────────────────────────────
+       .badge no se define aca: es del DS. La copia local iba en
+       600 11px var(--mono) y pisaba al canonico, asi que el cambio a
+       Plus Jakarta de la v1.2.8.38 no llegaba al informe. */
     .badge-cyan  { color: var(--cyan);  background: var(--cyan-soft); }
     .badge-green { color: var(--green); background: var(--green-soft); }
     .badge-amber { color: var(--amber); background: var(--amber-soft); }
@@ -466,11 +456,9 @@
       user-select: none;
     }
     .search-wrap:focus-within .search-kbd { opacity: 0; }
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-sm);
-    }
+    /* El radio y la sombra los trae .table-wrap del DS: la copia local
+       usaba --radius en vez de --radius-lg. */
+    .table-wrap { overflow-x: auto; }
     .ds-table {
       width: 100%; border-collapse: collapse;
       font: 400 13px var(--sans); min-width: 580px;
@@ -610,21 +598,12 @@
     .origen-chart-wrap {
       height: 240px; position: relative;
     }
-    .legend-table { margin-top: 14px; }
-    .legend-row {
-      display: grid;
-      grid-template-columns: 10px 1fr auto auto;
-      gap: 6px 10px;
-      align-items: center;
-      margin-bottom: 7px;
-    }
-    .legend-dot  {
-      width: 10px; height: 10px;
-      border-radius: 50%; flex-shrink: 0;
-    }
-    .legend-label { font: 400 12px var(--sans); color: var(--muted); }
-    .legend-n     { font: 600 12px var(--mono); color: var(--text); }
-    .legend-pct   { font: 400 11px var(--mono); color: var(--muted-2); min-width: 38px; text-align: right; }
+    /* .legend-row, .legend-dot, .legend-label y .legend-pct vivian aca con
+       valores propios y pisaban a los del DS: el porcentaje quedaba en mono
+       y apagado, cuando el canonico lo trata como cifra —600 12px
+       var(--kpi-num), que es Plus Jakarta— y en --text. Se borraron: las
+       usa un solo bloque y ahora toma las del sistema. .legend-table y
+       .legend-n no las usaba nadie. */
     .chart-placeholder {
       display: flex; align-items: center; justify-content: center;
       height: 100%; color: var(--muted-2);
@@ -1091,14 +1070,38 @@
       #mes .mes-frente-wide { padding:var(--s5) var(--s7); }
       /* Solo layout: lo visual sale de .ds-note, .kpi-card, .card-subtitle,
          .donut-block, .legend-row y .chart-wrap, que ya son canonicos. */
-      #mes .mes-cl-stats { margin:var(--s4) 0 var(--s6); }
-      #mes .mes-cl-charts { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:var(--s6); }
-      /* En una columna angosta la barra horizontal queda en cero y solo se
-         leen las etiquetas: los graficos se apilan antes de llegar ahi. */
-      @media (max-width: 900px) { #mes .mes-cl-charts { grid-template-columns: 1fr; } }
+      /* Ocho cifras en dos filas de cuatro que reparten el ancho: con la
+         variante flex cada tarjeta media lo que su texto pedia y quedaban
+         430px muertos a la derecha. Las cuatro de rendimiento van apagadas:
+         son contexto tecnico, no el titular. */
+      #mes .mes-cl-claves { margin:0 0 var(--s5); font:400 14px/1.6 var(--sans); color:var(--text); max-width:70ch; }
+      #mes .mes-cl-stats { margin:0 0 var(--s7); grid-template-columns: repeat(4, minmax(0, 1fr)); gap:var(--s3); }
+      #mes .mes-cl-stats .kpi-card { padding:var(--s3) var(--s4); }
+      #mes .mes-cl-stats .kpi-value { font-size:24px; }
+      #mes .mes-cl-g { min-width:0; }
+      /* Container query, no media query: lo que importa es el ancho de la
+         tarjeta, no el de la ventana. Con @media a 900px la tarjeta podia
+         medir 600 y los dos graficos seguian en dos columnas de 290, donde
+         la barra horizontal se queda sin lugar: las etiquetas comen 120px y
+         la barra mas larga entra en 130. Mismo recurso que usa .donut-block
+         del DS. */
+      #mes .mes-frente-wide { container-type: inline-size; }
+      /* El donut y su leyenda ocupan lo que necesitan; el resto del ancho
+         es de las barras, que es donde se lee el dato. */
+      #mes .mes-cl-charts { display:grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap:var(--s7); }
+      @container (max-width: 720px) {
+        #mes .mes-cl-charts { grid-template-columns: 1fr; }
+        #mes .mes-cl-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
       #mes .card-subtitle { color: var(--mes-acc); }
+      /* .legend-row es '10px 1fr auto': el rotulo se estira y manda el
+         porcentaje al borde. En el panel del DS la leyenda es angosta y no
+         se ve; aca mide 350px. Se le pone tope al contenedor, como hace el
+         propio DS en mobile, y la fila canonica queda intacta. */
+      #mes .donut-legend { max-width: 200px; }
       #mes .mes-cl-barras { height:190px; }
-      #mes .mes-cl-pie { margin-top:var(--s6); }
+      #mes .mes-cl-pie { margin-top:var(--s6); padding-top:var(--s3); border-top:1px solid var(--line);
+        font:400 11px/1.7 var(--mono); color:var(--muted-2); }
       /* La conclusion es lo primero y lo unico con el texto al maximo: el
          resto de la seccion esta apagado a proposito (el enfasis es de suma
          cero). Separacion mayor entre bloques que dentro de cada uno. */
@@ -1224,7 +1227,6 @@
             { t: 'Por sesión: 1,46 páginas, 28,6 % de scroll, 37 s activos de 201 s. Rage clicks 0 %, dead clicks 1,37 %, quick backs 4,02 %' },
             { t: 'Páginas: home 2.555 sesiones, iA Ready 146, API 91, ficha de app 87, novedades 42, contacto 35' },
             { t: 'Eventos de Clarity: Outbound click 186 (6,55 %), Login 59, Contact us 12, Submit form 1' },
-            { t: 'Rendimiento: puntaje 76 · LCP 2,61 s · INP 384 ms · CLS 0,026' },
           ]},
           { n: 'Ayuda y novedades', href: 'https://www.yiqi.com.ar/ayuda-erp.html', items: [
             { t: 'Página de la nueva ayuda (06/08) y las dos landings unificadas en ayuda-erp.html (11/08)', href: 'https://www.yiqi.com.ar/ayuda-erp.html' },
@@ -1291,7 +1293,8 @@
             ['2.839', 'sesiones'], ['2.248', 'usuarios'],
             ['1,46', 'páginas por sesión'], ['37 s', 'activos de 201'],
           ],
-          pie: 'Rage clicks 0 % · dead clicks 1,37 % · quick backs 4,02 % — Rendimiento: puntaje 76, LCP 2,61 s, INP 384 ms, CLS 0,026 — 505 sesiones de bots excluidas',
+          claves: 'Instagram trae 7 de cada 10 sesiones y la home se lleva 9 de cada 10 vistas: el sitio es una sola página alimentada por la pauta.',
+          pie: 'Rage clicks 0 % · dead clicks 1,37 % · quick backs 4,02 % · 505 sesiones de bots excluidas · Microsoft Clarity registra cada visita a yiqi.com.ar',
           /* Apex y www son la misma pagina servida por dos hosts, asi que
              se suman: home = 2.410 + 92 + 53 (index.html). */
           paginas: [
@@ -1350,7 +1353,7 @@
       const ext = h => /^https?:/.test(h) ? ' target="_blank" rel="noopener"' : '';
       const lnk = (t, h) => h ? `<a href="${esc(h)}"${ext(h)}>${esc(t)}</a>` : esc(t);
       const kpis = d.kpis.map(k => `
-        <div class="kpi-card">
+        <div class="kpi-card card-reveal">
           <div class="kpi-label">${esc(k.l)}</div>
           <div class="kpi-value">${k.href ? lnk(k.v, k.href) : esc(k.v)}</div>
           <div class="kpi-delta neutral">${esc(k.d || '')}</div>
@@ -1367,28 +1370,28 @@
         const resto = f.items.slice(MAX);
         const mas = resto.length ? `<details><summary>+${resto.length} más</summary><ul>${resto.map(i => `<li>${lnk(i.t, i.href)}</li>`).join('')}</ul></details>` : '';
         if (f.n === CLARITY && d.clarity) {
-          return `<div class="card mes-frente mes-frente-wide">
-            <div class="mes-frente-h"><span class="mes-t">${mesIco(f.n)}<a>${esc(f.n)}</a></span><span class="mes-frente-n">${esc(f.c ?? f.items.length)}</span></div>
-            <div class="ds-note">Microsoft Clarity registra cada visita a yiqi.com.ar: de dónde llega, qué páginas abre y cuánto se queda.</div>
-            <div class="kpi-grid kpi-grid-auto mes-cl-stats">${d.clarity.stats.map(([v, l]) => `
+          return `<div class="card mes-frente mes-frente-wide card-reveal">
+            <div class="mes-frente-h"><span class="mes-t">${mesIco(f.n)}<a>${esc(f.n)}</a></span></div>
+            <p class="mes-cl-claves">${esc(d.clarity.claves)}</p>
+            <div class="kpi-grid mes-cl-stats">${d.clarity.stats.map(([v, l]) => `
               <div class="kpi-card"><div class="kpi-label">${esc(l)}</div><div class="kpi-value">${esc(v)}</div></div>`).join('')}</div>
             <div class="mes-cl-charts">
-              <div>
+              <div class="mes-cl-g">
                 <div class="card-subtitle">De dónde llegan</div>
                 <div class="donut-block">
                   <div class="donut-chart"><canvas id="mes-chart-origen" aria-label="Sesiones por origen"></canvas></div>
                   <div class="donut-legend" id="mes-cl-leg"></div>
                 </div>
               </div>
-              <div>
+              <div class="mes-cl-g">
                 <div class="card-subtitle">Qué miran</div>
                 <div class="chart-wrap mes-cl-barras"><canvas id="mes-chart-paginas" aria-label="Páginas más vistas"></canvas></div>
               </div>
             </div>
-            <div class="ds-note mes-cl-pie">${esc(d.clarity.pie)}</div>
+            <div class="mes-cl-pie">${esc(d.clarity.pie)}</div>
           </div>`;
         }
-        return `<div class="card mes-frente">
+        return `<div class="card mes-frente card-reveal">
           <div class="mes-frente-h"><span class="mes-t">${mesIco(f.n)}${f.href ? `<a href="${esc(f.href)}"${ext(f.href)}>${esc(f.n)}</a>` : `<a>${esc(f.n)}</a>`}</span><span class="mes-frente-n">${esc(f.c ?? f.items.length)}</span></div>
           <ul>${vis}</ul>${mas}
         </div>`;
@@ -1396,17 +1399,48 @@
       const rec = d.recurrente.map(r => `<li><strong>${esc(r.t)}</strong> · ${esc(r.d)}</li>`).join('');
       const sigue = d.sigue.map(s => `<li>${esc(s)}</li>`).join('');
       const decidir = (d.decidir || []).map(x => `<li>${lnk(x.t, x.href)}</li>`).join('');
-      setTimeout(() => mesChart(key), 30);
       b.innerHTML = `
-        <div class="card mes-claves"><div class="card-subtitle" style="margin-bottom:8px">Tres cosas que hay que saber</div><ol>${claves}</ol></div>
+        <div class="card mes-claves card-reveal"><div class="card-subtitle" style="margin-bottom:8px">Tres cosas que hay que saber</div><ol>${claves}</ol></div>
         <div class="kpi-grid kpi-grid-auto mes-kpis">${kpis}</div>
         <div class="mes-grid">${frentes}</div>
         <div class="mes-foot">
-          <div class="card"><details><summary>Lo que corre todos los meses <span class="mes-frente-n"></span></summary><ul>${rec}</ul></details></div>
-          ${decidir ? `<div class="card mes-sigue mes-decidir"><div class="card-subtitle">Lo que hay que decidir</div><ol>${decidir}</ol></div>` : ''}
-          <div class="card mes-sigue"><div class="card-subtitle">Qué sigue</div><ol>${sigue}</ol></div>
+          <div class="card card-reveal"><details><summary>Lo que corre todos los meses <span class="mes-frente-n"></span></summary><ul>${rec}</ul></details></div>
+          ${decidir ? `<div class="card mes-sigue mes-decidir card-reveal"><div class="card-subtitle">Lo que hay que decidir</div><ol>${decidir}</ol></div>` : ''}
+          <div class="card mes-sigue card-reveal"><div class="card-subtitle">Qué sigue</div><ol>${sigue}</ol></div>
         </div>`;
+      /* Las tarjetas recien existen ahora, asi que recien ahora se las
+         puede observar. En el primer render entran animadas; al cambiar
+         de mes ya estan a la vista y hacerlas entrar de nuevo seria un
+         salto de toda la seccion, entonces solo corre el contador sobre
+         las cifras nuevas. */
+      /* Los graficos se dibujan cuando la tarjeta entra en pantalla, no
+         a los 30 ms: dibujados arriba del pliegue la animacion de
+         Chart.js terminaba antes de que nadie la viera. */
+      const dibujar = () => {
+        const cl = b.querySelector('.mes-frente-wide');
+        if (!cl || !('IntersectionObserver' in window)) { MES_GRAF_VISTO = true; mesChart(key); return; }
+        const io = new IntersectionObserver(es => {
+          if (es.some(e => e.isIntersecting)) { io.disconnect(); MES_GRAF_VISTO = true; mesChart(key); }
+        }, { threshold: 0.15 });
+        io.observe(cl);
+      };
+      setTimeout(dibujar, 30);
+      const revelar = () => {
+        if (MES_PRIMER_RENDER) { MES_PRIMER_RENDER = false; initReveal(b); return; }
+        b.querySelectorAll('.card-reveal').forEach(c => c.classList.add('visible'));
+        b.querySelectorAll('.kpi-value').forEach(v => runCountUp(v));
+      };
+      /* initReveal se declara en un <script> posterior: en el primer
+         render todavia no existe y la llamada tiraba ReferenceError. */
+      if (typeof initReveal === 'function') revelar();
+      else document.addEventListener('DOMContentLoaded', revelar, { once: true });
     }
+    let MES_PRIMER_RENDER = true;
+    /* El arranque del informe y el cambio de tema llaman a mesChart sin
+       saber donde esta el lector. Hasta que la tarjeta se ve una vez, esas
+       llamadas no dibujan: si dibujaran, la animacion ya habria corrido
+       cuando el lector llega y ademas se veria redibujar al pasar. */
+    let MES_GRAF_VISTO = false;
     let MES_ACTIVO = 'ago';
     const MES_NOMBRE = { ene:'Enero', feb:'Febrero', mar:'Marzo', abr:'Abril', may:'Mayo', jun:'Junio', jul:'Julio', ago:'Agosto', sep:'Septiembre', oct:'Octubre', nov:'Noviembre', dic:'Diciembre' };
 
@@ -1471,6 +1505,7 @@
        RESUMEN_MES[mes].clarity. Colores por token, como pide el skill de
        charts; se rehacen al cambiar de tema y al cambiar de mes. */
     function mesChart(key) {
+      if (!MES_GRAF_VISTO) return;
       const d = RESUMEN_MES[key];
       const cvO = document.getElementById('mes-chart-origen');
       const cvP = document.getElementById('mes-chart-paginas');
@@ -1480,6 +1515,11 @@
 
       const acc = getCSSVar('--violet'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
       const linea = getCSSVar('--line'), elev = getCSSVar('--bg-elev-2'), texto = getCSSVar('--text');
+      /* Las barras se leen como la leyenda del donut, que es el canonico:
+         rotulo en --sans como .legend-label, cifra en --kpi-num como
+         .legend-pct. Antes iban en mono y convivian dos tipografias para
+         la misma jerarquia, una al lado de la otra. */
+      const sans = getCSSVar('--sans'), cifra = getCSSVar('--kpi-num');
       const tooltip = { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10 };
       const mono = getCSSVar('--mono');
 
@@ -1492,6 +1532,9 @@
         data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
+          /* Misma duracion y misma curva que runCountUp: la seccion entra
+             con un solo ritmo en vez de tres velocidades distintas. */
+          animation: { duration: 900, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
           plugins: {
             legend: { display: false },
             tooltip: { ...tooltip, callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } },
@@ -1512,9 +1555,14 @@
         afterDatasetsDraw(chart) {
           const { ctx } = chart;
           ctx.save();
-          ctx.font = `600 11px ${mono}`; ctx.fillStyle = texto; ctx.textBaseline = 'middle';
+          ctx.font = `600 12px ${cifra}`; ctx.fillStyle = texto; ctx.textBaseline = 'middle';
+          /* El valor se lee de la posicion de la barra, no del dato: asi
+             cuenta mientras la barra crece en vez de mostrar el total
+             final viajando pegado a una barra a medio dibujar. */
+          const ex = chart.scales.x;
           chart.getDatasetMeta(0).data.forEach((bar, i) => {
-            const v = chart.data.datasets[0].data[i];
+            const fin = chart.data.datasets[0].data[i];
+            const v = ex ? Math.max(0, Math.min(fin, Math.round(ex.getValueForPixel(bar.x)))) : fin;
             ctx.fillText(v.toLocaleString('es-AR'), bar.x + 8, bar.y);
           });
           ctx.restore();
@@ -1525,11 +1573,13 @@
         data: { labels: filas.map(r => r[0]), datasets: [{ label: 'Sesiones', data: filas.map(r => r[1]), backgroundColor: acc, borderWidth: 0, borderRadius: 4, borderSkipped: false }] },
         options: {
           indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          animation: { duration: 900, easing: 'easeOutCubic' },
+          animations: { x: { from: 0 } },
           layout: { padding: { right: 46 } },
           plugins: { legend: { display: false }, tooltip: { ...tooltip, callbacks: { label: c => ` ${c.parsed.x.toLocaleString('es-AR')} sesiones` } } },
           scales: {
             x: { display: false, grid: { display: false } },
-            y: { grid: { display: false }, border: { display: false }, ticks: { color: muted2, font: { family: mono, size: 11 } } },
+            y: { grid: { display: false }, border: { display: false }, ticks: { color: muted, font: { family: sans, size: 12 } } },
           }
         },
         plugins: [valorAlFinal]
@@ -4744,25 +4794,33 @@ function renderConcretadasChart() {
 
 /* ─── COUNT-UP EN KPI VALUES ────────────────────────────────── */
 function parseKpiValue(text) {
-  // Devuelve { num, fmt } o null si no es un número animable
-  if (!text || text === '—' || text === '') return null;
-  const hasDollar = text.startsWith('$');
-  const hasPct    = text.endsWith('%');
-  // Extraer número: quitar $, %, puntos de miles, reemplazar coma decimal
-  let clean = text.replace('$','').replace('%','').replace(/\./g,'').replace(',','.');
-  const num = parseFloat(clean);
+  /* Devuelve { num, fmt } o null si la cifra no es animable.
+     El parser viejo se comia el resto del texto: "37 s" salia "37",
+     "1,46" salia "1,5" —toFixed(1) fijo— y "5,4 -> 7,0" se quedaba en
+     "5,4", borrando la flecha. Ahora la cifra tiene que ser UNA sola,
+     con lo que venga antes y despues conservado tal cual, y los
+     decimales se cuentan en vez de asumirse. */
+  if (!text) return null;
+  const t = text.trim();
+  if (!t || t === '—') return null;
+  /* prefijo sin digitos + numero + sufijo sin digitos. Si hay una
+     segunda cifra el sufijo tendria digitos y no matchea: no se anima. */
+  const m = t.match(/^([^\d]*?)(\d[\d.]*(?:,\d+)?)([^\d]*)$/);
+  if (!m) return null;
+  const [, pre, cifra, suf] = m;
+  const dec = (cifra.split(',')[1] || '');
+  const num = parseFloat(cifra.replace(/\./g, '').replace(',', '.'));
   if (!Number.isFinite(num)) return null;
-  // Determinar si tenía coma decimal
-  const hasDecimal = /,\d+$/.test(text.replace('$','').replace('%',''));
+  const miles = n => n.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   const fmt = (v) => {
-    if (hasDecimal) {
-      const str = v.toFixed(1).replace('.',',');
-      const parts = str.split(',');
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
-      return (hasDollar ? '$' : '') + parts.join(',') + (hasPct ? '%' : '');
+    let cuerpo;
+    if (dec.length) {
+      const str = v.toFixed(dec.length).split('.');
+      cuerpo = miles(str[0]) + ',' + str[1];
+    } else {
+      cuerpo = miles(Math.round(v).toString());
     }
-    const str = Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
-    return (hasDollar ? '$' : '') + str + (hasPct ? '%' : '');
+    return pre + cuerpo + suf;
   };
   return { num, fmt };
 }
@@ -4787,8 +4845,11 @@ function runCountUp(el, duration = 900) {
 }
 
 /* ─── CARD REVEAL ───────────────────────────────────────────── */
-function initReveal() {
-  const cards = document.querySelectorAll('.card-reveal');
+function initReveal(root = document) {
+  /* Acepta una raiz porque #mes dibuja sus tarjetas por JS despues de
+     que esta funcion ya corrio: sin esto nunca las observaba y el
+     resumen entraba sin animar y sin contador. */
+  const cards = root.querySelectorAll('.card-reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
