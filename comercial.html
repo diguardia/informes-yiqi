@@ -1162,9 +1162,9 @@
       ago: {
         kpis: [
           { l: 'Invertido en pauta',      v: '$486.857', d: 'el máximo del año',            href: '#resumen' },
-          { l: 'Alcance',                 v: '141.626',  d: '276.211 impresiones',          href: '#resumen' },
-          { l: 'Conversaciones',          v: '301',      d: 'iniciadas por anuncios',       href: '#resumen' },
-          { l: 'ONs nuevas',              v: '16',       d: '3 concretadas · $8.524.082',   href: '#funnel' },
+          { l: 'Alcance',                 v: '141.626',  d: 'el mayor del año · 276.211 impresiones', href: '#resumen' },
+          { l: 'Conversaciones',          v: '301',      d: 'récord del año · 51 % sobre el mejor mes previo', href: '#resumen' },
+          { l: 'ONs nuevas',              v: '16',       d: '3 concretadas · $8.524.082, el mayor monto del año', href: '#funnel' },
           { l: 'Presencia digital',       v: '5,4 → 7,0', d: 'sobre 10 · 05/08 → 08/09, mismo instrumento' },
         ],
         claves: [
@@ -1518,7 +1518,7 @@
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           /* Misma duracion y misma curva que runCountUp: la seccion entra
              con un solo ritmo en vez de tres velocidades distintas. */
-          animation: { duration: 900, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
+          animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
           plugins: {
             legend: { display: false },
             tooltip: { ...tooltip, callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } },
@@ -1557,7 +1557,7 @@
         data: { labels: filas.map(r => r[0]), datasets: [{ label: 'Sesiones', data: filas.map(r => r[1]), backgroundColor: acc, borderWidth: 0, borderRadius: 4, borderSkipped: false }] },
         options: {
           indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-          animation: { duration: 900, easing: 'easeOutCubic' },
+          animation: { duration: 400, easing: 'easeOutCubic' },
           animations: { x: { from: 0 } },
           layout: { padding: { right: 46 } },
           plugins: { legend: { display: false }, tooltip: { ...tooltip, callbacks: { label: c => ` ${c.parsed.x.toLocaleString('es-AR')} sesiones` } } },
@@ -4809,7 +4809,12 @@ function parseKpiValue(text) {
   return { num, fmt };
 }
 
-function runCountUp(el, duration = 900) {
+/* 400 ms, no 900. A 900 el contador muestra cifras falsas durante casi un
+   segundo, y este informe se mira de reojo y se captura: el 11/09 Seba leyó
+   mal dos KPIs en cinco minutos —$321.794 por $486.857 y 11 ONs por 16—
+   sacando capturas a mitad de animación. El movimiento sigue viéndose; la
+   ventana de mentira baja a menos de la mitad. */
+function runCountUp(el, duration = 400) {
   const parsed = parseKpiValue(el.textContent.trim());
   if (!parsed) return;
   const { num, fmt } = parsed;
