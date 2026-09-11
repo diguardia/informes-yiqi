@@ -37,14 +37,8 @@
       color: var(--text);
       min-height: 100vh;
       background:
-        radial-gradient(circle at 72% 8%,  rgba(0,204,255,.07), transparent 28%),
-        radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
-        var(--bg);
-    }
-    html[data-theme="light"] body {
-      background:
-        radial-gradient(circle at 72% 8%,  rgba(0,159,199,.06), transparent 28%),
-        radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),
+        radial-gradient(circle at 72% 8%,  color-mix(in srgb, var(--cyan) 7%, transparent), transparent 28%),
+        radial-gradient(circle at 12% 60%, color-mix(in srgb, var(--cyan) 4%, transparent), transparent 22%),
         var(--bg);
     }
 
@@ -115,7 +109,7 @@
     /* DS 1.2.7 — skip link */
     .skip-link {
       position: absolute; top: -100%; left: 8px; z-index: 999;
-      background: var(--cyan); color: #0a0a0b;
+      background: var(--cyan); color: var(--accent-ink);
       padding: 8px 16px; border-radius: 0 0 var(--radius) var(--radius);
       font: 600 13px var(--sans); text-decoration: none;
       transition: top .2s;
@@ -133,12 +127,11 @@
          barra envuelve, que ademas en mobile se lee mejor que scrollear. */
       flex-wrap: wrap; row-gap: 8px;
       margin: -28px -32px 20px; padding: 10px 32px;
-      background: rgba(12,12,14,.82);
+      background: color-mix(in srgb, var(--bg-elev) 85%, transparent);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line);
     }
     .period-bar > * { flex-shrink: 0; }
-    html[data-theme="light"] .period-bar { background: rgba(238,236,231,.88); }
     .period-bar-label {
       font: 600 9px var(--mono); letter-spacing: .12em; text-transform: uppercase;
       color: var(--muted-2); margin-right: 4px;
@@ -196,16 +189,12 @@
          abajo, le tapa el pie —tema y controles de colapsar/lockear—. */
       height: calc(100dvh - var(--topbar-h) - var(--statusbar-h));
       overflow-y: auto; overflow-x: clip;
-      background: linear-gradient(180deg, rgba(24,24,28,.96), rgba(17,17,20,.92));
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border-right: 1px solid var(--line);
       display: flex; flex-direction: column;
       padding: 16px 12px;
       scrollbar-width: none;
-    }
-    html[data-theme="light"] .sidebar {
-      background: linear-gradient(180deg, rgba(238,236,231,.97), rgba(230,228,223,.95));
     }
     .sidebar::-webkit-scrollbar { display: none; }
 
@@ -309,10 +298,7 @@
       width: var(--sidebar-w);
       padding: 16px 12px;
       z-index: 97;
-      box-shadow: 0 24px 60px rgba(0,0,0,.45);
-    }
-    html[data-theme="light"] .ds-layout.nav-collapsed.nav-peek .sidebar {
-      box-shadow: 0 24px 60px rgba(16,36,54,.18);
+      box-shadow: var(--shadow-lg);
     }
     .nav-collapsed.nav-peek .nav-section-label { visibility: visible; height: auto; padding: 12px 8px 6px; }
     .nav-collapsed.nav-peek .nav-link { justify-content: flex-start; padding: 8px 10px; gap: 8px; }
@@ -476,8 +462,7 @@
     }
     .ds-table tr:last-child td { border-bottom: none; }
     .ds-table tbody tr:hover { background: var(--bg-soft); }
-    .alert-row td { background: rgba(242,95,92,.05) !important; }
-    html[data-theme="light"] .alert-row td { background: rgba(212,72,94,.05) !important; }
+    .alert-row td { background: color-mix(in srgb, var(--red) 5%, transparent) !important; }
     .table-empty {
       padding: 24px; text-align: center;
       font: 400 13px var(--sans); color: var(--muted-2);
@@ -761,7 +746,7 @@
 
       .nav-scrim {
         display: block; position: fixed; inset: 0; z-index: 97;
-        background: rgba(0,0,0,.45); opacity: 0; visibility: hidden;
+        background: var(--scrim); opacity: 0; visibility: hidden;
         transition: opacity .22s ease, visibility .22s ease;
       }
       .nav-scrim.is-open { opacity: 1; visibility: visible; }
@@ -800,13 +785,13 @@
         width: min(var(--sidebar-w), 85vw);
         transform: translateX(110%);
         transition: transform .26s cubic-bezier(.4,0,.2,1);
-        box-shadow: -4px 0 28px rgba(0,0,0,.4);
+        box-shadow: var(--shadow-lg);
         border-right: none; border-left: 1px solid var(--line);
       }
       .sidebar.open { transform: translateX(0); }
       .ds-overlay {
         display: none; position: fixed; inset: 0;
-        background: rgba(0,0,0,.45); z-index: 80;
+        background: var(--scrim); z-index: 80;
         backdrop-filter: blur(2px);
       }
       .ds-overlay.show { display: block; }
