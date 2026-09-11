@@ -547,10 +547,8 @@
     .field-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .field-sub-label { font: 400 10px var(--mono); color: var(--muted-2); margin-bottom: 4px; }
 
-    .card-subtitle {
-      font: 600 10px var(--mono); letter-spacing: .1em; text-transform: uppercase;
-      color: var(--muted-2); margin-bottom: 16px;
-    }
+    /* .card-kicker era clase local; subio al DS como .card-kicker en
+       v1.2.8.41 con los mismos valores. */
 
     /* Rate cards grid */
     .rates-grid {
@@ -700,7 +698,7 @@
          completo y la fila cierra pareja. */
       #resumen-kpis .kpi-card:last-child { grid-column: 1 / -1; }
 
-      #resumen .card-subtitle { font-size: 11px; }
+      #resumen .card-kicker { font-size: 11px; }
     }
 
     /* ── NAVEGACIÓN MÓVIL — §67 del DS ────────────────────────────
@@ -1045,7 +1043,7 @@
              background: var(--mes-acc-soft); border-radius: var(--radius-lg); padding: var(--s7); }
       #mes .section-title { color: var(--mes-acc); }
       #mes .section-sub { color: var(--text); opacity: .75; }
-      #mes .kpi-label, #mes .card-subtitle { color: var(--mes-acc); }
+      #mes .kpi-label, #mes .card-kicker { color: var(--mes-acc); }
       #mes .ds-picker-toggle { background: var(--mes-acc-soft-2); color: var(--text); }
       @media (max-width: 980px) { #mes { padding: var(--s4) var(--s3) var(--s5); } }
       #mes .mes-head { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--s3); margin-top:var(--s2); }
@@ -1061,7 +1059,7 @@
       /* Tres bolsillos: las cifras, los tres graficos, y la letra chica.
          Dentro de cada uno el espacio es menor que entre ellos. */
       #mes .mes-frente-wide { padding:var(--s5) var(--s7); }
-      /* Solo layout: lo visual sale de .ds-note, .kpi-card, .card-subtitle,
+      /* Solo layout: lo visual sale de .ds-note, .kpi-card, .card-kicker,
          .donut-block, .legend-row y .chart-wrap, que ya son canonicos. */
       /* Ocho cifras en dos filas de cuatro que reparten el ancho: con la
          variante flex cada tarjeta media lo que su texto pedia y quedaban
@@ -1086,7 +1084,7 @@
         #mes .mes-cl-charts { grid-template-columns: 1fr; }
         #mes .mes-cl-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
-      #mes .card-subtitle { color: var(--mes-acc); }
+      #mes .card-kicker { color: var(--mes-acc); }
       /* .legend-row es '10px 1fr auto': el rotulo se estira y manda el
          porcentaje al borde. En el panel del DS la leyenda es angosta y no
          se ve; aca mide 350px. Se le pone tope al contenedor, como hace el
@@ -1133,7 +1131,7 @@
       #mes .mes-foot details li strong { color: var(--text); font-weight:600; }
       #mes .mes-sigue ol { margin:var(--s3) 0 0; padding-left:var(--s5); display:grid; gap:var(--s2); font-size:12px; color:var(--muted-2); line-height:1.5; }
       #mes .mes-sigue ol li::marker { color: var(--mes-acc); font-family: var(--mono); font-size:11px; }
-      #mes .mes-sigue .card-subtitle { margin:0; }
+      #mes .mes-sigue .card-kicker { margin:0; }
       #mes .mes-decidir ol li { color: var(--text); }
       #mes .mes-decidir ol li a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--mes-acc-soft); }
       #mes .mes-vacio { padding:24px; color:var(--muted-2); font-size:13px; }
@@ -1370,14 +1368,14 @@
               <div class="kpi-card"><div class="kpi-label">${esc(l)}</div><div class="kpi-value">${esc(v)}</div></div>`).join('')}</div>
             <div class="mes-cl-charts">
               <div class="mes-cl-g">
-                <div class="card-subtitle">De dónde llegan</div>
+                <div class="card-kicker">De dónde llegan</div>
                 <div class="donut-block">
                   <div class="donut-chart"><canvas id="mes-chart-origen" aria-label="Sesiones por origen"></canvas></div>
                   <div class="donut-legend" id="mes-cl-leg"></div>
                 </div>
               </div>
               <div class="mes-cl-g">
-                <div class="card-subtitle">Qué miran</div>
+                <div class="card-kicker">Qué miran</div>
                 <div class="chart-wrap mes-cl-barras"><canvas id="mes-chart-paginas" aria-label="Páginas más vistas"></canvas></div>
               </div>
             </div>
@@ -1393,13 +1391,13 @@
       const sigue = d.sigue.map(s => `<li>${esc(s)}</li>`).join('');
       const decidir = (d.decidir || []).map(x => `<li>${lnk(x.t, x.href)}</li>`).join('');
       b.innerHTML = `
-        <div class="card mes-claves card-reveal"><div class="card-subtitle" style="margin-bottom:8px">Tres cosas que hay que saber</div><ol>${claves}</ol></div>
+        <div class="card mes-claves card-reveal"><div class="card-kicker" style="margin-bottom:8px">Tres cosas que hay que saber</div><ol>${claves}</ol></div>
         <div class="kpi-grid kpi-grid-auto mes-kpis">${kpis}</div>
         <div class="mes-grid">${frentes}</div>
         <div class="mes-foot">
           <div class="card card-reveal"><details><summary>Lo que corre todos los meses <span class="mes-frente-n"></span></summary><ul>${rec}</ul></details></div>
-          ${decidir ? `<div class="card mes-sigue mes-decidir card-reveal"><div class="card-subtitle">Lo que hay que decidir</div><ol>${decidir}</ol></div>` : ''}
-          <div class="card mes-sigue card-reveal"><div class="card-subtitle">Qué sigue</div><ol>${sigue}</ol></div>
+          ${decidir ? `<div class="card mes-sigue mes-decidir card-reveal"><div class="card-kicker">Lo que hay que decidir</div><ol>${decidir}</ol></div>` : ''}
+          <div class="card mes-sigue card-reveal"><div class="card-kicker">Qué sigue</div><ol>${sigue}</ol></div>
         </div>`;
       /* Las tarjetas recien existen ahora, asi que recien ahora se las
          puede observar. En el primer render entran animadas; al cambiar
@@ -1702,7 +1700,7 @@
       <!-- Gráfico evolución mensual -->
       <div class="card card-reveal" style="margin-top:18px">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-          <div class="card-subtitle" style="margin:0" id="meta-chart-sub">Evolución mensual · Ene–Jun 2026</div>
+          <div class="card-kicker" style="margin:0" id="meta-chart-sub">Evolución mensual · Ene–Jun 2026</div>
           <div style="display:flex;gap:5px;flex-wrap:wrap">
             <button class="month-pill active" data-meta-metric="conv"    onclick="toggleMetaLine('conv')" title="Veces que alguien inició una conversación de mensajería con el negocio tras 7+ días de inactividad, atribuidas a los anuncios.">Conversaciones</button>
             <button class="month-pill active" data-meta-metric="inter"   onclick="toggleMetaLine('inter')" title="Total de acciones que las personas realizan sobre los anuncios (reacciones, comentarios, compartidos, clics, etc.).">Interacciones</button>
@@ -1720,7 +1718,7 @@
            series de arriba. Sin esto, dentro de un mes nadie sabe por qué
            cambió el costo por clic del retargeting. Se actualiza a mano. -->
       <div class="card card-reveal" style="margin-top:18px">
-        <div class="card-subtitle" style="margin-bottom:4px">Bitácora de cambios · julio–septiembre 2026</div>
+        <div class="card-kicker" style="margin-bottom:4px">Bitácora de cambios · julio–septiembre 2026</div>
         <div style="font-size:12px;color:var(--muted-2);margin-bottom:16px">
           Qué se tocó en la cuenta y qué efecto esperar en las series de arriba. Los quiebres de tendencia se leen acá antes de interpretarlos como cambios de mercado.
         </div>
@@ -1855,7 +1853,7 @@
 
       <!-- Gráfico gasto por campaña -->
       <div class="card card-reveal" style="margin-top:14px">
-        <div class="card-subtitle" id="anuncios-chart-sub">Gasto por campaña · Top 10 · ene–jul 2026 (ARS)</div>
+        <div class="card-kicker" id="anuncios-chart-sub">Gasto por campaña · Top 10 · ene–jul 2026 (ARS)</div>
         <div class="chart-wrap-tall"><canvas id="chart-anuncios" aria-label="Gasto por campaña"></canvas></div>
       </div>
 
@@ -1893,14 +1891,14 @@
 
       <!-- Gráfico funnel visual -->
       <div class="card card-reveal" style="margin-top:14px">
-        <div class="card-subtitle" style="margin-bottom:10px">Embudo de conversión · <span id="funnel-chart-period">YTD 2026</span></div>
+        <div class="card-kicker" style="margin-bottom:10px">Embudo de conversión · <span id="funnel-chart-period">YTD 2026</span></div>
         <div class="chart-wrap"><canvas id="chart-funnel" aria-label="Embudo de conversión"></canvas></div>
       </div>
 
       <div class="two-col">
         <!-- Inputs -->
         <div class="card card-reveal">
-          <div class="card-subtitle">Ingresar datos</div>
+          <div class="card-kicker">Ingresar datos</div>
           <div class="field-inputs-stack">
             <div class="field-group">
               <label class="field-label" for="ons-nuevas">ONs nuevas del período</label>
@@ -1937,7 +1935,7 @@
 
         <!-- Rates -->
         <div class="card card-reveal">
-          <div class="card-subtitle">Tasas calculadas</div>
+          <div class="card-kicker">Tasas calculadas</div>
           <div class="rates-grid">
             <div class="rate-card">
               <div class="rate-label">Alcance → Contacto</div>
@@ -2016,11 +2014,11 @@
       <!-- Gráficos origen y evolución mensual -->
       <div class="chart-half card-reveal">
         <div class="card">
-          <div class="card-subtitle">Por origen · YTD 103 ONs</div>
+          <div class="card-kicker">Por origen · YTD 103 ONs</div>
           <div class="chart-wrap"><canvas id="chart-ons-origen" aria-label="ONs por origen"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-subtitle">Por mes · 2026</div>
+          <div class="card-kicker">Por mes · 2026</div>
           <div class="chart-wrap"><canvas id="chart-ons-mes" aria-label="ONs por mes"></canvas></div>
         </div>
       </div>
@@ -2704,7 +2702,7 @@
 
       <!-- Gráfico concretadas por mes -->
       <div class="card card-reveal" style="margin-top:14px">
-        <div class="card-subtitle">Concretadas y monto por mes · 2026</div>
+        <div class="card-kicker">Concretadas y monto por mes · 2026</div>
         <div class="chart-wrap"><canvas id="chart-concretadas" aria-label="Concretadas por mes"></canvas></div>
       </div>
 
