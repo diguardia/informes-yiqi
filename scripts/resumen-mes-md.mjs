@@ -75,7 +75,6 @@ const FUENTES = {
       '`claude/Lanzamiento-app-Tiendanube-ago2026.md` (21/08) y `claude/Checklist-homologacion-TN-appID185.md` (19/08).',
       'WORK/CAMPAÑA/Tiendanube: diagrama de integración (mmd/svg/png/html), Capturas-ficha-Tiendanube, `Lanzamiento_Tiendanube_2026-08.pdf`.',
       '`claude/Auditoria-paginas-partners-ago2026.md` (12/08).',
-      'Peipe pendiente: confirmado por Seba el 11/09. La grilla de Planificación decía "S2S / Peipe: a la espera de respuesta" y eso ya no aplica a los otros tres.',
     ],
     'Marketplace e iA Ready': [
       'Analytics Pro: `claude/Brief-capturas-Analytics-Pro.md` (06/08), `Capturas-Analytics-Pro-ago2026.md` (13/08), `Campana-Analytics-Pro-ago2026.md` (25/08), `Guion-locucion-Analytics-Pro-iAready-ago2026.md` (28/08).',

@@ -1054,6 +1054,19 @@
       /* Resumen del mes: acento violeta, no cyan, para que se lea como
          otra pieza —el informe mensual— y no como una sección
          más del tablero. Solo tokens del DS. */
+    /* Bitacora y tablas crecen sin techo: se muestra lo ultimo y el resto
+       queda detras de un boton. No se usa <details> porque sus hijos se
+       siguen pintando con los estilos del informe. */
+    .col-oculto { display: none !important; }
+    .ver-mas {
+      display: block; margin: 14px 0 0; padding: 6px 0;
+      background: none; border: 0; cursor: pointer;
+      font: 500 11px var(--mono); color: var(--cyan);
+    }
+    .ver-mas::before { content: "▸ "; }
+    .ver-mas[aria-expanded="true"]::before { content: "▾ "; }
+    .ver-mas:hover { color: var(--text); }
+
       /* Espaciado: una sola escala de 4 —4, 8, 12, 16, 20, 24, 28— y una
          regla, que el espacio dentro de un grupo sea siempre menor que el
          que lo separa del grupo de al lado. Antes convivian once valores
@@ -1178,17 +1191,17 @@
           { l: 'Presencia digital',       v: '5,4 → 7,0', d: 'sobre 10 · 05/08 → 08/09, mismo instrumento' },
         ],
         claves: [
-          'Se escaló lo que funcionaba: con el gasto duplicado, la campaña de Mensajes IG bajó el costo por conversación de $952 a $680. En el total de la cuenta fueron $1.617, porque incluye las campañas de clics.',
+          'El gasto de la cuenta se duplicó respecto de julio y la campaña de Mensajes IG bajó su costo por conversación de $952 a $680. El promedio de la cuenta fue $1.617, porque incluye las campañas de clics, que no buscan conversaciones.',
           'Se lanzó la app de Tiendanube y quedó armado el circuito de landings por lead para la campaña en frío.',
-          'El sitio no convierte: 2.839 sesiones, 1,46 páginas y 37 segundos activos por sesión, y un solo formulario enviado. Lo que convierte son los mensajes, y el 69 % del tráfico llega desde Instagram.',
+          'El sitio no convierte: 2.839 sesiones, 1,46 páginas y 37 segundos activos por sesión, y un solo formulario enviado. Lo que convierte son los mensajes, y el 69 % del tráfico llega desde Instagram. El puntaje de Conversión subió de 3 a 6 porque mide la instrumentación —píxel, CTAs, precotizador—, no los resultados.',
         ],
         frentes: [
           { n: 'Pauta', href: '#resumen', items: [
-            { t: 'Pausadas cinco placas caras o sin entrega (10–11/08)', href: '#resumen' },
+            { t: 'Pausadas cinco placas caras o sin entrega (10–11/08)' },
             { t: 'Píxel instrumentado: PageView, ViewContent, InitiateCheckout, Lead' },
             { t: 'Presupuestos: Mensajes IG $6.000 → $7.200 · Vender más $4.000 → $3.000' },
             { t: 'Carrusel «Costo real» al aire (18/08)', href: '#anuncios' },
-            { t: 'Retargeting reactivado (11/08) y pausado (18/08)' },
+            { t: 'Retargeting reactivado el 11/08 y pausado el 18/08: el clic bajó a $156,69, pero de 93 clics solo 20 cargaron la página, así que la visita costó $806,98 contra $128,70 de Costos', href: '#resumen' },
             { t: 'Preguntas frecuentes y saludo automático de Instagram reescritos' },
           ]},
           { n: 'Piezas', c: '52', items: [
@@ -1205,7 +1218,7 @@
             { t: 'Prompt de landing de captación (21/08)' },
           ]},
           { n: 'Sitio', c: '34', href: 'https://www.yiqi.com.ar', items: [
-            { t: '34 páginas trabajadas: home, iA Ready, Marketplace y ficha de app, precotizador, seis partners, Tiendanube y su app, Shopify, ayuda, novedades, FAQ, capacitaciones, contacto, acerca de, panel y mobile del ERP en claro y oscuro, API', href: 'https://www.yiqi.com.ar' },
+            { t: '34 páginas trabajadas: home, iA Ready, Marketplace y ficha de app, precotizador, seis partners, Tiendanube y su app, Shopify, ayuda, novedades, FAQ, capacitaciones, contacto, acerca de, panel y mobile del ERP en claro y oscuro, API' },
             { t: 'Precotizador: wizard de cinco pasos, instrumentado con el píxel (11/08) y sumado al sitemap (14/08)', href: 'https://www.yiqi.com.ar/precotizador.html' },
             { t: 'Diagnóstico de presencia digital 5,4 → 7,0: Sitio web 5 → 8, Presencia en búsqueda 4 → 8, Conversión 3 → 6, Medición 5 → 6, Marca 7 → 8; Contenido 8 → 7 por el CTR' },
             { t: 'Rediagnóstico y plan de mejoras (14/08); auditoría SEO, inventario de CTAs, informe de peso de la home' },
@@ -1232,7 +1245,6 @@
             { t: 'App de Tiendanube lanzada (21/08) · checklist de homologación appID 185' },
             { t: 'Diagrama de integración, 5 capturas de ficha, PDF de lanzamiento' },
             { t: 'Auditoría de las páginas de partners' },
-            { t: 'Peipe queda pendiente' },
           ]},
           { n: 'Marketplace e iA Ready', href: '#iaready', items: [
             { t: 'Campaña Analytics Pro: brief, capturas, guion de locución, campaña' },
@@ -1414,10 +1426,12 @@
       const d = RESUMEN_MES[key];
       if (!d) return '';
       const L = [];
-      /* Los href relativos se resuelven contra la pagina, no se concatenan:
-         'YiQi_Informe_...html' pegado a location.pathname daba
-         'comercial.htmlYiQi_Informe_...html'. */
-      const abs = h => !h ? '' : (h.startsWith('#') ? location.href.split('#')[0] + h : new URL(h, location.href).href);
+      /* Los relativos se resuelven contra la URL publica, nunca contra
+         location: el informe se abre muchas veces como archivo local y
+         entonces los enlaces salian en file:///Users/... — solo abrian en
+         esa maquina. El texto copiado es para compartir. */
+      const BASE = 'https://informes.yiqi.com.ar/comercial.html';
+      const abs = h => !h ? '' : (h.startsWith('#') ? BASE + h : new URL(h, BASE).href);
       L.push(`# YiQi · Resumen del mes — ${MES_NOMBRE[key] || key} 2026`);
       L.push('');
       L.push('## El mes en números');
@@ -1438,7 +1452,7 @@
       L.push(''); L.push('## Qué sigue');
       d.sigue.forEach((x, i) => L.push(`${i + 1}. ${x}`));
       L.push('');
-      L.push(`Fuente: ${location.origin}${location.pathname}#mes · generado ${new Date().toLocaleDateString('es-AR')}`);
+      L.push(`Fuente: ${BASE}#mes · generado ${new Date().toLocaleDateString('es-AR')}`);
       return L.join('\n');
     }
 
@@ -1679,6 +1693,7 @@
 
         <div style="display:flex;flex-direction:column;gap:14px">
 
+          <div id="bitacora-viejos" class="col-oculto" style="display:flex;flex-direction:column;gap:14px">
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">22 jul</div>
             <div>
@@ -1686,7 +1701,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">El conjunto se creó con las treinta y una ubicaciones y a las 12:18 se restringió a cuatro de Instagram. Nunca se revirtió. <strong style="color:var(--text)">Consecuencia:</strong> es la causa del CPM de $5.164 que arrastró todo lo que vino después, y el motivo por el que el conjunto nuevo del 07/09 nace con las ubicaciones abiertas.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">10 ago</div>
             <div>
@@ -1694,7 +1708,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Gastaba $33.761 en 30 días a $416,81 el clic, contra $42–62 del resto. El diagnóstico inicial —que iba a público frío— resultó falso: la segmentación ya apuntaba a la audiencia de visitantes web. El problema real era el tamaño de esa audiencia.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">11 ago</div>
             <div>
@@ -1702,7 +1715,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Costos·margen, Costos·horas, Costos·planilla precios y Vender más·canales gastaron entre $98 y $293 en siete días. Nunca salieron de aprendizaje. <strong style="color:var(--text)">Efecto esperado:</strong> la tasa agregada de carga de página sube por composición, no por mejora de la landing — el Reel llega al 47,1 % y las placas al 27,7 %.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">11 ago</div>
             <div>
@@ -1710,7 +1722,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Se sumó «Interactuó con la página de Facebook · 365 d» a la audiencia de visitantes web: de 2.100–2.400 a 3.600–4.100 personas, con el mismo presupuesto de $2.000/día. La frecuencia mensual baja de zona de quemado a unas 3,8. <strong style="color:var(--text)">Efecto esperado:</strong> el costo por clic cae desde $416,81. Si no cae, el problema es la pieza y no la audiencia. El conjunto vuelve a aprendizaje, así que no se lee antes de siete días.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">11 ago</div>
             <div>
@@ -1718,7 +1729,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">El píxel no registraba el evento Lead: las ONs que entraban eran bots que hacen POST directo al endpoint, sin navegador y por lo tanto sin píxel. Se instrumentó el precotizador con PageView, ViewContent, InitiateCheckout y Lead. <strong style="color:var(--text)">Consecuencia para leer este informe:</strong> el conteo de Lead del píxel es una medida más honesta de conversión humana que el conteo de ONs del CRM.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">11 ago</div>
             <div>
@@ -1726,8 +1736,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Reescritos para que toda respuesta termine en una pregunta. <strong style="color:var(--text)">Efecto esperado:</strong> sube la proporción de conversaciones que pasan del primer mensaje. No hay línea de base previa, así que la primera semana es la medición cero.</div>
             </div>
           </div>
-
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">18 ago</div>
             <div>
@@ -1742,6 +1750,8 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Vender más pasa de $4.000 a $3.000 y Mensajes IG sube $1.200; los $2.000 del retargeting pausado no se reasignaron enteros. <strong style="color:var(--text)">Cómo leerlo:</strong> se liberó más de lo que se reasignó, así que la caída de volumen de Vender más desde esa fecha es de presupuesto, no de rendimiento — su costo por clic se mantuvo en el orden de los $77.</div>
             </div>
           </div>
+          </div>
+          <button type="button" class="ver-mas" aria-expanded="false" onclick="verMas(this,'bitacora-viejos')" data-mas="Ver los 8 asientos anteriores · 22 jul – 18 ago" data-menos="Ocultar los asientos anteriores">Ver los 8 asientos anteriores · 22 jul – 18 ago</button>
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">18 ago</div>
             <div>
@@ -1756,7 +1766,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Campaña de publicación promocionada, apagada el mismo día que se reacomodaron los presupuestos.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">18 ago</div>
             <div>
@@ -1764,7 +1773,6 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">En tres semanas entregó 38 impresiones y gastó $407. Comparte conjunto con la placa «Fuente de la verdad», que lleva un mes y medio de aprendizaje, y Meta le da a ella todo el presupuesto. <strong style="color:var(--text)">Cómo leerlo:</strong> el carrusel no tiene datos porque no tuvo entrega, no porque no funcione.</div>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">7 sep</div>
             <div>
@@ -1772,7 +1780,7 @@
               <div style="font-size:12px;color:var(--muted-2);line-height:1.6">$1.550 diarios, objetivo Respuestas, puja automática. Público: visitantes web 180 d, más quienes interactuaron con la página 365 d o le escribieron 365 d. Advantage+ desactivado, y —a diferencia de Costos y Vender más, que corren en cuatro— <strong style="color:var(--text)">con las veintitrés ubicaciones abiertas</strong>. <strong style="color:var(--text)">Cómo leerlo:</strong> al 10/09 llevaba tres días y $2.708,85 por conversación. Se decide a los siete días, y la comparación con el retargeting de agosto no es directa: cambió el objetivo.</div>
             </div>
           </div>
-        </div>
+</div>
 
         <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted-2);line-height:1.6">
           <strong style="color:var(--text)">Pendiente.</strong> El relevamiento por API del 10/09 mostró que tres de los cuatro conjuntos no tienen segmentación —solo país y edad— y que Costos y Vender más corren en cuatro de veinte ubicaciones, solo Instagram. Segmentar y abrir ubicaciones es la acción de mayor impacto y no cuesta plata. Conversions API: sin señal de servidor el píxel sigue perdiendo gente. El token de Meta vence el 24/09 y conviene reemplazarlo por uno de usuario del sistema, que no caduca. Los conjuntos Costos y Vender más quedaron con un solo creativo cada uno: cuando se fatigue no hay con qué rotar. Y hay un anuncio en estado <em>WITH_ISSUES</em> que o se revisa o se archiva.
@@ -3674,6 +3682,7 @@ function sortTable(tableId, colIdx) {
     return isAsc ? bText.localeCompare(aText, 'es') : aText.localeCompare(bText, 'es');
   });
   rows.forEach(r => tbody.appendChild(r));
+  if (tbody.closest('table')?.dataset.limite) aplicarCorte(tbody.closest('table').id);
 }
 
 /* ─── PLANIFICACIÓN · carga desde Google Sheets ─────────────────
@@ -3905,7 +3914,9 @@ function loadAppsCatalogo() {
       /* El nombre abre la ficha publica de la app: app.html?id=<id>, el
          mismo enlace que arma app-banner.js en el sitio. */
       + '<td><a href="https://www.yiqi.com.ar/app.html?id=' + encodeURIComponent(a.id) + '" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;border-bottom:1px solid var(--line)">' + _iaEsc(a.name) + '</a></td>'
-      + '<td>' + _iaEsc(a.stateLabel || '') + '</td>'
+      /* Estado con el badge del DS y los colores de la web: en
+         www.yiqi/apps-grid.css live es verde, dev ambar y homolog cyan. */
+      + '<td><span class="badge ' + ({ live: 'badge-green', dev: 'badge-amber', homolog: 'badge-cyan', soon: 'badge-blue' }[a.state] || 'badge-muted') + '">' + _iaEsc(a.stateLabel || '') + '</span></td>'
       + '<td>' + _iaEsc(a.cat || '') + '</td>'
       + '<td>' + _iaEsc(a.prov || '') + '</td>'
       + '<td style="font-family:var(--mono);font-size:12px">' + _iaEsc(version(a)) + '</td>'
@@ -4015,6 +4026,13 @@ function setupSearch(inputId, tableId, emptyId) {
     });
     const empty = document.getElementById(emptyId);
     if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+    /* Buscando se ve todo lo que coincide; al vaciar vuelve el corte. */
+    const t = document.getElementById(tableId);
+    if (t && t.dataset.limite) {
+      const btn = t.closest('.card')?.querySelector('.ver-mas');
+      t.dataset.corte = q ? '0' : (btn?.getAttribute('aria-expanded') === 'true' ? '0' : t.dataset.limite);
+      aplicarCorte(tableId);
+    }
   };
 
   const sync = () => {
@@ -4030,6 +4048,59 @@ function setupSearch(inputId, tableId, emptyId) {
     input.value = ''; sync(); input.focus();
   });
 }
+
+/* Muestra u oculta un bloque, o el resto de las filas de una tabla. En
+   tablas el corte se guarda en data-corte: buscar y ordenar lo respetan
+   mientras no haya texto en el buscador. */
+function verMas(btn, id) {
+  const abierto = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!abierto));
+  btn.textContent = abierto ? btn.dataset.mas : btn.dataset.menos;
+  const el = document.getElementById(id);
+  if (el && !el.tagName.match(/^TABLE$/)) { el.classList.toggle('col-oculto', abierto); return; }
+  if (el) { el.dataset.corte = abierto ? el.dataset.limite : '0'; aplicarCorte(id); }
+}
+
+/* corte = cuantas filas se muestran; 0 es sin corte. */
+function aplicarCorte(tableId) {
+  const t = document.getElementById(tableId);
+  if (!t) return;
+  const corte = parseInt(t.dataset.corte || '0', 10);
+  let n = 0;
+  t.querySelectorAll('tbody tr').forEach(r => {
+    if (r.dataset.periodHide === '1' || r.style.display === 'none') { r.classList.remove('col-oculto'); return; }
+    n++;
+    r.classList.toggle('col-oculto', corte > 0 && n > corte);
+  });
+}
+
+/* Instala el corte en una tabla y le pone su boton debajo. Se vuelve a
+   llamar cuando la tabla se repuebla —Anuncios se rearma con cada
+   periodo— para que el total del boton siga siendo cierto. */
+const CORTES = { 'tabla-anuncios': 8, 'tabla-nuevas': 12, 'tabla-concretadas': 10 };
+function instalarCorte(id) {
+  const t = document.getElementById(id);
+  const lim = CORTES[id];
+  if (!t || !lim) return;
+  const total = t.querySelectorAll('tbody tr').length;
+  const card = t.closest('.card');
+  let b = card?.querySelector('.ver-mas');
+  if (total <= lim) { delete t.dataset.limite; delete t.dataset.corte; b?.remove(); return; }
+  const abierto = b?.getAttribute('aria-expanded') === 'true';
+  t.dataset.limite = lim; t.dataset.corte = abierto ? '0' : String(lim);
+  aplicarCorte(id);
+  if (!b) {
+    b = document.createElement('button');
+    b.type = 'button'; b.className = 'ver-mas';
+    b.onclick = () => verMas(b, id);
+    t.closest('.table-wrap')?.after(b);
+  }
+  b.setAttribute('aria-expanded', String(abierto));
+  b.dataset.mas = `Ver las ${total} filas`;
+  b.dataset.menos = `Ver solo las primeras ${lim}`;
+  b.textContent = abierto ? b.dataset.menos : b.dataset.mas;
+}
+Object.keys(CORTES).forEach(instalarCorte);
 
 /* ─── COMMAND+K · enfocar buscador de la sección visible ─── */
 function initSearchShortcut() {
@@ -4457,6 +4528,7 @@ function renderAnunciosTable() {
   // Re-aplicar búsqueda activa sobre las filas nuevas
   const inp = document.getElementById('search-anuncios');
   if (inp && inp.value) inp.dispatchEvent(new Event('input'));
+  if (typeof instalarCorte === 'function') instalarCorte('tabla-anuncios');
 }
 
 function renderAnunciosChart() {
