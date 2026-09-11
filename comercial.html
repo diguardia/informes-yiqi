@@ -353,10 +353,8 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 12px; margin-bottom: 4px;
     }
-    .kpi-card {
-      padding: 16px 18px; border-radius: var(--radius-lg);
+    .kpi-card { border-radius: var(--radius-lg);
       border: none;
-      display: flex; flex-direction: column; gap: 5px;
     }
     .kpi-cyan  {
       background: var(--cyan-soft);
@@ -383,18 +381,16 @@
        la escala: el informe apila muchas tarjetas por fila y la cifra
        canonica —clamp(32px, 2.2vw, 42px)— no entra. El tamano se declara
        aparte; familia, peso, color y tracking quedan los del sistema. */
-    .kpi-value { font-size: 22px; }
+    .kpi-value { }
     .kpi-delta.positive { color: var(--green); }
     .kpi-delta.negative { color: var(--red); }
     .kpi-delta.neutral  { color: var(--muted-2); }
 
     /* ── BORDERLESS CARDS ────────────────────────────────────── */
     .card {
-      background: var(--bg-elev);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-sm);
       border: none;
-      padding: 22px 24px;
     }
     .card:hover {
       box-shadow: var(--shadow-md);
@@ -405,9 +401,9 @@
        600 11px var(--mono) y pisaba al canonico, asi que el cambio a
        Plus Jakarta de la v1.2.8.38 no llegaba al informe. */
     .badge-cyan  { color: var(--cyan);  background: var(--cyan-soft); }
-    .badge-green { color: var(--green); background: var(--green-soft); }
-    .badge-amber { color: var(--amber); background: var(--amber-soft); }
-    .badge-red   { color: var(--red);   background: var(--red-soft); }
+    .badge-green { color: var(--green); }
+    .badge-amber { color: var(--amber); }
+    .badge-red   { color: var(--red); }
     .badge-muted { color: var(--muted); background: var(--bg-soft); border-color: transparent; }
 
     /* ── TABLE ───────────────────────────────────────────────── */
@@ -676,9 +672,9 @@
          y sin esto la grilla desborda el viewport en vez de recortarlo. */
       .kpi-card { padding: 10px 12px; gap: 4px; min-width: 0; }
       .kpi-value { font-size: 19px; text-align: left; }
-      .kpi-label { font-size: 8.5px; }
-      .kpi-delta { padding: 0; background: none; font-size: 9.5px;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+      .kpi-label { }
+      .kpi-delta { font-size: 9.5px;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .chart-wrap { height: 190px; }
       .chart-wrap-tall { height: 200px; }
       .chart-wrap-meta { height: 180px; }
@@ -2058,25 +2054,25 @@
               <tr style="background:var(--cyan-soft)">
                 <td data-num="20260907a"><span class="num">07/09/2026</span> <span style="font:400 11px var(--mono);color:var(--muted-2)">16:50</span></td>
                 <td><span class="badge badge-green">Web</span></td>
-                <td><strong>Franco Demoli</strong> <span class="badge badge-cyan" style="margin-left:4px">● Sep</span></td>
+                <td><strong>Franco Demoli</strong> <span class="badge badge-cyan" style="margin-left:4px">Sep</span></td>
                 <td style="color:var(--muted);font-size:12px">YiQi ERP - Franco Demoli</td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td data-num="20260907b"><span class="num">07/09/2026</span> <span style="font:400 11px var(--mono);color:var(--muted-2)">15:18</span></td>
                 <td><span class="badge badge-amber">Recom.</span></td>
-                <td><strong>Transportes Bessone</strong> <span class="badge badge-cyan" style="margin-left:4px">● Sep</span></td>
+                <td><strong>Transportes Bessone</strong> <span class="badge badge-cyan" style="margin-left:4px">Sep</span></td>
                 <td style="color:var(--muted);font-size:12px">YiQi ERP - Transportes Bessone</td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td data-num="20260904a"><span class="num">04/09/2026</span> <span style="font:400 11px var(--mono);color:var(--muted-2)">15:04</span></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Sep</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Sep</span></td>
                 <td style="color:var(--muted);font-size:12px">YiQi ERP - Ticket - 35398 CentroDeDistribuciónSur</td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td data-num="20260903a"><span class="num">03/09/2026</span> <span style="font:400 11px var(--mono);color:var(--muted-2)">15:47</span></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td><strong>Espacio Marketing</strong> <span class="badge badge-cyan" style="margin-left:4px">● Sep</span></td>
+                <td><strong>Espacio Marketing</strong> <span class="badge badge-cyan" style="margin-left:4px">Sep</span></td>
                 <td style="color:var(--muted);font-size:12px">YiQi ERP - Provincia Compras</td>
               </tr>
               <tr>
@@ -2741,91 +2737,91 @@
             <tbody>
               <!-- 2026 YTD: 29 concretadas · jul–ago resaltadas ─ -->
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="276120.0"><span class="num">$276.120,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260820a"><span class="num">20/08/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="319449.6"><span class="num">$319.449,60</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260820b"><span class="num">20/08/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Silvestre Blousson</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Silvestre Blousson</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="7928512.5"><span class="num">$7.928.512,50</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260807a"><span class="num">07/08/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>LATCAU S.A.</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>LATCAU S.A.</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="360279.36"><span class="num">$360.279,36</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260730a"><span class="num">30/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Espacio Marketing</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Espacio Marketing</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="1305000.0"><span class="num">$1.305.000,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260723a"><span class="num">23/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Tienda Shopealo TradeBox SRL</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Tienda Shopealo TradeBox SRL</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="968660.0"><span class="num">$968.660,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260721a"><span class="num">21/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="419890.8"><span class="num">$419.890,80</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260716a"><span class="num">16/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="290080.0"><span class="num">$290.080,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260716b"><span class="num">16/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="1125000.0"><span class="num">$1.125.000,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260708a"><span class="num">08/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="580160.0"><span class="num">$580.160,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260708b"><span class="num">08/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
                 <td data-num="290080.0"><span class="num">$290.080,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260708c"><span class="num">08/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>LATCAU S.A.</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>LATCAU S.A.</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
                 <td data-num="435120.0"><span class="num">$435.120,00</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260706a"><span class="num">06/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
-                <td><strong>Tienda Shopealo TradeBox SRL</strong> <span class="badge badge-cyan" style="margin-left:4px">● Jul–ago</span></td>
+                <td><strong>Tienda Shopealo TradeBox SRL</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
                 <td data-num="560593.47"><span class="num">$560.593,47</span></td>
                 <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
