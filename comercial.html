@@ -334,10 +334,17 @@
     }
 
     /* ── KPI CARDS ───────────────────────────────────────────── */
-    .kpi-grid {
-      display: grid;
+    .kpi-grid { margin-bottom: 4px; }
+    /* El informe muestra filas de 4 y 5 cifras; el canonico del DS es
+       auto-fill con techo de 320px, pensado para paneles de 3 o 4. Medido
+       a 1440: con el canonico esas cuatro filas pasan de 1 a 2 renglones
+       con el ultimo desparejo. La densidad no se arregla pisando la regla
+       base —eso deja al informe sordo a los cambios del DS—: se declara
+       como variante, igual que .kpi-grid-auto.
+       Candidata a subir al DS junto con ella. */
+    .kpi-grid-densa {
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px; margin-bottom: 4px;
+      justify-content: stretch;
     }
     .kpi-card { border-radius: var(--radius-lg);
       border: none;
@@ -683,7 +690,8 @@
       .period-meta .period-info[title] { display: none; }
       .period-meta .topbar-divider { display: none; }
 
-      .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .kpi-grid-densa { grid-template-columns: 1fr 1fr; }
+      .kpi-grid { gap: 10px; }
       .kpi-card { padding: 12px 12px 13px; }
       .kpi-label { font-size: 9px; letter-spacing: .05em; }
       .kpi-value { font-size: 22px; margin-top: 4px; }
@@ -814,7 +822,7 @@
       .rates-grid  { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 460px) {
-      .kpi-grid   { grid-template-columns: 1fr 1fr; }
+      .kpi-grid-densa { grid-template-columns: 1fr 1fr; }
       .rates-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -1019,7 +1027,11 @@
        siguen pintando con los estilos del informe. */
     .col-oculto { display: none !important; }
     /* .btn .btn-ghost del DS; lo propio es solo el marcador de estado. */
-    .ver-mas { margin-top: 14px; }
+    /* .btn del DS no parte linea, y con razon: un boton de accion corto
+       no debe hacerlo. Este rotula lo que va a mostrar —"Ver los 8 asientos
+       anteriores · 22 jul – 18 ago"— y a 390px se salia 40px de la card.
+       El permiso de partir vive en la clase local, no en .btn. */
+    .ver-mas { margin-top: 14px; white-space: normal; text-align: left; }
     .ver-mas::before { content: "▸"; margin-right: 6px; }
     .ver-mas[aria-expanded="true"]::before { content: "▾"; }
 
@@ -1657,7 +1669,7 @@
       <div class="section-title">Resumen Meta</div>
       <div class="section-sub" id="resumen-period">1 ene – 13 jul 2026 · Instagram · variación intermensual</div>
 
-      <div class="kpi-grid" id="resumen-kpis">
+      <div class="kpi-grid kpi-grid-densa" id="resumen-kpis">
         <div class="kpi-card card-reveal" id="kpi-alcance">
           <div class="kpi-label">Alcance</div>
           <div class="kpi-value" id="v-alcance">355.258</div>
@@ -1855,7 +1867,7 @@
       <div class="section-sub" id="funnel-period-sub">Alcance, clics y conversaciones salen de Meta; ONs y concretadas, del CRM · seleccioná un período</div>
 
       <!-- KPI ONs por estado -->
-      <div class="kpi-grid" style="margin-bottom:18px">
+      <div class="kpi-grid kpi-grid-densa" style="margin-bottom:18px">
         <div class="kpi-card kpi-muted card-reveal">
           <div class="kpi-label">ONs nuevas</div>
           <div class="kpi-value" id="cotiz-v-ons">103</div>
@@ -1972,7 +1984,7 @@
       <div class="section-title">Nuevas ONs — Detalle</div>
       <div class="section-sub" id="nuevas-sub">Oportunidades de Negocio creadas en el CRM · 103 ONs YTD 2026 · ene–sep, al 07/09 · clic en columna para ordenar</div>
 
-      <div class="kpi-grid" style="margin-bottom:18px">
+      <div class="kpi-grid kpi-grid-densa" style="margin-bottom:18px">
         <div class="kpi-card kpi-cyan card-reveal">
           <div class="kpi-label">Total ONs YTD 2026</div>
           <div class="kpi-value">103</div>
@@ -2666,7 +2678,7 @@
       <div class="section-title">ONs Concretadas — Detalle</div>
       <div class="section-sub" id="concretadas-sub">Oportunidades concretadas en 2026 · 29 registros · al 07/09, última el 20/08 · clic en columna para ordenar</div>
 
-      <div class="kpi-grid" style="margin-bottom:18px">
+      <div class="kpi-grid kpi-grid-densa" style="margin-bottom:18px">
         <div class="kpi-card kpi-green card-reveal">
           <div class="kpi-label">Total concretadas YTD</div>
           <div class="kpi-value">29</div>
