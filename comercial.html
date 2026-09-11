@@ -1058,14 +1058,10 @@
        queda detras de un boton. No se usa <details> porque sus hijos se
        siguen pintando con los estilos del informe. */
     .col-oculto { display: none !important; }
-    .ver-mas {
-      display: block; margin: 14px 0 0; padding: 6px 0;
-      background: none; border: 0; cursor: pointer;
-      font: 500 11px var(--mono); color: var(--cyan);
-    }
-    .ver-mas::before { content: "▸ "; }
-    .ver-mas[aria-expanded="true"]::before { content: "▾ "; }
-    .ver-mas:hover { color: var(--text); }
+    /* .btn .btn-ghost del DS; lo propio es solo el marcador de estado. */
+    .ver-mas { margin-top: 14px; }
+    .ver-mas::before { content: "▸"; margin-right: 6px; }
+    .ver-mas[aria-expanded="true"]::before { content: "▾"; }
 
       /* Espaciado: una sola escala de 4 —4, 8, 12, 16, 20, 24, 28— y una
          regla, que el espacio dentro de un grupo sea siempre menor que el
@@ -1093,22 +1089,16 @@
       /* Tres bolsillos: las cifras, los tres graficos, y la letra chica.
          Dentro de cada uno el espacio es menor que entre ellos. */
       #mes .mes-frente-wide { padding:var(--s5) var(--s7); }
-      #mes .mes-cl-sub { font:400 12px var(--sans); color:var(--muted-2); line-height:1.6; margin-top:calc(var(--s1) * -1); }
-      #mes .mes-cl-stats { display:flex; flex-wrap:wrap; gap:var(--s1) var(--s7); margin:var(--s4) 0 var(--s6); }
-      #mes .mes-cl-stats div { display:flex; flex-direction:column; gap:var(--s1); }
-      #mes .mes-cl-stats b { font:500 22px var(--display); color:var(--text); letter-spacing:-.02em; line-height:1; }
-      #mes .mes-cl-stats span { font:400 11px var(--mono); color:var(--muted-2); }
+      /* Solo layout: lo visual sale de .ds-note, .kpi-card, .card-subtitle,
+         .donut-block, .legend-row y .chart-wrap, que ya son canonicos. */
+      #mes .mes-cl-stats { margin:var(--s4) 0 var(--s6); }
       #mes .mes-cl-charts { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:var(--s6); }
-      @media (max-width: 760px) { #mes .mes-cl-charts { grid-template-columns: 1fr; } }
-      #mes .mes-cl-t { font:600 11px var(--mono); letter-spacing:.04em; text-transform:uppercase; color:var(--mes-acc); margin-bottom:var(--s3); }
-      #mes .mes-cl-canvas { height:180px; min-width:0; }
-      #mes .mes-cl-donut { display:grid; grid-template-columns: 150px 1fr; gap:var(--s3); align-items:center; }
-      #mes .mes-cl-leg { display:grid; gap:var(--s1); min-width:0; justify-items:start; }
-      #mes .mes-cl-leg div { display:grid; grid-template-columns: 9px auto auto; gap:var(--s2); align-items:center; }
-      #mes .mes-cl-leg i { width:9px; height:9px; border-radius:50%; }
-      #mes .mes-cl-leg span { font:400 11px var(--sans); color:var(--muted-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-      #mes .mes-cl-leg b { font:600 11px var(--mono); color:var(--text); padding-left:var(--s1); }
-      #mes .mes-cl-pie { margin-top:var(--s6); padding-top:var(--s3); border-top:1px solid var(--line); font:400 11px var(--mono); color:var(--muted-2); line-height:1.7; }
+      /* En una columna angosta la barra horizontal queda en cero y solo se
+         leen las etiquetas: los graficos se apilan antes de llegar ahi. */
+      @media (max-width: 900px) { #mes .mes-cl-charts { grid-template-columns: 1fr; } }
+      #mes .card-subtitle { color: var(--mes-acc); }
+      #mes .mes-cl-barras { height:190px; }
+      #mes .mes-cl-pie { margin-top:var(--s6); }
       /* La conclusion es lo primero y lo unico con el texto al maximo: el
          resto de la seccion esta apagado a proposito (el enfasis es de suma
          cero). Separacion mayor entre bloques que dentro de cada uno. */
@@ -1379,22 +1369,23 @@
         if (f.n === CLARITY && d.clarity) {
           return `<div class="card mes-frente mes-frente-wide">
             <div class="mes-frente-h"><span class="mes-t">${mesIco(f.n)}<a>${esc(f.n)}</a></span><span class="mes-frente-n">${esc(f.c ?? f.items.length)}</span></div>
-            <div class="mes-cl-sub">Microsoft Clarity registra cada visita a yiqi.com.ar: de dónde llega, qué páginas abre y cuánto se queda.</div>
-            <div class="mes-cl-stats">${d.clarity.stats.map(([v, l]) => `<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('')}</div>
+            <div class="ds-note">Microsoft Clarity registra cada visita a yiqi.com.ar: de dónde llega, qué páginas abre y cuánto se queda.</div>
+            <div class="kpi-grid kpi-grid-auto mes-cl-stats">${d.clarity.stats.map(([v, l]) => `
+              <div class="kpi-card"><div class="kpi-label">${esc(l)}</div><div class="kpi-value">${esc(v)}</div></div>`).join('')}</div>
             <div class="mes-cl-charts">
-              <div class="mes-cl-g">
-                <div class="mes-cl-t">De dónde llegan</div>
-                <div class="mes-cl-donut">
-                  <div class="mes-cl-canvas"><canvas id="mes-chart-origen" aria-label="Sesiones por origen"></canvas></div>
-                  <div class="mes-cl-leg" id="mes-cl-leg"></div>
+              <div>
+                <div class="card-subtitle">De dónde llegan</div>
+                <div class="donut-block">
+                  <div class="donut-chart"><canvas id="mes-chart-origen" aria-label="Sesiones por origen"></canvas></div>
+                  <div class="donut-legend" id="mes-cl-leg"></div>
                 </div>
               </div>
-              <div class="mes-cl-g">
-                <div class="mes-cl-t">Qué miran</div>
-                <div class="mes-cl-canvas"><canvas id="mes-chart-paginas" aria-label="Páginas más vistas"></canvas></div>
+              <div>
+                <div class="card-subtitle">Qué miran</div>
+                <div class="chart-wrap mes-cl-barras"><canvas id="mes-chart-paginas" aria-label="Páginas más vistas"></canvas></div>
               </div>
             </div>
-            <div class="mes-cl-pie">${esc(d.clarity.pie)}</div>
+            <div class="ds-note mes-cl-pie">${esc(d.clarity.pie)}</div>
           </div>`;
         }
         return `<div class="card mes-frente">
@@ -1510,7 +1501,7 @@
 
       const leg = document.getElementById('mes-cl-leg');
       if (leg) leg.innerHTML = org.map((r, i) =>
-        `<div><i style="background:${escala[i % escala.length]}"></i><span>${r[0]}</span><b>${(r[1] / total * 100).toFixed(0)} %</b></div>`).join('');
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
 
       /* Paginas y acciones comparten forma: barras horizontales, que los
          nombres son largos y en vertical se cortarian. */
@@ -1751,7 +1742,7 @@
             </div>
           </div>
           </div>
-          <button type="button" class="ver-mas" aria-expanded="false" onclick="verMas(this,'bitacora-viejos')" data-mas="Ver los 8 asientos anteriores · 22 jul – 18 ago" data-menos="Ocultar los asientos anteriores">Ver los 8 asientos anteriores · 22 jul – 18 ago</button>
+          <button type="button" class="btn btn-ghost ver-mas" aria-expanded="false" onclick="verMas(this,'bitacora-viejos')" data-mas="Ver los 8 asientos anteriores · 22 jul – 18 ago" data-menos="Ocultar los asientos anteriores">Ver los 8 asientos anteriores · 22 jul – 18 ago</button>
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">18 ago</div>
             <div>
@@ -4091,7 +4082,7 @@ function instalarCorte(id) {
   aplicarCorte(id);
   if (!b) {
     b = document.createElement('button');
-    b.type = 'button'; b.className = 'ver-mas';
+    b.type = 'button'; b.className = 'btn btn-ghost ver-mas';
     b.onclick = () => verMas(b, id);
     t.closest('.table-wrap')?.after(b);
   }
