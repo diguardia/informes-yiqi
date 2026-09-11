@@ -346,9 +346,6 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       justify-content: stretch;
     }
-    .kpi-card { border-radius: var(--radius-lg);
-      border: none;
-    }
     .kpi-cyan  {
       background: var(--cyan-soft);
       box-shadow: var(--shadow-sm);
@@ -374,7 +371,6 @@
        la escala: el informe apila muchas tarjetas por fila y la cifra
        canonica —clamp(32px, 2.2vw, 42px)— no entra. El tamano se declara
        aparte; familia, peso, color y tracking quedan los del sistema. */
-    .kpi-value { }
     .kpi-delta.positive { color: var(--green); }
     .kpi-delta.negative { color: var(--red); }
     .kpi-delta.neutral  { color: var(--muted-2); }
@@ -597,11 +593,9 @@
     }
 
     /* ── ANIMATIONS ──────────────────────────────────────────── */
-    .card-reveal {
-      opacity: 0;
-      transition: opacity .6s cubic-bezier(.22,1,.36,1),
-                  transform .6s cubic-bezier(.22,1,.36,1);
-    }
+    /* opacity y transition salen del DS (.65s). Lo propio es solo el
+       desplazamiento de entrada, que el DS no define. */
+    .card-reveal { opacity: 0; }
     .kpi-card.card-reveal { transform: translateY(14px); }
     .card.card-reveal     { transform: translateY(14px); }
     .card-reveal.visible  { opacity: 1; transform: none; }
@@ -662,7 +656,6 @@
          y sin esto la grilla desborda el viewport en vez de recortarlo. */
       .kpi-card { padding: 10px 12px; gap: 4px; min-width: 0; }
       .kpi-value { font-size: 19px; text-align: left; }
-      .kpi-label { }
       .kpi-delta { font-size: 9.5px;
         white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .chart-wrap { height: 190px; }
