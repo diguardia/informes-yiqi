@@ -52,6 +52,14 @@
        de la escala de capas del sistema. */
     .topbar {
       height: var(--topbar-h);
+      /* El canonico, bajo 980px, convierte la topbar en un grid de tres
+         columnas (1fr auto 1fr) pensado para su propio patron de zonas
+         .topbar-l/.topbar-c/.topbar-r. Este informe no usa ese patron
+         -- tiene brand/actions/theme -- asi que sin este display:flex
+         explicito el grid ganaba igual (la regla local nunca tocaba
+         display) y .topbar-theme quedaba estirado a una columna 1fr con
+         el boton pegado a la izquierda y un hueco muerto a la derecha. */
+      display: flex;
       gap: 12px;
       padding: 0 28px;
       backdrop-filter: blur(16px);
