@@ -90,6 +90,10 @@
       white-space: nowrap; flex-shrink: 0; cursor: pointer; text-decoration: none;
     }
     .topbar-login:hover { color: var(--cyan); background: var(--cyan-soft); }
+    /* Boton "Sitio": solo existe en mobile (ver media query 980px), abre
+       el nav-sheet con los tres links que en desktop viven sueltos en la
+       topbar. En desktop no se ve. */
+    .topbar-sitio-btn { display: none; }
 
     .hamburger {
       display: none; align-items: center; justify-content: center;
@@ -741,7 +745,9 @@
       }
       .ds-bottomnav-item { cursor: pointer; border: 0; background: transparent; font: inherit; }
 
-      .topbar-theme { display: flex; align-items: center; margin-left: auto; }
+      .topbar-nav-link { display: none; }
+      .topbar-sitio-btn { display: inline-flex; }
+      .topbar-theme { display: flex; align-items: center; }
 
       .nav-scrim {
         display: block; position: fixed; inset: 0; z-index: 97;
@@ -851,26 +857,32 @@
     </a>
   </div>
   <div class="topbar-actions">
-    <a class="topbar-login" href="YiQi_Ecosistema.html" target="_blank" rel="noopener" aria-label="Ecosistema YiQi">
+    <a class="topbar-login topbar-nav-link" href="YiQi_Ecosistema.html" target="_blank" rel="noopener" aria-label="Ecosistema YiQi">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/>
         <line x1="6" y1="7" x2="10" y2="10"/><line x1="18" y1="7" x2="14" y2="10"/><line x1="6" y1="17" x2="10" y2="14"/><line x1="18" y1="17" x2="14" y2="14"/>
       </svg>
       Ecosistema
     </a>
-    <a class="topbar-login" href="YiQi_Arbol_del_Sitio.html" target="_blank" rel="noopener" aria-label="Árbol del sitio">
+    <a class="topbar-login topbar-nav-link" href="YiQi_Arbol_del_Sitio.html" target="_blank" rel="noopener" aria-label="Árbol del sitio">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/>
         <path d="M12 7v4M5 17v-3h14v3"/>
       </svg>
       Árbol del sitio
     </a>
-    <a class="topbar-login" href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" aria-label="YiQi Design System">
+    <a class="topbar-login topbar-nav-link" href="https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html" target="_blank" rel="noopener" aria-label="YiQi Design System">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
       </svg>
       Design System
     </a>
+    <button class="topbar-login topbar-sitio-btn" type="button" id="sitio-btn" aria-haspopup="dialog" aria-label="Mas enlaces del sitio">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>
+      </svg>
+      Sitio
+    </button>
     <a class="topbar-login" href="https://me.yiqi.com.ar/" target="_blank" rel="noopener" aria-label="Ingresar a YiQi">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
@@ -4282,6 +4294,24 @@ const NAV_GRUPOS = {
 const SEC_GRUPO = Object.fromEntries(
   Object.entries(NAV_GRUPOS).flatMap(([g,v]) => v.secs.map(([id]) => [id, g])));
 
+/* "Sitio" no es un grupo de NAV_GRUPOS: no tiene secciones que mostrar u
+   ocultar en el informe, son tres paginas externas. Por eso no pasa por
+   navMostrarGrupo ni toca layout.dataset.grupo -- solo reusa el mismo
+   componente de hoja (#nav-sheet) con contenido estatico. */
+const SITIO_LINKS = [
+  ["YiQi_Ecosistema.html", "Ecosistema"],
+  ["YiQi_Arbol_del_Sitio.html", "Árbol del sitio"],
+  ["https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html", "Design System"],
+];
+function sitioAbrir(){
+  const sh = document.getElementById('nav-sheet'), sc = document.getElementById('nav-scrim');
+  document.getElementById('nav-sheet-t').textContent = "Sitio";
+  document.getElementById('nav-sheet-body').innerHTML = SITIO_LINKS.map(([href,label]) =>
+    `<a class="ds-sheet-item" href="${href}" target="_blank" rel="noopener">${label}</a>`).join("");
+  sh.hidden = false; sc.hidden = false;
+  requestAnimationFrame(() => { sh.classList.add('is-open'); sc.classList.add('is-open'); });
+}
+
 const navEsMobile = () => window.matchMedia('(max-width: 980px)').matches;
 
 /* En mobile no se scrollea: se cambia de pantalla. El grupo activo se
@@ -4348,6 +4378,7 @@ function navMarcarActivo(forzado){
 }
 
 document.addEventListener('click', e => {
+  if (e.target.closest('#sitio-btn')) { sitioAbrir(); return; }
   const item = e.target.closest('.ds-bottomnav-item');
   if (item) {
     const g = item.dataset.grupo;
@@ -4359,6 +4390,7 @@ document.addEventListener('click', e => {
   }
   const ir = e.target.closest('[data-ir]');
   if (ir) { navSheetCerrar(); navIrA(ir.dataset.ir); return; }
+  if (e.target.closest('#nav-sheet-body a')) { navSheetCerrar(); return; }
   if (e.target.closest('#nav-scrim')) navSheetCerrar();
 });
 document.addEventListener('keydown', e => {
