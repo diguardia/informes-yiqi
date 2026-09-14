@@ -72,8 +72,8 @@
       const kpis = [
         ['Invertido', crmPesos(RT.gasto), RT.dias + ' días al aire'],
         ['Alcance', crmNum(RT.alcance), 'personas distintas'],
-        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · Costos llega al 50 %'],
-        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de Costos'],
+        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · la campaña «Costos» llega al 50 %'],
+        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de «Costos»'],
       ].map(([l, v, d]) => `
         <div class="kpi-card card-reveal">
           <div class="kpi-label">${esc(l)}</div>
@@ -104,7 +104,7 @@
 
         <div class="card rt-bloque card-reveal">
           <div class="card-kicker">Contra el resto de la cuenta</div>
-          <p class="rt-texto">El costo por clic fue 5,7 veces el de Costos. Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
+          <p class="rt-texto">El costo por clic fue 5,7 veces el de «Costos». Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
           ${barras('cpc', crmPesos, 'Costo por clic', 'Mismo período, mismas cuatro campañas de la cuenta.')}
           ${barras('frec', n => n.toFixed(1).replace('.', ','), 'Frecuencia', 'Cuántas veces vio el anuncio cada persona alcanzada.')}
           ${barras('carga', n => n + ' %', 'De los que hacen clic, cuántos cargan la página', 'Solo las dos campañas con el dato medido.')}

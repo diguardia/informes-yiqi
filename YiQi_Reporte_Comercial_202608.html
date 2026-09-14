@@ -88,6 +88,14 @@ body {
 
    Y con la barra inferior el cajon sobra: dos navegaciones para lo mismo
    es peor que una. */
+/* Solo el sidebar usa la medicion real de la topbar; si el script no
+   llego a correr, cae al token del DS y se comporta como antes. */
+.sidebar {
+  top: var(--topbar-real, var(--topbar-h));
+  height: calc(100vh - var(--topbar-real, var(--topbar-h)) - var(--statusbar-h));
+  overflow-y: auto;
+}
+
 .ds-bottomnav { display: none; }
 @media (max-width: 980px) {
   .ds-bottomnav {
@@ -190,9 +198,10 @@ body {
    y en pantallas angostas ademas envuelve. Cada pixel de diferencia es un
    pixel que el sidebar se mete abajo de la topbar — por eso el primer item
    del menu aparecia cortado al medio.
-   No se toca el DS: se mide la topbar real y se le escribe el token. Se
-   remide al cargar las fuentes y en cada cambio de tamano, porque la
-   tipografia asienta despues del primer layout. */
+   No se toca el DS ni su token: se mide la topbar real, se escribe en
+   --topbar-real y solo el sidebar lo consume. Se remide al cargar las
+   fuentes y en cada cambio de tamano, porque la tipografia asienta
+   despues del primer layout. */
 (function () {
   var tb = document.querySelector('.topbar');
   if (!tb) return;
@@ -201,7 +210,11 @@ body {
     var h = Math.round(tb.getBoundingClientRect().height);
     if (!h || h === ultimo) return;
     ultimo = h;
-    document.documentElement.style.setProperty('--topbar-h', h + 'px');
+    /* Se escribe un token propio, no --topbar-h. Pisar el del DS movia
+       todo lo que depende de el —el cajon movil, la altura de la barra,
+       los calculos del shell— y el sidebar se despegaba al scrollear.
+       --topbar-real lo consume solo la regla del sidebar de abajo. */
+    document.documentElement.style.setProperty('--topbar-real', h + 'px');
   }
   medir();
   addEventListener('load', medir);
@@ -1330,7 +1343,7 @@ _mqTema.addEventListener('change', function () {
        contra la Marketing API. Se embebe el mes y la serie al armar la
        pagina: agosto esta cerrado y no tiene que moverse despues.
        El cruce con el CRM usa el objeto CRM de la seccion anterior. */
-    const META = {"cuenta":"370211010327709","generado":"2026-09-13T13:34:36.468Z","meses":{"2025-01":{"gasto":615252,"alcance":76601,"impresiones":126561,"conv":130,"inter":1184,"clics":1038},"2025-02":{"gasto":860036,"alcance":109119,"impresiones":192091,"conv":121,"inter":1351,"clics":1241},"2025-03":{"gasto":1136173,"alcance":54068,"impresiones":125586,"conv":147,"inter":1085,"clics":980},"2025-04":{"gasto":856720,"alcance":59349,"impresiones":131785,"conv":153,"inter":1201,"clics":1106},"2025-05":{"gasto":862976,"alcance":50267,"impresiones":96280,"conv":36,"inter":812,"clics":731},"2025-06":{"gasto":706847,"alcance":266900,"impresiones":435422,"conv":67,"inter":1346,"clics":1129},"2025-07":{"gasto":644768,"alcance":147014,"impresiones":291698,"conv":44,"inter":1663,"clics":1428},"2025-08":{"gasto":218362,"alcance":75806,"impresiones":139281,"conv":21,"inter":502,"clics":429},"2025-10":{"gasto":16622,"alcance":6040,"impresiones":13514,"conv":5,"inter":580,"clics":68},"2026-01":{"gasto":61911,"alcance":3605,"impresiones":5597,"conv":5,"inter":887,"clics":48},"2026-02":{"gasto":265850,"alcance":45484,"impresiones":74488,"conv":103,"inter":5212,"clics":1408},"2026-03":{"gasto":568390,"alcance":74139,"impresiones":141295,"conv":199,"inter":2610,"clics":2017},"2026-04":{"gasto":526277,"alcance":129222,"impresiones":301183,"conv":187,"inter":5668,"clics":4856},"2026-05":{"gasto":544821,"alcance":109675,"impresiones":253808,"conv":101,"inter":9159,"clics":4806},"2026-06":{"gasto":475715,"alcance":19327,"impresiones":38222,"conv":41,"inter":9267,"clics":247},"2026-07":{"gasto":243256,"alcance":66919,"impresiones":122097,"conv":60,"inter":16833,"clics":4861},"2026-08":{"gasto":486857,"alcance":141626,"impresiones":276211,"conv":301,"inter":23336,"clics":6005}},"campanas":[{"nombre":"Puedes vender más / costos · Julio–Agosto","gasto":282082,"impresiones":136132,"resultadoTipo":"clics","resultado":4070,"costoResultado":69},{"nombre":"Mensajes IG · placas · Julio–Agosto","gasto":204775,"impresiones":140079,"resultadoTipo":"conversaciones","resultado":301,"costoResultado":680}]};
+    const META = {"cuenta":"370211010327709","generado":"2026-09-14T15:32:50.686Z","meses":{"2025-01":{"gasto":615252,"alcance":76601,"impresiones":126561,"conv":130,"inter":1184,"clics":1038},"2025-02":{"gasto":860036,"alcance":109119,"impresiones":192091,"conv":121,"inter":1351,"clics":1241},"2025-03":{"gasto":1136173,"alcance":54068,"impresiones":125586,"conv":147,"inter":1085,"clics":980},"2025-04":{"gasto":856720,"alcance":59349,"impresiones":131785,"conv":153,"inter":1201,"clics":1106},"2025-05":{"gasto":862976,"alcance":50267,"impresiones":96280,"conv":36,"inter":812,"clics":731},"2025-06":{"gasto":706847,"alcance":266900,"impresiones":435422,"conv":67,"inter":1346,"clics":1129},"2025-07":{"gasto":644768,"alcance":147014,"impresiones":291698,"conv":44,"inter":1663,"clics":1428},"2025-08":{"gasto":218362,"alcance":75806,"impresiones":139281,"conv":21,"inter":502,"clics":429},"2025-10":{"gasto":16622,"alcance":6040,"impresiones":13514,"conv":5,"inter":580,"clics":68},"2026-01":{"gasto":61911,"alcance":3605,"impresiones":5597,"conv":5,"inter":887,"clics":48},"2026-02":{"gasto":265850,"alcance":45484,"impresiones":74488,"conv":103,"inter":5212,"clics":1408},"2026-03":{"gasto":568390,"alcance":74139,"impresiones":141295,"conv":199,"inter":2610,"clics":2017},"2026-04":{"gasto":526277,"alcance":129222,"impresiones":301183,"conv":187,"inter":5668,"clics":4856},"2026-05":{"gasto":544821,"alcance":109675,"impresiones":253808,"conv":101,"inter":9159,"clics":4806},"2026-06":{"gasto":475715,"alcance":19327,"impresiones":38222,"conv":41,"inter":9267,"clics":247},"2026-07":{"gasto":243256,"alcance":66919,"impresiones":122097,"conv":60,"inter":16833,"clics":4861},"2026-08":{"gasto":486857,"alcance":141626,"impresiones":276211,"conv":301,"inter":23336,"clics":6005}},"campanas":[{"nombre":"Puedes vender más / costos · Julio–Agosto","gasto":282082,"impresiones":136132,"resultadoTipo":"clics","resultado":4070,"costoResultado":69},{"nombre":"Mensajes IG · placas · Julio–Agosto","gasto":204775,"impresiones":140079,"resultadoTipo":"conversaciones","resultado":301,"costoResultado":680}]};
 
     function metaRender() {
       const b = document.getElementById('meta-body');
@@ -1504,8 +1517,8 @@ _mqTema.addEventListener('change', function () {
       const kpis = [
         ['Invertido', crmPesos(RT.gasto), RT.dias + ' días al aire'],
         ['Alcance', crmNum(RT.alcance), 'personas distintas'],
-        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · Costos llega al 50 %'],
-        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de Costos'],
+        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · la campaña «Costos» llega al 50 %'],
+        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de «Costos»'],
       ].map(([l, v, d]) => `
         <div class="kpi-card card-reveal">
           <div class="kpi-label">${esc(l)}</div>
@@ -1536,7 +1549,7 @@ _mqTema.addEventListener('change', function () {
 
         <div class="card rt-bloque card-reveal">
           <div class="card-kicker">Contra el resto de la cuenta</div>
-          <p class="rt-texto">El costo por clic fue 5,7 veces el de Costos. Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
+          <p class="rt-texto">El costo por clic fue 5,7 veces el de «Costos». Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
           ${barras('cpc', crmPesos, 'Costo por clic', 'Mismo período, mismas cuatro campañas de la cuenta.')}
           ${barras('frec', n => n.toFixed(1).replace('.', ','), 'Frecuencia', 'Cuántas veces vio el anuncio cada persona alcanzada.')}
           ${barras('carga', n => n + ' %', 'De los que hacen clic, cuántos cargan la página', 'Solo las dos campañas con el dato medido.')}

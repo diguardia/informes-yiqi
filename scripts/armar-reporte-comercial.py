@@ -146,6 +146,14 @@ body {
 
    Y con la barra inferior el cajon sobra: dos navegaciones para lo mismo
    es peor que una. */
+/* Solo el sidebar usa la medicion real de la topbar; si el script no
+   llego a correr, cae al token del DS y se comporta como antes. */
+.sidebar {
+  top: var(--topbar-real, var(--topbar-h));
+  height: calc(100vh - var(--topbar-real, var(--topbar-h)) - var(--statusbar-h));
+  overflow-y: auto;
+}
+
 .ds-bottomnav { display: none; }
 @media (max-width: 980px) {
   .ds-bottomnav {
@@ -200,9 +208,10 @@ __CSS__
    y en pantallas angostas ademas envuelve. Cada pixel de diferencia es un
    pixel que el sidebar se mete abajo de la topbar — por eso el primer item
    del menu aparecia cortado al medio.
-   No se toca el DS: se mide la topbar real y se le escribe el token. Se
-   remide al cargar las fuentes y en cada cambio de tamano, porque la
-   tipografia asienta despues del primer layout. */
+   No se toca el DS ni su token: se mide la topbar real, se escribe en
+   --topbar-real y solo el sidebar lo consume. Se remide al cargar las
+   fuentes y en cada cambio de tamano, porque la tipografia asienta
+   despues del primer layout. */
 (function () {
   var tb = document.querySelector('.topbar');
   if (!tb) return;
@@ -211,7 +220,11 @@ __CSS__
     var h = Math.round(tb.getBoundingClientRect().height);
     if (!h || h === ultimo) return;
     ultimo = h;
-    document.documentElement.style.setProperty('--topbar-h', h + 'px');
+    /* Se escribe un token propio, no --topbar-h. Pisar el del DS movia
+       todo lo que depende de el —el cajon movil, la altura de la barra,
+       los calculos del shell— y el sidebar se despegaba al scrollear.
+       --topbar-real lo consume solo la regla del sidebar de abajo. */
+    document.documentElement.style.setProperty('--topbar-real', h + 'px');
   }
   medir();
   addEventListener('load', medir);
