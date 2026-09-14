@@ -105,7 +105,11 @@ body {
   }
   .ds-bottomnav-item { cursor: pointer; border: 0; background: transparent; font: inherit; }
 
-  .app-shell[data-grupo] .content > section { display: none; }
+  /* El brief y la conclusion no son destinos de la barra: son la
+     apertura y el cierre del documento. Si entran en la regla de
+     ocultar, abajo de 980px desaparecen y no hay boton que los
+     traiga de vuelta. Quedan fijos, y lo que conmuta es el medio. */
+  .app-shell[data-grupo] .content > section:not(#brief):not(#conclusion) { display: none; }
   .app-shell[data-grupo="sitio"] #sitio,
   .app-shell[data-grupo="meta"]  #meta,
   .app-shell[data-grupo="retargeting"] #retargeting,
