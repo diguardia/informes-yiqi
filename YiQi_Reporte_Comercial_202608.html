@@ -105,15 +105,18 @@ body {
   }
   .ds-bottomnav-item { cursor: pointer; border: 0; background: transparent; font: inherit; }
 
-  /* El brief y la conclusion no son destinos de la barra: son la
-     apertura y el cierre del documento. Si entran en la regla de
-     ocultar, abajo de 980px desaparecen y no hay boton que los
-     traiga de vuelta. Quedan fijos, y lo que conmuta es el medio. */
-  .app-shell[data-grupo] .content > section:not(#brief):not(#conclusion) { display: none; }
+  /* El brief no es un destino: es la apertura del documento, son tres
+     lineas y encabeza cualquier pantalla que elijas. Queda fijo. La
+     conclusion si tiene destino propio —el quinto de la barra—, asi
+     que entra en la regla de ocultar como las otras cuatro. Sin esta
+     excepcion, abajo de 980px el brief desaparecia sin boton que lo
+     recuperara. */
+  .app-shell[data-grupo] .content > section:not(#brief) { display: none; }
   .app-shell[data-grupo="sitio"] #sitio,
   .app-shell[data-grupo="meta"]  #meta,
   .app-shell[data-grupo="retargeting"] #retargeting,
-  .app-shell[data-grupo="crm"]   #crm { display: block; }
+  .app-shell[data-grupo="crm"]   #crm,
+  .app-shell[data-grupo="conclusion"] #conclusion { display: block; }
 
   .nav-hamburger, #app-sidebar, #app-overlay { display: none; }
   /* La barra inferior es fija y el DS no reserva su alto: sin esto el
@@ -617,6 +620,10 @@ body {
   <button class="ds-bottomnav-item" type="button" data-grupo="sitio">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>
     <span>El sitio</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="conclusion">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+    <span>Cierre</span>
   </button>
 </nav>
 
@@ -1819,7 +1826,7 @@ _mqTema.addEventListener('change', function () {
    seccion oculta nacen con ancho cero y quedan en blanco hasta que se
    les avisa al mostrarla. */
 (function () {
-  var SECCION = { crm: 'crm', meta: 'meta', retargeting: 'retargeting', sitio: 'sitio' };
+  var SECCION = { crm: 'crm', meta: 'meta', retargeting: 'retargeting', sitio: 'sitio', conclusion: 'conclusion' };
   var mq = matchMedia('(max-width: 980px)');
   var shell = document.getElementById('app-shell');
   if (!shell) return;
