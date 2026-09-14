@@ -1,0 +1,190 @@
+    <style>
+      /* Meta. Misma gramatica que el bloque del CRM: cifras del DS,
+         acento canonico, una escala de espaciado. */
+      #meta { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      #meta .card-kicker, #meta .kpi-label { color: var(--cyan); }
+      #meta .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
+      #meta .kpi-card .kpi-delta { color: var(--muted-2); }
+      #meta .meta-kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
+      #meta .meta-kpi { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
+      #meta .meta-mini { position: relative; height: 84px; margin-top: var(--s3); }
+      #meta .meta-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
+      #meta .meta-nota { margin: var(--s2) 0 var(--s5); font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #meta .meta-serie { position: relative; height: 210px; margin-top: var(--s3); }
+      #meta .meta-serie-t { font: 600 12px var(--sans); color: var(--text); margin-top: var(--s6); }
+      #meta .meta-serie-t:first-of-type { margin-top: var(--s3); }
+      /* Separados y mas altos, por lo mismo que la apilada de Comercial:
+         los semanticos del sistema estan todos en la misma franja de
+         luminancia y dos tramos pegados no llegan al 3:1 de 1.4.11. */
+      #meta .meta-apilada { display:flex; gap: 3px; }
+      #meta .meta-tramo { height: 20px; min-width: 6px; border-radius: 4px; }
+      #meta .meta-leyenda .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+      #meta .meta-leyenda { display:flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin-top: var(--s3); }
+      #meta .meta-leyenda .legend-row { display:flex; align-items:center; gap: var(--s2); min-width: 0; }
+      /* Los nombres de campaña son frases largas: sin esto la fila reserva
+         su min-content y estira el body entero. */
+      #meta .meta-leyenda .legend-label { min-width: 0; overflow-wrap: anywhere; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #meta .meta-mini { overflow: hidden; }
+      #meta .meta-mini > canvas { position: absolute; top: 0; left: 0; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #meta .meta-serie { overflow: hidden; }
+      #meta .meta-serie > canvas { position: absolute; top: 0; left: 0; }
+    </style>
+
+    <section id="meta" aria-label="Meta — la pauta del mes">
+      <h2 class="section-title">Meta — la pauta del mes</h2>
+      <div class="section-sub" id="meta-sub">Agosto 2026</div>
+      <div id="meta-body"></div>
+    </section>
+
+    <script>
+    /* ─── META ──────────────────────────────────────────────────────
+       Sale de data/meta.json, que GitHub Actions sincroniza a diario
+       contra la Marketing API. Se embebe el mes y la serie al armar la
+       pagina: agosto esta cerrado y no tiene que moverse despues.
+       El cruce con el CRM usa el objeto CRM de la seccion anterior. */
+    const META = __META_JSON__;
+
+    function metaRender() {
+      const b = document.getElementById('meta-body');
+      if (!b || !META.meses[CRM_MES]) return;
+      const d = META.meses[CRM_MES], p = META.meses[CRM_PREV] || {};
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const ms = Object.keys(META.meses).sort().filter(m => m <= CRM_MES);
+      const mesCorto = crmMesNom(CRM_PREV).split(' ')[0].toLowerCase();
+
+      document.getElementById('meta-sub').textContent =
+        crmMesNom(CRM_MES) + ' · cuenta ' + META.cuenta + ' · entre paréntesis, ' + mesCorto;
+
+      const hayPrev = !!META.meses[CRM_PREV];
+      const cmp = (fn, fmt) => hayPrev ? fmt(fn(p)) + ' en ' + mesCorto : '';
+
+      /* Las seis del mes. El costo por resultado no va aca: es un cruce y
+         tiene su propia tarjeta. */
+      const KPIS = [
+        { id: 'meta-h-gasto',  rot: 'Invertido',        v: m => m.gasto,       fmt: crmPesos },
+        { id: 'meta-h-alc',    rot: 'Alcance',          v: m => m.alcance,     fmt: crmNum },
+        { id: 'meta-h-imp',    rot: 'Impresiones',      v: m => m.impresiones, fmt: crmNum },
+        { id: 'meta-h-conv',   rot: 'Conversaciones',   v: m => m.conv,        fmt: crmNum },
+        { id: 'meta-h-clics',  rot: 'Clics en enlace',  v: m => m.clics,       fmt: crmNum },
+        { id: 'meta-h-inter',  rot: 'Interacciones',    v: m => m.inter,       fmt: crmNum },
+      ];
+      const kpis = KPIS.map(k => {
+        registrarDetalle('meta:' + k.id, {
+          kicker: 'Meta · la pauta', titulo: k.rot,
+          sub: 'Mes a mes, de enero 2025 a ' + crmMesNom(CRM_MES).toLowerCase(),
+          puntos: ms, valor: m => k.v(META.meses[m]), fmt: k.fmt,
+          fuente: 'Marketing API · data/meta.json · cuenta ' + META.cuenta,
+        });
+        return `
+        <div class="kpi-card card-reveal meta-kpi" data-detalle="meta:${k.id}" role="button" tabindex="0" aria-label="Ver ${esc(k.rot)} en detalle">
+          <div class="kpi-label">${esc(k.rot)}</div>
+          <div class="kpi-value">${esc(k.fmt(k.v(d)))}</div>
+          <div class="kpi-delta neutral">${esc(cmp(k.v, k.fmt))}</div>
+          <div class="meta-mini"><canvas id="${k.id}" aria-label="${esc(k.rot)} por mes"></canvas></div>
+        </div>`;
+      }).join('');
+
+      /* El cruce. Ninguna de las dos mitades contesta sola cuanto costo
+         traer una oportunidad: la pauta sabe lo que gasto y el CRM sabe
+         lo que entro. */
+      const ons = m => (CRM.meses[m] ? CRM.meses[m].ons.total : 0);
+      /* Dos cruces, no tres. El ticket promedio salio: con meses de una o
+         dos operaciones, el promedio es esa operacion, y en agosto una sola
+         explica el 93 % del monto. Un promedio ahi no resume, inventa. */
+      const CRUCES = [
+        { id: 'meta-h-cpconv', rot: 'Costo por conversación',
+          v: m => (META.meses[m] && META.meses[m].conv ? META.meses[m].gasto / META.meses[m].conv : 0),
+          fmt: crmPesos, nota: 'gasto de la cuenta ÷ conversaciones' },
+        { id: 'meta-h-cpon', rot: 'Costo por ON',
+          v: m => (ons(m) ? (META.meses[m] ? META.meses[m].gasto : 0) / ons(m) : 0),
+          fmt: crmPesos, nota: 'gasto de la cuenta ÷ ONs nuevas del CRM' },
+      ];
+      const cruces = CRUCES.map(k => {
+        const ps = ms.filter(m => CRM.meses[m] || k.id === 'meta-h-cpconv');
+        registrarDetalle('cruce:' + k.id, {
+          kicker: 'Meta \u00d7 CRM', titulo: k.rot, sub: k.nota,
+          puntos: ps, valor: k.v, fmt: k.fmt,
+          fuente: 'Marketing API y exports del CRM · data/meta.json + data/crm-2026.json',
+        });
+        return `
+        <div class="kpi-card card-reveal meta-kpi" data-detalle="cruce:${k.id}" role="button" tabindex="0" aria-label="Ver ${esc(k.rot)} en detalle">
+          <div class="kpi-label">${esc(k.rot)}</div>
+          <div class="kpi-value">${esc(k.fmt(k.v(CRM_MES)))}</div>
+          <div class="kpi-delta neutral">${esc(k.nota)}</div>
+          <div class="meta-mini"><canvas id="${k.id}" aria-label="${esc(k.rot)} por mes"></canvas></div>
+        </div>`;
+      }).join('');
+
+      /* Anuncios: el gasto del mes repartido por campaña. Misma pista
+         partida que los estados de las cotizaciones — son partes de un
+         total, no un ranking. */
+      const cs = (META.campanas || []).slice().sort((a, b) => b.gasto - a.gasto);
+      const totalC = cs.reduce((t, c) => t + c.gasto, 0) || 1;
+      const escala = ['--cyan', '--green', '--amber', '--blue', '--muted-2'];
+      const tramos = cs.map((c, i) => `<div class="meta-tramo" style="width:${(c.gasto / totalC * 100).toFixed(1)}%;background:var(${escala[i % escala.length]})"></div>`).join('');
+      const leyenda = cs.map((c, i) => `
+        <div class="legend-row"><span class="legend-dot" style="background:var(${escala[i % escala.length]})"></span><span class="legend-label">${esc(c.nombre)}</span><span class="legend-pct">${crmPesos(c.gasto)} · ${crmNum(c.resultado)} ${esc(c.resultadoTipo)} a ${crmPesos(c.costoResultado)}</span></div>`).join('');
+
+      b.innerHTML = `
+        <div class="meta-kpis">${kpis}</div>
+
+        <div class="card meta-bloque card-reveal">
+          <div class="card-kicker">Lo que costó cada cosa</div>
+          <p class="meta-nota">Las tres salen de cruzar la pauta con el CRM. La cuenta sabe lo que gastó y el CRM sabe lo que entró; el costo por oportunidad solo aparece al ponerlos juntos.</p>
+          <div class="meta-kpis" style="margin-bottom:0">${cruces}</div>
+        </div>
+
+        <div class="card meta-bloque card-reveal">
+          <div class="card-kicker">Anuncios del mes</div>
+          <p class="meta-nota">${crmPesos(d.gasto)} repartidos en ${crmNum(cs.length)} ${cs.length === 1 ? 'campaña con gasto' : 'campañas con gasto'}.</p>
+          <div class="meta-apilada" role="img" aria-label="${cs.map(c => c.nombre + ': ' + crmPesos(c.gasto)).join('; ')}">${tramos}</div>
+          <div class="meta-leyenda">${leyenda}</div>
+        </div>
+
+        <div class="card meta-bloque card-reveal">
+          <div class="card-kicker">La serie larga</div>
+          <p class="meta-nota">Inversión y conversaciones mes a mes, de enero 2025 a ${esc(crmMesNom(CRM_MES).toLowerCase())}. Los meses que la cuenta no devuelve quedan cortados: no se rellenan con cero.</p>
+          <div class="meta-serie-t">Inversión mensual</div>
+          <div class="meta-serie"><canvas id="meta-s-gasto" aria-label="Inversión mensual"></canvas></div>
+          <div class="meta-serie-t">Conversaciones mensuales</div>
+          <div class="meta-serie"><canvas id="meta-s-conv" aria-label="Conversaciones mensuales"></canvas></div>
+        </div>
+`;
+
+      if (typeof initReveal === 'function') initReveal(b);
+      setTimeout(metaChart, 30);
+    }
+
+    function metaChart() {
+      const ms = Object.keys(META.meses).sort().filter(m => m <= CRM_MES);
+      const KPIS = [
+        ['meta-h-gasto', m => META.meses[m].gasto, crmMillones],
+        ['meta-h-alc', m => META.meses[m].alcance, crmNum],
+        ['meta-h-imp', m => META.meses[m].impresiones, crmNum],
+        ['meta-h-conv', m => META.meses[m].conv, crmNum],
+        ['meta-h-clics', m => META.meses[m].clics, crmNum],
+        ['meta-h-inter', m => META.meses[m].inter, crmNum],
+      ];
+      KPIS.forEach(([id, v, fmt]) => crmColumnas(id, ms, v, fmt, 'mini'));
+
+      const ons = m => (CRM.meses[m] ? CRM.meses[m].ons.total : 0);
+      const msCrm = ms.filter(m => CRM.meses[m]);
+      crmColumnas('meta-h-cpconv', ms, m => (META.meses[m].conv ? META.meses[m].gasto / META.meses[m].conv : 0), crmMillones, 'mini');
+      crmColumnas('meta-h-cpon', msCrm, m => (ons(m) ? META.meses[m].gasto / ons(m) : 0), crmMillones, 'mini');
+
+      crmLinea('meta-s-gasto', ms, [{ label: 'Invertido', valor: m => META.meses[m].gasto }], crmMillones);
+      crmLinea('meta-s-conv', ms, [{ label: 'Conversaciones', valor: m => META.meses[m].conv }], crmNum);
+    }
+
+    metaRender();
+    </script>

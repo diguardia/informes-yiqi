@@ -1,0 +1,1843 @@
+<!doctype html>
+<html lang="es" data-theme="system">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Reporte comercial — Agosto 2026 · YiQi</title>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     Reporte comercial del mes · Agosto 2026 — version de una sola pantalla.
+
+     DERIVADO, NO ESCRITO A MANO. Ninguna cifra de esta pagina se teclea:
+     todas salen de un origen y el archivo se rehace corriendo el script.
+     Tres secciones, tres origenes:
+
+       Meta            data/meta.json, que sincroniza GitHub Actions
+                       contra la Marketing API
+       El retargeting  claude/Retargeting-inventario-y-acciones-sep2026.md
+       Comercial       data/crm-2026.json, que arma scripts/crm-json.py
+                       desde los exports de data/crm/
+
+     De comercial.html ya no sale contenido: solo el CSS de los componentes
+     que este informe comparte con aquel —cifras, tarjetas, animacion de
+     entrada—, extraido por rangos verificados. El bloque #mes que se
+     heredaba al principio se retiro entero: arrastraba el objeto del
+     resumen, su selector de mes y su boton de copiar para sostener una
+     sola tarjeta.
+
+     El armazon es propio: topbar, sidebar, barra inferior y barra de
+     estado. El comportamiento del sidebar se extrae del informe de
+     Ingenieria, que ya lo tenia resuelto.
+
+     Para rehacerlo con otro mes:
+       1. bajar los seis exports del CRM a data/crm/
+       2. python3 scripts/crm-json.py
+       3. python3 scripts/armar-reporte-comercial.py
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+
+<script>
+/* Tema claro por defecto, solo si el visitante no eligio nada en YiQi.
+   Va antes del runtime y sin defer: despues no llega. */
+(function () {
+  try {
+    if (localStorage.getItem('yiqi-theme')) return;
+    if (/(?:^|;\s*)yiqi-theme=/.test(document.cookie)) return;
+    localStorage.setItem('yiqi-theme', 'light');
+  } catch (e) {}
+})();
+</script>
+<script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+/* ── ARMAZON ─────────────────────────────────────────────────────
+   Lo minimo para sostener una sola seccion: fondo, ancho y relleno.
+   Todo lo demas sale del DS o del bloque heredado de comercial.html. */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font: 14px var(--sans);
+  color: var(--text);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 72% 8%,  color-mix(in srgb, var(--cyan) 7%, transparent), transparent 28%),
+    radial-gradient(circle at 12% 60%, color-mix(in srgb, var(--cyan) 4%, transparent), transparent 22%),
+    var(--bg);
+}
+.content { min-width: 0; padding: 28px 32px calc(64px + var(--statusbar-h)); }
+@media (max-width: 980px) {
+  .content { padding: 20px 16px calc(78px + env(safe-area-inset-bottom, 12px)); }
+}
+
+
+/* ── NAVEGACION MOVIL — §67 del DS ────────────────────────────────
+   Tres destinos, uno por seccion. Una barra inferior promete pantallas:
+   si el destino fuera un ancla dentro de una pagina de miles de pixeles,
+   el salto recorreria todo lo que no pediste y despues cualquier scroll
+   te mudaria de seccion sin querer. Bajo 980px cada destino es una
+   pantalla: se muestra su seccion y se ocultan las otras. En escritorio
+   no cambia nada, sigue siendo el reporte largo con su sidebar.
+
+   Y con la barra inferior el cajon sobra: dos navegaciones para lo mismo
+   es peor que una. */
+.ds-bottomnav { display: none; }
+@media (max-width: 980px) {
+  .ds-bottomnav {
+    display: grid;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 96;
+    box-shadow: 0 -1px 0 var(--line), var(--shadow);
+  }
+  .ds-bottomnav-item { cursor: pointer; border: 0; background: transparent; font: inherit; }
+
+  .app-shell[data-grupo] .content > section { display: none; }
+  .app-shell[data-grupo="sitio"] #sitio,
+  .app-shell[data-grupo="meta"]  #meta,
+  .app-shell[data-grupo="retargeting"] #retargeting,
+  .app-shell[data-grupo="crm"]   #crm { display: block; }
+
+  .nav-hamburger, #app-sidebar, #app-overlay { display: none; }
+  /* La barra inferior es fija y el DS no reserva su alto: sin esto el
+     ultimo bloque de cada pantalla queda tapado. */
+  .content { padding-bottom: calc(76px + env(safe-area-inset-bottom, 12px)); }
+}
+
+/* ── HEREDADO DE comercial.html ──────────────────────────────────
+   Las mismas reglas, no una reinterpretacion: si cambian alla, se
+   vuelve a correr el script y cambian aca. */
+    section { margin-bottom: 44px; }
+
+    .section-title {
+      font: 700 18px var(--display);
+      color: var(--text); letter-spacing: -.02em;
+      margin-bottom: 3px;
+    }
+    .section-sub {
+      font: 400 12px var(--mono);
+      color: var(--muted-2); margin-bottom: 18px;
+    }
+
+    /* .kpi-label, .kpi-value y .kpi-delta salen del DS. Lo unico propio es
+       la escala: el informe apila muchas tarjetas por fila y la cifra
+       canonica —clamp(32px, 2.2vw, 42px)— no entra. El tamano se declara
+       aparte; familia, peso, color y tracking quedan los del sistema. */
+    .kpi-delta.positive { color: var(--green); }
+    .kpi-delta.negative { color: var(--red); }
+    .kpi-delta.neutral  { color: var(--muted-2); }
+
+    /* ── BORDERLESS CARDS ────────────────────────────────────── */
+    .card {
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: none;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    /* ── ANIMATIONS ──────────────────────────────────────────── */
+    /* opacity y transition salen del DS (.65s). Lo propio es solo el
+       desplazamiento de entrada, que el DS no define. */
+    .card-reveal { opacity: 0; }
+    .kpi-card.card-reveal { transform: translateY(14px); }
+    .card.card-reveal     { transform: translateY(14px); }
+    .card-reveal.visible  { opacity: 1; transform: none; }
+    .card-reveal:nth-child(2) { transition-delay: .06s; }
+    .card-reveal:nth-child(3) { transition-delay: .12s; }
+    .card-reveal:nth-child(4) { transition-delay: .18s; }
+    .card-reveal:nth-child(5) { transition-delay: .24s; }
+    @media (max-width: 640px) {
+      .kpi-grid { gap: 8px; }
+      /* min-width:0 — el delta en nowrap infla el min-content de la card
+         y sin esto la grilla desborda el viewport en vez de recortarlo. */
+      .kpi-card { padding: 10px 12px; gap: 4px; min-width: 0; }
+      .kpi-value { font-size: 19px; text-align: left; }
+      .kpi-delta { font-size: 9.5px;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    }
+
+</style>
+</head>
+<body>
+
+<header class="topbar app-topbar">
+  <div class="topbar-l">
+    <a class="topbar-logo" href="comercial.html" aria-label="Ir al informe comercial">
+      <svg class="topbar-logo-svg" data-yiqi-logo viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YiQi"><g><path style="fill:currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path style="fill:currentColor" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/><path style="fill:currentColor" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path style="fill:currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/><path style="fill:currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/></g></svg>
+    </a>
+    <h1 class="t-pill" style="margin:0">Reporte comercial</h1>
+  </div>
+  <div class="topbar-c" style="justify-content:center">
+    <div class="range-filter" role="group" aria-label="Periodo del informe">
+      <button class="range-btn is-active" type="button" aria-current="page">Agosto 2026</button>
+    </div>
+  </div>
+  <div class="topbar-r">
+    <button class="nav-hamburger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="app-sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <button class="theme-cycle" type="button" data-theme-cycle aria-label="Cambiar tema"><svg class="tc-dark" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg><svg class="tc-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><svg class="tc-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg></button>
+  </div>
+</header>
+
+<script>
+/* El sidebar del DS se pega con `top: var(--topbar-h)` y ese token es fijo
+   en 56px. Esta topbar no mide 56: le sumamos el h1 y el selector de tema,
+   y en pantallas angostas ademas envuelve. Cada pixel de diferencia es un
+   pixel que el sidebar se mete abajo de la topbar — por eso el primer item
+   del menu aparecia cortado al medio.
+   No se toca el DS: se mide la topbar real y se le escribe el token. Se
+   remide al cargar las fuentes y en cada cambio de tamano, porque la
+   tipografia asienta despues del primer layout. */
+(function () {
+  var tb = document.querySelector('.topbar');
+  if (!tb) return;
+  var ultimo = 0;
+  function medir() {
+    var h = Math.round(tb.getBoundingClientRect().height);
+    if (!h || h === ultimo) return;
+    ultimo = h;
+    document.documentElement.style.setProperty('--topbar-h', h + 'px');
+  }
+  medir();
+  addEventListener('load', medir);
+  addEventListener('resize', medir);
+  if (window.ResizeObserver) new ResizeObserver(medir).observe(tb);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
+})();
+</script>
+
+<!-- La barra de estado es position:fixed y el DS no reserva su alto: sin
+     este relleno los ultimos 28px del informe quedan tapados. -->
+<div class="app-shell" id="app-shell" style="padding-bottom:var(--statusbar-h)">
+
+  <aside class="sidebar" id="app-sidebar" aria-label="Secciones del reporte">
+    <button class="nav-close" type="button" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+
+    <nav class="nav" aria-label="Secciones">
+      <section class="nav-section">
+        <p class="nav-lbl">Agosto 2026</p>
+        <a class="nav-link is-active" href="#crm" title="Comercial" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span><span>Comercial</span></a>
+        <a class="nav-link" href="#meta" title="Meta"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span><span>Meta</span></a>
+        <a class="nav-link" href="#retargeting" title="Retargeting"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span>Retargeting</span></a>
+        <a class="nav-link" href="#sitio" title="El sitio"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg></span><span>El sitio</span></a>
+      </section>
+    </nav>
+
+    <div class="sb-footer">
+      <div class="sidebar-ctrls">
+        <button class="sidebar-collapse sb-lock" type="button" aria-pressed="false" aria-label="Fijar el menú abierto" title="Fijar el menú">
+          <svg class="ico-unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          <svg class="ico-locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </button>
+        <button class="sidebar-collapse sb-arrow" type="button" aria-label="Colapsar el menú" title="Colapsar el menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="sb-copy">&copy; 2026 YiQi S.A.</div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <style>
+      /* El brief. Va arriba de todo y es lo unico del reporte escrito en
+         prosa: las cuatro secciones de abajo muestran, esta dice. Ninguna
+         cifra esta tecleada: todas se interpolan de los mismos objetos que
+         alimentan las secciones, asi que al regenerar el reporte el brief
+         se corrige solo. */
+      #brief { --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s5); }
+      #brief .card-kicker { color: var(--cyan); }
+      #brief .bf-card { padding: var(--s5) var(--s6); }
+      #brief ol { margin: var(--s4) 0 0; padding-left: var(--s5); display: grid; gap: var(--s4); }
+      #brief li { font: 400 14px/1.6 var(--sans); color: var(--text); max-width: 78ch; }
+      #brief li::marker { color: var(--cyan); font-family: var(--mono); font-size: 12px; }
+      #brief strong { font-weight: 600; }
+    </style>
+
+    <section id="brief" aria-label="Agosto en tres líneas">
+      <div class="card bf-card">
+        <div class="card-kicker">Agosto en tres líneas</div>
+        <ol id="brief-body"></ol>
+      </div>
+    </section>
+
+    <style>
+      /* Comercial en el CRM. Mismo acento y misma escala de espaciado que
+         la seccion del mes; lo visual sale del DS (.card, .kpi-card,
+         .donut-block, .legend-row). */
+      #crm { --crm-acc: var(--cyan); --crm-acc-soft: var(--cyan-soft); --crm-acc-soft-2: var(--cyan-soft-2);
+             --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px;
+             margin-top: var(--s7); }
+      #crm .card-kicker { color: var(--crm-acc); }
+      #crm .crm-nota { margin: var(--s2) 0 var(--s5); font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #crm .crm-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
+
+      /* Cinco etapas, cinco escalas. En una pista compartida la longitud
+         invita a comparar 4 consultas con 16 ONs, que no son la misma
+         cosa: el unico contraste que significa algo es el de cada etapa
+         contra sus propios meses. Por eso cada una trae su histograma. */
+      /* Las cifras son .kpi-label / .kpi-value / .kpi-delta del DS, las
+         mismas que usa el resumen del mes. Aca solo se repite el ajuste de
+         escala y color que aquella seccion ya hace: el informe apila muchas
+         tarjetas por fila y la cifra canonica no entra. */
+      #crm .crm-etapas { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
+      #crm .crm-etapa { padding: var(--s3) var(--s4) var(--s3); min-width: 0; max-width: none; }
+      #crm .kpi-label { color: var(--crm-acc); }
+      #crm .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
+      #crm .kpi-card .kpi-delta { color: var(--muted-2); }
+      #crm .crm-mini { position: relative; height: 84px; margin-top: var(--s3); }
+
+      #crm .crm-donut { height: 200px; }
+      #crm .donut-legend { max-width: 260px; }
+      #crm .crm-histo { position: relative; height: 200px; margin-top: var(--s3); }
+      @media (max-width: 640px) { #crm .crm-histo { height: 160px; } }
+
+      /* Los estados no son un ranking: son las partes de un total. Tres
+         pistas sueltas de 4, 2 y 1 gastaban cinco renglones y escondian
+         justamente eso, que suman las emitidas del mes. Una sola pista
+         partida lo dice en uno. */
+      /* Separados, no pegados. Los colores semanticos del sistema estan
+         todos en la misma franja de luminancia —verde 3,54, azul 2,72,
+         rojo 4,30 contra la card blanca— asi que dos tramos vecinos
+         quedan entre 1,21 y 2,05 entre si, lejos del 3:1 que pide
+         1.4.11. Con aire en el medio la adyacencia deja de tener que
+         sostener el contraste: cada tramo solo compite contra la card.
+         Y 20px en vez de 12 le dan superficie al color. */
+      #crm .crm-apilada { display:flex; gap: 3px; }
+      #crm .crm-tramo { height: 20px; min-width: 6px; border-radius: 4px; }
+      #crm .crm-apilada-leyenda .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+      #crm .crm-apilada-leyenda { display:flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin-top: var(--s3); }
+      #crm .crm-apilada-leyenda .legend-row { display:flex; align-items:center; gap: var(--s2); min-width: 0; }
+      #crm .crm-apilada-leyenda .legend-label { min-width: 0; overflow-wrap: anywhere; }
+
+      #crm .crm-serie { position: relative; height: 210px; margin-top: var(--s3); }
+      #crm .crm-serie-t { font: 600 12px var(--sans); color: var(--text); margin-top: var(--s6); }
+      #crm .crm-serie-t:first-of-type { margin-top: var(--s3); }
+      #crm .crm-par { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--s5); }
+      #crm .crm-pie { margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--line);
+        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #crm .crm-mini { overflow: hidden; }
+      #crm .crm-mini > canvas { position: absolute; top: 0; left: 0; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #crm .crm-histo { overflow: hidden; }
+      #crm .crm-histo > canvas { position: absolute; top: 0; left: 0; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #crm .crm-serie { overflow: hidden; }
+      #crm .crm-serie > canvas { position: absolute; top: 0; left: 0; }
+      /* ── Tarjeta que abre en detalle ──────────────────────────────
+         Misma mecanica que el panel gerencial: la tarjeta es el disparador
+         y el detalle vive en un modal unico. Se marca como boton para que
+         el teclado llegue igual que el mouse. */
+      .kpi-card[data-detalle] { cursor: pointer; transition: box-shadow var(--tr, .2s ease), transform var(--tr, .2s ease); }
+      .kpi-card[data-detalle]:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+      .kpi-card[data-detalle]:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+      /* ── Modal de detalle (patron de yiqi-panel-gerencial) ────────── */
+      .modal-overlay { position: fixed; inset: 0; background: color-mix(in srgb, var(--ink, #000) 60%, transparent);
+        display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+      .modal-overlay[hidden] { display: none; }
+      .modal-content { background: var(--bg-elev-2); border: 1px solid var(--line); border-radius: var(--radius-xl, var(--radius-lg));
+        max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg, var(--shadow-md));
+        display: grid; grid-template-rows: auto 1fr; }
+      .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        padding: 24px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+      .modal-head-titles { min-width: 0; }
+      .modal-kicker { display: block; font: 700 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 4px; }
+      .modal-title { font: 700 24px var(--display); letter-spacing: -.02em; margin: 0; color: var(--text); }
+      .modal-sub { margin: 4px 0 0; font: 400 12px var(--sans); color: var(--muted); }
+      .modal-close { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+        border-radius: var(--radius); border: 1px solid var(--line); background: transparent; color: var(--muted);
+        font-size: 18px; cursor: pointer; flex-shrink: 0; }
+      .modal-close:hover { background: var(--bg-soft); color: var(--text); }
+      .modal-body { display: grid; gap: 24px; padding: 24px; overflow-y: auto; }
+      .modal-chart-container { position: relative; min-height: 300px; border-radius: var(--radius-lg);
+        background: var(--bg-soft); padding: 20px; overflow: hidden; }
+      .modal-stats-section { display: grid; gap: 12px; }
+      .modal-stats-section h3 { font: 600 14px var(--sans); color: var(--text); margin: 0; }
+      .modal-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 12px; }
+      .modal-stat-item { display: grid; gap: 4px; padding: 11px 13px; border-radius: var(--radius-md); background: var(--bg-elev); min-width: 0; }
+      .modal-stat-label { font: 700 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted-2); }
+      .modal-stat-value { font: 500 16px/1 var(--kpi-num); color: var(--text); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+      .modal-stat-value.is-positive { color: var(--green); }
+      .modal-stat-value.is-negative { color: var(--red); }
+      .modal-stat-sub { font: 400 10px var(--sans); color: var(--muted); }
+      .modal-source { margin: 0; font: 400 11px var(--mono); color: var(--muted-2); letter-spacing: .08em; }
+      @media (max-width: 720px) {
+        .modal-content { max-height: 95vh; border-radius: var(--radius-lg); }
+        .modal-header { padding: 16px; }
+        .modal-title { font-size: 18px; }
+        .modal-body { gap: 16px; padding: 16px; }
+        .modal-chart-container { min-height: 200px; padding: 12px; }
+        .modal-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    </style>
+
+    <section id="crm" aria-label="Comercial en el CRM">
+      <h2 class="section-title">Comercial — el mes en el CRM</h2>
+      <div class="section-sub" id="crm-sub">Agosto 2026</div>
+      <div id="crm-body"></div>
+    </section>
+
+    <!-- Modal unico de detalle. Lo comparten las tarjetas del CRM y las de
+         Meta: una sola caja, un solo grafico, un solo lugar donde arreglarlo. -->
+    <div class="modal-overlay" id="detalle-modal" hidden>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="detalle-titulo">
+        <div class="modal-header">
+          <div class="modal-head-titles">
+            <span class="modal-kicker" id="detalle-kicker"></span>
+            <h3 class="modal-title" id="detalle-titulo">Detalle</h3>
+            <p class="modal-sub" id="detalle-sub"></p>
+          </div>
+          <button class="modal-close" id="detalle-cerrar" type="button" aria-label="Cerrar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-chart-section">
+            <div class="modal-chart-container"><canvas id="detalle-canvas" aria-label="Serie del indicador"></canvas></div>
+          </div>
+          <div class="modal-stats-section">
+            <h3>La serie, en números</h3>
+            <div class="modal-stats-grid" id="detalle-stats"></div>
+          </div>
+          <div class="modal-source" id="detalle-fuente"></div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      /* Meta. Misma gramatica que el bloque del CRM: cifras del DS,
+         acento canonico, una escala de espaciado. */
+      #meta { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      #meta .card-kicker, #meta .kpi-label { color: var(--cyan); }
+      #meta .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
+      #meta .kpi-card .kpi-delta { color: var(--muted-2); }
+      #meta .meta-kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
+      #meta .meta-kpi { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
+      #meta .meta-mini { position: relative; height: 84px; margin-top: var(--s3); }
+      #meta .meta-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
+      #meta .meta-nota { margin: var(--s2) 0 var(--s5); font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #meta .meta-serie { position: relative; height: 210px; margin-top: var(--s3); }
+      #meta .meta-serie-t { font: 600 12px var(--sans); color: var(--text); margin-top: var(--s6); }
+      #meta .meta-serie-t:first-of-type { margin-top: var(--s3); }
+      /* Separados y mas altos, por lo mismo que la apilada de Comercial:
+         los semanticos del sistema estan todos en la misma franja de
+         luminancia y dos tramos pegados no llegan al 3:1 de 1.4.11. */
+      #meta .meta-apilada { display:flex; gap: 3px; }
+      #meta .meta-tramo { height: 20px; min-width: 6px; border-radius: 4px; }
+      #meta .meta-leyenda .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+      #meta .meta-leyenda { display:flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin-top: var(--s3); }
+      #meta .meta-leyenda .legend-row { display:flex; align-items:center; gap: var(--s2); min-width: 0; }
+      /* Los nombres de campaña son frases largas: sin esto la fila reserva
+         su min-content y estira el body entero. */
+      #meta .meta-leyenda .legend-label { min-width: 0; overflow-wrap: anywhere; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #meta .meta-mini { overflow: hidden; }
+      #meta .meta-mini > canvas { position: absolute; top: 0; left: 0; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #meta .meta-serie { overflow: hidden; }
+      #meta .meta-serie > canvas { position: absolute; top: 0; left: 0; }
+    </style>
+
+    <section id="meta" aria-label="Meta — la pauta del mes">
+      <h2 class="section-title">Meta — la pauta del mes</h2>
+      <div class="section-sub" id="meta-sub">Agosto 2026</div>
+      <div id="meta-body"></div>
+    </section>
+
+    <style>
+      /* Retargeting. Sin serie mensual propia —el conjunto vivio veintiocho
+         dias—, asi que acá no hay histograma: lo que se compara es contra
+         las otras campañas de la cuenta, que sí comparten escala. */
+      #retargeting { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      #retargeting .card-kicker, #retargeting .kpi-label { color: var(--cyan); }
+      #retargeting .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
+      #retargeting .kpi-card .kpi-delta { color: var(--muted-2); }
+      #retargeting .rt-kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
+      #retargeting .rt-kpis .kpi-card { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
+      #retargeting .rt-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
+      #retargeting .rt-texto { margin: var(--s2) 0 var(--s5); font: 400 13px/1.7 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #retargeting .rt-texto strong { color: var(--text); font-weight: 600; }
+      /* Comparacion contra las otras campañas: misma metrica, misma escala.
+         La barra dibuja la proporcion y la cifra se lee al lado. */
+      /* La pista tiene tope: sin el, en un monitor ancho la barra cruzaba
+         toda la tarjeta y una diferencia de $46 contra $259 se leia como
+         dos metros de color. El ancho de la barra no es el dato. */
+      #retargeting .rt-fila { display:grid; grid-template-columns: minmax(0, 130px) minmax(0, 360px) auto; align-items:center; gap: var(--s3); margin-bottom: var(--s1); max-width: 560px; }
+      #retargeting .rt-rot { font: 400 11px var(--sans); color: var(--text); min-width: 0; }
+      #retargeting .rt-pista { background: var(--bg-elev-2); border-radius: 999px; height: 8px; overflow: hidden; }
+      #retargeting .rt-fill { height: 100%; border-radius: 999px; min-width: 3px; }
+      #retargeting .rt-n { font: 600 12px var(--kpi-num); color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      @media (max-width: 640px) {
+        #retargeting .rt-fila { grid-template-columns: 1fr auto; }
+        #retargeting .rt-pista { grid-column: 1 / -1; }
+      }
+      #retargeting .rt-pie { margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--line);
+        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
+    </style>
+
+    <section id="retargeting" aria-label="El retargeting de agosto">
+      <h2 class="section-title">El retargeting</h2>
+      <div class="section-sub">Conjunto «Retargeting · migración · Argentina» · activo del 22 de julio al 18 de agosto · volvió el 7 de septiembre como conjunto nuevo, ya fuera de este mes</div>
+      <div id="retargeting-body"></div>
+    </section>
+
+    <style>
+      /* El sitio. La tarjeta es la misma que vivia dentro del bloque #mes
+         de comercial.html; lo que no viene es su encabezado —titulo del
+         resumen, selector de mes y boton de copiar—, que era del tablero y
+         no de este reporte. */
+      #sitio { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      #sitio .card-kicker, #sitio .kpi-label { color: var(--cyan); }
+      #sitio .kpi-card .kpi-value { color: var(--text); font-size: 24px; }
+      #sitio .st-bloque { padding: var(--s5) var(--s6); container-type: inline-size; }
+      #sitio .st-claves { margin: 0 0 var(--s5); font: 400 14px/1.6 var(--sans); color: var(--text); max-width: 70ch; }
+      #sitio .st-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: var(--s3); margin: 0 0 var(--s7); }
+      #sitio .st-stats .kpi-card { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
+      /* Container query, no media query: lo que importa es el ancho de la
+         tarjeta, no el de la ventana. */
+      #sitio .st-charts { display:grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: var(--s7); }
+      @container (max-width: 720px) {
+        #sitio .st-charts { grid-template-columns: 1fr; }
+        #sitio .st-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      #sitio .st-g { min-width: 0; }
+      #sitio .donut-legend { max-width: 220px; }
+      /* El canvas fuera del flujo: adentro, su ancho vuelve a contar para
+         el del contenedor y en cada redibujo crece. */
+      #sitio .st-barras, #sitio .donut-chart { position: relative; overflow: hidden; }
+      #sitio .st-barras { height: 190px; }
+      #sitio .st-barras > canvas, #sitio .donut-chart > canvas { position: absolute; top: 0; left: 0; }
+      #sitio .st-serie { position: relative; overflow: hidden; height: 190px; margin-top: var(--s3); }
+      #sitio .st-serie > canvas { position: absolute; top: 0; left: 0; }
+      #sitio .st-serie-wrap { margin-top: var(--s7); }
+      #sitio .st-nota { margin: var(--s2) 0 0; font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #sitio .st-pie { margin-top: var(--s6); padding-top: var(--s3); border-top: 1px solid var(--line);
+        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
+    </style>
+
+    <section id="sitio" aria-label="El sitio por dentro">
+      <h2 class="section-title">El sitio</h2>
+      <div class="section-sub">Agosto 2026 · Microsoft Clarity</div>
+      <div id="sitio-body"></div>
+    </section>
+
+    <style>
+      /* La conclusion. Cierra la pagina y no lleva entrada en la nav: las
+         cuatro secciones de la barra son las de datos, esto es el final del
+         documento. Prosa, como el brief, y por la misma razon sin cifras
+         tecleadas: las que aparecen las interpola el script desde RT. */
+      #conclusion { --s2:8px; --s3:12px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      /* En las otras secciones el aire bajo el titulo lo pone .section-sub,
+         que trae 18px. Esta no lleva bajada, asi que quedaba pegada a la
+         card con los 3px de .section-title y nada mas. */
+      #conclusion .section-head { margin-bottom: var(--s5); }
+      #conclusion .cc-bloque { padding: var(--s5) var(--s6); }
+      #conclusion .cc-tit { font: 600 15px var(--sans); color: var(--text); margin: 0 0 var(--s2); }
+      #conclusion .cc-tit + p { margin-top: 0; }
+      #conclusion p { font: 400 13px/1.7 var(--sans); color: var(--muted-2); max-width: 70ch; margin: 0 0 var(--s5); }
+      #conclusion p:last-child { margin-bottom: 0; }
+      #conclusion strong { color: var(--text); font-weight: 600; }
+    </style>
+
+    <section id="conclusion" aria-label="Conclusión del mes">
+      <div class="section-head">
+        <div>
+          <span class="section-title">Conclusión</span>
+        </div>
+      </div>
+      <div class="card cc-bloque card-reveal" id="cc-body"></div>
+    </section>
+  </main>
+</div>
+
+<div class="nav-overlay" id="app-overlay"></div>
+
+<!-- ── Navegacion movil — §67 del DS ────────────────────────────────
+     Tres destinos, uno por seccion: ninguno agrupa, asi que ninguno abre
+     hoja. Solo se ve bajo 980px. -->
+<nav class="ds-bottomnav" id="bottomnav" aria-label="Secciones del reporte">
+  <button class="ds-bottomnav-item" type="button" data-grupo="crm">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+    <span>Comercial</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="meta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg>
+    <span>Meta</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="retargeting">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    <span>Retarget.</span>
+  </button>
+  <button class="ds-bottomnav-item" type="button" data-grupo="sitio">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>
+    <span>El sitio</span>
+  </button>
+</nav>
+
+
+<footer class="statusbar">
+  <div class="statusbar-left">
+    <strong>Reporte comercial</strong>
+    <span class="sb-sep">&middot;</span>
+    <span class="statusbar-desc">$486.857 de pauta &middot; 301 conversaciones &middot; 16 ONs nuevas &middot; 3 concretadas</span>
+  </div>
+  <div class="statusbar-right">
+    <span class="sb-item" id="sb-datos">datos al —</span>
+    <span class="sb-sep">&middot;</span>
+    <a class="sb-item" href="comercial.html">Informe comercial</a>
+    <span class="sb-sep">&middot;</span>
+    <span class="sb-item" data-ds-version>DS</span>
+    <span class="sb-sep">&middot;</span>
+    <span class="sb-item sb-clock" id="sb-clock">--:--</span>
+  </div>
+</footer>
+
+<script>
+/* Helpers que el render del mes usa y que en comercial.html viven
+   repartidos por el archivo. Se extraen por nombre, no por posicion. */
+const _charts = {};
+function getCSSVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function parseKpiValue(text) {
+  /* Devuelve { num, fmt } o null si la cifra no es animable.
+     El parser viejo se comia el resto del texto: "37 s" salia "37",
+     "1,46" salia "1,5" —toFixed(1) fijo— y "5,4 -> 7,0" se quedaba en
+     "5,4", borrando la flecha. Ahora la cifra tiene que ser UNA sola,
+     con lo que venga antes y despues conservado tal cual, y los
+     decimales se cuentan en vez de asumirse. */
+  if (!text) return null;
+  const t = text.trim();
+  if (!t || t === '—') return null;
+  /* prefijo sin digitos + numero + sufijo sin digitos. Si hay una
+     segunda cifra el sufijo tendria digitos y no matchea: no se anima. */
+  const m = t.match(/^([^\d]*?)(\d[\d.]*(?:,\d+)?)([^\d]*)$/);
+  if (!m) return null;
+  const [, pre, cifra, suf] = m;
+  const dec = (cifra.split(',')[1] || '');
+  const num = parseFloat(cifra.replace(/\./g, '').replace(',', '.'));
+  if (!Number.isFinite(num)) return null;
+  const miles = n => n.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const fmt = (v) => {
+    let cuerpo;
+    if (dec.length) {
+      const str = v.toFixed(dec.length).split('.');
+      cuerpo = miles(str[0]) + ',' + str[1];
+    } else {
+      cuerpo = miles(Math.round(v).toString());
+    }
+    return pre + cuerpo + suf;
+  };
+  return { num, fmt };
+}
+
+function runCountUp(el, duration = 400) {
+  const parsed = parseKpiValue(el.textContent.trim());
+  if (!parsed) return;
+  const { num, fmt } = parsed;
+  const start = performance.now();
+  // Token de generación: si otro render reescribe el valor mientras la
+  // animación está en vuelo, esta se aborta y no pisa el dato nuevo.
+  const gen = (el._cuGen = (el._cuGen || 0) + 1);
+  const step = (now) => {
+    if (el._cuGen !== gen) return;
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmt(num * ease);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = fmt(num);
+  };
+  requestAnimationFrame(step);
+}
+
+function initReveal(root = document) {
+  /* Acepta una raiz porque #mes dibuja sus tarjetas por JS despues de
+     que esta funcion ya corrio: sin esto nunca las observaba y el
+     resumen entraba sin animar y sin contador. */
+  const cards = root.querySelectorAll('.card-reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Count-up en todos los kpi-value dentro de la card
+        e.target.querySelectorAll('.kpi-value').forEach(v => runCountUp(v));
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.04 });
+  cards.forEach(c => obs.observe(c));
+}
+
+/* El boton de tema del DS delega en setTheme() si existe. Los graficos
+   toman sus colores de los tokens, asi que se redibujan al cambiar. */
+const _mqTema = window.matchMedia('(prefers-color-scheme: dark)');
+function applyTheme(v) { document.documentElement.dataset.theme = (v === 'system' ? (_mqTema.matches ? 'dark' : 'light') : v); }
+function setTheme(v) {
+  try { localStorage.setItem('yiqi-theme', v); } catch (e) {}
+  applyTheme(v);
+  setTimeout(function () {
+    if (typeof sitioChart === 'function') sitioChart();
+    if (typeof crmChart === 'function') crmChart();
+    if (typeof crmHistogramas === 'function') crmHistogramas();
+  }, 50);
+}
+_mqTema.addEventListener('change', function () {
+  var g = 'system'; try { g = localStorage.getItem('yiqi-theme') || 'system'; } catch (e) {}
+  if (g === 'system') setTheme('system');
+});
+(function () { var g = 'system'; try { g = localStorage.getItem('yiqi-theme') || 'system'; } catch (e) {} applyTheme(g); })();
+
+(function () {
+  var shell = document.getElementById('app-shell');
+  var col   = document.querySelector('.sb-arrow');
+  var lock  = document.querySelector('.sb-lock');
+  var KEY   = 'yiqi-nav-collapsed', KEYL = 'yiqi-nav-locked';
+
+  function read(k) { try { return localStorage.getItem(k) === '1'; } catch (e) { return false; } }
+  function write(k, v) { try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {} }
+
+  /* El rail es de escritorio. Abajo de 980px el sidebar es un cajon y el
+     boton de colapsar ni se muestra, asi que la clase guardada no tiene que
+     aplicarse: dejaba el cajon con estilos de rail y los items sin responder.
+     Se recalcula al cambiar el ancho porque la preferencia sigue guardada. */
+  var esRail = matchMedia('(min-width: 981px)');
+  function aplicarRail() {
+    var on = esRail.matches && read(KEY);
+    shell.classList.toggle('nav-collapsed', on);
+    if (!esRail.matches) shell.classList.remove('nav-peek');
+  }
+  aplicarRail();
+  esRail.addEventListener ? esRail.addEventListener('change', aplicarRail)
+                          : esRail.addListener(aplicarRail);
+  if (read(KEYL)) { shell.classList.add('nav-locked'); lock && lock.setAttribute('aria-pressed', 'true'); }
+
+  col && col.addEventListener('click', function () {
+    var on = shell.classList.toggle('nav-collapsed');
+    write(KEY, on);
+    col.setAttribute('aria-label', on ? 'Expandir el menú' : 'Colapsar el menú');
+  });
+
+  /* Fijado: cancela el hover-peek. Es preferencia del que lee, no estado
+     del informe, así que también se recuerda. */
+  lock && lock.addEventListener('click', function () {
+    var on = shell.classList.toggle('nav-locked');
+    write(KEYL, on);
+    lock.setAttribute('aria-pressed', String(on));
+    lock.setAttribute('title', on ? 'Soltar el menú' : 'Fijar el menú');
+  });
+
+  /* Hover-peek: en rail, el sidebar se despliega como overlay al pasar por
+     encima. No empuja el contenido. Se anula con el candado. */
+  var sb = document.getElementById('app-sidebar');
+  /* El desplegado tiene transicion de ancho: mientras crece de 68 a 240px el
+     borde derecho pasa por debajo del puntero y disparaba mouseleave y
+     mouseenter en cadena — el panel titilaba. Se sale con histeresis: el
+     cierre espera y se cancela si el puntero vuelve a entrar. */
+  var salida = null;
+  sb && sb.addEventListener('mouseenter', function () {
+    clearTimeout(salida);
+    if (esRail.matches && shell.classList.contains('nav-collapsed') && !shell.classList.contains('nav-locked')) {
+      shell.classList.add('nav-peek');
+    }
+  });
+  sb && sb.addEventListener('mouseleave', function () {
+    clearTimeout(salida);
+    salida = setTimeout(function () { shell.classList.remove('nav-peek'); }, 180);
+  });
+
+  /* Ítem activo del sidebar según el scroll.
+     No se usa YiQi.initScrollSpy: marca la ÚLTIMA sección que intersecta, y
+     con paneles altos eso deja marcado el final de la página mientras estás
+     mirando el medio. Medido: al ir a "Trabado" marcaba "Indicadores".
+     Acá se elige la sección más alta que cruza la banda superior. */
+  var nav = document.querySelector('.nav');
+  var secs = [].slice.call(document.querySelectorAll('.content > section[id]'));
+  function marcar() {
+    if (!nav || !secs.length) return;
+    var y = 140, elegida = secs[0];
+    for (var i = 0; i < secs.length; i++) {
+      if (secs[i].getBoundingClientRect().top <= y) elegida = secs[i];
+    }
+    /* Al final de la página la última sección puede no llegar nunca a la
+       banda superior: si no, el menú nunca la marca. */
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) {
+      elegida = secs[secs.length - 1];
+    }
+    nav.querySelectorAll('.nav-link').forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + elegida.id;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  var pedido = false;
+  addEventListener('scroll', function () {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(function () { pedido = false; marcar(); });
+  }, { passive: true });
+  addEventListener('resize', marcar);
+  marcar();
+
+  /* Drawer de mobile. El hamburguesa abre; el overlay, la cruz y Escape
+     cierran. Sin esto el cajon queda abierto tapando el informe. */
+  var ham = document.querySelector('.nav-hamburger');
+  var cerrar = document.querySelector('.nav-close');
+  var overlay = document.getElementById('app-overlay');
+  function drawer(abierto) {
+    shell.classList.toggle('nav-open', abierto);
+    if (overlay) overlay.classList.toggle('is-on', abierto);
+    if (ham) ham.setAttribute('aria-expanded', String(abierto));
+  }
+  ham && ham.addEventListener('click', function () { drawer(!shell.classList.contains('nav-open')); });
+  cerrar && cerrar.addEventListener('click', function () { drawer(false); });
+  overlay && overlay.addEventListener('click', function () { drawer(false); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape') drawer(false); });
+  /* Al tocar un destino en mobile el cajon se cierra solo: si no, el lector
+     salta a la seccion y la sigue viendo tapada. */
+  sb && sb.addEventListener('click', function (e) {
+    if (e.target.closest('a.nav-link')) drawer(false);
+  });
+})();
+
+/* Reloj de la barra de estado, en hora local. */
+(function () {
+  var el = document.getElementById('sb-clock');
+  function tick() { var d = new Date(); el.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+  if (el) { tick(); setInterval(tick, 30000); }
+})();
+
+/* Version del DS: se lee del token en runtime, asi el pie nunca miente. */
+(function () {
+  try {
+    var v = getComputedStyle(document.documentElement).getPropertyValue('--ds-version').trim().replace(/"/g, '');
+    if (v) document.querySelectorAll('[data-ds-version]').forEach(function (el) { el.textContent = 'DS v' + v; });
+  } catch (e) {}
+})();
+</script>
+
+    <script>
+    /* ─── COMERCIAL · CRM ───────────────────────────────────────────
+       Cifras calculadas desde los exports del CRM por
+       scripts/crm-json.py; el resultado vive en data/crm-2026.json y se
+       embebe al armar la pagina, para que el informe abra igual desde el
+       disco. Aca no se escribe ninguna cifra a mano. */
+    const CRM = {"generado":"2026-09-14","fuentes":["Consulta_comercial_639247301474559625.xlsx","Nuevas_ON_mensuales_639249872023278151.xlsx","ONs_Concretadas_DETALLE_639247234485819268.xlsx","ONs_Detalle_con_estado_639249969573870225.xlsx","_Cotiz__Aprobadas_639249810261016332.xlsx","__Cotiz_enviadas__639249810338249427.xlsx","default_639249810372437562.xlsx"],"nota":"Calculado desde los exports del CRM. Emitidas se cuenta por fecha de la cotizacion; enviadas y aprobadas son los agregados del CRM, por fecha de envio y de aprobacion. Son tres fechas distintas.","meses":{"2026-01":{"consultas":{"total":1,"origen":{"Web yiqi.com.ar":1}},"ons":{"total":6,"origen":{"CLIENTE":3,"Web yiqi.com.ar":2,"Recomendación":1},"estado":{"Desestimada":3,"Vencida":1,"Concretada":1,"Hibernando":1}},"cotizaciones":{"emitidas":9,"estado":{"Vencida":3,"Rechazada":2,"Aprobada":2,"Versionada":2},"enviadas":9,"aprobadas":{"n":3,"neto_impl":610091.07,"neto_sop":36413.6}},"concretadas":{"n":6,"importe":3115782.695,"detalle":[{"f":"20/01","empresa":"Mutis Agencia ","origen":"CLIENTE","importe":918000.0},{"f":"23/01","empresa":"Silvestre Blousson","origen":"CLIENTE","importe":610091.07},{"f":"16/01","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":574925.0},{"f":"02/01","empresa":"DX Electrónica","origen":"CLIENTE","importe":450118.5},{"f":"02/01","empresa":"DX Electrónica","origen":"CLIENTE","importe":337588.875},{"f":"02/01","empresa":"ProShop","origen":"CLIENTE","importe":225059.25}]}},"2026-02":{"consultas":{"total":2,"origen":{"INSTAGRAM - META":1,"Web yiqi.com.ar":1}},"ons":{"total":6,"origen":{"CLIENTE":4,"INSTAGRAM - META":1,"Web yiqi.com.ar":1},"estado":{"Concretada":3,"Desestimada":2,"Hibernando":1}},"cotizaciones":{"emitidas":6,"estado":{"Versionada":2,"Aprobada":2,"Vencida":1,"En preparación":1},"enviadas":2,"aprobadas":{"n":2,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":1,"importe":353925.0,"detalle":[{"f":"26/02","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":353925.0}]}},"2026-03":{"consultas":{"total":5,"origen":{"Recomendación":3,"Web yiqi.com.ar":1,"INSTAGRAM - META":1}},"ons":{"total":23,"origen":{"CLIENTE":19,"Recomendación":3,"INSTAGRAM - META":1},"estado":{"Desestimada":12,"En Curso":4,"Vencida":4,"Concretada":3}},"cotizaciones":{"emitidas":22,"estado":{"En preparación":7,"Vencida":6,"Versionada":5,"Rechazada":2,"Aprobada":2},"enviadas":18,"aprobadas":{"n":1,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":3,"importe":5287209.0,"detalle":[{"f":"09/03","empresa":"Mutis Agencia ","origen":"CLIENTE","importe":2796789.0},{"f":"27/03","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":2018520.0},{"f":"04/03","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":471900.0}]}},"2026-04":{"consultas":{"total":3,"origen":{"Sin origen":1,"web":1,"Web yiqi.com.ar":1}},"ons":{"total":11,"origen":{"CLIENTE":7,"web":3,"Web yiqi.com.ar":1},"estado":{"Desestimada":4,"Concretada":2,"Vencida":2,"Hibernando":1,"Confirmada":1,"En Curso":1}},"cotizaciones":{"emitidas":17,"estado":{"Vencida":8,"Aprobada":5,"Versionada":3,"En preparación":1},"enviadas":17,"aprobadas":{"n":5,"neto_impl":2742989.085,"neto_sop":403832.16}},"concretadas":{"n":5,"importe":5128122.78,"detalle":[{"f":"29/04","empresa":"Adsmartm","origen":"Recomendación","importe":2754044.955},{"f":"13/04","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":696389.4},{"f":"14/04","empresa":"TALLERES METALURGICOS CRESPO S.R.L.","origen":"CLIENTE","importe":658251.72},{"f":"23/04","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":541636.2},{"f":"14/04","empresa":"TALLERES METALURGICOS CRESPO S.R.L.","origen":"CLIENTE","importe":477800.505}]}},"2026-05":{"consultas":{"total":6,"origen":{"Recomendación":3,"web":2,"Sin origen":1}},"ons":{"total":12,"origen":{"CLIENTE":6,"Recomendación":3,"web":2,"CACE":1},"estado":{"Desestimada":4,"Concretada":4,"Hibernando":2,"Vencida":1,"En Curso":1}},"cotizaciones":{"emitidas":9,"estado":{"Versionada":5,"Vencida":2,"Rechazada":1,"Aprobada":1},"enviadas":7,"aprobadas":{"n":1,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":0,"importe":0.0,"detalle":[]}},"2026-06":{"consultas":{"total":6,"origen":{"web":4,"INSTAGRAM - META":1,"Sin origen":1}},"ons":{"total":19,"origen":{"CLIENTE":15,"web":3,"Recomendación":1},"estado":{"Concretada":7,"En Curso":5,"Desestimada":4,"Presupuesto enviado":2,"Vencida":1}},"cotizaciones":{"emitidas":23,"estado":{"Aprobada":10,"Versionada":6,"Vencida":4,"En preparación":2,"Rechazada":1},"enviadas":22,"aprobadas":{"n":10,"neto_impl":10358512.5,"neto_sop":1400056.0}},"concretadas":{"n":1,"importe":700741.825,"detalle":[{"f":"01/06","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":700741.825}]}},"2026-07":{"consultas":{"total":3,"origen":{"Precotizador web":1,"Recomendación":1,"web":1}},"ons":{"total":6,"origen":{"CLIENTE":4,"web":1,"Recomendación":1},"estado":{"En Curso":2,"Confirmada":2,"Desestimada":1,"Concretada":1}},"cotizaciones":{"emitidas":7,"estado":{"Aprobada":4,"Vencida":3},"enviadas":7,"aprobadas":{"n":2,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":10,"importe":6334863.627,"detalle":[{"f":"23/07","empresa":"Espacio Marketing","origen":"CLIENTE","importe":1305000.0},{"f":"08/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":1125000.0},{"f":"21/07","empresa":"Tienda Shopealo TradeBox SRL","origen":"CLIENTE","importe":968660.0},{"f":"08/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":580160.0},{"f":"01/07","empresa":"Tienda Shopealo TradeBox SRL","origen":"CLIENTE","importe":560593.467},{"f":"06/07","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":435120.0},{"f":"16/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":419890.8},{"f":"30/07","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":360279.36},{"f":"16/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":290080.0},{"f":"08/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":290080.0}]}},"2026-08":{"consultas":{"total":4,"origen":{"Precotizador web":2,"Sin origen":1,"web":1}},"ons":{"total":16,"origen":{"CLIENTE":14,"web":2},"estado":{"En Curso":11,"Presupuesto enviado":4,"Concretada":1}},"cotizaciones":{"emitidas":7,"estado":{"Vencida":4,"Aprobada":2,"Enviada":1},"enviadas":7,"aprobadas":{"n":4,"neto_impl":596025.0,"neto_sop":75624.0}},"concretadas":{"n":3,"importe":8524082.1,"detalle":[{"f":"07/08","empresa":"Silvestre Blousson","origen":"CLIENTE","importe":7928512.5},{"f":"20/08","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":319449.6},{"f":"20/08","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":276120.0}]}},"2026-09":{"consultas":{"total":3,"origen":{"web":2,"Recomendación":1}},"ons":{"total":4,"origen":{"CLIENTE":2,"web":1,"Recomendación":1},"estado":{"En Curso":2,"Confirmada":1,"Presupuesto enviado":1}},"cotizaciones":{"emitidas":3,"estado":{"Enviada":2,"Aprobada":1},"enviadas":3,"aprobadas":{"n":1,"neto_impl":262990.0,"neto_sop":null}},"concretadas":{"n":0,"importe":0.0,"detalle":[]}}},"historico":{"total":4436,"desde":"2014-11-28","estado":{"Desestimada":2481,"En Curso":1411,"Concretada":459,"Hibernando":30,"Presentación enviada":19,"Confirmada":14,"Vencida":11,"Presupuesto enviado":8,"Esperando presupuesto":3},"enCursoNuevas":26,"enCursoViejas":1385},"series":{"on_mensuales":{"2025-01":13,"2025-02":14,"2025-03":14,"2025-04":12,"2025-05":18,"2025-06":13,"2025-07":8,"2025-08":12,"2025-09":14,"2025-10":8,"2025-11":9,"2025-12":10,"2026-01":6,"2026-02":5,"2026-03":16,"2026-04":8,"2026-05":9,"2026-06":15,"2026-07":6,"2026-08":8,"2026-09":4},"cotiz_enviadas":{"2025-07":10,"2025-08":12,"2025-09":16,"2025-10":15,"2025-11":16,"2025-12":10,"2026-01":9,"2026-02":2,"2026-03":18,"2026-04":17,"2026-05":7,"2026-06":22,"2026-07":7,"2026-08":7,"2026-09":3},"cotiz_aprobadas":{"2025-07":{"n":5,"neto_impl":10814429.171999998,"neto_sop":2034782.0},"2025-08":{"n":3,"neto_impl":496145.0,"neto_sop":53912.0},"2025-09":{"n":7,"neto_impl":0.0,"neto_sop":0.0},"2025-10":{"n":6,"neto_impl":6356223.5,"neto_sop":612444.0},"2025-11":{"n":2,"neto_impl":0.0,"neto_sop":0.0},"2025-12":{"n":4,"neto_impl":0.0,"neto_sop":0.0},"2026-01":{"n":3,"neto_impl":610091.07,"neto_sop":36413.6},"2026-02":{"n":2,"neto_impl":0.0,"neto_sop":0.0},"2026-03":{"n":1,"neto_impl":0.0,"neto_sop":0.0},"2026-04":{"n":5,"neto_impl":2742989.085,"neto_sop":403832.16},"2026-05":{"n":1,"neto_impl":0.0,"neto_sop":0.0},"2026-06":{"n":10,"neto_impl":10358512.5,"neto_sop":1400056.0},"2026-07":{"n":2,"neto_impl":0.0,"neto_sop":0.0},"2026-08":{"n":4,"neto_impl":596025.0,"neto_sop":75624.0},"2026-09":{"n":1,"neto_impl":262990.0,"neto_sop":0.0}}}};
+    const CRM_MES = '2026-08', CRM_PREV = '2026-07';
+    const CRM_NOMBRE = { '01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre' };
+
+    /* La serie corta en el mes del reporte. Septiembre esta a mitad de
+       camino: puesto al lado de meses cerrados se lee como una caida. */
+    const CRM_MESES = () => Object.keys(CRM.meses).sort().filter(m => m <= CRM_MES);
+    const crmRotulo = k => CRM_NOMBRE[k.slice(5)].slice(0, 3);
+    /* En la serie larga el rotulo lleva el año: hay dos eneros. */
+    const crmRotLargo = k => CRM_NOMBRE[k.slice(5)].slice(0, 3) + ' ' + k.slice(2, 4);
+    const crmNum = v => Number(v).toLocaleString('es-AR');
+    const crmPesos = v => '$' + Math.round(v).toLocaleString('es-AR');
+    const crmMillones = v => v >= 1e6 ? '$' + (v / 1e6).toFixed(1).replace('.', ',') + ' M'
+                            : v >= 1e3 ? '$' + Math.round(v / 1e3) + ' k' : '$' + Math.round(v);
+    const crmMesNom = k => CRM_NOMBRE[k.slice(5)] + ' ' + k.slice(0, 4);
+
+    /* Las cinco etapas y el importe, cada una con como se lee su cifra. */
+    const CRM_ETAPAS = [
+      { id: 'crm-h-consultas',   rot: 'Consultas comerciales',  valor: d => d.consultas.total,               fmt: crmNum },
+      { id: 'crm-h-ons',         rot: 'ONs nuevas',             valor: d => d.ons.total,                     fmt: crmNum },
+      { id: 'crm-h-emitidas',    rot: 'Cotizaciones emitidas',  valor: d => d.cotizaciones.emitidas,         fmt: crmNum },
+      { id: 'crm-h-aprobadas',   rot: 'Cotizaciones aprobadas', valor: d => d.cotizaciones.aprobadas.n,      fmt: crmNum },
+      { id: 'crm-h-concretadas', rot: 'ONs concretadas',        valor: d => d.concretadas.n,                 fmt: crmNum },
+    ];
+
+    /* ─── DETALLE EN MODAL ──────────────────────────────────────────
+       Cada tarjeta con cifra se registra acá con su serie, y el click la
+       abre en grande. Un solo modal para todo el reporte: la tarjeta es el
+       disparador, no el dueño del gráfico. */
+    const DETALLES = {};
+    let _detalleVolver = null;
+
+    function registrarDetalle(clave, cfg) { DETALLES[clave] = cfg; }
+
+    function detalleStats(cfg) {
+      const ps = cfg.puntos, vs = ps.map(cfg.valor);
+      const i = ps.indexOf(CRM_MES), j = ps.indexOf(CRM_PREV);
+      const act = i >= 0 ? vs[i] : 0, ant = j >= 0 ? vs[j] : null;
+      const dif = ant == null ? null : act - ant;
+      const pct = (ant == null || !ant) ? null : (act - ant) / ant * 100;
+      const max = Math.max.apply(null, vs);
+      const mMax = ps[vs.indexOf(max)];
+      /* Un decimal: sin redondear, crmNum devolvia "12,375" y en es-AR
+         eso se lee como doce mil trescientos setenta y cinco. */
+      const prom = Math.round(vs.reduce((t, v) => t + v, 0) / (vs.length || 1) * 10) / 10;
+      const signo = n => (n > 0 ? '+' : n < 0 ? '\u2212' : '');
+      const clase = n => (n > 0 ? ' is-positive' : n < 0 ? ' is-negative' : '');
+      const item = (l, v, sub, cl) =>
+        `<div class="modal-stat-item"><span class="modal-stat-label">${l}</span><span class="modal-stat-value${cl || ''}">${v}</span><span class="modal-stat-sub">${sub}</span></div>`;
+      return [
+        item(crmMesNom(CRM_MES).split(' ')[0], cfg.fmt(act), 'el mes del reporte'),
+        ant == null ? item('Mes anterior', '\u2014', 'sin dato')
+                    : item(crmMesNom(CRM_PREV).split(' ')[0], cfg.fmt(ant), 'mes anterior'),
+        dif == null ? item('Variación', '\u2014', 'sin comparación')
+                    : item('Variación', signo(dif) + cfg.fmt(Math.abs(dif)), 'contra el mes anterior', clase(dif)),
+        pct == null ? item('En porcentaje', '\u2014', 'el mes anterior fue cero')
+                    : item('En porcentaje', signo(pct) + Math.abs(pct).toFixed(1).replace('.', ',') + ' %', 'contra el mes anterior', clase(pct)),
+        item('Máximo de la serie', cfg.fmt(max), crmMesNom(mMax).toLowerCase()),
+        item('Promedio', cfg.fmt(prom), ps.length + ' meses'),
+      ].join('');
+    }
+
+    function abrirDetalle(clave, origen) {
+      const cfg = DETALLES[clave];
+      const m = document.getElementById('detalle-modal');
+      if (!cfg || !m) return;
+      _detalleVolver = origen || null;
+      document.getElementById('detalle-kicker').textContent = cfg.kicker || '';
+      document.getElementById('detalle-titulo').textContent = cfg.titulo;
+      document.getElementById('detalle-sub').textContent = cfg.sub || '';
+      document.getElementById('detalle-stats').innerHTML = detalleStats(cfg);
+      document.getElementById('detalle-fuente').textContent = cfg.fuente || '';
+      m.hidden = false;
+      /* El grafico se dibuja con el modal ya visible: en un contenedor
+         oculto, Chart.js mide cero y sale un canvas de 0px. */
+      setTimeout(function () {
+        crmLinea('detalle-canvas', cfg.puntos, [{ label: cfg.titulo, valor: cfg.valor }], cfg.fmt);
+        const c = document.getElementById('detalle-cerrar');
+        c && c.focus();
+      }, 20);
+    }
+
+    function cerrarDetalle() {
+      const m = document.getElementById('detalle-modal');
+      if (!m || m.hidden) return;
+      m.hidden = true;
+      if (_charts['detalle-canvas']) { _charts['detalle-canvas'].destroy(); delete _charts['detalle-canvas']; }
+      if (_detalleVolver) { _detalleVolver.focus(); _detalleVolver = null; }
+    }
+
+    (function () {
+      document.addEventListener('click', function (e) {
+        const cerrar = e.target.closest('#detalle-cerrar');
+        if (cerrar) { cerrarDetalle(); return; }
+        if (e.target.id === 'detalle-modal') { cerrarDetalle(); return; }
+        const card = e.target.closest('[data-detalle]');
+        if (card) abrirDetalle(card.getAttribute('data-detalle'), card);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { cerrarDetalle(); return; }
+        const card = e.target.closest && e.target.closest('[data-detalle]');
+        if (card && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          abrirDetalle(card.getAttribute('data-detalle'), card);
+        }
+      });
+      /* Foco atrapado dentro del modal mientras esta abierto, como en el
+         panel gerencial: con Tab no se sale a la pagina de atras. */
+      document.addEventListener('keydown', function (e) {
+        const m = document.getElementById('detalle-modal');
+        if (!m || m.hidden || e.key !== 'Tab') return;
+        const f = Array.prototype.filter.call(
+          m.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'),
+          el => el.offsetParent !== null);
+        if (!f.length) return;
+        const pri = f[0], ult = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === pri) { e.preventDefault(); ult.focus(); }
+        else if (!e.shiftKey && document.activeElement === ult) { e.preventDefault(); pri.focus(); }
+      });
+    })();
+
+    function crmRender() {
+      const b = document.getElementById('crm-body');
+      const d = CRM.meses[CRM_MES], p = CRM.meses[CRM_PREV];
+      if (!b || !d) return;
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+      document.getElementById('crm-sub').textContent =
+        crmMesNom(CRM_MES) + ' · calculado desde los exports del CRM · cada etapa contra sus propios meses';
+
+      /* La variacion se dice en la unidad de la etapa, no en porcentaje:
+         de 2 a 4 cotizaciones no es "+100 %", son dos cotizaciones. */
+      const variacion = (v, prev) => {
+        const dif = v - prev;
+        if (!dif) return 'igual que ' + crmMesNom(CRM_PREV).split(' ')[0].toLowerCase();
+        return (dif > 0 ? '+' : '−') + crmNum(Math.abs(dif)) + ' vs ' + crmMesNom(CRM_PREV).split(' ')[0].toLowerCase();
+      };
+
+      const etapas = CRM_ETAPAS.map(e => {
+        registrarDetalle('crm:' + e.id, {
+          kicker: 'Comercial · CRM', titulo: e.rot,
+          sub: 'Mes a mes, de enero 2026 a ' + crmMesNom(CRM_MES).toLowerCase(),
+          puntos: CRM_MESES(), valor: m => e.valor(CRM.meses[m]), fmt: e.fmt,
+          fuente: 'Exports del CRM · data/crm-2026.json',
+        });
+        return `
+        <div class="kpi-card card-reveal crm-etapa" data-detalle="crm:${e.id}" role="button" tabindex="0" aria-label="Ver ${esc(e.rot)} en detalle">
+          <div class="kpi-label">${esc(e.rot)}</div>
+          <div class="kpi-value">${esc(e.fmt(e.valor(d)))}</div>
+          <div class="kpi-delta neutral">${esc(variacion(e.valor(d), e.valor(p)))}</div>
+          <div class="crm-mini"><canvas id="${e.id}" aria-label="${esc(e.rot)} por mes"></canvas></div>
+        </div>`;
+      }).join('');
+
+      /* Orden fijo, no por cantidad: asi la barra se lee igual todos los
+         meses. El color sale de la tabla semantica del sistema — aprobada
+         es un resultado, vencida es una perdida. */
+      const ORDEN = ['Concretada', 'Confirmada', 'Aprobada', 'Presupuesto enviado', 'Presentación enviada',
+                     'Enviada', 'En Curso', 'En preparación', 'Esperando presupuesto', 'Versionada',
+                     'Hibernando', 'Rechazada', 'Desestimada', 'Vencida', 'Sin estado'];
+      const TOKEN = { 'Concretada': '--green', 'Confirmada': '--green', 'Aprobada': '--green',
+                      'Presupuesto enviado': '--cyan', 'Presentación enviada': '--cyan', 'Enviada': '--cyan',
+                      'En Curso': '--blue', 'En preparación': '--blue', 'Esperando presupuesto': '--blue',
+                      'Versionada': '--muted-2', 'Hibernando': '--muted-2', 'Sin estado': '--muted-2',
+                      'Rechazada': '--red', 'Desestimada': '--red', 'Vencida': '--red' };
+      /* Una pista partida por estado. La usan las ONs del mes, la cartera
+         historica y las cotizaciones: en los tres casos son las partes de
+         un total, no un ranking. */
+      const apilada = (mapa, aria) => {
+        const todas = Object.entries(mapa)
+          .sort((a, z) => (ORDEN.indexOf(a[0]) + 1 || 99) - (ORDEN.indexOf(z[0]) + 1 || 99));
+        const tot = todas.reduce((t, e) => t + e[1], 0) || 1;
+        /* Un tramo de 8 sobre 4.436 no se ve en la barra y ensucia la
+           leyenda. Debajo del 2 % van juntos a «Otros», que si se ve. */
+        let filas = todas;
+        if (todas.length > 4) {
+          const grandes = todas.filter(e => e[1] / tot >= 0.02);
+          const resto   = todas.reduce((t, e) => t + (e[1] / tot >= 0.02 ? 0 : e[1]), 0);
+          if (resto > 0 && grandes.length < todas.length) filas = grandes.concat([['Otros', resto]]);
+        }
+        const color = r => 'var(' + (TOKEN[r] || '--muted-2') + ')';
+        return `
+          <div class="crm-apilada" role="img" aria-label="${esc(aria)}">${filas.map(([r, v]) =>
+            `<div class="crm-tramo" style="width:${(v / tot * 100).toFixed(1)}%;background:${color(r)}"></div>`).join('')}</div>
+          <div class="crm-apilada-leyenda">${filas.map(([r, v]) =>
+            `<div class="legend-row"><span class="legend-dot" style="background:${color(r)}"></span><span class="legend-label">${esc(r)}</span><span class="legend-pct">${crmNum(v)} · ${Math.round(v / tot * 100)} %</span></div>`).join('')}</div>`;
+      };
+      const barras = apilada(d.cotizaciones.estado, 'Cotizaciones del mes por estado');
+      const h = CRM.historico || null;
+      const cerradas = h ? (h.estado['Concretada'] || 0) : 0;
+      const perdidas = h ? (h.estado['Desestimada'] || 0) : 0;
+
+      b.innerHTML = `
+        <div class="crm-etapas">${etapas}</div>
+
+        <div class="crm-par">
+          <div class="card crm-bloque card-reveal kpi-card" data-detalle="crm:importe" role="button" tabindex="0" aria-label="Ver el importe concretado en detalle">
+            <div class="kpi-label">Importe concretado</div>
+            <div class="kpi-value">${esc(crmPesos(d.concretadas.importe))}</div>
+            <div class="kpi-delta neutral">${esc(crmPesos(p.concretadas.importe) + ' en ' + crmMesNom(CRM_PREV).split(' ')[0].toLowerCase())}</div>
+            <div class="crm-histo"><canvas id="crm-h-importe" aria-label="Importe concretado por mes"></canvas></div>
+          </div>
+
+          <div class="card crm-bloque card-reveal">
+            <div class="card-kicker">De dónde salieron las ONs</div>
+            <div class="donut-block" style="margin-top:12px">
+              <div class="donut-chart crm-donut"><canvas id="crm-chart-origen" aria-label="ONs por origen"></canvas></div>
+              <div class="donut-legend" id="crm-leg-origen"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card crm-bloque card-reveal">
+          <div class="card-kicker">En qué quedaron las ONs del mes</div>
+          <p class="crm-nota">Se lee hoy, no al cierre del mes: una ON abierta en ${esc(crmMesNom(CRM_MES).toLowerCase())} puede concretarse en cualquier momento. Por eso las ONs nuevas y las concretadas de un mismo mes son grupos distintos y no se comparan entre sí.</p>
+          ${apilada(d.ons.estado, 'ONs del mes por estado')}
+        </div>
+
+        ${h ? `<div class="card crm-bloque card-reveal">
+          <div class="card-kicker">Pendiente de limpieza en el CRM</div>
+          <p class="crm-nota">De las ${crmNum(h.estado['En Curso'] || 0)} oportunidades en «En Curso», ${crmNum(h.enCursoViejas)} se crearon hace más de dos años y nadie las cerró ni las descartó. El pipeline abierto real son ${crmNum(h.enCursoNuevas)}. Es trabajo de CRM, no lectura del mes.</p>
+        </div>` : ''}
+
+        <div class="card crm-bloque card-reveal">
+          <div class="card-kicker">En qué quedaron las cotizaciones del mes</div>
+          <p class="crm-nota">${crmNum(d.cotizaciones.emitidas)} emitidas · ${crmNum(d.cotizaciones.enviadas)} enviadas · ${crmNum(d.cotizaciones.aprobadas.n)} aprobadas por ${crmPesos(d.cotizaciones.aprobadas.neto_impl)} de neto de implementación${d.cotizaciones.aprobadas.neto_sop ? ' y ' + crmPesos(d.cotizaciones.aprobadas.neto_sop) + ' de soporte' : ''}. Emitidas se cuenta por fecha de la cotización; enviadas y aprobadas, por fecha de envío y de aprobación. Son tres fechas distintas.</p>
+          ${barras}
+        </div>
+
+        <div class="card crm-bloque card-reveal">
+          <div class="card-kicker">La serie larga</div>
+          <p class="crm-nota">Los tres agregados que publica el tablero del CRM, tal cual: se copian, no se recalculan desde el detalle. Cortan en ${esc(crmMesNom(CRM_MES).toLowerCase())}.</p>
+          <div class="crm-serie-t">Nuevas ON mensuales</div>
+          <div class="crm-serie"><canvas id="crm-s-ons" aria-label="Nuevas ON mensuales"></canvas></div>
+          <div class="crm-serie-t">Cotizaciones enviadas</div>
+          <div class="crm-serie"><canvas id="crm-s-env" aria-label="Cotizaciones enviadas por mes"></canvas></div>
+          <div class="crm-serie-t">Cotizaciones aprobadas · neto</div>
+          <div class="crm-serie"><canvas id="crm-s-apr" aria-label="Neto de las cotizaciones aprobadas por mes"></canvas></div>
+        </div>
+
+        <div class="crm-pie">${esc(CRM.nota)} · Generado el ${esc(CRM.generado)}.</div>`;
+
+      registrarDetalle('crm:importe', {
+        kicker: 'Comercial · CRM', titulo: 'Importe concretado',
+        sub: 'Mes a mes, de enero 2026 a ' + crmMesNom(CRM_MES).toLowerCase(),
+        puntos: CRM_MESES(), valor: m => CRM.meses[m].concretadas.importe, fmt: crmPesos,
+        fuente: 'Exports del CRM · data/crm-2026.json',
+      });
+
+      if (typeof initReveal === 'function') initReveal(b);
+      setTimeout(function () { crmChart(); crmHistogramas(); }, 30);
+    }
+
+    /* ─── HISTOGRAMAS ───────────────────────────────────────────────
+       El eje Y no se dibuja: la cifra del mes del reporte va escrita
+       sobre su barra y la del resto se lee por la altura. Un grafico
+       cuyo dato hay que buscar con el mouse no informa, pero nueve
+       etiquetas en 200px tampoco: se escribe la que ancla la lectura. */
+    /* Escribe la cifra sobre la barra o el punto, corrida hacia adentro si
+       se saldria del area del grafico: centrada sobre el ultimo mes, la
+       mitad del texto quedaba cortada contra el borde. */
+    function crmCifraEncima(chart, x, y, texto) {
+      const ctx = chart.ctx, area = chart.chartArea;
+      const mitad = ctx.measureText(texto).width / 2 + 1;
+      const xx = Math.min(Math.max(x, area.left + mitad), area.right - mitad);
+      ctx.fillText(texto, xx, y);
+    }
+
+    /* Motor de columnas por mes. Lo usan las etapas del CRM y tambien la
+       seccion de Meta: una sola gramatica de barras en todo el reporte. */
+    function crmColumnas(id, puntos, valores, fmt, alto) {
+      const cv = document.getElementById(id);
+      if (!cv || typeof Chart === 'undefined') return;
+      if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
+      const ms = puntos;
+      const acc = getCSSVar('--cyan'), apagado = getCSSVar('--muted-2');
+      const texto = getCSSVar('--text'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
+      const cifra = getCSSVar('--kpi-num'), mono = getCSSVar('--mono');
+      const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line');
+
+      const valorDelMes = {
+        id: 'valorDelMes',
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx, i = ms.indexOf(CRM_MES);
+          if (i < 0) return;
+          const bar = chart.getDatasetMeta(0).data[i], v = chart.data.datasets[0].data[i];
+          if (!bar || !v) return;
+          ctx.save();
+          ctx.font = '600 11px ' + cifra;
+          ctx.fillStyle = texto; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          crmCifraEncima(chart, bar.x, bar.y - 3, fmt(v));
+          ctx.restore();
+        }
+      };
+
+      _charts[id] = new Chart(cv, {
+        type: 'bar',
+        data: {
+          labels: ms.map(alto === 'mini' ? crmRotulo : crmRotLargo),
+          datasets: [{
+            label: 'Mes',
+            data: ms.map(valores),
+            backgroundColor: ms.map(m => m === CRM_MES ? acc : apagado),
+            borderRadius: 3, borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 400, easing: 'easeOutCubic' },
+          layout: { padding: { top: 16 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: elev, borderColor: linea, borderWidth: 1,
+              titleColor: texto, bodyColor: muted, padding: 10,
+              callbacks: { label: c => ' ' + fmt(c.parsed.y) }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { display: false },
+                 ticks: { color: muted2, font: { family: mono, size: alto === 'mini' ? 9 : 10 }, maxRotation: 0, autoSkip: true } },
+            y: { display: false, beginAtZero: true, grace: '14%' }
+          }
+        },
+        plugins: [valorDelMes]
+      });
+    }
+
+    /* Las etapas del CRM: mismo motor, sobre los meses de 2026. */
+    function crmHisto(id, valor, fmt, alto) {
+      crmColumnas(id, CRM_MESES(), m => valor(CRM.meses[m]), fmt, alto);
+    }
+
+
+    /* La serie larga va en linea, no en barras: son veinte meses y lo que
+       se lee ahi es la forma de la curva, no el valor de cada mes. El eje Y
+       vuelve a dibujarse —una linea sin escala no se puede leer— y el mes
+       del reporte queda marcado con su punto grande y su cifra escrita.
+       Cuando hay dos series se distinguen ademas por el trazo: --cyan y
+       --blue vecinos, a este tamaño, se leen como una sola linea. */
+    function crmLinea(id, puntos, series, fmt) {
+      const cv = document.getElementById(id);
+      if (!cv || typeof Chart === 'undefined') return;
+      if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
+      const acc = getCSSVar('--cyan'), segunda = getCSSVar('--blue');
+      const texto = getCSSVar('--text'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
+      const cifra = getCSSVar('--kpi-num'), mono = getCSSVar('--mono');
+      const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), fondo = getCSSVar('--bg-elev');
+      const solo = series.length === 1;
+      const escala = [acc, segunda];
+      const iMes = puntos.indexOf(CRM_MES);
+
+      const valorDelMes = {
+        id: 'valorDelMes',
+        afterDatasetsDraw(chart) {
+          if (iMes < 0) return;
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.font = '600 11px ' + cifra;
+          ctx.fillStyle = texto; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          chart.data.datasets.forEach((ds, di) => {
+            const meta = chart.getDatasetMeta(di);
+            if (meta.hidden || di > 0) return;
+            const pt = meta.data[iMes], v = ds.data[iMes];
+            if (!pt) return;
+            crmCifraEncima(chart, pt.x, pt.y - 10, fmt(v));
+          });
+          ctx.restore();
+        }
+      };
+
+      _charts[id] = new Chart(cv, {
+        type: 'line',
+        data: {
+          labels: puntos.map(crmRotLargo),
+          datasets: series.map((se, i) => ({
+            label: se.label,
+            data: puntos.map(se.valor),
+            borderColor: escala[i % escala.length],
+            backgroundColor: escala[i % escala.length],
+            borderWidth: 2,
+            borderDash: i === 0 ? [] : [5, 4],
+            tension: 0.35,
+            fill: false,
+            pointRadius: puntos.map(m => m === CRM_MES ? 5 : 2.5),
+            pointHoverRadius: 6,
+            pointBackgroundColor: puntos.map(m => m === CRM_MES ? escala[i % escala.length] : fondo),
+            pointBorderColor: escala[i % escala.length],
+            pointBorderWidth: 2,
+          }))
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 400, easing: 'easeOutCubic' },
+          interaction: { mode: 'index', intersect: false },
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: solo ? { display: false } : {
+              position: 'bottom',
+              labels: { color: muted, font: { family: mono, size: 10 }, usePointStyle: true, pointStyleWidth: 8, padding: 12 }
+            },
+            tooltip: {
+              backgroundColor: elev, borderColor: linea, borderWidth: 1,
+              titleColor: texto, bodyColor: muted, padding: 10,
+              callbacks: { label: c => ' ' + c.dataset.label + ': ' + fmt(c.parsed.y) }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { color: linea },
+                 ticks: { color: muted2, font: { family: mono, size: 10 }, maxRotation: 0, autoSkip: true } },
+            y: { beginAtZero: true, grace: '10%', border: { display: false },
+                 grid: { color: linea },
+                 ticks: { color: muted2, font: { family: mono, size: 10 }, maxTicksLimit: 5, callback: v => fmt(v) } }
+          }
+        },
+        plugins: [valorDelMes]
+      });
+    }
+
+    function crmSeries() {
+      const corte = o => Object.keys(o).sort().filter(m => m <= CRM_MES);
+      const S = CRM.series || {};
+      if (S.on_mensuales) {
+        const ms = corte(S.on_mensuales);
+        crmLinea('crm-s-ons', ms, [{ label: 'Nuevas ON', valor: m => S.on_mensuales[m] }], crmNum);
+      }
+      if (S.cotiz_enviadas) {
+        const ms = corte(S.cotiz_enviadas);
+        crmLinea('crm-s-env', ms, [{ label: 'Enviadas', valor: m => S.cotiz_enviadas[m] }], crmNum);
+      }
+      if (S.cotiz_aprobadas) {
+        const ms = corte(S.cotiz_aprobadas);
+        crmLinea('crm-s-apr', ms, [
+          { label: 'Neto implementación', valor: m => S.cotiz_aprobadas[m].neto_impl },
+          { label: 'Neto soporte',        valor: m => S.cotiz_aprobadas[m].neto_sop },
+        ], crmMillones);
+      }
+    }
+
+    function crmHistogramas() {
+      CRM_ETAPAS.forEach(e => crmHisto(e.id, e.valor, e.fmt, 'mini'));
+      crmHisto('crm-h-importe', d => d.concretadas.importe, crmMillones);
+      crmSeries();
+    }
+
+    /* Donut de origen. Colores por token y cifra en la leyenda, nunca
+       solo en el tooltip. Se rehace al cambiar de tema. */
+    function crmChart() {
+      const cv = document.getElementById('crm-chart-origen');
+      const d = CRM.meses[CRM_MES];
+      if (!cv || !d || typeof Chart === 'undefined') return;
+      if (_charts.crmOrigen) { _charts.crmOrigen.destroy(); delete _charts.crmOrigen; }
+      const filas = Object.entries(d.ons.origen).sort((a, b) => b[1] - a[1]);
+      const total = filas.reduce((s, r) => s + r[1], 0) || 1;
+      const escala = [getCSSVar('--cyan'), getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--blue'), getCSSVar('--muted-2')];
+      const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), texto = getCSSVar('--text'), muted = getCSSVar('--muted');
+      _charts.crmOrigen = new Chart(cv, {
+        type: 'doughnut',
+        data: { labels: filas.map(r => r[0]), datasets: [{ data: filas.map(r => r[1]), backgroundColor: filas.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '68%',
+          animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10,
+              callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } },
+          }
+        }
+      });
+      const leg = document.getElementById('crm-leg-origen');
+      if (leg) leg.innerHTML = filas.map((r, i) =>
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${r[1]} · ${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+    }
+
+    crmRender();
+    </script>
+
+    <script>
+    /* ─── META ──────────────────────────────────────────────────────
+       Sale de data/meta.json, que GitHub Actions sincroniza a diario
+       contra la Marketing API. Se embebe el mes y la serie al armar la
+       pagina: agosto esta cerrado y no tiene que moverse despues.
+       El cruce con el CRM usa el objeto CRM de la seccion anterior. */
+    const META = {"cuenta":"370211010327709","generado":"2026-09-13T13:34:36.468Z","meses":{"2025-01":{"gasto":615252,"alcance":76601,"impresiones":126561,"conv":130,"inter":1184,"clics":1038},"2025-02":{"gasto":860036,"alcance":109119,"impresiones":192091,"conv":121,"inter":1351,"clics":1241},"2025-03":{"gasto":1136173,"alcance":54068,"impresiones":125586,"conv":147,"inter":1085,"clics":980},"2025-04":{"gasto":856720,"alcance":59349,"impresiones":131785,"conv":153,"inter":1201,"clics":1106},"2025-05":{"gasto":862976,"alcance":50267,"impresiones":96280,"conv":36,"inter":812,"clics":731},"2025-06":{"gasto":706847,"alcance":266900,"impresiones":435422,"conv":67,"inter":1346,"clics":1129},"2025-07":{"gasto":644768,"alcance":147014,"impresiones":291698,"conv":44,"inter":1663,"clics":1428},"2025-08":{"gasto":218362,"alcance":75806,"impresiones":139281,"conv":21,"inter":502,"clics":429},"2025-10":{"gasto":16622,"alcance":6040,"impresiones":13514,"conv":5,"inter":580,"clics":68},"2026-01":{"gasto":61911,"alcance":3605,"impresiones":5597,"conv":5,"inter":887,"clics":48},"2026-02":{"gasto":265850,"alcance":45484,"impresiones":74488,"conv":103,"inter":5212,"clics":1408},"2026-03":{"gasto":568390,"alcance":74139,"impresiones":141295,"conv":199,"inter":2610,"clics":2017},"2026-04":{"gasto":526277,"alcance":129222,"impresiones":301183,"conv":187,"inter":5668,"clics":4856},"2026-05":{"gasto":544821,"alcance":109675,"impresiones":253808,"conv":101,"inter":9159,"clics":4806},"2026-06":{"gasto":475715,"alcance":19327,"impresiones":38222,"conv":41,"inter":9267,"clics":247},"2026-07":{"gasto":243256,"alcance":66919,"impresiones":122097,"conv":60,"inter":16833,"clics":4861},"2026-08":{"gasto":486857,"alcance":141626,"impresiones":276211,"conv":301,"inter":23336,"clics":6005}},"campanas":[{"nombre":"Puedes vender más / costos · Julio–Agosto","gasto":282082,"impresiones":136132,"resultadoTipo":"clics","resultado":4070,"costoResultado":69},{"nombre":"Mensajes IG · placas · Julio–Agosto","gasto":204775,"impresiones":140079,"resultadoTipo":"conversaciones","resultado":301,"costoResultado":680}]};
+
+    function metaRender() {
+      const b = document.getElementById('meta-body');
+      if (!b || !META.meses[CRM_MES]) return;
+      const d = META.meses[CRM_MES], p = META.meses[CRM_PREV] || {};
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const ms = Object.keys(META.meses).sort().filter(m => m <= CRM_MES);
+      const mesCorto = crmMesNom(CRM_PREV).split(' ')[0].toLowerCase();
+
+      document.getElementById('meta-sub').textContent =
+        crmMesNom(CRM_MES) + ' · cuenta ' + META.cuenta + ' · entre paréntesis, ' + mesCorto;
+
+      const hayPrev = !!META.meses[CRM_PREV];
+      const cmp = (fn, fmt) => hayPrev ? fmt(fn(p)) + ' en ' + mesCorto : '';
+
+      /* Las seis del mes. El costo por resultado no va aca: es un cruce y
+         tiene su propia tarjeta. */
+      const KPIS = [
+        { id: 'meta-h-gasto',  rot: 'Invertido',        v: m => m.gasto,       fmt: crmPesos },
+        { id: 'meta-h-alc',    rot: 'Alcance',          v: m => m.alcance,     fmt: crmNum },
+        { id: 'meta-h-imp',    rot: 'Impresiones',      v: m => m.impresiones, fmt: crmNum },
+        { id: 'meta-h-conv',   rot: 'Conversaciones',   v: m => m.conv,        fmt: crmNum },
+        { id: 'meta-h-clics',  rot: 'Clics en enlace',  v: m => m.clics,       fmt: crmNum },
+        { id: 'meta-h-inter',  rot: 'Interacciones',    v: m => m.inter,       fmt: crmNum },
+      ];
+      const kpis = KPIS.map(k => {
+        registrarDetalle('meta:' + k.id, {
+          kicker: 'Meta · la pauta', titulo: k.rot,
+          sub: 'Mes a mes, de enero 2025 a ' + crmMesNom(CRM_MES).toLowerCase(),
+          puntos: ms, valor: m => k.v(META.meses[m]), fmt: k.fmt,
+          fuente: 'Marketing API · data/meta.json · cuenta ' + META.cuenta,
+        });
+        return `
+        <div class="kpi-card card-reveal meta-kpi" data-detalle="meta:${k.id}" role="button" tabindex="0" aria-label="Ver ${esc(k.rot)} en detalle">
+          <div class="kpi-label">${esc(k.rot)}</div>
+          <div class="kpi-value">${esc(k.fmt(k.v(d)))}</div>
+          <div class="kpi-delta neutral">${esc(cmp(k.v, k.fmt))}</div>
+          <div class="meta-mini"><canvas id="${k.id}" aria-label="${esc(k.rot)} por mes"></canvas></div>
+        </div>`;
+      }).join('');
+
+      /* El cruce. Ninguna de las dos mitades contesta sola cuanto costo
+         traer una oportunidad: la pauta sabe lo que gasto y el CRM sabe
+         lo que entro. */
+      const ons = m => (CRM.meses[m] ? CRM.meses[m].ons.total : 0);
+      /* Dos cruces, no tres. El ticket promedio salio: con meses de una o
+         dos operaciones, el promedio es esa operacion, y en agosto una sola
+         explica el 93 % del monto. Un promedio ahi no resume, inventa. */
+      const CRUCES = [
+        { id: 'meta-h-cpconv', rot: 'Costo por conversación',
+          v: m => (META.meses[m] && META.meses[m].conv ? META.meses[m].gasto / META.meses[m].conv : 0),
+          fmt: crmPesos, nota: 'gasto de la cuenta ÷ conversaciones' },
+        { id: 'meta-h-cpon', rot: 'Costo por ON',
+          v: m => (ons(m) ? (META.meses[m] ? META.meses[m].gasto : 0) / ons(m) : 0),
+          fmt: crmPesos, nota: 'gasto de la cuenta ÷ ONs nuevas del CRM' },
+      ];
+      const cruces = CRUCES.map(k => {
+        const ps = ms.filter(m => CRM.meses[m] || k.id === 'meta-h-cpconv');
+        registrarDetalle('cruce:' + k.id, {
+          kicker: 'Meta \u00d7 CRM', titulo: k.rot, sub: k.nota,
+          puntos: ps, valor: k.v, fmt: k.fmt,
+          fuente: 'Marketing API y exports del CRM · data/meta.json + data/crm-2026.json',
+        });
+        return `
+        <div class="kpi-card card-reveal meta-kpi" data-detalle="cruce:${k.id}" role="button" tabindex="0" aria-label="Ver ${esc(k.rot)} en detalle">
+          <div class="kpi-label">${esc(k.rot)}</div>
+          <div class="kpi-value">${esc(k.fmt(k.v(CRM_MES)))}</div>
+          <div class="kpi-delta neutral">${esc(k.nota)}</div>
+          <div class="meta-mini"><canvas id="${k.id}" aria-label="${esc(k.rot)} por mes"></canvas></div>
+        </div>`;
+      }).join('');
+
+      /* Anuncios: el gasto del mes repartido por campaña. Misma pista
+         partida que los estados de las cotizaciones — son partes de un
+         total, no un ranking. */
+      const cs = (META.campanas || []).slice().sort((a, b) => b.gasto - a.gasto);
+      const totalC = cs.reduce((t, c) => t + c.gasto, 0) || 1;
+      const escala = ['--cyan', '--green', '--amber', '--blue', '--muted-2'];
+      const tramos = cs.map((c, i) => `<div class="meta-tramo" style="width:${(c.gasto / totalC * 100).toFixed(1)}%;background:var(${escala[i % escala.length]})"></div>`).join('');
+      const leyenda = cs.map((c, i) => `
+        <div class="legend-row"><span class="legend-dot" style="background:var(${escala[i % escala.length]})"></span><span class="legend-label">${esc(c.nombre)}</span><span class="legend-pct">${crmPesos(c.gasto)} · ${crmNum(c.resultado)} ${esc(c.resultadoTipo)} a ${crmPesos(c.costoResultado)}</span></div>`).join('');
+
+      b.innerHTML = `
+        <div class="meta-kpis">${kpis}</div>
+
+        <div class="card meta-bloque card-reveal">
+          <div class="card-kicker">Lo que costó cada cosa</div>
+          <p class="meta-nota">Las tres salen de cruzar la pauta con el CRM. La cuenta sabe lo que gastó y el CRM sabe lo que entró; el costo por oportunidad solo aparece al ponerlos juntos.</p>
+          <div class="meta-kpis" style="margin-bottom:0">${cruces}</div>
+        </div>
+
+        <div class="card meta-bloque card-reveal">
+          <div class="card-kicker">Anuncios del mes</div>
+          <p class="meta-nota">${crmPesos(d.gasto)} repartidos en ${crmNum(cs.length)} ${cs.length === 1 ? 'campaña con gasto' : 'campañas con gasto'}.</p>
+          <div class="meta-apilada" role="img" aria-label="${cs.map(c => c.nombre + ': ' + crmPesos(c.gasto)).join('; ')}">${tramos}</div>
+          <div class="meta-leyenda">${leyenda}</div>
+        </div>
+
+        <div class="card meta-bloque card-reveal">
+          <div class="card-kicker">La serie larga</div>
+          <p class="meta-nota">Inversión y conversaciones mes a mes, de enero 2025 a ${esc(crmMesNom(CRM_MES).toLowerCase())}. Los meses que la cuenta no devuelve quedan cortados: no se rellenan con cero.</p>
+          <div class="meta-serie-t">Inversión mensual</div>
+          <div class="meta-serie"><canvas id="meta-s-gasto" aria-label="Inversión mensual"></canvas></div>
+          <div class="meta-serie-t">Conversaciones mensuales</div>
+          <div class="meta-serie"><canvas id="meta-s-conv" aria-label="Conversaciones mensuales"></canvas></div>
+        </div>
+`;
+
+      if (typeof initReveal === 'function') initReveal(b);
+      setTimeout(metaChart, 30);
+    }
+
+    function metaChart() {
+      const ms = Object.keys(META.meses).sort().filter(m => m <= CRM_MES);
+      const KPIS = [
+        ['meta-h-gasto', m => META.meses[m].gasto, crmMillones],
+        ['meta-h-alc', m => META.meses[m].alcance, crmNum],
+        ['meta-h-imp', m => META.meses[m].impresiones, crmNum],
+        ['meta-h-conv', m => META.meses[m].conv, crmNum],
+        ['meta-h-clics', m => META.meses[m].clics, crmNum],
+        ['meta-h-inter', m => META.meses[m].inter, crmNum],
+      ];
+      KPIS.forEach(([id, v, fmt]) => crmColumnas(id, ms, v, fmt, 'mini'));
+
+      const ons = m => (CRM.meses[m] ? CRM.meses[m].ons.total : 0);
+      const msCrm = ms.filter(m => CRM.meses[m]);
+      crmColumnas('meta-h-cpconv', ms, m => (META.meses[m].conv ? META.meses[m].gasto / META.meses[m].conv : 0), crmMillones, 'mini');
+      crmColumnas('meta-h-cpon', msCrm, m => (ons(m) ? META.meses[m].gasto / ons(m) : 0), crmMillones, 'mini');
+
+      crmLinea('meta-s-gasto', ms, [{ label: 'Invertido', valor: m => META.meses[m].gasto }], crmMillones);
+      crmLinea('meta-s-conv', ms, [{ label: 'Conversaciones', valor: m => META.meses[m].conv }], crmNum);
+    }
+
+    metaRender();
+    </script>
+
+    <script>
+    /* ─── RETARGETING ───────────────────────────────────────────────
+       Las cifras salen de claude/Retargeting-inventario-y-acciones-sep2026.md,
+       del 7 de septiembre, verificadas ahí contra la Marketing API. No salen
+       de data/meta.json: aquel archivo agrega por campaña y este conjunto
+       vivió dentro de una, veintiocho días. Si alguna cambia, se cambia acá
+       y se vuelve a correr el armador. */
+    const RT = {
+      conjunto: 'Retargeting · migración · Argentina',
+      desde: '22 de julio', hasta: '18 de agosto', dias: 28,
+      gasto: 51242, alcance: 2476, cpc: 258.80, frecuencia: 4.0,
+      /* Los siete dias con el pool duplicado, del asiento del 18/08 de la
+         bitacora de comercial.html. Se decidio con esto. */
+      corte: '18 de agosto', diasDeLaPrueba: 7,
+      clicAntes: 416.81, clicDespues: 156.69,
+      costoVisita7d: 806.98, costoVisitaCostos: 128.70,
+      clics: 175, cargaron: 41, costoVisita: 1249.81, cpm: 5164,
+      /* Las otras tres campañas de la cuenta en el mismo período, para que
+         el número tenga contra qué leerse. */
+      campanas: [
+        { n: 'Retargeting', cpc: 258.80, frec: 4.0, carga: 23, esEl: true },
+        { n: 'Costos',      cpc: 45.62,  frec: 1.7, carga: 50 },
+        { n: 'Vender más',  cpc: 65.50,  frec: 2.0, carga: null },
+        { n: 'Mensajes IG', cpc: 101.28, frec: 2.2, carga: null },
+      ],
+      fuente: 'claude/Retargeting-inventario-y-acciones-sep2026.md · 07/09/2026, verificado contra la Marketing API · conjunto 120250888826560343',
+    };
+
+    function rtRender() {
+      const b = document.getElementById('retargeting-body');
+      if (!b) return;
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const pct = n => n.toFixed(1).replace('.', ',') + ' %';
+
+      const kpis = [
+        ['Invertido', crmPesos(RT.gasto), RT.dias + ' días al aire'],
+        ['Alcance', crmNum(RT.alcance), 'personas distintas'],
+        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · Costos llega al 50 %'],
+        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de Costos'],
+      ].map(([l, v, d]) => `
+        <div class="kpi-card card-reveal">
+          <div class="kpi-label">${esc(l)}</div>
+          <div class="kpi-value">${esc(v)}</div>
+          <div class="kpi-delta neutral">${esc(d)}</div>
+        </div>`).join('');
+
+      const barras = (clave, fmt, titulo, nota) => {
+        const filas = RT.campanas.filter(c => c[clave] != null);
+        const tope = Math.max.apply(null, filas.map(c => c[clave]));
+        return `
+          <div class="card-kicker" style="margin-top:20px">${esc(titulo)}</div>
+          <p class="rt-texto" style="margin-bottom:12px">${esc(nota)}</p>
+          ${filas.map(c => `
+            <div class="rt-fila">
+              <div class="rt-rot">${esc(c.n)}</div>
+              <div class="rt-pista"><div class="rt-fill" style="width:${(c[clave] / tope * 100).toFixed(1)}%;background:var(${c.esEl ? '--red' : '--cyan'})"></div></div>
+              <div class="rt-n">${esc(fmt(c[clave]))}</div>
+            </div>`).join('')}`;
+      };
+
+      b.innerHTML = `
+        <div class="card rt-bloque card-reveal">
+          <div class="card-kicker">Qué es</div>
+          <p class="rt-texto">Cuando alguien entra a yiqi.com.ar, el píxel deja una marca en su navegador y esa persona pasa a formar parte de un público que Meta puede volver a alcanzar. El retargeting es comprarle a Meta el derecho a mostrarle un anuncio otra vez a esa gente. La diferencia con la prospección es el punto de partida: en prospección le hablas a alguien que nunca oyó de YiQi; en retargeting, a alguien que ya entró, miró y se fue sin escribir. <strong>Ya sabe quién sos: lo que le falta es una razón para volver.</strong></p>
+          <div class="kpi-grid rt-kpis" style="margin-top:20px;margin-bottom:0">${kpis}</div>
+        </div>
+
+        <div class="card rt-bloque card-reveal">
+          <div class="card-kicker">Contra el resto de la cuenta</div>
+          <p class="rt-texto">El costo por clic fue 5,7 veces el de Costos. Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
+          ${barras('cpc', crmPesos, 'Costo por clic', 'Mismo período, mismas cuatro campañas de la cuenta.')}
+          ${barras('frec', n => n.toFixed(1).replace('.', ','), 'Frecuencia', 'Cuántas veces vio el anuncio cada persona alcanzada.')}
+          ${barras('carga', n => n + ' %', 'De los que hacen clic, cuántos cargan la página', 'Solo las dos campañas con el dato medido.')}
+        </div>
+
+        <div class="rt-pie">${esc(RT.fuente)}</div>`;
+
+      if (typeof initReveal === 'function') initReveal(b);
+    }
+
+    rtRender();
+    </script>
+
+    <script>
+    /* ─── EL SITIO ──────────────────────────────────────────────────
+       Los datos son el objeto `clarity` del resumen de agosto de
+       comercial.html, extraido tal cual al armar la pagina. Si cambian,
+       se cambian alla y se vuelve a correr el armador. */
+    const CLARITY = {
+          /* Export del Dashboard de Clarity, 01–31/08/2026. Los referrers
+             suman 2.516 de 2.839 sesiones: el resto entra sin referente. */
+          origen: [
+            ['Instagram', 1975], ['Sitio propio', 282], ['Facebook', 116],
+            ['Google', 99], ['Otros', 44],
+          ],
+          eventos: [
+            ['Outbound click', 186], ['Login', 59], ['Contact us', 12],
+            ['Order success', 2], ['Book', 2], ['Submit form', 1],
+          ],
+          stats: [
+            ['2.839', 'sesiones'], ['2.248', 'usuarios'],
+            ['1,46', 'páginas por sesión'], ['37 s', 'activos de 201'],
+          ],
+          claves: 'Instagram trae 7 de cada 10 sesiones y la home se lleva 9 de cada 10 vistas: el sitio es una sola página alimentada por la pauta.',
+          pie: 'Rage clicks 0 % · dead clicks 1,37 % · quick backs 4,02 % · 505 sesiones de bots excluidas · Microsoft Clarity registra cada visita a yiqi.com.ar',
+          /* Apex y www son la misma pagina servida por dos hosts, asi que
+             se suman: home = 2.410 + 92 + 53 (index.html). */
+          paginas: [
+            ['Home', 2555], ['iA Ready', 146], ['API', 91],
+            ['Ficha de app', 87], ['Novedades', 42], ['Contacto', 35],
+          ],
+        };
+
+    function sitioRender() {
+      const b = document.getElementById('sitio-body');
+      if (!b || !CLARITY) return;
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      b.innerHTML = `
+        <div class="card st-bloque card-reveal">
+          <p class="st-claves">${esc(CLARITY.claves)}</p>
+          <div class="kpi-grid st-stats">${CLARITY.stats.map(([v, l]) => `
+            <div class="kpi-card"><div class="kpi-label">${esc(l)}</div><div class="kpi-value">${esc(v)}</div></div>`).join('')}</div>
+          <div class="st-charts">
+            <div class="st-g">
+              <div class="card-kicker">De dónde llegan</div>
+              <div class="donut-block">
+                <div class="donut-chart" style="height:190px"><canvas id="sitio-origen" aria-label="Sesiones por origen"></canvas></div>
+                <div class="donut-legend" id="sitio-leg"></div>
+              </div>
+            </div>
+            <div class="st-g">
+              <div class="card-kicker">Qué miran</div>
+              <div class="st-barras"><canvas id="sitio-paginas" aria-label="Páginas más vistas"></canvas></div>
+            </div>
+          </div>
+          <div class="st-serie-wrap">
+            <div class="card-kicker">Mes a mes</div>
+            <div class="st-serie"><canvas id="sitio-serie" aria-label="Sesiones por mes"></canvas></div>
+            <p class="st-nota">La serie arranca en junio porque Clarity se instalo el 3 de junio de 2026: antes de esa fecha no hay medicion. Junio cuenta desde el dia 3.</p>
+          </div>
+          <div class="st-pie">${esc(CLARITY.pie)}</div>
+        </div>`;
+      if (typeof initReveal === 'function') initReveal(b);
+      setTimeout(sitioChart, 30);
+    }
+
+    /* Sesiones por mes, sin bots. Junio y julio salen de los exports del
+       dashboard de Clarity que estan en data/clarity/; agosto es la misma
+       cifra que ya muestra la tarjeta. Clarity no publica la serie en su
+       export, asi que son tres consultas al mismo tablero cambiando el
+       rango, una por mes. */
+    const SITIO_SERIE = [['2026-06', 510], ['2026-07', 1846], ['2026-08', 2839]];
+
+    function sitioChart() {
+      const cvO = document.getElementById('sitio-origen'), cvP = document.getElementById('sitio-paginas');
+      if (!cvO || !cvP || typeof Chart === 'undefined') return;
+      ['sitioOrigen', 'sitioPaginas'].forEach(k => { if (_charts[k]) { _charts[k].destroy(); delete _charts[k]; } });
+
+      /* Mismo motor de columnas que el CRM y que Meta: una sola gramatica
+         de barras en todo el reporte. Marca sola el mes del reporte. */
+      if (typeof crmColumnas === 'function') {
+        const mapa = Object.fromEntries(SITIO_SERIE);
+        crmColumnas('sitio-serie', SITIO_SERIE.map(e => e[0]), m => mapa[m],
+                    v => v.toLocaleString('es-AR') + ' sesiones', 'alto');
+      }
+
+      const acc = getCSSVar('--cyan'), muted = getCSSVar('--muted');
+      const linea = getCSSVar('--line'), elev = getCSSVar('--bg-elev-2'), texto = getCSSVar('--text');
+      const sans = getCSSVar('--sans'), cifra = getCSSVar('--kpi-num');
+      const tooltip = { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10 };
+
+      const org = CLARITY.origen.slice().sort((a, b) => b[1] - a[1]);
+      const total = org.reduce((s, r) => s + r[1], 0) || 1;
+      const escala = [acc, getCSSVar('--cyan-soft-2'), getCSSVar('--blue'), getCSSVar('--green'), getCSSVar('--muted-2')];
+      _charts.sitioOrigen = new Chart(cvO, {
+        type: 'doughnut',
+        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '68%',
+          animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
+          plugins: { legend: { display: false },
+            tooltip: { ...tooltip, callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } } }
+        }
+      });
+      const leg = document.getElementById('sitio-leg');
+      if (leg) leg.innerHTML = org.map((r, i) =>
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+
+      /* La cifra va al final de la barra: un grafico cuyo dato hay que
+         buscar con el mouse no informa. */
+      const valorAlFinal = {
+        id: 'valorAlFinal',
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.font = `600 12px ${cifra}`; ctx.fillStyle = texto; ctx.textBaseline = 'middle';
+          const ex = chart.scales.x;
+          chart.getDatasetMeta(0).data.forEach((bar, i) => {
+            const fin = chart.data.datasets[0].data[i];
+            const v = ex ? Math.max(0, Math.min(fin, Math.round(ex.getValueForPixel(bar.x)))) : fin;
+            ctx.fillText(v.toLocaleString('es-AR'), bar.x + 8, bar.y);
+          });
+          ctx.restore();
+        }
+      };
+      /* Escala lineal a proposito: que la home aplaste a las otras es
+         justamente lo que el grafico tiene que mostrar. */
+      const pgs = CLARITY.paginas.slice().sort((a, b) => b[1] - a[1]);
+      _charts.sitioPaginas = new Chart(cvP, {
+        type: 'bar',
+        data: { labels: pgs.map(r => r[0]), datasets: [{ label: 'Sesiones', data: pgs.map(r => r[1]), backgroundColor: acc, borderWidth: 0, borderRadius: 4, borderSkipped: false }] },
+        options: {
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          animation: { duration: 400, easing: 'easeOutCubic' }, animations: { x: { from: 0 } },
+          layout: { padding: { right: 46 } },
+          plugins: { legend: { display: false }, tooltip: { ...tooltip, callbacks: { label: c => ` ${c.parsed.x.toLocaleString('es-AR')} sesiones` } } },
+          scales: {
+            x: { display: false, grid: { display: false } },
+            y: { grid: { display: false }, border: { display: false }, ticks: { color: muted, font: { family: sans, size: 12 } } }
+          }
+        },
+        plugins: [valorAlFinal]
+      });
+    }
+
+    sitioRender();
+    </script>
+
+    <script>
+    (function () {
+      const b = document.getElementById('cc-body');
+      if (!b || typeof RT === 'undefined') return;
+      const coma = n => String(n).replace('.', ',');
+      const frecs = RT.campanas.filter(c => !c.esEl && c.frec != null).map(c => c.frec);
+      const prom = frecs.length ? frecs.reduce((a, b) => a + b, 0) / frecs.length : 0;
+      /* En palabras y redondeado: el numero exacto no cambia la conclusion y
+         la cifra suelta invita a leerlo como si fuera lo que vio cada uno. */
+      const LETRA = ['cero','una','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez'];
+      const letra = n => LETRA[Math.round(n)] || coma(n.toFixed(1));
+      b.innerHTML = `
+        <p class="cc-tit">Un solo formato sostiene la cuenta.</p>
+        <p>Todo lo que funciona son placas en Instagram. Las piezas en video no arrancaron y LinkedIn no salió: si las placas se desgastan, no hay con qué reemplazarlas.</p>
+        <p class="cc-tit">El desgaste ya se vio.</p>
+        <p>El retargeting corrió ${RT.dias} días con una sola pieza, y terminó mostrándose un promedio de ${letra(RT.frecuencia)} veces por persona alcanzada. En las campañas de captación, con público grande, el promedio es ${letra(prom)}. El problema no es la pauta: es no rotar piezas cuando el público es chico.</p>
+        <p class="cc-tit">Le pautamos a desconocidos y facturamos por upselling.</p>
+        <p>Toda la inversión del mes fue a gente que no nos conocía, y el dinero que entró lo pusieron clientes que ya trabajaban con nosotros — igual que la enorme mayoría de las ONs nuevas. <strong>El canal que factura no tiene una sola campaña propia.</strong></p>`;
+      if (typeof initReveal === 'function') initReveal(b.parentElement || document);
+      else b.classList.add('visible');
+    })();
+    </script>
+
+    <script>
+    /* ─── BRIEF ─────────────────────────────────────────────────────
+       Va ultimo a proposito: lee CRM, META y RT, que declaran las
+       secciones de abajo. Ninguna cifra se teclea — si cambia el origen,
+       cambia el brief. */
+    (function () {
+      const ol = document.getElementById('brief-body');
+      if (!ol || typeof CRM === 'undefined' || typeof META === 'undefined') return;
+      const d = CRM.meses[CRM_MES], m = META.meses[CRM_MES];
+      if (!d || !m) return;
+
+      /* Prosa: los numeros chicos van en letras. Si alguno se sale de la
+         tabla, cae en la cifra en vez de inventar la palabra. */
+      const LETRAS = ['cero','una','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez',
+                      'once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte'];
+      const letra = n => (Number.isInteger(n) && n >= 0 && n < LETRAS.length) ? LETRAS[n] : crmNum(n);
+      const b = t => '<strong>' + t + '</strong>';
+      /* Estas cuatro se decidieron al centavo y asi se citaron: redondearlas
+         a $417 le saca a la frase la precision que la hizo decidible. */
+      const pesosCent = v => '$' + v.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const ons = d.ons.total, conc = d.concretadas.n, importe = d.concretadas.importe;
+      const cliente = d.ons.origen['CLIENTE'] || 0, web = d.ons.origen['web'] || 0;
+      /* El ticket promedio queda afuera: con tres operaciones y una que
+         explica el 93 % del monto, el promedio no resume nada — inventa una
+         operacion tipica que no existe y es el numero en el que se ancla.
+         En su lugar se dice la forma: cuanto pesa la mayor y cuantos
+         clientes distintos hay detras. */
+      const porImporte = (d.concretadas.detalle || []).slice().sort((a, z) => z.importe - a.importe);
+      const mayor = porImporte.length ? porImporte[0].importe / importe * 100 : 0;
+      const clientes = new Set(porImporte.map(r => r.empresa)).size;
+      const porOn = ons ? m.gasto / ons : 0;
+
+      /* Cada linea abre con su hallazgo, no con su tema: el que escanea los
+         tres titulos se lleva el mes sin entrar al cuerpo.
+
+         Sin superlativos. "El mes de mayor inversion del ano" venia del
+         resumen de comercial.html y era falso —agosto es el cuarto de ocho
+         en 2026, detras de marzo, mayo y abril—: se arrastro sin
+         contrastarlo contra data/meta.json. Un reporte informa; el lugar de
+         cada mes en la serie lo dice el histograma de su seccion. */
+      const lineas = [
+        [`${letra(conc).replace(/^t/, 'T')} operaciones cerraron ${crmPesos(importe)}`,
+         `${crmPesos(m.gasto)} de pauta y ${crmNum(m.conv)} conversaciones. Una sola operación explica el ${Math.round(mayor)} % del monto${clientes && clientes < conc ? ', y las otras ' + letra(conc - 1) + ' son del mismo cliente' : ''}.`],
+        ['El CRM se llenó por otro camino',
+         `Las ${letra(conc)} concretadas fueron upselling, y de las ${crmNum(ons)} ONs nuevas ${letra(cliente)} vinieron de cliente y ${letra(web)} de la web. Cada ON costó ${crmPesos(porOn)} de pauta.`],
+        ['El retargeting se cortó a los ' + letra(RT.diasDeLaPrueba) + ' días',
+         `El clic bajó de ${pesosCent(RT.clicAntes)} a ${pesosCent(RT.clicDespues)} y la visita efectiva igual costó ${pesosCent(RT.costoVisita7d)} contra ${pesosCent(RT.costoVisitaCostos)} del resto. Se pausó el ${RT.corte} con el dato en la mano.`],
+      ];
+      ol.innerHTML = lineas.map(([t, c]) => `<li>${b(t + '.')} ${c}</li>`).join('');
+    })();
+
+    /* A que fecha estan los datos. Estaba enterrada en el pie del bloque del
+       CRM y el reporte se manda por link: quien lo abre tiene que poder ver
+       de cuando es sin bajar hasta el final. Va aca, con el brief, porque
+       este bloque corre ultimo y META ya existe. */
+    (function () {
+      const el = document.getElementById('sb-datos');
+      if (!el) return;
+      let f = (typeof META !== 'undefined' && META.generado) ? META.generado.slice(0, 10) : null;
+      if (!f && typeof CRM !== 'undefined') f = CRM.generado;
+      if (!f) return;
+      const p = f.split('-');
+      el.textContent = 'datos al ' + p[2] + '/' + p[1] + '/' + p[0];
+    })();
+    </script>
+
+<script>
+/* ─── NAVEGACION MOVIL (§67) ─────────────────────────────────────
+   Va al final a proposito: necesita _charts, que declara el bloque del
+   CRM. Chart.js mide el canvas al crearlo, asi que los graficos de una
+   seccion oculta nacen con ancho cero y quedan en blanco hasta que se
+   les avisa al mostrarla. */
+(function () {
+  var SECCION = { crm: 'crm', meta: 'meta', retargeting: 'retargeting', sitio: 'sitio' };
+  var mq = matchMedia('(max-width: 980px)');
+  var shell = document.getElementById('app-shell');
+  if (!shell) return;
+
+  function marcar(g) {
+    document.querySelectorAll('.ds-bottomnav-item').forEach(function (b) {
+      b.classList.toggle('is-active', b.dataset.grupo === g);
+      if (b.dataset.grupo === g) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
+  }
+  function redibujar() {
+    if (typeof _charts === 'undefined') return;
+    requestAnimationFrame(function () {
+      Object.keys(_charts).forEach(function (k) { try { _charts[k].resize(); } catch (e) {} });
+    });
+  }
+  function mostrar(g) {
+    if (!mq.matches) {
+      var el = document.getElementById(SECCION[g]);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      marcar(g);
+      return;
+    }
+    shell.dataset.grupo = g;
+    scrollTo({ top: 0 });
+    redibujar();
+    marcar(g);
+  }
+
+  document.addEventListener('click', function (e) {
+    var it = e.target.closest && e.target.closest('.ds-bottomnav-item');
+    if (it) mostrar(it.dataset.grupo);
+  });
+
+  /* Al pasar a escritorio se suelta el grupo: alla la pagina vuelve a ser
+     larga y esconder secciones dejaria el reporte a un tercio. */
+  function alCambiarAncho() {
+    if (mq.matches) { if (!shell.dataset.grupo) mostrar('crm'); else marcar(shell.dataset.grupo); }
+    else { delete shell.dataset.grupo; redibujar(); }
+  }
+  mq.addEventListener ? mq.addEventListener('change', alCambiarAncho) : mq.addListener(alCambiarAncho);
+  alCambiarAncho();
+})();
+</script>
+
+</body>
+</html>

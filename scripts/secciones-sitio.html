@@ -1,0 +1,161 @@
+    <style>
+      /* El sitio. La tarjeta es la misma que vivia dentro del bloque #mes
+         de comercial.html; lo que no viene es su encabezado —titulo del
+         resumen, selector de mes y boton de copiar—, que era del tablero y
+         no de este reporte. */
+      #sitio { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      #sitio .card-kicker, #sitio .kpi-label { color: var(--cyan); }
+      #sitio .kpi-card .kpi-value { color: var(--text); font-size: 24px; }
+      #sitio .st-bloque { padding: var(--s5) var(--s6); container-type: inline-size; }
+      #sitio .st-claves { margin: 0 0 var(--s5); font: 400 14px/1.6 var(--sans); color: var(--text); max-width: 70ch; }
+      #sitio .st-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: var(--s3); margin: 0 0 var(--s7); }
+      #sitio .st-stats .kpi-card { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
+      /* Container query, no media query: lo que importa es el ancho de la
+         tarjeta, no el de la ventana. */
+      #sitio .st-charts { display:grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: var(--s7); }
+      @container (max-width: 720px) {
+        #sitio .st-charts { grid-template-columns: 1fr; }
+        #sitio .st-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      #sitio .st-g { min-width: 0; }
+      #sitio .donut-legend { max-width: 220px; }
+      /* El canvas fuera del flujo: adentro, su ancho vuelve a contar para
+         el del contenedor y en cada redibujo crece. */
+      #sitio .st-barras, #sitio .donut-chart { position: relative; overflow: hidden; }
+      #sitio .st-barras { height: 190px; }
+      #sitio .st-barras > canvas, #sitio .donut-chart > canvas { position: absolute; top: 0; left: 0; }
+      #sitio .st-serie { position: relative; overflow: hidden; height: 190px; margin-top: var(--s3); }
+      #sitio .st-serie > canvas { position: absolute; top: 0; left: 0; }
+      #sitio .st-serie-wrap { margin-top: var(--s7); }
+      #sitio .st-nota { margin: var(--s2) 0 0; font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #sitio .st-pie { margin-top: var(--s6); padding-top: var(--s3); border-top: 1px solid var(--line);
+        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
+    </style>
+
+    <section id="sitio" aria-label="El sitio por dentro">
+      <h2 class="section-title">El sitio</h2>
+      <div class="section-sub">Agosto 2026 · Microsoft Clarity</div>
+      <div id="sitio-body"></div>
+    </section>
+
+    <script>
+    /* ─── EL SITIO ──────────────────────────────────────────────────
+       Los datos son el objeto `clarity` del resumen de agosto de
+       comercial.html, extraido tal cual al armar la pagina. Si cambian,
+       se cambian alla y se vuelve a correr el armador. */
+    const CLARITY = __CLARITY__;
+
+    function sitioRender() {
+      const b = document.getElementById('sitio-body');
+      if (!b || !CLARITY) return;
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      b.innerHTML = `
+        <div class="card st-bloque card-reveal">
+          <p class="st-claves">${esc(CLARITY.claves)}</p>
+          <div class="kpi-grid st-stats">${CLARITY.stats.map(([v, l]) => `
+            <div class="kpi-card"><div class="kpi-label">${esc(l)}</div><div class="kpi-value">${esc(v)}</div></div>`).join('')}</div>
+          <div class="st-charts">
+            <div class="st-g">
+              <div class="card-kicker">De dónde llegan</div>
+              <div class="donut-block">
+                <div class="donut-chart" style="height:190px"><canvas id="sitio-origen" aria-label="Sesiones por origen"></canvas></div>
+                <div class="donut-legend" id="sitio-leg"></div>
+              </div>
+            </div>
+            <div class="st-g">
+              <div class="card-kicker">Qué miran</div>
+              <div class="st-barras"><canvas id="sitio-paginas" aria-label="Páginas más vistas"></canvas></div>
+            </div>
+          </div>
+          <div class="st-serie-wrap">
+            <div class="card-kicker">Mes a mes</div>
+            <div class="st-serie"><canvas id="sitio-serie" aria-label="Sesiones por mes"></canvas></div>
+            <p class="st-nota">La serie arranca en junio porque Clarity se instalo el 3 de junio de 2026: antes de esa fecha no hay medicion. Junio cuenta desde el dia 3.</p>
+          </div>
+          <div class="st-pie">${esc(CLARITY.pie)}</div>
+        </div>`;
+      if (typeof initReveal === 'function') initReveal(b);
+      setTimeout(sitioChart, 30);
+    }
+
+    /* Sesiones por mes, sin bots. Junio y julio salen de los exports del
+       dashboard de Clarity que estan en data/clarity/; agosto es la misma
+       cifra que ya muestra la tarjeta. Clarity no publica la serie en su
+       export, asi que son tres consultas al mismo tablero cambiando el
+       rango, una por mes. */
+    const SITIO_SERIE = [['2026-06', 510], ['2026-07', 1846], ['2026-08', 2839]];
+
+    function sitioChart() {
+      const cvO = document.getElementById('sitio-origen'), cvP = document.getElementById('sitio-paginas');
+      if (!cvO || !cvP || typeof Chart === 'undefined') return;
+      ['sitioOrigen', 'sitioPaginas'].forEach(k => { if (_charts[k]) { _charts[k].destroy(); delete _charts[k]; } });
+
+      /* Mismo motor de columnas que el CRM y que Meta: una sola gramatica
+         de barras en todo el reporte. Marca sola el mes del reporte. */
+      if (typeof crmColumnas === 'function') {
+        const mapa = Object.fromEntries(SITIO_SERIE);
+        crmColumnas('sitio-serie', SITIO_SERIE.map(e => e[0]), m => mapa[m],
+                    v => v.toLocaleString('es-AR') + ' sesiones', 'alto');
+      }
+
+      const acc = getCSSVar('--cyan'), muted = getCSSVar('--muted');
+      const linea = getCSSVar('--line'), elev = getCSSVar('--bg-elev-2'), texto = getCSSVar('--text');
+      const sans = getCSSVar('--sans'), cifra = getCSSVar('--kpi-num');
+      const tooltip = { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10 };
+
+      const org = CLARITY.origen.slice().sort((a, b) => b[1] - a[1]);
+      const total = org.reduce((s, r) => s + r[1], 0) || 1;
+      const escala = [acc, getCSSVar('--cyan-soft-2'), getCSSVar('--blue'), getCSSVar('--green'), getCSSVar('--muted-2')];
+      _charts.sitioOrigen = new Chart(cvO, {
+        type: 'doughnut',
+        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '68%',
+          animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
+          plugins: { legend: { display: false },
+            tooltip: { ...tooltip, callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } } }
+        }
+      });
+      const leg = document.getElementById('sitio-leg');
+      if (leg) leg.innerHTML = org.map((r, i) =>
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+
+      /* La cifra va al final de la barra: un grafico cuyo dato hay que
+         buscar con el mouse no informa. */
+      const valorAlFinal = {
+        id: 'valorAlFinal',
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.font = `600 12px ${cifra}`; ctx.fillStyle = texto; ctx.textBaseline = 'middle';
+          const ex = chart.scales.x;
+          chart.getDatasetMeta(0).data.forEach((bar, i) => {
+            const fin = chart.data.datasets[0].data[i];
+            const v = ex ? Math.max(0, Math.min(fin, Math.round(ex.getValueForPixel(bar.x)))) : fin;
+            ctx.fillText(v.toLocaleString('es-AR'), bar.x + 8, bar.y);
+          });
+          ctx.restore();
+        }
+      };
+      /* Escala lineal a proposito: que la home aplaste a las otras es
+         justamente lo que el grafico tiene que mostrar. */
+      const pgs = CLARITY.paginas.slice().sort((a, b) => b[1] - a[1]);
+      _charts.sitioPaginas = new Chart(cvP, {
+        type: 'bar',
+        data: { labels: pgs.map(r => r[0]), datasets: [{ label: 'Sesiones', data: pgs.map(r => r[1]), backgroundColor: acc, borderWidth: 0, borderRadius: 4, borderSkipped: false }] },
+        options: {
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          animation: { duration: 400, easing: 'easeOutCubic' }, animations: { x: { from: 0 } },
+          layout: { padding: { right: 46 } },
+          plugins: { legend: { display: false }, tooltip: { ...tooltip, callbacks: { label: c => ` ${c.parsed.x.toLocaleString('es-AR')} sesiones` } } },
+          scales: {
+            x: { display: false, grid: { display: false } },
+            y: { grid: { display: false }, border: { display: false }, ticks: { color: muted, font: { family: sans, size: 12 } } }
+          }
+        },
+        plugins: [valorAlFinal]
+      });
+    }
+
+    sitioRender();
+    </script>

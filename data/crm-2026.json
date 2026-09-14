@@ -1,0 +1,2004 @@
+{
+ "generado": "2026-09-14",
+ "fuentes": [
+  "Consulta_comercial_639247301474559625.xlsx",
+  "Nuevas_ON_mensuales_639249872023278151.xlsx",
+  "ONs_Concretadas_DETALLE_639247234485819268.xlsx",
+  "ONs_Detalle_con_estado_639249969573870225.xlsx",
+  "_Cotiz__Aprobadas_639249810261016332.xlsx",
+  "__Cotiz_enviadas__639249810338249427.xlsx",
+  "default_639249810372437562.xlsx"
+ ],
+ "nota": "Calculado desde los exports del CRM. Emitidas se cuenta por fecha de la cotizacion; enviadas y aprobadas son los agregados del CRM, por fecha de envio y de aprobacion. Son tres fechas distintas.",
+ "meses": {
+  "2026-01": {
+   "consultas": {
+    "total": 1,
+    "origen": {
+     "Web yiqi.com.ar": 1
+    },
+    "detalle": [
+     {
+      "f": "16/01",
+      "cliente": "trcparts",
+      "contacto": "Martin Esposito ",
+      "origen": "Web yiqi.com.ar"
+     }
+    ]
+   },
+   "ons": {
+    "total": 6,
+    "origen": {
+     "CLIENTE": 3,
+     "Web yiqi.com.ar": 2,
+     "Recomendación": 1
+    },
+    "estado": {
+     "Desestimada": 3,
+     "Vencida": 1,
+     "Concretada": 1,
+     "Hibernando": 1
+    },
+    "detalle": [
+     {
+      "f": "22/01",
+      "empresa": "JEDSOL SRL (CoopArgen)",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "16/01",
+      "empresa": "trcparts",
+      "origen": "Web yiqi.com.ar"
+     },
+     {
+      "f": "15/01",
+      "empresa": "MultiC SRL ",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "13/01",
+      "empresa": "Metroblanc",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "09/01",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "08/01",
+      "empresa": "OSPESE",
+      "origen": "Web yiqi.com.ar"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 9,
+    "estado": {
+     "Vencida": 3,
+     "Rechazada": 2,
+     "Aprobada": 2,
+     "Versionada": 2
+    },
+    "enviadas": 9,
+    "aprobadas": {
+     "n": 3,
+     "neto_impl": 610091.07,
+     "neto_sop": 36413.6
+    },
+    "detalle": [
+     {
+      "f": "22/01",
+      "nro": "1495.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "21/01",
+      "nro": "1463.2",
+      "estado": "Rechazada"
+     },
+     {
+      "f": "16/01",
+      "nro": "1484.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "15/01",
+      "nro": "1494.1",
+      "estado": "Rechazada"
+     },
+     {
+      "f": "13/01",
+      "nro": "1493.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "12/01",
+      "nro": "1479.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "09/01",
+      "nro": "1492.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "09/01",
+      "nro": "1491.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "06/01",
+      "nro": "1490.1",
+      "estado": "Versionada"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 6,
+    "importe": 3115782.695,
+    "detalle": [
+     {
+      "f": "20/01",
+      "empresa": "Mutis Agencia ",
+      "origen": "CLIENTE",
+      "importe": 918000.0
+     },
+     {
+      "f": "23/01",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE",
+      "importe": 610091.07
+     },
+     {
+      "f": "16/01",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 574925.0
+     },
+     {
+      "f": "02/01",
+      "empresa": "DX Electrónica",
+      "origen": "CLIENTE",
+      "importe": 450118.5
+     },
+     {
+      "f": "02/01",
+      "empresa": "DX Electrónica",
+      "origen": "CLIENTE",
+      "importe": 337588.875
+     },
+     {
+      "f": "02/01",
+      "empresa": "ProShop",
+      "origen": "CLIENTE",
+      "importe": 225059.25
+     }
+    ]
+   }
+  },
+  "2026-02": {
+   "consultas": {
+    "total": 2,
+    "origen": {
+     "INSTAGRAM - META": 1,
+     "Web yiqi.com.ar": 1
+    },
+    "detalle": [
+     {
+      "f": "25/02",
+      "cliente": "Telridan srl",
+      "contacto": "David Salem",
+      "origen": "INSTAGRAM - META"
+     },
+     {
+      "f": "19/02",
+      "cliente": " www.mtinsumos.com.ar",
+      "contacto": "Martin mtinsumos",
+      "origen": "Web yiqi.com.ar"
+     }
+    ]
+   },
+   "ons": {
+    "total": 6,
+    "origen": {
+     "CLIENTE": 4,
+     "INSTAGRAM - META": 1,
+     "Web yiqi.com.ar": 1
+    },
+    "estado": {
+     "Concretada": 3,
+     "Desestimada": 2,
+     "Hibernando": 1
+    },
+    "detalle": [
+     {
+      "f": "27/02",
+      "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "27/02",
+      "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "25/02",
+      "empresa": "Telridan srl",
+      "origen": "INSTAGRAM - META"
+     },
+     {
+      "f": "24/02",
+      "empresa": "Kids Land",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "19/02",
+      "empresa": " www.mtinsumos.com.ar",
+      "origen": "Web yiqi.com.ar"
+     },
+     {
+      "f": "11/02",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 6,
+    "estado": {
+     "Versionada": 2,
+     "Aprobada": 2,
+     "Vencida": 1,
+     "En preparación": 1
+    },
+    "enviadas": 2,
+    "aprobadas": {
+     "n": 2,
+     "neto_impl": 0.0,
+     "neto_sop": null
+    },
+    "detalle": [
+     {
+      "f": "27/02",
+      "nro": "1499.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "27/02",
+      "nro": "1500.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "24/02",
+      "nro": "1498.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "20/02",
+      "nro": "1491.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "11/02",
+      "nro": "1497.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "05/02",
+      "nro": "1496.1",
+      "estado": "En preparación"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 1,
+    "importe": 353925.0,
+    "detalle": [
+     {
+      "f": "26/02",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 353925.0
+     }
+    ]
+   }
+  },
+  "2026-03": {
+   "consultas": {
+    "total": 5,
+    "origen": {
+     "Recomendación": 3,
+     "Web yiqi.com.ar": 1,
+     "INSTAGRAM - META": 1
+    },
+    "detalle": [
+     {
+      "f": "30/03",
+      "cliente": "WIL",
+      "contacto": "Felipe Ruiz",
+      "origen": "Web yiqi.com.ar"
+     },
+     {
+      "f": "20/03",
+      "cliente": "BRUMAT",
+      "contacto": "Pamela Laura Escobar",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "11/03",
+      "cliente": "Oleana - Joyería",
+      "contacto": "Valentina Comas Gómez",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "10/03",
+      "cliente": "Uninorte del Pilar S.A.",
+      "contacto": "Fabian",
+      "origen": "INSTAGRAM - META"
+     },
+     {
+      "f": "10/03",
+      "cliente": "Adsmartm",
+      "contacto": "Gonzalo Farrus",
+      "origen": "Recomendación"
+     }
+    ]
+   },
+   "ons": {
+    "total": 23,
+    "origen": {
+     "CLIENTE": 19,
+     "Recomendación": 3,
+     "INSTAGRAM - META": 1
+    },
+    "estado": {
+     "Desestimada": 12,
+     "En Curso": 4,
+     "Vencida": 4,
+     "Concretada": 3
+    },
+    "detalle": [
+     {
+      "f": "30/03",
+      "empresa": "WIL",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "27/03",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "20/03",
+      "empresa": "BRUMAT",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "13/03",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/03",
+      "empresa": "Oleana - Joyería",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "11/03",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/03",
+      "empresa": "BootikApp SA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/03",
+      "empresa": "Uninorte del Pilar SA",
+      "origen": "INSTAGRAM - META"
+     },
+     {
+      "f": "10/03",
+      "empresa": "INDEPENDENT AGENTS SA (ArphGroup)",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/03",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/03",
+      "empresa": "Adsmartm",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "10/03",
+      "empresa": "BootikApp SA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/03",
+      "empresa": "BootikApp SA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "05/03",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "05/03",
+      "empresa": "Sin empresa",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "05/03",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "04/03",
+      "empresa": "ESPACIO MARKETING SRL",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/03",
+      "empresa": "DEL BUEN VIVIR",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/03",
+      "empresa": "Mutis Agencia ",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/03",
+      "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/03",
+      "empresa": "Arph Group",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/03",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/03",
+      "empresa": "Arph Group",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 22,
+    "estado": {
+     "En preparación": 7,
+     "Vencida": 6,
+     "Versionada": 5,
+     "Rechazada": 2,
+     "Aprobada": 2
+    },
+    "enviadas": 18,
+    "aprobadas": {
+     "n": 1,
+     "neto_impl": 0.0,
+     "neto_sop": null
+    },
+    "detalle": [
+     {
+      "f": "30/03",
+      "nro": "1518.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "27/03",
+      "nro": "1514.2",
+      "estado": "Versionada"
+     },
+     {
+      "f": "27/03",
+      "nro": "1514.3",
+      "estado": "Versionada"
+     },
+     {
+      "f": "27/03",
+      "nro": "1517.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "19/03",
+      "nro": "1516.1",
+      "estado": "Rechazada"
+     },
+     {
+      "f": "18/03",
+      "nro": "1515.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "17/03",
+      "nro": "1514.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "13/03",
+      "nro": "1513.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "11/03",
+      "nro": "1512.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "11/03",
+      "nro": "1511.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "11/03",
+      "nro": "1510.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "10/03",
+      "nro": "1506.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "10/03",
+      "nro": "1507.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "10/03",
+      "nro": "1509.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "10/03",
+      "nro": "1508.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "09/03",
+      "nro": "1463.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "09/03",
+      "nro": "1415.3",
+      "estado": "Rechazada"
+     },
+     {
+      "f": "05/03",
+      "nro": "1505.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "05/03",
+      "nro": "1504.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "05/03",
+      "nro": "1503.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "04/03",
+      "nro": "1502.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "03/03",
+      "nro": "1501.1",
+      "estado": "En preparación"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 3,
+    "importe": 5287209.0,
+    "detalle": [
+     {
+      "f": "09/03",
+      "empresa": "Mutis Agencia ",
+      "origen": "CLIENTE",
+      "importe": 2796789.0
+     },
+     {
+      "f": "27/03",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 2018520.0
+     },
+     {
+      "f": "04/03",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE",
+      "importe": 471900.0
+     }
+    ]
+   }
+  },
+  "2026-04": {
+   "consultas": {
+    "total": 3,
+    "origen": {
+     "Sin origen": 1,
+     "web": 1,
+     "Web yiqi.com.ar": 1
+    },
+    "detalle": [
+     {
+      "f": "21/04",
+      "cliente": "TEYT ENVASES",
+      "contacto": "Sabrina Getino",
+      "origen": "Sin origen"
+     },
+     {
+      "f": "21/04",
+      "cliente": "Nak stuff srl",
+      "contacto": "Axel Kronik",
+      "origen": "web"
+     },
+     {
+      "f": "10/04",
+      "cliente": "Mel City SA",
+      "contacto": "Patricio Fernandez",
+      "origen": "Web yiqi.com.ar"
+     }
+    ]
+   },
+   "ons": {
+    "total": 11,
+    "origen": {
+     "CLIENTE": 7,
+     "web": 3,
+     "Web yiqi.com.ar": 1
+    },
+    "estado": {
+     "Desestimada": 4,
+     "Concretada": 2,
+     "Vencida": 2,
+     "Hibernando": 1,
+     "Confirmada": 1,
+     "En Curso": 1
+    },
+    "detalle": [
+     {
+      "f": "30/04",
+      "empresa": "Javier Bufarini",
+      "origen": "web"
+     },
+     {
+      "f": "24/04",
+      "empresa": "Metroblanc",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "22/04",
+      "empresa": "Nak stuff srl",
+      "origen": "web"
+     },
+     {
+      "f": "21/04",
+      "empresa": "TEYT ENVASES",
+      "origen": "web"
+     },
+     {
+      "f": "21/04",
+      "empresa": "Metroblanc",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "17/04",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "16/04",
+      "empresa": "Zapatería Febo (Tossounian y Boyadjian S.A.)",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/04",
+      "empresa": "Mel City SA",
+      "origen": "Web yiqi.com.ar"
+     },
+     {
+      "f": "08/04",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "08/04",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "08/04",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 17,
+    "estado": {
+     "Vencida": 8,
+     "Aprobada": 5,
+     "Versionada": 3,
+     "En preparación": 1
+    },
+    "enviadas": 17,
+    "aprobadas": {
+     "n": 5,
+     "neto_impl": 2742989.085,
+     "neto_sop": 403832.16
+    },
+    "detalle": [
+     {
+      "f": "24/04",
+      "nro": "1528.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "22/04",
+      "nro": "1527.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "22/04",
+      "nro": "1489.2",
+      "estado": "Vencida"
+     },
+     {
+      "f": "20/04",
+      "nro": "1524.2",
+      "estado": "Vencida"
+     },
+     {
+      "f": "17/04",
+      "nro": "1526.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "16/04",
+      "nro": "1525.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "15/04",
+      "nro": "1515.2",
+      "estado": "En preparación"
+     },
+     {
+      "f": "15/04",
+      "nro": "1524.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "08/04",
+      "nro": "1521.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "08/04",
+      "nro": "1520.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "08/04",
+      "nro": "1523.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "08/04",
+      "nro": "1513.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "08/04",
+      "nro": "1522.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "07/04",
+      "nro": "1500.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "07/04",
+      "nro": "1499.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "06/04",
+      "nro": "1514.4",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "01/04",
+      "nro": "1519.1",
+      "estado": "Vencida"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 5,
+    "importe": 5128122.78,
+    "detalle": [
+     {
+      "f": "29/04",
+      "empresa": "Adsmartm",
+      "origen": "Recomendación",
+      "importe": 2754044.955
+     },
+     {
+      "f": "13/04",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 696389.4
+     },
+     {
+      "f": "14/04",
+      "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
+      "origen": "CLIENTE",
+      "importe": 658251.72
+     },
+     {
+      "f": "23/04",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 541636.2
+     },
+     {
+      "f": "14/04",
+      "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
+      "origen": "CLIENTE",
+      "importe": 477800.505
+     }
+    ]
+   }
+  },
+  "2026-05": {
+   "consultas": {
+    "total": 6,
+    "origen": {
+     "Recomendación": 3,
+     "web": 2,
+     "Sin origen": 1
+    },
+    "detalle": [
+     {
+      "f": "29/05",
+      "cliente": "Julián Vazquez Albarracín",
+      "contacto": "Julián Vazquez Albarracín",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "29/05",
+      "cliente": "https://avelia.com.ar/",
+      "contacto": "Santiago Rodriguez ",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "29/05",
+      "cliente": "Shake Again",
+      "contacto": "Lionel Pieniazek",
+      "origen": "Sin origen"
+     },
+     {
+      "f": "27/05",
+      "cliente": "Infynitto",
+      "contacto": "Hernan Zambelli",
+      "origen": "web"
+     },
+     {
+      "f": "21/05",
+      "cliente": "OSTARA S.A",
+      "contacto": "Franco Manzone",
+      "origen": "web"
+     },
+     {
+      "f": "21/05",
+      "cliente": "Acapuedo",
+      "contacto": "Ronald Ozuna",
+      "origen": "Recomendación"
+     }
+    ]
+   },
+   "ons": {
+    "total": 12,
+    "origen": {
+     "CLIENTE": 6,
+     "Recomendación": 3,
+     "web": 2,
+     "CACE": 1
+    },
+    "estado": {
+     "Desestimada": 4,
+     "Concretada": 4,
+     "Hibernando": 2,
+     "Vencida": 1,
+     "En Curso": 1
+    },
+    "detalle": [
+     {
+      "f": "29/05",
+      "empresa": "DROGUERIA JAVA SRL",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "29/05",
+      "empresa": "https://avelia.com.ar/",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "29/05",
+      "empresa": "Shake Again",
+      "origen": "CACE"
+     },
+     {
+      "f": "29/05",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "27/05",
+      "empresa": "Infynitto",
+      "origen": "web"
+     },
+     {
+      "f": "26/05",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "26/05",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "22/05",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "21/05",
+      "empresa": "OSTARA S.A",
+      "origen": "web"
+     },
+     {
+      "f": "21/05",
+      "empresa": "Acapuedo",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "13/05",
+      "empresa": "Adsmartm",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/05",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 9,
+    "estado": {
+     "Versionada": 5,
+     "Vencida": 2,
+     "Rechazada": 1,
+     "Aprobada": 1
+    },
+    "enviadas": 7,
+    "aprobadas": {
+     "n": 1,
+     "neto_impl": 0.0,
+     "neto_sop": null
+    },
+    "detalle": [
+     {
+      "f": "29/05",
+      "nro": "1534.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "29/05",
+      "nro": "1460.2",
+      "estado": "Versionada"
+     },
+     {
+      "f": "29/05",
+      "nro": "1535.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "26/05",
+      "nro": "1533.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "26/05",
+      "nro": "1532.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "22/05",
+      "nro": "1531.1",
+      "estado": "Rechazada"
+     },
+     {
+      "f": "13/05",
+      "nro": "1530.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "12/05",
+      "nro": "1525.2",
+      "estado": "Versionada"
+     },
+     {
+      "f": "11/05",
+      "nro": "1529.1",
+      "estado": "Aprobada"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 0,
+    "importe": 0.0,
+    "detalle": []
+   }
+  },
+  "2026-06": {
+   "consultas": {
+    "total": 6,
+    "origen": {
+     "web": 4,
+     "INSTAGRAM - META": 1,
+     "Sin origen": 1
+    },
+    "detalle": [
+     {
+      "f": "28/06",
+      "cliente": "Sander",
+      "contacto": "Carlos Pacheco Pacheco",
+      "origen": "web"
+     },
+     {
+      "f": "08/06",
+      "cliente": "Apolo Outdoor",
+      "contacto": "Rubén Nacachian",
+      "origen": "web"
+     },
+     {
+      "f": "08/06",
+      "cliente": "Tecnogo",
+      "contacto": "Sergio Kreimer",
+      "origen": "INSTAGRAM - META"
+     },
+     {
+      "f": "05/06",
+      "cliente": "mt insumos",
+      "contacto": "Martin Segobia",
+      "origen": "web"
+     },
+     {
+      "f": "05/06",
+      "cliente": "Silvestre LOLL",
+      "contacto": "Josefina",
+      "origen": "Sin origen"
+     },
+     {
+      "f": "05/06",
+      "cliente": "Apolo Outdoor",
+      "contacto": "Rubén Nacachian",
+      "origen": "web"
+     }
+    ]
+   },
+   "ons": {
+    "total": 19,
+    "origen": {
+     "CLIENTE": 15,
+     "web": 3,
+     "Recomendación": 1
+    },
+    "estado": {
+     "Concretada": 7,
+     "En Curso": 5,
+     "Desestimada": 4,
+     "Presupuesto enviado": 2,
+     "Vencida": 1
+    },
+    "detalle": [
+     {
+      "f": "28/06",
+      "empresa": "Sander",
+      "origen": "web"
+     },
+     {
+      "f": "26/06",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "26/06",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "24/06",
+      "empresa": "Denise Schulman",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "24/06",
+      "empresa": "FUEGUIA S.A.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "23/06",
+      "empresa": "Metroblanc",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "18/06",
+      "empresa": "Adsmartm",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "12/06",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "12/06",
+      "empresa": "Zapatería Guido GRUPO MAXIMO SA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "12/06",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "12/06",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "08/06",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "08/06",
+      "empresa": "Tecnogo",
+      "origen": "web"
+     },
+     {
+      "f": "05/06",
+      "empresa": "mt insumos",
+      "origen": "web"
+     },
+     {
+      "f": "05/06",
+      "empresa": "Apolo Outdoor",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "01/06",
+      "empresa": "Mutis Agencia ",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "01/06",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "01/06",
+      "empresa": "INDEPENDENT AGENTS SA (ArphGroup)",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "01/06",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 23,
+    "estado": {
+     "Aprobada": 10,
+     "Versionada": 6,
+     "Vencida": 4,
+     "En preparación": 2,
+     "Rechazada": 1
+    },
+    "enviadas": 22,
+    "aprobadas": {
+     "n": 10,
+     "neto_impl": 10358512.5,
+     "neto_sop": 1400056.0
+    },
+    "detalle": [
+     {
+      "f": "26/06",
+      "nro": "1552.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "26/06",
+      "nro": "1551.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "24/06",
+      "nro": "1545.3",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "24/06",
+      "nro": "1550.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "24/06",
+      "nro": "1549.1",
+      "estado": "Rechazada"
+     },
+     {
+      "f": "23/06",
+      "nro": "1548.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "22/06",
+      "nro": "1533.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "19/06",
+      "nro": "1545.2",
+      "estado": "Versionada"
+     },
+     {
+      "f": "19/06",
+      "nro": "1460.3",
+      "estado": "Versionada"
+     },
+     {
+      "f": "18/06",
+      "nro": "1547.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "16/06",
+      "nro": "1545.1",
+      "estado": "Versionada"
+     },
+     {
+      "f": "16/06",
+      "nro": "1546.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "12/06",
+      "nro": "1543.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "12/06",
+      "nro": "1542.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "12/06",
+      "nro": "1541.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "12/06",
+      "nro": "1521.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "12/06",
+      "nro": "1544.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "04/06",
+      "nro": "1540.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "03/06",
+      "nro": "1525.3",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "01/06",
+      "nro": "1538.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "01/06",
+      "nro": "1537.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "01/06",
+      "nro": "1536.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "01/06",
+      "nro": "1539.1",
+      "estado": "Versionada"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 1,
+    "importe": 700741.825,
+    "detalle": [
+     {
+      "f": "01/06",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE",
+      "importe": 700741.825
+     }
+    ]
+   }
+  },
+  "2026-07": {
+   "consultas": {
+    "total": 3,
+    "origen": {
+     "Precotizador web": 1,
+     "Recomendación": 1,
+     "web": 1
+    },
+    "detalle": [
+     {
+      "f": "31/07",
+      "cliente": ".",
+      "contacto": "Llll",
+      "origen": "Precotizador web"
+     },
+     {
+      "f": "22/07",
+      "cliente": "electrosistem",
+      "contacto": " Cristian Cáceres",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "21/07",
+      "cliente": "Dx Electronica",
+      "contacto": "Angee Peraza",
+      "origen": "web"
+     }
+    ]
+   },
+   "ons": {
+    "total": 6,
+    "origen": {
+     "CLIENTE": 4,
+     "web": 1,
+     "Recomendación": 1
+    },
+    "estado": {
+     "En Curso": 2,
+     "Confirmada": 2,
+     "Desestimada": 1,
+     "Concretada": 1
+    },
+    "detalle": [
+     {
+      "f": "31/07",
+      "empresa": ".",
+      "origen": "web"
+     },
+     {
+      "f": "27/07",
+      "empresa": "NINA ALVARADO NATHACHA ALTAGRACIA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "27/07",
+      "empresa": "ECOSAN",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "22/07",
+      "empresa": "electrosistem",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "21/07",
+      "empresa": "Dx Electronica",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "13/07",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 7,
+    "estado": {
+     "Aprobada": 4,
+     "Vencida": 3
+    },
+    "enviadas": 7,
+    "aprobadas": {
+     "n": 2,
+     "neto_impl": 0.0,
+     "neto_sop": null
+    },
+    "detalle": [
+     {
+      "f": "27/07",
+      "nro": "1555.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "27/07",
+      "nro": "1554.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "24/07",
+      "nro": "1534.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "14/07",
+      "nro": "1547.2",
+      "estado": "Vencida"
+     },
+     {
+      "f": "13/07",
+      "nro": "1553.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "08/07",
+      "nro": "1550.2",
+      "estado": "Vencida"
+     },
+     {
+      "f": "03/07",
+      "nro": "1539.2",
+      "estado": "Vencida"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 10,
+    "importe": 6334863.627,
+    "detalle": [
+     {
+      "f": "23/07",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE",
+      "importe": 1305000.0
+     },
+     {
+      "f": "08/07",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 1125000.0
+     },
+     {
+      "f": "21/07",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE",
+      "importe": 968660.0
+     },
+     {
+      "f": "08/07",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 580160.0
+     },
+     {
+      "f": "01/07",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE",
+      "importe": 560593.467
+     },
+     {
+      "f": "06/07",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE",
+      "importe": 435120.0
+     },
+     {
+      "f": "16/07",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 419890.8
+     },
+     {
+      "f": "30/07",
+      "empresa": "LATCAU S.A.",
+      "origen": "CLIENTE",
+      "importe": 360279.36
+     },
+     {
+      "f": "16/07",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 290080.0
+     },
+     {
+      "f": "08/07",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 290080.0
+     }
+    ]
+   }
+  },
+  "2026-08": {
+   "consultas": {
+    "total": 4,
+    "origen": {
+     "Precotizador web": 2,
+     "Sin origen": 1,
+     "web": 1
+    },
+    "detalle": [
+     {
+      "f": "31/08",
+      "cliente": "Mutis Agencia",
+      "contacto": "Felipe Stafforini",
+      "origen": "Sin origen"
+     },
+     {
+      "f": "05/08",
+      "cliente": "Raptiv",
+      "contacto": "Federico Vara",
+      "origen": "Precotizador web"
+     },
+     {
+      "f": "02/08",
+      "cliente": "ferreteria lincoln",
+      "contacto": "Julian Alvarez",
+      "origen": "web"
+     },
+     {
+      "f": "02/08",
+      "cliente": "MAC Propiedades",
+      "contacto": "Federico Vara",
+      "origen": "Precotizador web"
+     }
+    ]
+   },
+   "ons": {
+    "total": 16,
+    "origen": {
+     "CLIENTE": 14,
+     "web": 2
+    },
+    "estado": {
+     "En Curso": 11,
+     "Presupuesto enviado": 4,
+     "Concretada": 1
+    },
+    "detalle": [
+     {
+      "f": "31/08",
+      "empresa": "Mutis Agencia ",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "25/08",
+      "empresa": "Laksmi SAS - Agni Home",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "21/08",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "20/08",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Raptiv",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Sin empresa",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Huinoil SA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Huinoil SA",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Pracau",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "11/08",
+      "empresa": "Metroblanc",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/08",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "10/08",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "02/08",
+      "empresa": "ferreteria lincoln",
+      "origen": "web"
+     },
+     {
+      "f": "02/08",
+      "empresa": "MAC Propiedades",
+      "origen": "web"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 7,
+    "estado": {
+     "Vencida": 4,
+     "Aprobada": 2,
+     "Enviada": 1
+    },
+    "enviadas": 7,
+    "aprobadas": {
+     "n": 4,
+     "neto_impl": 596025.0,
+     "neto_sop": 75624.0
+    },
+    "detalle": [
+     {
+      "f": "25/08",
+      "nro": "1560.1",
+      "estado": "Enviada"
+     },
+     {
+      "f": "21/08",
+      "nro": "1559.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "20/08",
+      "nro": "1558.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "10/08",
+      "nro": "1557.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "10/08",
+      "nro": "1556.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "07/08",
+      "nro": "1460.4",
+      "estado": "Vencida"
+     },
+     {
+      "f": "07/08",
+      "nro": "1532.2",
+      "estado": "Aprobada"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 3,
+    "importe": 8524082.1,
+    "detalle": [
+     {
+      "f": "07/08",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE",
+      "importe": 7928512.5
+     },
+     {
+      "f": "20/08",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 319449.6
+     },
+     {
+      "f": "20/08",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 276120.0
+     }
+    ]
+   }
+  },
+  "2026-09": {
+   "consultas": {
+    "total": 3,
+    "origen": {
+     "web": 2,
+     "Recomendación": 1
+    },
+    "detalle": [
+     {
+      "f": "07/09",
+      "cliente": "Franco Demoli",
+      "contacto": "Franco Demoli ",
+      "origen": "web"
+     },
+     {
+      "f": "07/09",
+      "cliente": "Transportes Bessone",
+      "contacto": "Luis Bessone",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "07/09",
+      "cliente": "test",
+      "contacto": "Test Test",
+      "origen": "web"
+     }
+    ]
+   },
+   "ons": {
+    "total": 4,
+    "origen": {
+     "CLIENTE": 2,
+     "web": 1,
+     "Recomendación": 1
+    },
+    "estado": {
+     "En Curso": 2,
+     "Confirmada": 1,
+     "Presupuesto enviado": 1
+    },
+    "detalle": [
+     {
+      "f": "07/09",
+      "empresa": "Franco Demoli",
+      "origen": "web"
+     },
+     {
+      "f": "07/09",
+      "empresa": "Transportes Bessone",
+      "origen": "Recomendación"
+     },
+     {
+      "f": "04/09",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE"
+     },
+     {
+      "f": "03/09",
+      "empresa": "Espacio Marketing",
+      "origen": "CLIENTE"
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 3,
+    "estado": {
+     "Enviada": 2,
+     "Aprobada": 1
+    },
+    "enviadas": 3,
+    "aprobadas": {
+     "n": 1,
+     "neto_impl": 262990.0,
+     "neto_sop": null
+    },
+    "detalle": [
+     {
+      "f": "04/09",
+      "nro": "1563.1",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "03/09",
+      "nro": "1490.2",
+      "estado": "Enviada"
+     },
+     {
+      "f": "03/09",
+      "nro": "1561.1",
+      "estado": "Enviada"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 0,
+    "importe": 0.0,
+    "detalle": []
+   }
+  }
+ },
+ "historico": {
+  "total": 4436,
+  "desde": "2014-11-28",
+  "estado": {
+   "Desestimada": 2481,
+   "En Curso": 1411,
+   "Concretada": 459,
+   "Hibernando": 30,
+   "Presentación enviada": 19,
+   "Confirmada": 14,
+   "Vencida": 11,
+   "Presupuesto enviado": 8,
+   "Esperando presupuesto": 3
+  },
+  "enCursoNuevas": 26,
+  "enCursoViejas": 1385
+ },
+ "series": {
+  "on_mensuales": {
+   "2025-01": 13,
+   "2025-02": 14,
+   "2025-03": 14,
+   "2025-04": 12,
+   "2025-05": 18,
+   "2025-06": 13,
+   "2025-07": 8,
+   "2025-08": 12,
+   "2025-09": 14,
+   "2025-10": 8,
+   "2025-11": 9,
+   "2025-12": 10,
+   "2026-01": 6,
+   "2026-02": 5,
+   "2026-03": 16,
+   "2026-04": 8,
+   "2026-05": 9,
+   "2026-06": 15,
+   "2026-07": 6,
+   "2026-08": 8,
+   "2026-09": 4
+  },
+  "cotiz_enviadas": {
+   "2025-07": 10,
+   "2025-08": 12,
+   "2025-09": 16,
+   "2025-10": 15,
+   "2025-11": 16,
+   "2025-12": 10,
+   "2026-01": 9,
+   "2026-02": 2,
+   "2026-03": 18,
+   "2026-04": 17,
+   "2026-05": 7,
+   "2026-06": 22,
+   "2026-07": 7,
+   "2026-08": 7,
+   "2026-09": 3
+  },
+  "cotiz_aprobadas": {
+   "2025-07": {
+    "n": 5,
+    "neto_impl": 10814429.171999998,
+    "neto_sop": 2034782.0
+   },
+   "2025-08": {
+    "n": 3,
+    "neto_impl": 496145.0,
+    "neto_sop": 53912.0
+   },
+   "2025-09": {
+    "n": 7,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2025-10": {
+    "n": 6,
+    "neto_impl": 6356223.5,
+    "neto_sop": 612444.0
+   },
+   "2025-11": {
+    "n": 2,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2025-12": {
+    "n": 4,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2026-01": {
+    "n": 3,
+    "neto_impl": 610091.07,
+    "neto_sop": 36413.6
+   },
+   "2026-02": {
+    "n": 2,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2026-03": {
+    "n": 1,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2026-04": {
+    "n": 5,
+    "neto_impl": 2742989.085,
+    "neto_sop": 403832.16
+   },
+   "2026-05": {
+    "n": 1,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2026-06": {
+    "n": 10,
+    "neto_impl": 10358512.5,
+    "neto_sop": 1400056.0
+   },
+   "2026-07": {
+    "n": 2,
+    "neto_impl": 0.0,
+    "neto_sop": 0.0
+   },
+   "2026-08": {
+    "n": 4,
+    "neto_impl": 596025.0,
+    "neto_sop": 75624.0
+   },
+   "2026-09": {
+    "n": 1,
+    "neto_impl": 262990.0,
+    "neto_sop": 0.0
+   }
+  }
+ }
+}

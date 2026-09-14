@@ -1,0 +1,637 @@
+    <style>
+      /* Comercial en el CRM. Mismo acento y misma escala de espaciado que
+         la seccion del mes; lo visual sale del DS (.card, .kpi-card,
+         .donut-block, .legend-row). */
+      #crm { --crm-acc: var(--cyan); --crm-acc-soft: var(--cyan-soft); --crm-acc-soft-2: var(--cyan-soft-2);
+             --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px;
+             margin-top: var(--s7); }
+      #crm .card-kicker { color: var(--crm-acc); }
+      #crm .crm-nota { margin: var(--s2) 0 var(--s5); font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #crm .crm-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
+
+      /* Cinco etapas, cinco escalas. En una pista compartida la longitud
+         invita a comparar 4 consultas con 16 ONs, que no son la misma
+         cosa: el unico contraste que significa algo es el de cada etapa
+         contra sus propios meses. Por eso cada una trae su histograma. */
+      /* Las cifras son .kpi-label / .kpi-value / .kpi-delta del DS, las
+         mismas que usa el resumen del mes. Aca solo se repite el ajuste de
+         escala y color que aquella seccion ya hace: el informe apila muchas
+         tarjetas por fila y la cifra canonica no entra. */
+      #crm .crm-etapas { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
+      #crm .crm-etapa { padding: var(--s3) var(--s4) var(--s3); min-width: 0; max-width: none; }
+      #crm .kpi-label { color: var(--crm-acc); }
+      #crm .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
+      #crm .kpi-card .kpi-delta { color: var(--muted-2); }
+      #crm .crm-mini { position: relative; height: 84px; margin-top: var(--s3); }
+
+      #crm .crm-donut { height: 200px; }
+      #crm .donut-legend { max-width: 260px; }
+      #crm .crm-histo { position: relative; height: 200px; margin-top: var(--s3); }
+      @media (max-width: 640px) { #crm .crm-histo { height: 160px; } }
+
+      /* Los estados no son un ranking: son las partes de un total. Tres
+         pistas sueltas de 4, 2 y 1 gastaban cinco renglones y escondian
+         justamente eso, que suman las emitidas del mes. Una sola pista
+         partida lo dice en uno. */
+      /* Separados, no pegados. Los colores semanticos del sistema estan
+         todos en la misma franja de luminancia —verde 3,54, azul 2,72,
+         rojo 4,30 contra la card blanca— asi que dos tramos vecinos
+         quedan entre 1,21 y 2,05 entre si, lejos del 3:1 que pide
+         1.4.11. Con aire en el medio la adyacencia deja de tener que
+         sostener el contraste: cada tramo solo compite contra la card.
+         Y 20px en vez de 12 le dan superficie al color. */
+      #crm .crm-apilada { display:flex; gap: 3px; }
+      #crm .crm-tramo { height: 20px; min-width: 6px; border-radius: 4px; }
+      #crm .crm-apilada-leyenda .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+      #crm .crm-apilada-leyenda { display:flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin-top: var(--s3); }
+      #crm .crm-apilada-leyenda .legend-row { display:flex; align-items:center; gap: var(--s2); min-width: 0; }
+      #crm .crm-apilada-leyenda .legend-label { min-width: 0; overflow-wrap: anywhere; }
+
+      #crm .crm-serie { position: relative; height: 210px; margin-top: var(--s3); }
+      #crm .crm-serie-t { font: 600 12px var(--sans); color: var(--text); margin-top: var(--s6); }
+      #crm .crm-serie-t:first-of-type { margin-top: var(--s3); }
+      #crm .crm-par { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--s5); }
+      #crm .crm-pie { margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--line);
+        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #crm .crm-mini { overflow: hidden; }
+      #crm .crm-mini > canvas { position: absolute; top: 0; left: 0; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #crm .crm-histo { overflow: hidden; }
+      #crm .crm-histo > canvas { position: absolute; top: 0; left: 0; }
+      /* Chart.js mide el contenedor y le escribe el ancho al canvas. Si el
+         canvas queda en el flujo, ese ancho vuelve a contar para el ancho
+         del contenedor y en cada redibujo crece: los histogramas se salian
+         de la tarjeta y pisaban la de al lado. Fuera del flujo, el canvas
+         no puede empujar a su padre. */
+      #crm .crm-serie { overflow: hidden; }
+      #crm .crm-serie > canvas { position: absolute; top: 0; left: 0; }
+      /* ── Tarjeta que abre en detalle ──────────────────────────────
+         Misma mecanica que el panel gerencial: la tarjeta es el disparador
+         y el detalle vive en un modal unico. Se marca como boton para que
+         el teclado llegue igual que el mouse. */
+      .kpi-card[data-detalle] { cursor: pointer; transition: box-shadow var(--tr, .2s ease), transform var(--tr, .2s ease); }
+      .kpi-card[data-detalle]:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+      .kpi-card[data-detalle]:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+      /* ── Modal de detalle (patron de yiqi-panel-gerencial) ────────── */
+      .modal-overlay { position: fixed; inset: 0; background: color-mix(in srgb, var(--ink, #000) 60%, transparent);
+        display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+      .modal-overlay[hidden] { display: none; }
+      .modal-content { background: var(--bg-elev-2); border: 1px solid var(--line); border-radius: var(--radius-xl, var(--radius-lg));
+        max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg, var(--shadow-md));
+        display: grid; grid-template-rows: auto 1fr; }
+      .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        padding: 24px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+      .modal-head-titles { min-width: 0; }
+      .modal-kicker { display: block; font: 700 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 4px; }
+      .modal-title { font: 700 24px var(--display); letter-spacing: -.02em; margin: 0; color: var(--text); }
+      .modal-sub { margin: 4px 0 0; font: 400 12px var(--sans); color: var(--muted); }
+      .modal-close { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+        border-radius: var(--radius); border: 1px solid var(--line); background: transparent; color: var(--muted);
+        font-size: 18px; cursor: pointer; flex-shrink: 0; }
+      .modal-close:hover { background: var(--bg-soft); color: var(--text); }
+      .modal-body { display: grid; gap: 24px; padding: 24px; overflow-y: auto; }
+      .modal-chart-container { position: relative; min-height: 300px; border-radius: var(--radius-lg);
+        background: var(--bg-soft); padding: 20px; overflow: hidden; }
+      .modal-stats-section { display: grid; gap: 12px; }
+      .modal-stats-section h3 { font: 600 14px var(--sans); color: var(--text); margin: 0; }
+      .modal-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 12px; }
+      .modal-stat-item { display: grid; gap: 4px; padding: 11px 13px; border-radius: var(--radius-md); background: var(--bg-elev); min-width: 0; }
+      .modal-stat-label { font: 700 9px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted-2); }
+      .modal-stat-value { font: 500 16px/1 var(--kpi-num); color: var(--text); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+      .modal-stat-value.is-positive { color: var(--green); }
+      .modal-stat-value.is-negative { color: var(--red); }
+      .modal-stat-sub { font: 400 10px var(--sans); color: var(--muted); }
+      .modal-source { margin: 0; font: 400 11px var(--mono); color: var(--muted-2); letter-spacing: .08em; }
+      @media (max-width: 720px) {
+        .modal-content { max-height: 95vh; border-radius: var(--radius-lg); }
+        .modal-header { padding: 16px; }
+        .modal-title { font-size: 18px; }
+        .modal-body { gap: 16px; padding: 16px; }
+        .modal-chart-container { min-height: 200px; padding: 12px; }
+        .modal-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    </style>
+
+    <section id="crm" aria-label="Comercial en el CRM">
+      <h2 class="section-title">Comercial — el mes en el CRM</h2>
+      <div class="section-sub" id="crm-sub">Agosto 2026</div>
+      <div id="crm-body"></div>
+    </section>
+
+    <!-- Modal unico de detalle. Lo comparten las tarjetas del CRM y las de
+         Meta: una sola caja, un solo grafico, un solo lugar donde arreglarlo. -->
+    <div class="modal-overlay" id="detalle-modal" hidden>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="detalle-titulo">
+        <div class="modal-header">
+          <div class="modal-head-titles">
+            <span class="modal-kicker" id="detalle-kicker"></span>
+            <h3 class="modal-title" id="detalle-titulo">Detalle</h3>
+            <p class="modal-sub" id="detalle-sub"></p>
+          </div>
+          <button class="modal-close" id="detalle-cerrar" type="button" aria-label="Cerrar">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-chart-section">
+            <div class="modal-chart-container"><canvas id="detalle-canvas" aria-label="Serie del indicador"></canvas></div>
+          </div>
+          <div class="modal-stats-section">
+            <h3>La serie, en números</h3>
+            <div class="modal-stats-grid" id="detalle-stats"></div>
+          </div>
+          <div class="modal-source" id="detalle-fuente"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    /* ─── COMERCIAL · CRM ───────────────────────────────────────────
+       Cifras calculadas desde los exports del CRM por
+       scripts/crm-json.py; el resultado vive en data/crm-2026.json y se
+       embebe al armar la pagina, para que el informe abra igual desde el
+       disco. Aca no se escribe ninguna cifra a mano. */
+    const CRM = __CRM_JSON__;
+    const CRM_MES = '2026-08', CRM_PREV = '2026-07';
+    const CRM_NOMBRE = { '01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre' };
+
+    /* La serie corta en el mes del reporte. Septiembre esta a mitad de
+       camino: puesto al lado de meses cerrados se lee como una caida. */
+    const CRM_MESES = () => Object.keys(CRM.meses).sort().filter(m => m <= CRM_MES);
+    const crmRotulo = k => CRM_NOMBRE[k.slice(5)].slice(0, 3);
+    /* En la serie larga el rotulo lleva el año: hay dos eneros. */
+    const crmRotLargo = k => CRM_NOMBRE[k.slice(5)].slice(0, 3) + ' ' + k.slice(2, 4);
+    const crmNum = v => Number(v).toLocaleString('es-AR');
+    const crmPesos = v => '$' + Math.round(v).toLocaleString('es-AR');
+    const crmMillones = v => v >= 1e6 ? '$' + (v / 1e6).toFixed(1).replace('.', ',') + ' M'
+                            : v >= 1e3 ? '$' + Math.round(v / 1e3) + ' k' : '$' + Math.round(v);
+    const crmMesNom = k => CRM_NOMBRE[k.slice(5)] + ' ' + k.slice(0, 4);
+
+    /* Las cinco etapas y el importe, cada una con como se lee su cifra. */
+    const CRM_ETAPAS = [
+      { id: 'crm-h-consultas',   rot: 'Consultas comerciales',  valor: d => d.consultas.total,               fmt: crmNum },
+      { id: 'crm-h-ons',         rot: 'ONs nuevas',             valor: d => d.ons.total,                     fmt: crmNum },
+      { id: 'crm-h-emitidas',    rot: 'Cotizaciones emitidas',  valor: d => d.cotizaciones.emitidas,         fmt: crmNum },
+      { id: 'crm-h-aprobadas',   rot: 'Cotizaciones aprobadas', valor: d => d.cotizaciones.aprobadas.n,      fmt: crmNum },
+      { id: 'crm-h-concretadas', rot: 'ONs concretadas',        valor: d => d.concretadas.n,                 fmt: crmNum },
+    ];
+
+    /* ─── DETALLE EN MODAL ──────────────────────────────────────────
+       Cada tarjeta con cifra se registra acá con su serie, y el click la
+       abre en grande. Un solo modal para todo el reporte: la tarjeta es el
+       disparador, no el dueño del gráfico. */
+    const DETALLES = {};
+    let _detalleVolver = null;
+
+    function registrarDetalle(clave, cfg) { DETALLES[clave] = cfg; }
+
+    function detalleStats(cfg) {
+      const ps = cfg.puntos, vs = ps.map(cfg.valor);
+      const i = ps.indexOf(CRM_MES), j = ps.indexOf(CRM_PREV);
+      const act = i >= 0 ? vs[i] : 0, ant = j >= 0 ? vs[j] : null;
+      const dif = ant == null ? null : act - ant;
+      const pct = (ant == null || !ant) ? null : (act - ant) / ant * 100;
+      const max = Math.max.apply(null, vs);
+      const mMax = ps[vs.indexOf(max)];
+      /* Un decimal: sin redondear, crmNum devolvia "12,375" y en es-AR
+         eso se lee como doce mil trescientos setenta y cinco. */
+      const prom = Math.round(vs.reduce((t, v) => t + v, 0) / (vs.length || 1) * 10) / 10;
+      const signo = n => (n > 0 ? '+' : n < 0 ? '\u2212' : '');
+      const clase = n => (n > 0 ? ' is-positive' : n < 0 ? ' is-negative' : '');
+      const item = (l, v, sub, cl) =>
+        `<div class="modal-stat-item"><span class="modal-stat-label">${l}</span><span class="modal-stat-value${cl || ''}">${v}</span><span class="modal-stat-sub">${sub}</span></div>`;
+      return [
+        item(crmMesNom(CRM_MES).split(' ')[0], cfg.fmt(act), 'el mes del reporte'),
+        ant == null ? item('Mes anterior', '\u2014', 'sin dato')
+                    : item(crmMesNom(CRM_PREV).split(' ')[0], cfg.fmt(ant), 'mes anterior'),
+        dif == null ? item('Variación', '\u2014', 'sin comparación')
+                    : item('Variación', signo(dif) + cfg.fmt(Math.abs(dif)), 'contra el mes anterior', clase(dif)),
+        pct == null ? item('En porcentaje', '\u2014', 'el mes anterior fue cero')
+                    : item('En porcentaje', signo(pct) + Math.abs(pct).toFixed(1).replace('.', ',') + ' %', 'contra el mes anterior', clase(pct)),
+        item('Máximo de la serie', cfg.fmt(max), crmMesNom(mMax).toLowerCase()),
+        item('Promedio', cfg.fmt(prom), ps.length + ' meses'),
+      ].join('');
+    }
+
+    function abrirDetalle(clave, origen) {
+      const cfg = DETALLES[clave];
+      const m = document.getElementById('detalle-modal');
+      if (!cfg || !m) return;
+      _detalleVolver = origen || null;
+      document.getElementById('detalle-kicker').textContent = cfg.kicker || '';
+      document.getElementById('detalle-titulo').textContent = cfg.titulo;
+      document.getElementById('detalle-sub').textContent = cfg.sub || '';
+      document.getElementById('detalle-stats').innerHTML = detalleStats(cfg);
+      document.getElementById('detalle-fuente').textContent = cfg.fuente || '';
+      m.hidden = false;
+      /* El grafico se dibuja con el modal ya visible: en un contenedor
+         oculto, Chart.js mide cero y sale un canvas de 0px. */
+      setTimeout(function () {
+        crmLinea('detalle-canvas', cfg.puntos, [{ label: cfg.titulo, valor: cfg.valor }], cfg.fmt);
+        const c = document.getElementById('detalle-cerrar');
+        c && c.focus();
+      }, 20);
+    }
+
+    function cerrarDetalle() {
+      const m = document.getElementById('detalle-modal');
+      if (!m || m.hidden) return;
+      m.hidden = true;
+      if (_charts['detalle-canvas']) { _charts['detalle-canvas'].destroy(); delete _charts['detalle-canvas']; }
+      if (_detalleVolver) { _detalleVolver.focus(); _detalleVolver = null; }
+    }
+
+    (function () {
+      document.addEventListener('click', function (e) {
+        const cerrar = e.target.closest('#detalle-cerrar');
+        if (cerrar) { cerrarDetalle(); return; }
+        if (e.target.id === 'detalle-modal') { cerrarDetalle(); return; }
+        const card = e.target.closest('[data-detalle]');
+        if (card) abrirDetalle(card.getAttribute('data-detalle'), card);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { cerrarDetalle(); return; }
+        const card = e.target.closest && e.target.closest('[data-detalle]');
+        if (card && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          abrirDetalle(card.getAttribute('data-detalle'), card);
+        }
+      });
+      /* Foco atrapado dentro del modal mientras esta abierto, como en el
+         panel gerencial: con Tab no se sale a la pagina de atras. */
+      document.addEventListener('keydown', function (e) {
+        const m = document.getElementById('detalle-modal');
+        if (!m || m.hidden || e.key !== 'Tab') return;
+        const f = Array.prototype.filter.call(
+          m.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'),
+          el => el.offsetParent !== null);
+        if (!f.length) return;
+        const pri = f[0], ult = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === pri) { e.preventDefault(); ult.focus(); }
+        else if (!e.shiftKey && document.activeElement === ult) { e.preventDefault(); pri.focus(); }
+      });
+    })();
+
+    function crmRender() {
+      const b = document.getElementById('crm-body');
+      const d = CRM.meses[CRM_MES], p = CRM.meses[CRM_PREV];
+      if (!b || !d) return;
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+      document.getElementById('crm-sub').textContent =
+        crmMesNom(CRM_MES) + ' · calculado desde los exports del CRM · cada etapa contra sus propios meses';
+
+      /* La variacion se dice en la unidad de la etapa, no en porcentaje:
+         de 2 a 4 cotizaciones no es "+100 %", son dos cotizaciones. */
+      const variacion = (v, prev) => {
+        const dif = v - prev;
+        if (!dif) return 'igual que ' + crmMesNom(CRM_PREV).split(' ')[0].toLowerCase();
+        return (dif > 0 ? '+' : '−') + crmNum(Math.abs(dif)) + ' vs ' + crmMesNom(CRM_PREV).split(' ')[0].toLowerCase();
+      };
+
+      const etapas = CRM_ETAPAS.map(e => {
+        registrarDetalle('crm:' + e.id, {
+          kicker: 'Comercial · CRM', titulo: e.rot,
+          sub: 'Mes a mes, de enero 2026 a ' + crmMesNom(CRM_MES).toLowerCase(),
+          puntos: CRM_MESES(), valor: m => e.valor(CRM.meses[m]), fmt: e.fmt,
+          fuente: 'Exports del CRM · data/crm-2026.json',
+        });
+        return `
+        <div class="kpi-card card-reveal crm-etapa" data-detalle="crm:${e.id}" role="button" tabindex="0" aria-label="Ver ${esc(e.rot)} en detalle">
+          <div class="kpi-label">${esc(e.rot)}</div>
+          <div class="kpi-value">${esc(e.fmt(e.valor(d)))}</div>
+          <div class="kpi-delta neutral">${esc(variacion(e.valor(d), e.valor(p)))}</div>
+          <div class="crm-mini"><canvas id="${e.id}" aria-label="${esc(e.rot)} por mes"></canvas></div>
+        </div>`;
+      }).join('');
+
+      /* Orden fijo, no por cantidad: asi la barra se lee igual todos los
+         meses. El color sale de la tabla semantica del sistema — aprobada
+         es un resultado, vencida es una perdida. */
+      const ORDEN = ['Concretada', 'Confirmada', 'Aprobada', 'Presupuesto enviado', 'Presentación enviada',
+                     'Enviada', 'En Curso', 'En preparación', 'Esperando presupuesto', 'Versionada',
+                     'Hibernando', 'Rechazada', 'Desestimada', 'Vencida', 'Sin estado'];
+      const TOKEN = { 'Concretada': '--green', 'Confirmada': '--green', 'Aprobada': '--green',
+                      'Presupuesto enviado': '--cyan', 'Presentación enviada': '--cyan', 'Enviada': '--cyan',
+                      'En Curso': '--blue', 'En preparación': '--blue', 'Esperando presupuesto': '--blue',
+                      'Versionada': '--muted-2', 'Hibernando': '--muted-2', 'Sin estado': '--muted-2',
+                      'Rechazada': '--red', 'Desestimada': '--red', 'Vencida': '--red' };
+      /* Una pista partida por estado. La usan las ONs del mes, la cartera
+         historica y las cotizaciones: en los tres casos son las partes de
+         un total, no un ranking. */
+      const apilada = (mapa, aria) => {
+        const todas = Object.entries(mapa)
+          .sort((a, z) => (ORDEN.indexOf(a[0]) + 1 || 99) - (ORDEN.indexOf(z[0]) + 1 || 99));
+        const tot = todas.reduce((t, e) => t + e[1], 0) || 1;
+        /* Un tramo de 8 sobre 4.436 no se ve en la barra y ensucia la
+           leyenda. Debajo del 2 % van juntos a «Otros», que si se ve. */
+        let filas = todas;
+        if (todas.length > 4) {
+          const grandes = todas.filter(e => e[1] / tot >= 0.02);
+          const resto   = todas.reduce((t, e) => t + (e[1] / tot >= 0.02 ? 0 : e[1]), 0);
+          if (resto > 0 && grandes.length < todas.length) filas = grandes.concat([['Otros', resto]]);
+        }
+        const color = r => 'var(' + (TOKEN[r] || '--muted-2') + ')';
+        return `
+          <div class="crm-apilada" role="img" aria-label="${esc(aria)}">${filas.map(([r, v]) =>
+            `<div class="crm-tramo" style="width:${(v / tot * 100).toFixed(1)}%;background:${color(r)}"></div>`).join('')}</div>
+          <div class="crm-apilada-leyenda">${filas.map(([r, v]) =>
+            `<div class="legend-row"><span class="legend-dot" style="background:${color(r)}"></span><span class="legend-label">${esc(r)}</span><span class="legend-pct">${crmNum(v)} · ${Math.round(v / tot * 100)} %</span></div>`).join('')}</div>`;
+      };
+      const barras = apilada(d.cotizaciones.estado, 'Cotizaciones del mes por estado');
+      const h = CRM.historico || null;
+      const cerradas = h ? (h.estado['Concretada'] || 0) : 0;
+      const perdidas = h ? (h.estado['Desestimada'] || 0) : 0;
+
+      b.innerHTML = `
+        <div class="crm-etapas">${etapas}</div>
+
+        <div class="crm-par">
+          <div class="card crm-bloque card-reveal kpi-card" data-detalle="crm:importe" role="button" tabindex="0" aria-label="Ver el importe concretado en detalle">
+            <div class="kpi-label">Importe concretado</div>
+            <div class="kpi-value">${esc(crmPesos(d.concretadas.importe))}</div>
+            <div class="kpi-delta neutral">${esc(crmPesos(p.concretadas.importe) + ' en ' + crmMesNom(CRM_PREV).split(' ')[0].toLowerCase())}</div>
+            <div class="crm-histo"><canvas id="crm-h-importe" aria-label="Importe concretado por mes"></canvas></div>
+          </div>
+
+          <div class="card crm-bloque card-reveal">
+            <div class="card-kicker">De dónde salieron las ONs</div>
+            <div class="donut-block" style="margin-top:12px">
+              <div class="donut-chart crm-donut"><canvas id="crm-chart-origen" aria-label="ONs por origen"></canvas></div>
+              <div class="donut-legend" id="crm-leg-origen"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card crm-bloque card-reveal">
+          <div class="card-kicker">En qué quedaron las ONs del mes</div>
+          <p class="crm-nota">Se lee hoy, no al cierre del mes: una ON abierta en ${esc(crmMesNom(CRM_MES).toLowerCase())} puede concretarse en cualquier momento. Por eso las ONs nuevas y las concretadas de un mismo mes son grupos distintos y no se comparan entre sí.</p>
+          ${apilada(d.ons.estado, 'ONs del mes por estado')}
+        </div>
+
+        ${h ? `<div class="card crm-bloque card-reveal">
+          <div class="card-kicker">Pendiente de limpieza en el CRM</div>
+          <p class="crm-nota">De las ${crmNum(h.estado['En Curso'] || 0)} oportunidades en «En Curso», ${crmNum(h.enCursoViejas)} se crearon hace más de dos años y nadie las cerró ni las descartó. El pipeline abierto real son ${crmNum(h.enCursoNuevas)}. Es trabajo de CRM, no lectura del mes.</p>
+        </div>` : ''}
+
+        <div class="card crm-bloque card-reveal">
+          <div class="card-kicker">En qué quedaron las cotizaciones del mes</div>
+          <p class="crm-nota">${crmNum(d.cotizaciones.emitidas)} emitidas · ${crmNum(d.cotizaciones.enviadas)} enviadas · ${crmNum(d.cotizaciones.aprobadas.n)} aprobadas por ${crmPesos(d.cotizaciones.aprobadas.neto_impl)} de neto de implementación${d.cotizaciones.aprobadas.neto_sop ? ' y ' + crmPesos(d.cotizaciones.aprobadas.neto_sop) + ' de soporte' : ''}. Emitidas se cuenta por fecha de la cotización; enviadas y aprobadas, por fecha de envío y de aprobación. Son tres fechas distintas.</p>
+          ${barras}
+        </div>
+
+        <div class="card crm-bloque card-reveal">
+          <div class="card-kicker">La serie larga</div>
+          <p class="crm-nota">Los tres agregados que publica el tablero del CRM, tal cual: se copian, no se recalculan desde el detalle. Cortan en ${esc(crmMesNom(CRM_MES).toLowerCase())}.</p>
+          <div class="crm-serie-t">Nuevas ON mensuales</div>
+          <div class="crm-serie"><canvas id="crm-s-ons" aria-label="Nuevas ON mensuales"></canvas></div>
+          <div class="crm-serie-t">Cotizaciones enviadas</div>
+          <div class="crm-serie"><canvas id="crm-s-env" aria-label="Cotizaciones enviadas por mes"></canvas></div>
+          <div class="crm-serie-t">Cotizaciones aprobadas · neto</div>
+          <div class="crm-serie"><canvas id="crm-s-apr" aria-label="Neto de las cotizaciones aprobadas por mes"></canvas></div>
+        </div>
+
+        <div class="crm-pie">${esc(CRM.nota)} · Generado el ${esc(CRM.generado)}.</div>`;
+
+      registrarDetalle('crm:importe', {
+        kicker: 'Comercial · CRM', titulo: 'Importe concretado',
+        sub: 'Mes a mes, de enero 2026 a ' + crmMesNom(CRM_MES).toLowerCase(),
+        puntos: CRM_MESES(), valor: m => CRM.meses[m].concretadas.importe, fmt: crmPesos,
+        fuente: 'Exports del CRM · data/crm-2026.json',
+      });
+
+      if (typeof initReveal === 'function') initReveal(b);
+      setTimeout(function () { crmChart(); crmHistogramas(); }, 30);
+    }
+
+    /* ─── HISTOGRAMAS ───────────────────────────────────────────────
+       El eje Y no se dibuja: la cifra del mes del reporte va escrita
+       sobre su barra y la del resto se lee por la altura. Un grafico
+       cuyo dato hay que buscar con el mouse no informa, pero nueve
+       etiquetas en 200px tampoco: se escribe la que ancla la lectura. */
+    /* Escribe la cifra sobre la barra o el punto, corrida hacia adentro si
+       se saldria del area del grafico: centrada sobre el ultimo mes, la
+       mitad del texto quedaba cortada contra el borde. */
+    function crmCifraEncima(chart, x, y, texto) {
+      const ctx = chart.ctx, area = chart.chartArea;
+      const mitad = ctx.measureText(texto).width / 2 + 1;
+      const xx = Math.min(Math.max(x, area.left + mitad), area.right - mitad);
+      ctx.fillText(texto, xx, y);
+    }
+
+    /* Motor de columnas por mes. Lo usan las etapas del CRM y tambien la
+       seccion de Meta: una sola gramatica de barras en todo el reporte. */
+    function crmColumnas(id, puntos, valores, fmt, alto) {
+      const cv = document.getElementById(id);
+      if (!cv || typeof Chart === 'undefined') return;
+      if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
+      const ms = puntos;
+      const acc = getCSSVar('--cyan'), apagado = getCSSVar('--muted-2');
+      const texto = getCSSVar('--text'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
+      const cifra = getCSSVar('--kpi-num'), mono = getCSSVar('--mono');
+      const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line');
+
+      const valorDelMes = {
+        id: 'valorDelMes',
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx, i = ms.indexOf(CRM_MES);
+          if (i < 0) return;
+          const bar = chart.getDatasetMeta(0).data[i], v = chart.data.datasets[0].data[i];
+          if (!bar || !v) return;
+          ctx.save();
+          ctx.font = '600 11px ' + cifra;
+          ctx.fillStyle = texto; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          crmCifraEncima(chart, bar.x, bar.y - 3, fmt(v));
+          ctx.restore();
+        }
+      };
+
+      _charts[id] = new Chart(cv, {
+        type: 'bar',
+        data: {
+          labels: ms.map(alto === 'mini' ? crmRotulo : crmRotLargo),
+          datasets: [{
+            label: 'Mes',
+            data: ms.map(valores),
+            backgroundColor: ms.map(m => m === CRM_MES ? acc : apagado),
+            borderRadius: 3, borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 400, easing: 'easeOutCubic' },
+          layout: { padding: { top: 16 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: elev, borderColor: linea, borderWidth: 1,
+              titleColor: texto, bodyColor: muted, padding: 10,
+              callbacks: { label: c => ' ' + fmt(c.parsed.y) }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { display: false },
+                 ticks: { color: muted2, font: { family: mono, size: alto === 'mini' ? 9 : 10 }, maxRotation: 0, autoSkip: true } },
+            y: { display: false, beginAtZero: true, grace: '14%' }
+          }
+        },
+        plugins: [valorDelMes]
+      });
+    }
+
+    /* Las etapas del CRM: mismo motor, sobre los meses de 2026. */
+    function crmHisto(id, valor, fmt, alto) {
+      crmColumnas(id, CRM_MESES(), m => valor(CRM.meses[m]), fmt, alto);
+    }
+
+
+    /* La serie larga va en linea, no en barras: son veinte meses y lo que
+       se lee ahi es la forma de la curva, no el valor de cada mes. El eje Y
+       vuelve a dibujarse —una linea sin escala no se puede leer— y el mes
+       del reporte queda marcado con su punto grande y su cifra escrita.
+       Cuando hay dos series se distinguen ademas por el trazo: --cyan y
+       --blue vecinos, a este tamaño, se leen como una sola linea. */
+    function crmLinea(id, puntos, series, fmt) {
+      const cv = document.getElementById(id);
+      if (!cv || typeof Chart === 'undefined') return;
+      if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
+      const acc = getCSSVar('--cyan'), segunda = getCSSVar('--blue');
+      const texto = getCSSVar('--text'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
+      const cifra = getCSSVar('--kpi-num'), mono = getCSSVar('--mono');
+      const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), fondo = getCSSVar('--bg-elev');
+      const solo = series.length === 1;
+      const escala = [acc, segunda];
+      const iMes = puntos.indexOf(CRM_MES);
+
+      const valorDelMes = {
+        id: 'valorDelMes',
+        afterDatasetsDraw(chart) {
+          if (iMes < 0) return;
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.font = '600 11px ' + cifra;
+          ctx.fillStyle = texto; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          chart.data.datasets.forEach((ds, di) => {
+            const meta = chart.getDatasetMeta(di);
+            if (meta.hidden || di > 0) return;
+            const pt = meta.data[iMes], v = ds.data[iMes];
+            if (!pt) return;
+            crmCifraEncima(chart, pt.x, pt.y - 10, fmt(v));
+          });
+          ctx.restore();
+        }
+      };
+
+      _charts[id] = new Chart(cv, {
+        type: 'line',
+        data: {
+          labels: puntos.map(crmRotLargo),
+          datasets: series.map((se, i) => ({
+            label: se.label,
+            data: puntos.map(se.valor),
+            borderColor: escala[i % escala.length],
+            backgroundColor: escala[i % escala.length],
+            borderWidth: 2,
+            borderDash: i === 0 ? [] : [5, 4],
+            tension: 0.35,
+            fill: false,
+            pointRadius: puntos.map(m => m === CRM_MES ? 5 : 2.5),
+            pointHoverRadius: 6,
+            pointBackgroundColor: puntos.map(m => m === CRM_MES ? escala[i % escala.length] : fondo),
+            pointBorderColor: escala[i % escala.length],
+            pointBorderWidth: 2,
+          }))
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 400, easing: 'easeOutCubic' },
+          interaction: { mode: 'index', intersect: false },
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: solo ? { display: false } : {
+              position: 'bottom',
+              labels: { color: muted, font: { family: mono, size: 10 }, usePointStyle: true, pointStyleWidth: 8, padding: 12 }
+            },
+            tooltip: {
+              backgroundColor: elev, borderColor: linea, borderWidth: 1,
+              titleColor: texto, bodyColor: muted, padding: 10,
+              callbacks: { label: c => ' ' + c.dataset.label + ': ' + fmt(c.parsed.y) }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { color: linea },
+                 ticks: { color: muted2, font: { family: mono, size: 10 }, maxRotation: 0, autoSkip: true } },
+            y: { beginAtZero: true, grace: '10%', border: { display: false },
+                 grid: { color: linea },
+                 ticks: { color: muted2, font: { family: mono, size: 10 }, maxTicksLimit: 5, callback: v => fmt(v) } }
+          }
+        },
+        plugins: [valorDelMes]
+      });
+    }
+
+    function crmSeries() {
+      const corte = o => Object.keys(o).sort().filter(m => m <= CRM_MES);
+      const S = CRM.series || {};
+      if (S.on_mensuales) {
+        const ms = corte(S.on_mensuales);
+        crmLinea('crm-s-ons', ms, [{ label: 'Nuevas ON', valor: m => S.on_mensuales[m] }], crmNum);
+      }
+      if (S.cotiz_enviadas) {
+        const ms = corte(S.cotiz_enviadas);
+        crmLinea('crm-s-env', ms, [{ label: 'Enviadas', valor: m => S.cotiz_enviadas[m] }], crmNum);
+      }
+      if (S.cotiz_aprobadas) {
+        const ms = corte(S.cotiz_aprobadas);
+        crmLinea('crm-s-apr', ms, [
+          { label: 'Neto implementación', valor: m => S.cotiz_aprobadas[m].neto_impl },
+          { label: 'Neto soporte',        valor: m => S.cotiz_aprobadas[m].neto_sop },
+        ], crmMillones);
+      }
+    }
+
+    function crmHistogramas() {
+      CRM_ETAPAS.forEach(e => crmHisto(e.id, e.valor, e.fmt, 'mini'));
+      crmHisto('crm-h-importe', d => d.concretadas.importe, crmMillones);
+      crmSeries();
+    }
+
+    /* Donut de origen. Colores por token y cifra en la leyenda, nunca
+       solo en el tooltip. Se rehace al cambiar de tema. */
+    function crmChart() {
+      const cv = document.getElementById('crm-chart-origen');
+      const d = CRM.meses[CRM_MES];
+      if (!cv || !d || typeof Chart === 'undefined') return;
+      if (_charts.crmOrigen) { _charts.crmOrigen.destroy(); delete _charts.crmOrigen; }
+      const filas = Object.entries(d.ons.origen).sort((a, b) => b[1] - a[1]);
+      const total = filas.reduce((s, r) => s + r[1], 0) || 1;
+      const escala = [getCSSVar('--cyan'), getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--blue'), getCSSVar('--muted-2')];
+      const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), texto = getCSSVar('--text'), muted = getCSSVar('--muted');
+      _charts.crmOrigen = new Chart(cv, {
+        type: 'doughnut',
+        data: { labels: filas.map(r => r[0]), datasets: [{ data: filas.map(r => r[1]), backgroundColor: filas.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '68%',
+          animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10,
+              callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } },
+          }
+        }
+      });
+      const leg = document.getElementById('crm-leg-origen');
+      if (leg) leg.innerHTML = filas.map((r, i) =>
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${r[1]} · ${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+    }
+
+    crmRender();
+    </script>

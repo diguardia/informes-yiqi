@@ -1,0 +1,21 @@
+    <style>
+      /* El brief. Va arriba de todo y es lo unico del reporte escrito en
+         prosa: las cuatro secciones de abajo muestran, esta dice. Ninguna
+         cifra esta tecleada: todas se interpolan de los mismos objetos que
+         alimentan las secciones, asi que al regenerar el reporte el brief
+         se corrige solo. */
+      #brief { --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s5); }
+      #brief .card-kicker { color: var(--cyan); }
+      #brief .bf-card { padding: var(--s5) var(--s6); }
+      #brief ol { margin: var(--s4) 0 0; padding-left: var(--s5); display: grid; gap: var(--s4); }
+      #brief li { font: 400 14px/1.6 var(--sans); color: var(--text); max-width: 78ch; }
+      #brief li::marker { color: var(--cyan); font-family: var(--mono); font-size: 12px; }
+      #brief strong { font-weight: 600; }
+    </style>
+
+    <section id="brief" aria-label="Agosto en tres líneas">
+      <div class="card bf-card">
+        <div class="card-kicker">Agosto en tres líneas</div>
+        <ol id="brief-body"></ol>
+      </div>
+    </section>

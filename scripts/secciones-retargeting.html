@@ -1,0 +1,119 @@
+    <style>
+      /* Retargeting. Sin serie mensual propia —el conjunto vivio veintiocho
+         dias—, asi que acá no hay histograma: lo que se compara es contra
+         las otras campañas de la cuenta, que sí comparten escala. */
+      #retargeting { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
+      #retargeting .card-kicker, #retargeting .kpi-label { color: var(--cyan); }
+      #retargeting .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
+      #retargeting .kpi-card .kpi-delta { color: var(--muted-2); }
+      #retargeting .rt-kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
+      #retargeting .rt-kpis .kpi-card { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
+      #retargeting .rt-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
+      #retargeting .rt-texto { margin: var(--s2) 0 var(--s5); font: 400 13px/1.7 var(--sans); color: var(--muted-2); max-width: 70ch; }
+      #retargeting .rt-texto strong { color: var(--text); font-weight: 600; }
+      /* Comparacion contra las otras campañas: misma metrica, misma escala.
+         La barra dibuja la proporcion y la cifra se lee al lado. */
+      /* La pista tiene tope: sin el, en un monitor ancho la barra cruzaba
+         toda la tarjeta y una diferencia de $46 contra $259 se leia como
+         dos metros de color. El ancho de la barra no es el dato. */
+      #retargeting .rt-fila { display:grid; grid-template-columns: minmax(0, 130px) minmax(0, 360px) auto; align-items:center; gap: var(--s3); margin-bottom: var(--s1); max-width: 560px; }
+      #retargeting .rt-rot { font: 400 11px var(--sans); color: var(--text); min-width: 0; }
+      #retargeting .rt-pista { background: var(--bg-elev-2); border-radius: 999px; height: 8px; overflow: hidden; }
+      #retargeting .rt-fill { height: 100%; border-radius: 999px; min-width: 3px; }
+      #retargeting .rt-n { font: 600 12px var(--kpi-num); color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      @media (max-width: 640px) {
+        #retargeting .rt-fila { grid-template-columns: 1fr auto; }
+        #retargeting .rt-pista { grid-column: 1 / -1; }
+      }
+      #retargeting .rt-pie { margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--line);
+        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
+    </style>
+
+    <section id="retargeting" aria-label="El retargeting de agosto">
+      <h2 class="section-title">El retargeting</h2>
+      <div class="section-sub">Conjunto «Retargeting · migración · Argentina» · activo del 22 de julio al 18 de agosto · volvió el 7 de septiembre como conjunto nuevo, ya fuera de este mes</div>
+      <div id="retargeting-body"></div>
+    </section>
+
+    <script>
+    /* ─── RETARGETING ───────────────────────────────────────────────
+       Las cifras salen de claude/Retargeting-inventario-y-acciones-sep2026.md,
+       del 7 de septiembre, verificadas ahí contra la Marketing API. No salen
+       de data/meta.json: aquel archivo agrega por campaña y este conjunto
+       vivió dentro de una, veintiocho días. Si alguna cambia, se cambia acá
+       y se vuelve a correr el armador. */
+    const RT = {
+      conjunto: 'Retargeting · migración · Argentina',
+      desde: '22 de julio', hasta: '18 de agosto', dias: 28,
+      gasto: 51242, alcance: 2476, cpc: 258.80, frecuencia: 4.0,
+      /* Los siete dias con el pool duplicado, del asiento del 18/08 de la
+         bitacora de comercial.html. Se decidio con esto. */
+      corte: '18 de agosto', diasDeLaPrueba: 7,
+      clicAntes: 416.81, clicDespues: 156.69,
+      costoVisita7d: 806.98, costoVisitaCostos: 128.70,
+      clics: 175, cargaron: 41, costoVisita: 1249.81, cpm: 5164,
+      /* Las otras tres campañas de la cuenta en el mismo período, para que
+         el número tenga contra qué leerse. */
+      campanas: [
+        { n: 'Retargeting', cpc: 258.80, frec: 4.0, carga: 23, esEl: true },
+        { n: 'Costos',      cpc: 45.62,  frec: 1.7, carga: 50 },
+        { n: 'Vender más',  cpc: 65.50,  frec: 2.0, carga: null },
+        { n: 'Mensajes IG', cpc: 101.28, frec: 2.2, carga: null },
+      ],
+      fuente: 'claude/Retargeting-inventario-y-acciones-sep2026.md · 07/09/2026, verificado contra la Marketing API · conjunto 120250888826560343',
+    };
+
+    function rtRender() {
+      const b = document.getElementById('retargeting-body');
+      if (!b) return;
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const pct = n => n.toFixed(1).replace('.', ',') + ' %';
+
+      const kpis = [
+        ['Invertido', crmPesos(RT.gasto), RT.dias + ' días al aire'],
+        ['Alcance', crmNum(RT.alcance), 'personas distintas'],
+        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · Costos llega al 50 %'],
+        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de Costos'],
+      ].map(([l, v, d]) => `
+        <div class="kpi-card card-reveal">
+          <div class="kpi-label">${esc(l)}</div>
+          <div class="kpi-value">${esc(v)}</div>
+          <div class="kpi-delta neutral">${esc(d)}</div>
+        </div>`).join('');
+
+      const barras = (clave, fmt, titulo, nota) => {
+        const filas = RT.campanas.filter(c => c[clave] != null);
+        const tope = Math.max.apply(null, filas.map(c => c[clave]));
+        return `
+          <div class="card-kicker" style="margin-top:20px">${esc(titulo)}</div>
+          <p class="rt-texto" style="margin-bottom:12px">${esc(nota)}</p>
+          ${filas.map(c => `
+            <div class="rt-fila">
+              <div class="rt-rot">${esc(c.n)}</div>
+              <div class="rt-pista"><div class="rt-fill" style="width:${(c[clave] / tope * 100).toFixed(1)}%;background:var(${c.esEl ? '--red' : '--cyan'})"></div></div>
+              <div class="rt-n">${esc(fmt(c[clave]))}</div>
+            </div>`).join('')}`;
+      };
+
+      b.innerHTML = `
+        <div class="card rt-bloque card-reveal">
+          <div class="card-kicker">Qué es</div>
+          <p class="rt-texto">Cuando alguien entra a yiqi.com.ar, el píxel deja una marca en su navegador y esa persona pasa a formar parte de un público que Meta puede volver a alcanzar. El retargeting es comprarle a Meta el derecho a mostrarle un anuncio otra vez a esa gente. La diferencia con la prospección es el punto de partida: en prospección le hablas a alguien que nunca oyó de YiQi; en retargeting, a alguien que ya entró, miró y se fue sin escribir. <strong>Ya sabe quién sos: lo que le falta es una razón para volver.</strong></p>
+          <div class="kpi-grid rt-kpis" style="margin-top:20px;margin-bottom:0">${kpis}</div>
+        </div>
+
+        <div class="card rt-bloque card-reveal">
+          <div class="card-kicker">Contra el resto de la cuenta</div>
+          <p class="rt-texto">El costo por clic fue 5,7 veces el de Costos. Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
+          ${barras('cpc', crmPesos, 'Costo por clic', 'Mismo período, mismas cuatro campañas de la cuenta.')}
+          ${barras('frec', n => n.toFixed(1).replace('.', ','), 'Frecuencia', 'Cuántas veces vio el anuncio cada persona alcanzada.')}
+          ${barras('carga', n => n + ' %', 'De los que hacen clic, cuántos cargan la página', 'Solo las dos campañas con el dato medido.')}
+        </div>
+
+        <div class="rt-pie">${esc(RT.fuente)}</div>`;
+
+      if (typeof initReveal === 'function') initReveal(b);
+    }
+
+    rtRender();
+    </script>

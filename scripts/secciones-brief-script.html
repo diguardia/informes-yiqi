@@ -1,0 +1,66 @@
+    <script>
+    /* ─── BRIEF ─────────────────────────────────────────────────────
+       Va ultimo a proposito: lee CRM, META y RT, que declaran las
+       secciones de abajo. Ninguna cifra se teclea — si cambia el origen,
+       cambia el brief. */
+    (function () {
+      const ol = document.getElementById('brief-body');
+      if (!ol || typeof CRM === 'undefined' || typeof META === 'undefined') return;
+      const d = CRM.meses[CRM_MES], m = META.meses[CRM_MES];
+      if (!d || !m) return;
+
+      /* Prosa: los numeros chicos van en letras. Si alguno se sale de la
+         tabla, cae en la cifra en vez de inventar la palabra. */
+      const LETRAS = ['cero','una','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez',
+                      'once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte'];
+      const letra = n => (Number.isInteger(n) && n >= 0 && n < LETRAS.length) ? LETRAS[n] : crmNum(n);
+      const b = t => '<strong>' + t + '</strong>';
+      /* Estas cuatro se decidieron al centavo y asi se citaron: redondearlas
+         a $417 le saca a la frase la precision que la hizo decidible. */
+      const pesosCent = v => '$' + v.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const ons = d.ons.total, conc = d.concretadas.n, importe = d.concretadas.importe;
+      const cliente = d.ons.origen['CLIENTE'] || 0, web = d.ons.origen['web'] || 0;
+      /* El ticket promedio queda afuera: con tres operaciones y una que
+         explica el 93 % del monto, el promedio no resume nada — inventa una
+         operacion tipica que no existe y es el numero en el que se ancla.
+         En su lugar se dice la forma: cuanto pesa la mayor y cuantos
+         clientes distintos hay detras. */
+      const porImporte = (d.concretadas.detalle || []).slice().sort((a, z) => z.importe - a.importe);
+      const mayor = porImporte.length ? porImporte[0].importe / importe * 100 : 0;
+      const clientes = new Set(porImporte.map(r => r.empresa)).size;
+      const porOn = ons ? m.gasto / ons : 0;
+
+      /* Cada linea abre con su hallazgo, no con su tema: el que escanea los
+         tres titulos se lleva el mes sin entrar al cuerpo.
+
+         Sin superlativos. "El mes de mayor inversion del ano" venia del
+         resumen de comercial.html y era falso —agosto es el cuarto de ocho
+         en 2026, detras de marzo, mayo y abril—: se arrastro sin
+         contrastarlo contra data/meta.json. Un reporte informa; el lugar de
+         cada mes en la serie lo dice el histograma de su seccion. */
+      const lineas = [
+        [`${letra(conc).replace(/^t/, 'T')} operaciones cerraron ${crmPesos(importe)}`,
+         `${crmPesos(m.gasto)} de pauta y ${crmNum(m.conv)} conversaciones. Una sola operación explica el ${Math.round(mayor)} % del monto${clientes && clientes < conc ? ', y las otras ' + letra(conc - 1) + ' son del mismo cliente' : ''}.`],
+        ['El CRM se llenó por otro camino',
+         `Las ${letra(conc)} concretadas fueron upselling, y de las ${crmNum(ons)} ONs nuevas ${letra(cliente)} vinieron de cliente y ${letra(web)} de la web. Cada ON costó ${crmPesos(porOn)} de pauta.`],
+        ['El retargeting se cortó a los ' + letra(RT.diasDeLaPrueba) + ' días',
+         `El clic bajó de ${pesosCent(RT.clicAntes)} a ${pesosCent(RT.clicDespues)} y la visita efectiva igual costó ${pesosCent(RT.costoVisita7d)} contra ${pesosCent(RT.costoVisitaCostos)} del resto. Se pausó el ${RT.corte} con el dato en la mano.`],
+      ];
+      ol.innerHTML = lineas.map(([t, c]) => `<li>${b(t + '.')} ${c}</li>`).join('');
+    })();
+
+    /* A que fecha estan los datos. Estaba enterrada en el pie del bloque del
+       CRM y el reporte se manda por link: quien lo abre tiene que poder ver
+       de cuando es sin bajar hasta el final. Va aca, con el brief, porque
+       este bloque corre ultimo y META ya existe. */
+    (function () {
+      const el = document.getElementById('sb-datos');
+      if (!el) return;
+      let f = (typeof META !== 'undefined' && META.generado) ? META.generado.slice(0, 10) : null;
+      if (!f && typeof CRM !== 'undefined') f = CRM.generado;
+      if (!f) return;
+      const p = f.split('-');
+      el.textContent = 'datos al ' + p[2] + '/' + p[1] + '/' + p[0];
+    })();
+    </script>
