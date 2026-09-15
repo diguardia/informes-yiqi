@@ -1,5 +1,5 @@
 {
-  "generado": "2026-09-14T15:32:50.686Z",
+  "generado": "2026-09-15T14:04:36.396Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,14 +377,14 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-09-14",
+      "hasta": "2026-09-15",
       "ytd": {
-        "alcance": 522653,
-        "gasto": 3377315,
-        "impresiones": 1314438,
-        "conv": 1123,
-        "inter": 81956,
-        "clics": 26416,
+        "alcance": 525152,
+        "gasto": 3393034,
+        "impresiones": 1322413,
+        "conv": 1137,
+        "inter": 82646,
+        "clics": 26590,
         "campanas": [
           {
             "nombre": "Publicación de Instagram: @interbanking  ahora...",
@@ -396,10 +396,10 @@
           },
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 559817,
-            "impresiones": 285665,
+            "gasto": 566921,
+            "impresiones": 289146,
             "resultadoTipo": "clics",
-            "resultado": 9955,
+            "resultado": 10051,
             "costoResultado": 56
           },
           {
@@ -412,11 +412,11 @@
           },
           {
             "nombre": "Mensajes IG · placas · Julio–Agosto",
-            "gasto": 368116,
-            "impresiones": 213913,
+            "gasto": 376740,
+            "impresiones": 218410,
             "resultadoTipo": "conversaciones",
-            "resultado": 487,
-            "costoResultado": 756
+            "resultado": 501,
+            "costoResultado": 752
           },
           {
             "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
@@ -953,29 +953,29 @@
           "key": "sep",
           "mes": 9,
           "desde": "2026-09-01",
-          "hasta": "2026-09-14",
+          "hasta": "2026-09-15",
           "parcial": true,
-          "alcance": 59756,
-          "gasto": 204238,
-          "impresiones": 101537,
-          "conv": 126,
-          "inter": 8984,
-          "clics": 2168,
+          "alcance": 63687,
+          "gasto": 219957,
+          "impresiones": 109512,
+          "conv": 140,
+          "inter": 9674,
+          "clics": 2342,
           "campanas": [
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
-              "gasto": 106222,
-              "impresiones": 50812,
+              "gasto": 114846,
+              "impresiones": 55309,
               "resultadoTipo": "conversaciones",
-              "resultado": 126,
-              "costoResultado": 843
+              "resultado": 140,
+              "costoResultado": 820
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 98008,
-              "impresiones": 50722,
+              "gasto": 105112,
+              "impresiones": 54203,
               "resultadoTipo": "clics",
-              "resultado": 1404,
+              "resultado": 1500,
               "costoResultado": 70
             }
           ]
@@ -984,14 +984,14 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-09-14",
+  "hasta": "2026-09-15",
   "ytd": {
-    "alcance": 522653,
-    "gasto": 3377315,
-    "impresiones": 1314438,
-    "conv": 1123,
-    "inter": 81956,
-    "clics": 26416,
+    "alcance": 525152,
+    "gasto": 3393034,
+    "impresiones": 1322413,
+    "conv": 1137,
+    "inter": 82646,
+    "clics": 26590,
     "campanas": [
       {
         "nombre": "Publicación de Instagram: @interbanking  ahora...",
@@ -1003,10 +1003,10 @@
       },
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 559817,
-        "impresiones": 285665,
+        "gasto": 566921,
+        "impresiones": 289146,
         "resultadoTipo": "clics",
-        "resultado": 9955,
+        "resultado": 10051,
         "costoResultado": 56
       },
       {
@@ -1019,11 +1019,11 @@
       },
       {
         "nombre": "Mensajes IG · placas · Julio–Agosto",
-        "gasto": 368116,
-        "impresiones": 213913,
+        "gasto": 376740,
+        "impresiones": 218410,
         "resultadoTipo": "conversaciones",
-        "resultado": 487,
-        "costoResultado": 756
+        "resultado": 501,
+        "costoResultado": 752
       },
       {
         "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
@@ -1560,29 +1560,29 @@
       "key": "sep",
       "mes": 9,
       "desde": "2026-09-01",
-      "hasta": "2026-09-14",
+      "hasta": "2026-09-15",
       "parcial": true,
-      "alcance": 59756,
-      "gasto": 204238,
-      "impresiones": 101537,
-      "conv": 126,
-      "inter": 8984,
-      "clics": 2168,
+      "alcance": 63687,
+      "gasto": 219957,
+      "impresiones": 109512,
+      "conv": 140,
+      "inter": 9674,
+      "clics": 2342,
       "campanas": [
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
-          "gasto": 106222,
-          "impresiones": 50812,
+          "gasto": 114846,
+          "impresiones": 55309,
           "resultadoTipo": "conversaciones",
-          "resultado": 126,
-          "costoResultado": 843
+          "resultado": 140,
+          "costoResultado": 820
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 98008,
-          "impresiones": 50722,
+          "gasto": 105112,
+          "impresiones": 54203,
           "resultadoTipo": "clics",
-          "resultado": 1404,
+          "resultado": 1500,
           "costoResultado": 70
         }
       ]
