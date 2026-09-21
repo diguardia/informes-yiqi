@@ -6,10 +6,10 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<title>Reporte comercial — Agosto 2026 · YiQi</title>
+<title>Reporte comercial — Julio 2026 · YiQi</title>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     Reporte comercial del mes · Agosto 2026 — version de una sola pantalla.
+     Reporte comercial del mes · Julio 2026 — version de una sola pantalla.
 
      DERIVADO, NO ESCRITO A MANO. Ninguna cifra de esta pagina se teclea:
      todas salen de un origen y el archivo se rehace corriendo el script.
@@ -188,7 +188,7 @@ body {
   </div>
   <div class="topbar-c" style="justify-content:center">
     <div class="range-filter" role="group" aria-label="Periodo del informe">
-      <button class="range-btn is-active" type="button" aria-current="page">Agosto 2026</button>
+      <button class="range-btn is-active" type="button" aria-current="page">Julio 2026</button>
     </div>
   </div>
   <div class="topbar-r">
@@ -238,11 +238,9 @@ body {
 
     <nav class="nav" aria-label="Secciones">
       <section class="nav-section">
-        <p class="nav-lbl">Agosto 2026</p>
+        <p class="nav-lbl">Julio 2026</p>
         <a class="nav-link is-active" href="#crm" title="Comercial" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span><span>Comercial</span></a>
         <a class="nav-link" href="#meta" title="Meta"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span><span>Meta</span></a>
-        <a class="nav-link" href="#retargeting" title="Retargeting"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span>Retargeting</span></a>
-        <a class="nav-link" href="#sitio" title="El sitio"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg></span><span>El sitio</span></a>
       </section>
     </nav>
 
@@ -261,27 +259,7 @@ body {
   </aside>
 
   <main class="content">
-    <style>
-      /* El brief. Va arriba de todo y es lo unico del reporte escrito en
-         prosa: las cuatro secciones de abajo muestran, esta dice. Ninguna
-         cifra esta tecleada: todas se interpolan de los mismos objetos que
-         alimentan las secciones, asi que al regenerar el reporte el brief
-         se corrige solo. */
-      #brief { --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s5); }
-      #brief .card-kicker { color: var(--cyan); }
-      #brief .bf-card { padding: var(--s5) var(--s6); }
-      #brief ol { margin: var(--s4) 0 0; padding-left: var(--s5); display: grid; gap: var(--s4); }
-      #brief li { font: 400 14px/1.6 var(--sans); color: var(--text); max-width: 78ch; }
-      #brief li::marker { color: var(--cyan); font-family: var(--mono); font-size: 12px; }
-      #brief strong { font-weight: 600; }
-    </style>
 
-    <section id="brief" aria-label="Agosto en tres líneas">
-      <div class="card bf-card">
-        <div class="card-kicker">Agosto en tres líneas</div>
-        <ol id="brief-body"></ol>
-      </div>
-    </section>
 
     <style>
       /* Comercial en el CRM. Mismo acento y misma escala de espaciado que
@@ -409,7 +387,7 @@ body {
 
     <section id="crm" aria-label="Comercial en el CRM">
       <h2 class="section-title">Comercial — el mes en el CRM</h2>
-      <div class="section-sub" id="crm-sub">Agosto 2026</div>
+      <div class="section-sub" id="crm-sub">Julio 2026</div>
       <div id="crm-body"></div>
     </section>
 
@@ -482,118 +460,15 @@ body {
 
     <section id="meta" aria-label="Meta — la pauta del mes">
       <h2 class="section-title">Meta — la pauta del mes</h2>
-      <div class="section-sub" id="meta-sub">Agosto 2026</div>
+      <div class="section-sub" id="meta-sub">Julio 2026</div>
       <div id="meta-body"></div>
     </section>
 
-    <style>
-      /* Retargeting. Sin serie mensual propia —el conjunto vivio veintiocho
-         dias—, asi que acá no hay histograma: lo que se compara es contra
-         los otros conjuntos de la cuenta, que si comparten escala. */
-      #retargeting { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
-      #retargeting .card-kicker, #retargeting .kpi-label { color: var(--cyan); }
-      #retargeting .kpi-card .kpi-value { color: var(--text); font-size: 22px; }
-      #retargeting .kpi-card .kpi-delta { color: var(--muted-2); }
-      #retargeting .rt-kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: var(--s4); margin-bottom: var(--s5); }
-      #retargeting .rt-kpis .kpi-card { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
-      #retargeting .rt-bloque { padding: var(--s5) var(--s6); margin-bottom: var(--s5); }
-      #retargeting .rt-texto { margin: var(--s2) 0 var(--s5); font: 400 13px/1.7 var(--sans); color: var(--muted-2); max-width: 70ch; }
-      #retargeting .rt-texto strong { color: var(--text); font-weight: 600; }
-      /* Comparacion contra los otros conjuntos: misma metrica, misma escala.
-         La barra dibuja la proporcion y la cifra se lee al lado. */
-      /* La pista tiene tope: sin el, en un monitor ancho la barra cruzaba
-         toda la tarjeta y una diferencia de $46 contra $259 se leia como
-         dos metros de color. El ancho de la barra no es el dato. */
-      /* El rotulo va arriba, en su propia linea, y abajo la barra con la
-         cifra. Con los nombres reales —«Retargeting · migracion ·
-         Argentina»— una columna de 130px los partia en tres renglones, y
-         ensancharla le comia el ancho a la barra, que es lo unico que
-         hay que comparar. Asi el nombre puede medir lo que mida y las
-         cuatro barras arrancan y terminan siempre en el mismo lugar.
-         Es ademas el layout que la version movil ya usaba. */
-      #retargeting .rt-fila { display:grid; grid-template-columns: minmax(0, 1fr) auto;
-        align-items:center; gap: var(--s1) var(--s3); margin-bottom: var(--s4); max-width: 560px; }
-      #retargeting .rt-rot { grid-column: 1 / -1; min-width: 0;
-        font: 400 11px var(--sans); color: var(--muted); }
-      #retargeting .rt-pista { background: var(--bg-elev-2); border-radius: 999px; height: 8px; overflow: hidden; }
-      #retargeting .rt-fill { height: 100%; border-radius: 999px; min-width: 3px; }
-      #retargeting .rt-n { font: 600 12px var(--kpi-num); color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
-      #retargeting .rt-pie { margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--line);
-        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
-    </style>
 
-    <section id="retargeting" aria-label="El retargeting de agosto">
-      <h2 class="section-title">El retargeting</h2>
-      <div class="section-sub">Conjunto «Retargeting · migración · Argentina» · activo del 22 de julio al 18 de agosto · volvió el 7 de septiembre como conjunto nuevo, ya fuera de este mes</div>
-      <div id="retargeting-body"></div>
-    </section>
 
-    <style>
-      /* El sitio. La tarjeta es la misma que vivia dentro del bloque #mes
-         de comercial.html; lo que no viene es su encabezado —titulo del
-         resumen, selector de mes y boton de copiar—, que era del tablero y
-         no de este reporte. */
-      #sitio { --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
-      #sitio .card-kicker, #sitio .kpi-label { color: var(--cyan); }
-      #sitio .kpi-card .kpi-value { color: var(--text); font-size: 24px; }
-      #sitio .st-bloque { padding: var(--s5) var(--s6); container-type: inline-size; }
-      #sitio .st-claves { margin: 0 0 var(--s5); font: 400 14px/1.6 var(--sans); color: var(--text); max-width: 70ch; }
-      #sitio .st-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: var(--s3); margin: 0 0 var(--s7); }
-      #sitio .st-stats .kpi-card { padding: var(--s3) var(--s4); min-width: 0; max-width: none; }
-      /* Container query, no media query: lo que importa es el ancho de la
-         tarjeta, no el de la ventana. */
-      #sitio .st-charts { display:grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: var(--s7); }
-      @container (max-width: 720px) {
-        #sitio .st-charts { grid-template-columns: 1fr; }
-        #sitio .st-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      }
-      #sitio .st-g { min-width: 0; }
-      #sitio .donut-legend { max-width: 220px; }
-      /* El canvas fuera del flujo: adentro, su ancho vuelve a contar para
-         el del contenedor y en cada redibujo crece. */
-      #sitio .st-barras, #sitio .donut-chart { position: relative; overflow: hidden; }
-      #sitio .st-barras { height: 190px; }
-      #sitio .st-barras > canvas, #sitio .donut-chart > canvas { position: absolute; top: 0; left: 0; }
-      #sitio .st-serie { position: relative; overflow: hidden; height: 190px; margin-top: var(--s3); }
-      #sitio .st-serie > canvas { position: absolute; top: 0; left: 0; }
-      #sitio .st-serie-wrap { margin-top: var(--s7); }
-      #sitio .st-nota { margin: var(--s2) 0 0; font: 400 12px/1.6 var(--sans); color: var(--muted-2); max-width: 70ch; }
-      #sitio .st-pie { margin-top: var(--s6); padding-top: var(--s3); border-top: 1px solid var(--line);
-        font: 400 11px/1.7 var(--mono); color: var(--muted-2); }
-    </style>
 
-    <section id="sitio" aria-label="El sitio por dentro">
-      <h2 class="section-title">El sitio</h2>
-      <div class="section-sub">Agosto 2026 · Microsoft Clarity</div>
-      <div id="sitio-body"></div>
-    </section>
 
-    <style>
-      /* La conclusion. Cierra la pagina y no lleva entrada en la nav: las
-         cuatro secciones de la barra son las de datos, esto es el final del
-         documento. Prosa, como el brief, y por la misma razon sin cifras
-         tecleadas: las que aparecen las interpola el script desde RT. */
-      #conclusion { --s2:8px; --s3:12px; --s5:20px; --s6:24px; --s7:28px; margin-top: var(--s7); }
-      /* En las otras secciones el aire bajo el titulo lo pone .section-sub,
-         que trae 18px. Esta no lleva bajada, asi que quedaba pegada a la
-         card con los 3px de .section-title y nada mas. */
-      #conclusion .section-head { margin-bottom: var(--s5); }
-      #conclusion .cc-bloque { padding: var(--s5) var(--s6); }
-      #conclusion .cc-tit { font: 600 15px var(--sans); color: var(--text); margin: 0 0 var(--s2); }
-      #conclusion .cc-tit + p { margin-top: 0; }
-      #conclusion p { font: 400 13px/1.7 var(--sans); color: var(--muted-2); max-width: 70ch; margin: 0 0 var(--s5); }
-      #conclusion p:last-child { margin-bottom: 0; }
-      #conclusion strong { color: var(--text); font-weight: 600; }
-    </style>
 
-    <section id="conclusion" aria-label="Conclusión del mes">
-      <div class="section-head">
-        <div>
-          <span class="section-title">Conclusión</span>
-        </div>
-      </div>
-      <div class="card cc-bloque card-reveal" id="cc-body"></div>
-    </section>
   </main>
 </div>
 
@@ -611,18 +486,6 @@ body {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg>
     <span>Meta</span>
   </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="retargeting">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-    <span>Retarget.</span>
-  </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="sitio">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>
-    <span>El sitio</span>
-  </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="resumen">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-    <span>Resumen</span>
-  </button>
 </nav>
 
 
@@ -630,7 +493,7 @@ body {
   <div class="statusbar-left">
     <strong>Reporte comercial</strong>
     <span class="sb-sep">&middot;</span>
-    <span class="statusbar-desc">$486.857 de pauta &middot; 301 conversaciones &middot; 16 ONs nuevas &middot; 3 concretadas</span>
+    <span class="statusbar-desc">$243.256 de pauta &middot; 60 conversaciones &middot; 6 ONs nuevas &middot; 10 concretadas</span>
   </div>
   <div class="statusbar-right">
     <span class="sb-item" id="sb-datos">datos al —</span>
@@ -875,7 +738,7 @@ _mqTema.addEventListener('change', function () {
        embebe al armar la pagina, para que el informe abra igual desde el
        disco. Aca no se escribe ninguna cifra a mano. */
     const CRM = {"generado":"2026-09-14","fuentes":["Consulta_comercial_639247301474559625.xlsx","Nuevas_ON_mensuales_639249872023278151.xlsx","ONs_Concretadas_DETALLE_639247234485819268.xlsx","ONs_Detalle_con_estado_639249969573870225.xlsx","_Cotiz__Aprobadas_639249810261016332.xlsx","__Cotiz_enviadas__639249810338249427.xlsx","default_639249810372437562.xlsx"],"nota":"Calculado desde los exports del CRM. Emitidas se cuenta por fecha de la cotizacion; enviadas y aprobadas son los agregados del CRM, por fecha de envio y de aprobacion. Son tres fechas distintas.","meses":{"2026-01":{"consultas":{"total":1,"origen":{"Web yiqi.com.ar":1}},"ons":{"total":6,"origen":{"CLIENTE":3,"Web yiqi.com.ar":2,"Recomendación":1},"estado":{"Desestimada":3,"Vencida":1,"Concretada":1,"Hibernando":1}},"cotizaciones":{"emitidas":9,"estado":{"Vencida":3,"Rechazada":2,"Aprobada":2,"Versionada":2},"enviadas":9,"aprobadas":{"n":3,"neto_impl":610091.07,"neto_sop":36413.6}},"concretadas":{"n":6,"importe":3115782.695,"detalle":[{"f":"20/01","empresa":"Mutis Agencia ","origen":"CLIENTE","importe":918000.0},{"f":"23/01","empresa":"Silvestre Blousson","origen":"CLIENTE","importe":610091.07},{"f":"16/01","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":574925.0},{"f":"02/01","empresa":"DX Electrónica","origen":"CLIENTE","importe":450118.5},{"f":"02/01","empresa":"DX Electrónica","origen":"CLIENTE","importe":337588.875},{"f":"02/01","empresa":"ProShop","origen":"CLIENTE","importe":225059.25}]}},"2026-02":{"consultas":{"total":2,"origen":{"INSTAGRAM - META":1,"Web yiqi.com.ar":1}},"ons":{"total":6,"origen":{"CLIENTE":4,"INSTAGRAM - META":1,"Web yiqi.com.ar":1},"estado":{"Concretada":3,"Desestimada":2,"Hibernando":1}},"cotizaciones":{"emitidas":6,"estado":{"Versionada":2,"Aprobada":2,"Vencida":1,"En preparación":1},"enviadas":2,"aprobadas":{"n":2,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":1,"importe":353925.0,"detalle":[{"f":"26/02","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":353925.0}]}},"2026-03":{"consultas":{"total":5,"origen":{"Recomendación":3,"Web yiqi.com.ar":1,"INSTAGRAM - META":1}},"ons":{"total":23,"origen":{"CLIENTE":19,"Recomendación":3,"INSTAGRAM - META":1},"estado":{"Desestimada":12,"En Curso":4,"Vencida":4,"Concretada":3}},"cotizaciones":{"emitidas":22,"estado":{"En preparación":7,"Vencida":6,"Versionada":5,"Rechazada":2,"Aprobada":2},"enviadas":18,"aprobadas":{"n":1,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":3,"importe":5287209.0,"detalle":[{"f":"09/03","empresa":"Mutis Agencia ","origen":"CLIENTE","importe":2796789.0},{"f":"27/03","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":2018520.0},{"f":"04/03","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":471900.0}]}},"2026-04":{"consultas":{"total":3,"origen":{"Sin origen":1,"web":1,"Web yiqi.com.ar":1}},"ons":{"total":11,"origen":{"CLIENTE":7,"web":3,"Web yiqi.com.ar":1},"estado":{"Desestimada":4,"Concretada":2,"Vencida":2,"Hibernando":1,"Confirmada":1,"En Curso":1}},"cotizaciones":{"emitidas":17,"estado":{"Vencida":8,"Aprobada":5,"Versionada":3,"En preparación":1},"enviadas":17,"aprobadas":{"n":5,"neto_impl":2742989.085,"neto_sop":403832.16}},"concretadas":{"n":5,"importe":5128122.78,"detalle":[{"f":"29/04","empresa":"Adsmartm","origen":"Recomendación","importe":2754044.955},{"f":"13/04","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":696389.4},{"f":"14/04","empresa":"TALLERES METALURGICOS CRESPO S.R.L.","origen":"CLIENTE","importe":658251.72},{"f":"23/04","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":541636.2},{"f":"14/04","empresa":"TALLERES METALURGICOS CRESPO S.R.L.","origen":"CLIENTE","importe":477800.505}]}},"2026-05":{"consultas":{"total":6,"origen":{"Recomendación":3,"web":2,"Sin origen":1}},"ons":{"total":12,"origen":{"CLIENTE":6,"Recomendación":3,"web":2,"CACE":1},"estado":{"Desestimada":4,"Concretada":4,"Hibernando":2,"Vencida":1,"En Curso":1}},"cotizaciones":{"emitidas":9,"estado":{"Versionada":5,"Vencida":2,"Rechazada":1,"Aprobada":1},"enviadas":7,"aprobadas":{"n":1,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":0,"importe":0.0,"detalle":[]}},"2026-06":{"consultas":{"total":6,"origen":{"web":4,"INSTAGRAM - META":1,"Sin origen":1}},"ons":{"total":19,"origen":{"CLIENTE":15,"web":3,"Recomendación":1},"estado":{"Concretada":7,"En Curso":5,"Desestimada":4,"Presupuesto enviado":2,"Vencida":1}},"cotizaciones":{"emitidas":23,"estado":{"Aprobada":10,"Versionada":6,"Vencida":4,"En preparación":2,"Rechazada":1},"enviadas":22,"aprobadas":{"n":10,"neto_impl":10358512.5,"neto_sop":1400056.0}},"concretadas":{"n":1,"importe":700741.825,"detalle":[{"f":"01/06","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":700741.825}]}},"2026-07":{"consultas":{"total":3,"origen":{"Precotizador web":1,"Recomendación":1,"web":1}},"ons":{"total":6,"origen":{"CLIENTE":4,"web":1,"Recomendación":1},"estado":{"En Curso":2,"Confirmada":2,"Desestimada":1,"Concretada":1}},"cotizaciones":{"emitidas":7,"estado":{"Aprobada":4,"Vencida":3},"enviadas":7,"aprobadas":{"n":2,"neto_impl":0.0,"neto_sop":null}},"concretadas":{"n":10,"importe":6334863.627,"detalle":[{"f":"23/07","empresa":"Espacio Marketing","origen":"CLIENTE","importe":1305000.0},{"f":"08/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":1125000.0},{"f":"21/07","empresa":"Tienda Shopealo TradeBox SRL","origen":"CLIENTE","importe":968660.0},{"f":"08/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":580160.0},{"f":"01/07","empresa":"Tienda Shopealo TradeBox SRL","origen":"CLIENTE","importe":560593.467},{"f":"06/07","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":435120.0},{"f":"16/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":419890.8},{"f":"30/07","empresa":"LATCAU S.A.","origen":"CLIENTE","importe":360279.36},{"f":"16/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":290080.0},{"f":"08/07","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":290080.0}]}},"2026-08":{"consultas":{"total":4,"origen":{"Precotizador web":2,"Sin origen":1,"web":1}},"ons":{"total":16,"origen":{"CLIENTE":14,"web":2},"estado":{"En Curso":11,"Presupuesto enviado":4,"Concretada":1}},"cotizaciones":{"emitidas":7,"estado":{"Vencida":4,"Aprobada":2,"Enviada":1},"enviadas":7,"aprobadas":{"n":4,"neto_impl":596025.0,"neto_sop":75624.0}},"concretadas":{"n":3,"importe":8524082.1,"detalle":[{"f":"07/08","empresa":"Silvestre Blousson","origen":"CLIENTE","importe":7928512.5},{"f":"20/08","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":319449.6},{"f":"20/08","empresa":"Centro de Distribución Sur","origen":"CLIENTE","importe":276120.0}]}},"2026-09":{"consultas":{"total":3,"origen":{"web":2,"Recomendación":1}},"ons":{"total":4,"origen":{"CLIENTE":2,"web":1,"Recomendación":1},"estado":{"En Curso":2,"Confirmada":1,"Presupuesto enviado":1}},"cotizaciones":{"emitidas":3,"estado":{"Enviada":2,"Aprobada":1},"enviadas":3,"aprobadas":{"n":1,"neto_impl":262990.0,"neto_sop":null}},"concretadas":{"n":0,"importe":0.0,"detalle":[]}}},"historico":{"total":4436,"desde":"2014-11-28","estado":{"Desestimada":2481,"En Curso":1411,"Concretada":459,"Hibernando":30,"Presentación enviada":19,"Confirmada":14,"Vencida":11,"Presupuesto enviado":8,"Esperando presupuesto":3},"enCursoNuevas":26,"enCursoViejas":1385},"series":{"on_mensuales":{"2025-01":13,"2025-02":14,"2025-03":14,"2025-04":12,"2025-05":18,"2025-06":13,"2025-07":8,"2025-08":12,"2025-09":14,"2025-10":8,"2025-11":9,"2025-12":10,"2026-01":6,"2026-02":5,"2026-03":16,"2026-04":8,"2026-05":9,"2026-06":15,"2026-07":6,"2026-08":8,"2026-09":4},"cotiz_enviadas":{"2025-07":10,"2025-08":12,"2025-09":16,"2025-10":15,"2025-11":16,"2025-12":10,"2026-01":9,"2026-02":2,"2026-03":18,"2026-04":17,"2026-05":7,"2026-06":22,"2026-07":7,"2026-08":7,"2026-09":3},"cotiz_aprobadas":{"2025-07":{"n":5,"neto_impl":10814429.171999998,"neto_sop":2034782.0},"2025-08":{"n":3,"neto_impl":496145.0,"neto_sop":53912.0},"2025-09":{"n":7,"neto_impl":0.0,"neto_sop":0.0},"2025-10":{"n":6,"neto_impl":6356223.5,"neto_sop":612444.0},"2025-11":{"n":2,"neto_impl":0.0,"neto_sop":0.0},"2025-12":{"n":4,"neto_impl":0.0,"neto_sop":0.0},"2026-01":{"n":3,"neto_impl":610091.07,"neto_sop":36413.6},"2026-02":{"n":2,"neto_impl":0.0,"neto_sop":0.0},"2026-03":{"n":1,"neto_impl":0.0,"neto_sop":0.0},"2026-04":{"n":5,"neto_impl":2742989.085,"neto_sop":403832.16},"2026-05":{"n":1,"neto_impl":0.0,"neto_sop":0.0},"2026-06":{"n":10,"neto_impl":10358512.5,"neto_sop":1400056.0},"2026-07":{"n":2,"neto_impl":0.0,"neto_sop":0.0},"2026-08":{"n":4,"neto_impl":596025.0,"neto_sop":75624.0},"2026-09":{"n":1,"neto_impl":262990.0,"neto_sop":0.0}}}};
-    const CRM_MES = '2026-08', CRM_PREV = '2026-07';
+    const CRM_MES = '2026-07', CRM_PREV = '2026-06';
     const CRM_NOMBRE = { '01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre' };
 
     /* La serie corta en el mes del reporte. Septiembre esta a mitad de
@@ -1357,7 +1220,7 @@ _mqTema.addEventListener('change', function () {
        contra la Marketing API. Se embebe el mes y la serie al armar la
        pagina: agosto esta cerrado y no tiene que moverse despues.
        El cruce con el CRM usa el objeto CRM de la seccion anterior. */
-    const META = {"cuenta":"370211010327709","generado":"2026-09-18T13:18:06.488Z","meses":{"2025-01":{"gasto":615252,"alcance":76601,"impresiones":126561,"conv":130,"inter":1184,"clics":1038},"2025-02":{"gasto":860036,"alcance":109119,"impresiones":192091,"conv":121,"inter":1351,"clics":1241},"2025-03":{"gasto":1136173,"alcance":54068,"impresiones":125586,"conv":147,"inter":1085,"clics":980},"2025-04":{"gasto":856720,"alcance":59349,"impresiones":131785,"conv":153,"inter":1201,"clics":1106},"2025-05":{"gasto":862976,"alcance":50267,"impresiones":96280,"conv":36,"inter":812,"clics":731},"2025-06":{"gasto":706847,"alcance":266900,"impresiones":435422,"conv":67,"inter":1346,"clics":1129},"2025-07":{"gasto":644768,"alcance":147014,"impresiones":291698,"conv":44,"inter":1663,"clics":1428},"2025-08":{"gasto":218362,"alcance":75806,"impresiones":139281,"conv":21,"inter":502,"clics":429},"2025-10":{"gasto":16622,"alcance":6040,"impresiones":13514,"conv":5,"inter":580,"clics":68},"2026-01":{"gasto":61911,"alcance":3605,"impresiones":5597,"conv":5,"inter":887,"clics":48},"2026-02":{"gasto":265850,"alcance":45484,"impresiones":74488,"conv":103,"inter":5212,"clics":1408},"2026-03":{"gasto":568390,"alcance":74139,"impresiones":141295,"conv":199,"inter":2610,"clics":2017},"2026-04":{"gasto":526277,"alcance":129222,"impresiones":301183,"conv":187,"inter":5668,"clics":4856},"2026-05":{"gasto":544821,"alcance":109675,"impresiones":253808,"conv":101,"inter":9159,"clics":4806},"2026-06":{"gasto":475715,"alcance":19327,"impresiones":38222,"conv":41,"inter":9267,"clics":247},"2026-07":{"gasto":243256,"alcance":66919,"impresiones":122097,"conv":60,"inter":16833,"clics":4861},"2026-08":{"gasto":486857,"alcance":141626,"impresiones":276211,"conv":301,"inter":23336,"clics":6005}},"campanas":[{"nombre":"Puedes vender más / costos · Julio–Agosto","gasto":282082,"impresiones":136132,"resultadoTipo":"clics","resultado":4070,"costoResultado":69},{"nombre":"Mensajes IG · placas · Julio–Agosto","gasto":204775,"impresiones":140079,"resultadoTipo":"conversaciones","resultado":301,"costoResultado":680}]};
+    const META = {"cuenta":"370211010327709","generado":"2026-09-18T13:18:06.488Z","meses":{"2025-01":{"gasto":615252,"alcance":76601,"impresiones":126561,"conv":130,"inter":1184,"clics":1038},"2025-02":{"gasto":860036,"alcance":109119,"impresiones":192091,"conv":121,"inter":1351,"clics":1241},"2025-03":{"gasto":1136173,"alcance":54068,"impresiones":125586,"conv":147,"inter":1085,"clics":980},"2025-04":{"gasto":856720,"alcance":59349,"impresiones":131785,"conv":153,"inter":1201,"clics":1106},"2025-05":{"gasto":862976,"alcance":50267,"impresiones":96280,"conv":36,"inter":812,"clics":731},"2025-06":{"gasto":706847,"alcance":266900,"impresiones":435422,"conv":67,"inter":1346,"clics":1129},"2025-07":{"gasto":644768,"alcance":147014,"impresiones":291698,"conv":44,"inter":1663,"clics":1428},"2025-08":{"gasto":218362,"alcance":75806,"impresiones":139281,"conv":21,"inter":502,"clics":429},"2025-10":{"gasto":16622,"alcance":6040,"impresiones":13514,"conv":5,"inter":580,"clics":68},"2026-01":{"gasto":61911,"alcance":3605,"impresiones":5597,"conv":5,"inter":887,"clics":48},"2026-02":{"gasto":265850,"alcance":45484,"impresiones":74488,"conv":103,"inter":5212,"clics":1408},"2026-03":{"gasto":568390,"alcance":74139,"impresiones":141295,"conv":199,"inter":2610,"clics":2017},"2026-04":{"gasto":526277,"alcance":129222,"impresiones":301183,"conv":187,"inter":5668,"clics":4856},"2026-05":{"gasto":544821,"alcance":109675,"impresiones":253808,"conv":101,"inter":9159,"clics":4806},"2026-06":{"gasto":475715,"alcance":19327,"impresiones":38222,"conv":41,"inter":9267,"clics":247},"2026-07":{"gasto":243256,"alcance":66919,"impresiones":122097,"conv":60,"inter":16833,"clics":4861},"2026-08":{"gasto":486857,"alcance":141626,"impresiones":276211,"conv":301,"inter":23336,"clics":6005}},"campanas":[{"nombre":"Puedes vender más / costos · Julio–Agosto","gasto":179727,"impresiones":98811,"resultadoTipo":"clics","resultado":4481,"costoResultado":40},{"nombre":"Mensajes IG · placas · Julio–Agosto","gasto":57119,"impresiones":23022,"resultadoTipo":"conversaciones","resultado":60,"costoResultado":952},{"nombre":"Publicación: \"Puedes vender más, suma canales en minutos\"","gasto":3334,"impresiones":141,"resultadoTipo":"clics","resultado":1,"costoResultado":3334},{"nombre":"[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20","gasto":3076,"impresiones":123,"resultadoTipo":"leads","resultado":1,"costoResultado":3076},{"nombre":"Publicación de Instagram: El sistema que opera...","gasto":0,"impresiones":0,"resultadoTipo":null,"resultado":0,"costoResultado":null}]};
 
     function metaRender() {
       const b = document.getElementById('meta-body');
@@ -1494,318 +1357,13 @@ _mqTema.addEventListener('change', function () {
     metaRender();
     </script>
 
-    <script>
-    /* ─── RETARGETING ───────────────────────────────────────────────
-       Las cifras salen de claude/Retargeting-inventario-y-acciones-sep2026.md,
-       del 7 de septiembre, verificadas ahí contra la Marketing API. No salen
-       de data/meta.json: aquel archivo agrega por campaña y este conjunto
-       vivió dentro de una, veintiocho días. Si alguna cambia, se cambia acá
-       y se vuelve a correr el armador. */
-    const RT = {
-      conjunto: 'Retargeting · migración · Argentina',
-      desde: '22 de julio', hasta: '18 de agosto', dias: 28,
-      gasto: 51242, alcance: 2476, cpc: 258.80, frecuencia: 4.0,
-      /* Los siete dias con el pool duplicado, del asiento del 18/08 de la
-         bitacora de comercial.html. Se decidio con esto. */
-      corte: '18 de agosto', diasDeLaPrueba: 7,
-      clicAntes: 416.81, clicDespues: 156.69,
-      costoVisita7d: 806.98, costoVisitaCostos: 128.70,
-      clics: 175, cargaron: 41, costoVisita: 1249.81, cpm: 5164,
-      /* Los otros tres conjuntos de la cuenta en el mismo periodo, para
-         que el numero tenga contra que leerse. Son conjuntos, no campanas:
-         verificado contra la API el 14/09/2026. Los tres primeros viven
-         dentro de la misma campana (120250322380040343) y Mensajes IG en
-         otra (120250889076720343). Los nombres van completos porque
-         "Costos" a secas, en un grafico titulado Costo por clic, se lee
-         como una metrica. */
-      campanas: [
-        { n: 'Retargeting · migración · Argentina', cpc: 258.80, frec: 4.0, carga: 23, esEl: true },
-        { n: 'Costos · Argentina',      cpc: 45.62,  frec: 1.7, carga: 50 },
-        { n: 'Vender más · Argentina',  cpc: 65.50,  frec: 2.0, carga: null },
-        { n: 'Mensajes IG · Argentina', cpc: 101.28, frec: 2.2, carga: null },
-      ],
-      fuente: 'claude/Retargeting-inventario-y-acciones-sep2026.md · 07/09/2026, verificado contra la Marketing API · conjunto 120250888826560343',
-    };
 
-    function rtRender() {
-      const b = document.getElementById('retargeting-body');
-      if (!b) return;
-      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-      const pct = n => n.toFixed(1).replace('.', ',') + ' %';
 
-      const kpis = [
-        ['Invertido', crmPesos(RT.gasto), RT.dias + ' días al aire'],
-        ['Alcance', crmNum(RT.alcance), 'personas distintas'],
-        ['Clics que cargaron', RT.cargaron + ' de ' + RT.clics, pct(RT.cargaron / RT.clics * 100) + ' · «Costos · Argentina» llega al 50 %'],
-        ['Costo por visita real', crmPesos(RT.costoVisita), 'casi diez veces el de «Costos · Argentina»'],
-      ].map(([l, v, d]) => `
-        <div class="kpi-card card-reveal">
-          <div class="kpi-label">${esc(l)}</div>
-          <div class="kpi-value">${esc(v)}</div>
-          <div class="kpi-delta neutral">${esc(d)}</div>
-        </div>`).join('');
 
-      const barras = (clave, fmt, titulo, nota) => {
-        const filas = RT.campanas.filter(c => c[clave] != null);
-        const tope = Math.max.apply(null, filas.map(c => c[clave]));
-        return `
-          <div class="card-kicker" style="margin-top:20px">${esc(titulo)}</div>
-          <p class="rt-texto" style="margin-bottom:12px">${esc(nota)}</p>
-          ${filas.map(c => `
-            <div class="rt-fila">
-              <div class="rt-rot">${esc('«' + c.n + '»')}</div>
-              <div class="rt-pista"><div class="rt-fill" style="width:${(c[clave] / tope * 100).toFixed(1)}%;background:var(${c.esEl ? '--red' : '--cyan'})"></div></div>
-              <div class="rt-n">${esc(fmt(c[clave]))}</div>
-            </div>`).join('')}`;
-      };
 
-      b.innerHTML = `
-        <div class="card rt-bloque card-reveal">
-          <div class="card-kicker">Qué es</div>
-          <p class="rt-texto">Cuando alguien entra a yiqi.com.ar, el píxel deja una marca en su navegador y esa persona pasa a formar parte de un público que Meta puede volver a alcanzar. El retargeting es comprarle a Meta el derecho a mostrarle un anuncio otra vez a esa gente. La diferencia con la prospección es el punto de partida: en prospección le hablas a alguien que nunca oyó de YiQi; en retargeting, a alguien que ya entró, miró y se fue sin escribir. <strong>Ya sabe quién sos: lo que le falta es una razón para volver.</strong></p>
-          <div class="kpi-grid rt-kpis" style="margin-top:20px;margin-bottom:0">${kpis}</div>
-        </div>
 
-        <div class="card rt-bloque card-reveal">
-          <div class="card-kicker">Contra el resto de la cuenta</div>
-          <p class="rt-texto">El costo por clic fue 5,7 veces el del conjunto «Costos · Argentina». Pero <strong>el número que más importa no es ese</strong>: de ${RT.clics} clics salientes, solo ${RT.cargaron} llegaron a cargar la página. Por eso la visita real costó ${crmPesos(RT.costoVisita)} y no ${crmPesos(RT.cpc)}.</p>
-          ${barras('cpc', crmPesos, 'Costo por clic', 'Los cuatro conjuntos, en el mismo período. Los tres primeros son de la misma campaña.')}
-          ${barras('frec', n => n.toFixed(1).replace('.', ','), 'Frecuencia', 'Cuántas veces vio el anuncio cada persona alcanzada, por conjunto.')}
-          ${barras('carga', n => n + ' %', 'De los que hacen clic, cuántos cargan la página', 'Los dos conjuntos que tienen el dato medido.')}
-        </div>
-
-        <div class="rt-pie">${esc(RT.fuente)}</div>`;
-
-      if (typeof initReveal === 'function') initReveal(b);
-    }
-
-    rtRender();
-    </script>
 
     <script>
-    /* ─── EL SITIO ──────────────────────────────────────────────────
-       Los datos son el objeto `clarity` del resumen de agosto de
-       comercial.html, extraido tal cual al armar la pagina. Si cambian,
-       se cambian alla y se vuelve a correr el armador. */
-    const CLARITY = {
-          /* Export del Dashboard de Clarity, 01–31/08/2026. Los referrers
-             suman 2.516 de 2.839 sesiones: el resto entra sin referente. */
-          origen: [
-            ['Instagram', 1975], ['Sitio propio', 282], ['Facebook', 116],
-            ['Google', 99], ['Otros', 44],
-          ],
-          eventos: [
-            ['Outbound click', 186], ['Login', 59], ['Contact us', 12],
-            ['Order success', 2], ['Book', 2], ['Submit form', 1],
-          ],
-          stats: [
-            ['2.839', 'sesiones'], ['2.248', 'usuarios'],
-            ['1,46', 'páginas por sesión'], ['37 s', 'activos de 201'],
-          ],
-          claves: 'Instagram trae 7 de cada 10 sesiones y la home se lleva 9 de cada 10 vistas: el sitio es una sola página alimentada por la pauta.',
-          pie: 'Rage clicks 0 % · dead clicks 1,37 % · quick backs 4,02 % · 505 sesiones de bots excluidas · Microsoft Clarity registra cada visita a yiqi.com.ar',
-          /* Apex y www son la misma pagina servida por dos hosts, asi que
-             se suman: home = 2.410 + 92 + 53 (index.html). */
-          paginas: [
-            ['Home', 2555], ['iA Ready', 146], ['API', 91],
-            ['Ficha de app', 87], ['Novedades', 42], ['Contacto', 35],
-          ],
-        };
-
-    function sitioRender() {
-      const b = document.getElementById('sitio-body');
-      if (!b || !CLARITY) return;
-      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-      b.innerHTML = `
-        <div class="card st-bloque card-reveal">
-          <p class="st-claves">${esc(CLARITY.claves)}</p>
-          <div class="kpi-grid st-stats">${CLARITY.stats.map(([v, l]) => `
-            <div class="kpi-card"><div class="kpi-label">${esc(l)}</div><div class="kpi-value">${esc(v)}</div></div>`).join('')}</div>
-          <div class="st-charts">
-            <div class="st-g">
-              <div class="card-kicker">De dónde llegan</div>
-              <div class="donut-block">
-                <div class="donut-chart" style="height:190px"><canvas id="sitio-origen" aria-label="Sesiones por origen"></canvas></div>
-                <div class="donut-legend" id="sitio-leg"></div>
-              </div>
-            </div>
-            <div class="st-g">
-              <div class="card-kicker">Qué miran</div>
-              <div class="st-barras"><canvas id="sitio-paginas" aria-label="Páginas más vistas"></canvas></div>
-            </div>
-          </div>
-          <div class="st-serie-wrap">
-            <div class="card-kicker">Mes a mes</div>
-            <div class="st-serie"><canvas id="sitio-serie" aria-label="Sesiones por mes"></canvas></div>
-            <p class="st-nota">La serie arranca en junio porque Clarity se instalo el 3 de junio de 2026: antes de esa fecha no hay medicion. Junio cuenta desde el dia 3.</p>
-          </div>
-          <div class="st-pie">${esc(CLARITY.pie)}</div>
-        </div>`;
-      if (typeof initReveal === 'function') initReveal(b);
-      setTimeout(sitioChart, 30);
-    }
-
-    /* Sesiones por mes, sin bots, desde junio 2026. La arma el script:
-       cada mes sale de su export en data/clarity/ o, si no lo hay, de la
-       cifra de sesiones del resumen de ese mes en comercial.html. Clarity
-       no publica la serie en su export: es una consulta al tablero por
-       mes, cambiando el rango. */
-    const SITIO_SERIE = [['2026-06', 510], ['2026-07', 1846], ['2026-08', 2839]];
-
-    function sitioChart() {
-      const cvO = document.getElementById('sitio-origen'), cvP = document.getElementById('sitio-paginas');
-      if (!cvO || !cvP || typeof Chart === 'undefined') return;
-      ['sitioOrigen', 'sitioPaginas'].forEach(k => { if (_charts[k]) { _charts[k].destroy(); delete _charts[k]; } });
-
-      /* Mismo motor de columnas que el CRM y que Meta: una sola gramatica
-         de barras en todo el reporte. Marca sola el mes del reporte. */
-      if (typeof crmColumnas === 'function') {
-        const mapa = Object.fromEntries(SITIO_SERIE);
-        crmColumnas('sitio-serie', SITIO_SERIE.map(e => e[0]), m => mapa[m],
-                    v => v.toLocaleString('es-AR') + ' sesiones', 'alto');
-      }
-
-      const acc = getCSSVar('--cyan'), muted = getCSSVar('--muted');
-      const linea = getCSSVar('--line'), elev = getCSSVar('--bg-elev-2'), texto = getCSSVar('--text');
-      const sans = getCSSVar('--sans'), cifra = getCSSVar('--kpi-num');
-      const tooltip = { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10 };
-
-      const org = CLARITY.origen.slice().sort((a, b) => b[1] - a[1]);
-      const total = org.reduce((s, r) => s + r[1], 0) || 1;
-      const escala = [acc, getCSSVar('--cyan-soft-2'), getCSSVar('--blue'), getCSSVar('--green'), getCSSVar('--muted-2')];
-      _charts.sitioOrigen = new Chart(cvO, {
-        type: 'doughnut',
-        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '68%',
-          animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
-          plugins: { legend: { display: false },
-            tooltip: { ...tooltip, callbacks: { label: c => ` ${c.label}: ${c.parsed.toLocaleString('es-AR')} · ${(c.parsed / total * 100).toFixed(1)} %` } } }
-        }
-      });
-      const leg = document.getElementById('sitio-leg');
-      if (leg) leg.innerHTML = org.map((r, i) =>
-        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
-
-      /* La cifra va al final de la barra: un grafico cuyo dato hay que
-         buscar con el mouse no informa. */
-      const valorAlFinal = {
-        id: 'valorAlFinal',
-        afterDatasetsDraw(chart) {
-          const ctx = chart.ctx;
-          ctx.save();
-          ctx.font = `600 12px ${cifra}`; ctx.fillStyle = texto; ctx.textBaseline = 'middle';
-          const ex = chart.scales.x;
-          chart.getDatasetMeta(0).data.forEach((bar, i) => {
-            const fin = chart.data.datasets[0].data[i];
-            const v = ex ? Math.max(0, Math.min(fin, Math.round(ex.getValueForPixel(bar.x)))) : fin;
-            ctx.fillText(v.toLocaleString('es-AR'), bar.x + 8, bar.y);
-          });
-          ctx.restore();
-        }
-      };
-      /* Escala lineal a proposito: que la home aplaste a las otras es
-         justamente lo que el grafico tiene que mostrar. */
-      const pgs = CLARITY.paginas.slice().sort((a, b) => b[1] - a[1]);
-      _charts.sitioPaginas = new Chart(cvP, {
-        type: 'bar',
-        data: { labels: pgs.map(r => r[0]), datasets: [{ label: 'Sesiones', data: pgs.map(r => r[1]), backgroundColor: acc, borderWidth: 0, borderRadius: 4, borderSkipped: false }] },
-        options: {
-          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-          animation: { duration: 400, easing: 'easeOutCubic' }, animations: { x: { from: 0 } },
-          layout: { padding: { right: 46 } },
-          plugins: { legend: { display: false }, tooltip: { ...tooltip, callbacks: { label: c => ` ${c.parsed.x.toLocaleString('es-AR')} sesiones` } } },
-          scales: {
-            x: { display: false, grid: { display: false } },
-            y: { grid: { display: false }, border: { display: false }, ticks: { color: muted, font: { family: sans, size: 12 } } }
-          }
-        },
-        plugins: [valorAlFinal]
-      });
-    }
-
-    sitioRender();
-    </script>
-
-    <script>
-    (function () {
-      const b = document.getElementById('cc-body');
-      if (!b || typeof RT === 'undefined') return;
-      const coma = n => String(n).replace('.', ',');
-      const frecs = RT.campanas.filter(c => !c.esEl && c.frec != null).map(c => c.frec);
-      const prom = frecs.length ? frecs.reduce((a, b) => a + b, 0) / frecs.length : 0;
-      /* En palabras y redondeado: el numero exacto no cambia la conclusion y
-         la cifra suelta invita a leerlo como si fuera lo que vio cada uno. */
-      const LETRA = ['cero','una','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez'];
-      const letra = n => LETRA[Math.round(n)] || coma(n.toFixed(1));
-      b.innerHTML = `
-        <p class="cc-tit">Un solo formato sostiene la cuenta.</p>
-        <p>Todo lo que funciona son placas en Instagram. Las piezas en video no arrancaron y LinkedIn no salió: si las placas se desgastan, no hay con qué reemplazarlas.</p>
-        <p class="cc-tit">El desgaste ya se vio.</p>
-        <p>El retargeting corrió ${RT.dias} días con una sola pieza, y terminó mostrándose un promedio de ${letra(RT.frecuencia)} veces por persona alcanzada. En los conjuntos de captación, con público grande, el promedio es ${letra(prom)}. El problema no es la pauta: es no rotar piezas cuando el público es chico.</p>
-        <p class="cc-tit">Le pautamos a desconocidos y facturamos por upselling.</p>
-        <p>Toda la inversión del mes fue a gente que no nos conocía, y el dinero que entró lo pusieron clientes que ya trabajaban con nosotros — igual que la enorme mayoría de las ONs nuevas. <strong>El canal que factura no tiene una sola campaña propia.</strong></p>`;
-      if (typeof initReveal === 'function') initReveal(b.parentElement || document);
-      else b.classList.add('visible');
-    })();
-    </script>
-
-    <script>
-    /* ─── BRIEF ─────────────────────────────────────────────────────
-       Va ultimo a proposito: lee CRM, META y RT, que declaran las
-       secciones de abajo. Ninguna cifra se teclea — si cambia el origen,
-       cambia el brief. */
-    (function () {
-      const ol = document.getElementById('brief-body');
-      if (!ol || typeof CRM === 'undefined' || typeof META === 'undefined') return;
-      const d = CRM.meses[CRM_MES], m = META.meses[CRM_MES];
-      if (!d || !m) return;
-
-      /* Prosa: los numeros chicos van en letras. Si alguno se sale de la
-         tabla, cae en la cifra en vez de inventar la palabra. */
-      const LETRAS = ['cero','una','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez',
-                      'once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve','veinte'];
-      const letra = n => (Number.isInteger(n) && n >= 0 && n < LETRAS.length) ? LETRAS[n] : crmNum(n);
-      const b = t => '<strong>' + t + '</strong>';
-      /* Estas cuatro se decidieron al centavo y asi se citaron: redondearlas
-         a $417 le saca a la frase la precision que la hizo decidible. */
-      const pesosCent = v => '$' + v.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-      const ons = d.ons.total, conc = d.concretadas.n, importe = d.concretadas.importe;
-      const cliente = d.ons.origen['CLIENTE'] || 0, web = d.ons.origen['web'] || 0;
-      /* El ticket promedio queda afuera: con tres operaciones y una que
-         explica el 93 % del monto, el promedio no resume nada — inventa una
-         operacion tipica que no existe y es el numero en el que se ancla.
-         En su lugar se dice la forma: cuanto pesa la mayor y cuantos
-         clientes distintos hay detras. */
-      const porImporte = (d.concretadas.detalle || []).slice().sort((a, z) => z.importe - a.importe);
-      const mayor = porImporte.length ? porImporte[0].importe / importe * 100 : 0;
-      const clientes = new Set(porImporte.map(r => r.empresa)).size;
-      const porOn = ons ? m.gasto / ons : 0;
-
-      /* Cada linea abre con su hallazgo, no con su tema: el que escanea los
-         tres titulos se lleva el mes sin entrar al cuerpo.
-
-         Sin superlativos. "El mes de mayor inversion del ano" venia del
-         resumen de comercial.html y era falso —agosto es el cuarto de ocho
-         en 2026, detras de marzo, mayo y abril—: se arrastro sin
-         contrastarlo contra data/meta.json. Un reporte informa; el lugar de
-         cada mes en la serie lo dice el histograma de su seccion. */
-      const lineas = [
-        [`${letra(conc).replace(/^t/, 'T')} operaciones cerraron ${crmPesos(importe)}`,
-         `${crmPesos(m.gasto)} de pauta y ${crmNum(m.conv)} conversaciones. Una sola operación explica el ${Math.round(mayor)} % del monto${clientes && clientes < conc ? ', y las otras ' + letra(conc - 1) + ' son del mismo cliente' : ''}.`],
-        ['El CRM se llenó por otro camino',
-         `Las ${letra(conc)} concretadas fueron upselling, y de las ${crmNum(ons)} ONs nuevas ${letra(cliente)} vinieron de cliente y ${letra(web)} de la web. Cada ON costó ${crmPesos(porOn)} de pauta.`],
-        ['El retargeting se cortó a los ' + letra(RT.diasDeLaPrueba) + ' días',
-         `El clic bajó de ${pesosCent(RT.clicAntes)} a ${pesosCent(RT.clicDespues)} y la visita efectiva igual costó ${pesosCent(RT.costoVisita7d)} contra ${pesosCent(RT.costoVisitaCostos)} del resto. Se pausó el ${RT.corte} con el dato en la mano.`],
-      ];
-      ol.innerHTML = lineas.map(([t, c]) => `<li>${b(t + '.')} ${c}</li>`).join('');
-    })();
-
-    /* A que fecha estan los datos. Estaba enterrada en el pie del bloque del
-       CRM y el reporte se manda por link: quien lo abre tiene que poder ver
-       de cuando es sin bajar hasta el final. Va aca, con el brief, porque
-       este bloque corre ultimo y META ya existe. */
     (function () {
       const el = document.getElementById('sb-datos');
       if (!el) return;

@@ -1,4 +1,4 @@
-"""Arma YiQi_Reporte_Comercial_202608.html.
+"""Arma YiQi_Reporte_Comercial_AAAAMM.html para el mes que se le pida.
 
 Tres secciones, tres origenes, ninguna cifra escrita a mano:
   Meta            data/meta.json
@@ -8,11 +8,64 @@ Tres secciones, tres origenes, ninguna cifra escrita a mano:
 De comercial.html se extrae solo CSS compartido y cuatro funciones, por
 rangos verificados y balance de llaves, nunca por posicion.
 
-Se corre desde la raiz del repo:  python3 scripts/armar-reporte-comercial.py
+Se corre desde la raiz del repo:
+
+    python3 scripts/armar-reporte-comercial.py            # el mes anterior
+    python3 scripts/armar-reporte-comercial.py 2026-09    # un mes puntual
+
 Para otro mes: bajar los exports a data/crm/, correr scripts/crm-json.py y
 volver a correr este.
+
+Que entra cada mes:
+  Siempre            Comercial (CRM) y Meta: salen de datos y no dependen de
+                     nada escrito a mano.
+  Si hay datos       El sitio: si el resumen de comercial.html trae el objeto
+                     clarity de ese mes.
+  Si se escribio     Brief, retargeting y conclusion: son prosa sobre lo que
+                     paso en ese mes. Se registran en CONTENIDO_DEL_MES; un mes
+                     sin entrada sale sin esas secciones, en vez de salir con
+                     las de otro mes.
 """
-import re, io, os, hashlib
+import re, io, os, sys, hashlib, datetime
+
+# El mes del reporte. Sin argumento es el mes anterior al de hoy: el
+# reporte se arma el dia 1, cuando cierra el mes que informa.
+if len(sys.argv) > 1:
+    MES = sys.argv[1]
+else:
+    _hoy = datetime.date.today().replace(day=1)
+    MES = (_hoy - datetime.timedelta(days=1)).strftime('%Y-%m')
+assert re.fullmatch(r'20\d\d-(0[1-9]|1[0-2])', MES), 'el mes va como AAAA-MM: ' + MES
+_a, _m = int(MES[:4]), int(MES[5:])
+MES_PREV = '%04d-%02d' % ((_a, _m - 1) if _m > 1 else (_a - 1, 12))
+_NOMBRES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+            'Septiembre','Octubre','Noviembre','Diciembre']
+MES_SOLO = _NOMBRES[_m - 1]                       # Agosto
+MES_NOMBRE = '%s %d' % (MES_SOLO, _a)             # Agosto 2026
+MES_CORTO = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][_m - 1]
+MES_ARCHIVO = MES.replace('-', '')                # 202608
+
+# Prosa escrita para un mes puntual. Cada pieza es un fragmento de
+# scripts/; el mes que no figura aca sale sin ellas. Agosto quedo con los
+# nombres planos porque fue el primero y el puente no puede mover archivos:
+# los meses siguientes van con el mes en el nombre, p. ej.
+# 'secciones-2026-09-brief.html'.
+CONTENIDO_DEL_MES = {
+    '2026-08': {
+        'brief':        'secciones-brief.html',
+        'brief_script': 'secciones-brief-script.html',
+        'retargeting':  'secciones-retargeting.html',
+        'conclusion':   'secciones-conclusion.html',
+    },
+}
+CONTENIDO = CONTENIDO_DEL_MES.get(MES, {})
+
+# Destinos de navegacion, en el orden en que aparecen. Se arman con las
+# secciones que el mes trae: un link a una seccion que no esta es un boton
+# que no hace nada.
+NAV_LINK = {'crm': '        <a class="nav-link is-active" href="#crm" title="Comercial" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span><span>Comercial</span></a>\n', 'meta': '        <a class="nav-link" href="#meta" title="Meta"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span><span>Meta</span></a>\n', 'retargeting': '        <a class="nav-link" href="#retargeting" title="Retargeting"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span>Retargeting</span></a>\n', 'sitio': '        <a class="nav-link" href="#sitio" title="El sitio"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg></span><span>El sitio</span></a>\n'}
+BOTTOMNAV_BTN = {'crm': '  <button class="ds-bottomnav-item" type="button" data-grupo="crm">\n    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>\n    <span>Comercial</span>\n  </button>\n', 'meta': '  <button class="ds-bottomnav-item" type="button" data-grupo="meta">\n    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg>\n    <span>Meta</span>\n  </button>\n', 'retargeting': '  <button class="ds-bottomnav-item" type="button" data-grupo="retargeting">\n    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>\n    <span>Retarget.</span>\n  </button>\n', 'sitio': '  <button class="ds-bottomnav-item" type="button" data-grupo="sitio">\n    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>\n    <span>El sitio</span>\n  </button>\n', 'resumen': '  <button class="ds-bottomnav-item" type="button" data-grupo="resumen">\n    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>\n    <span>Resumen</span>\n  </button>\n'}
+
 # La raiz del repo es la carpeta que contiene a scripts/, no una ruta fija:
 # el script corre igual desde la Mac que desde el puente.
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -64,10 +117,10 @@ PAGINA = """<!doctype html>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<title>Reporte comercial — Agosto 2026 · YiQi</title>
+<title>Reporte comercial — __MES_NOMBRE__ · YiQi</title>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     Reporte comercial del mes · Agosto 2026 — version de una sola pantalla.
+     Reporte comercial del mes · __MES_NOMBRE__ — version de una sola pantalla.
 
      DERIVADO, NO ESCRITO A MANO. Ninguna cifra de esta pagina se teclea:
      todas salen de un origen y el archivo se rehace corriendo el script.
@@ -198,7 +251,7 @@ __CSS__
   </div>
   <div class="topbar-c" style="justify-content:center">
     <div class="range-filter" role="group" aria-label="Periodo del informe">
-      <button class="range-btn is-active" type="button" aria-current="page">Agosto 2026</button>
+      <button class="range-btn is-active" type="button" aria-current="page">__MES_NOMBRE__</button>
     </div>
   </div>
   <div class="topbar-r">
@@ -248,11 +301,8 @@ __CSS__
 
     <nav class="nav" aria-label="Secciones">
       <section class="nav-section">
-        <p class="nav-lbl">Agosto 2026</p>
-        <a class="nav-link is-active" href="#crm" title="Comercial" aria-current="page"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span><span>Comercial</span></a>
-        <a class="nav-link" href="#meta" title="Meta"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span><span>Meta</span></a>
-        <a class="nav-link" href="#retargeting" title="Retargeting"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span>Retargeting</span></a>
-        <a class="nav-link" href="#sitio" title="El sitio"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg></span><span>El sitio</span></a>
+        <p class="nav-lbl">__MES_NOMBRE__</p>
+__NAV_LINKS__
       </section>
     </nav>
 
@@ -291,34 +341,14 @@ __CONCL_MARKUP__
      Tres destinos, uno por seccion: ninguno agrupa, asi que ninguno abre
      hoja. Solo se ve bajo 980px. -->
 <nav class="ds-bottomnav" id="bottomnav" aria-label="Secciones del reporte">
-  <button class="ds-bottomnav-item" type="button" data-grupo="crm">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
-    <span>Comercial</span>
-  </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="meta">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg>
-    <span>Meta</span>
-  </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="retargeting">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-    <span>Retarget.</span>
-  </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="sitio">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>
-    <span>El sitio</span>
-  </button>
-  <button class="ds-bottomnav-item" type="button" data-grupo="resumen">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-    <span>Resumen</span>
-  </button>
-</nav>
+__BOTTOMNAV__</nav>
 
 
 <footer class="statusbar">
   <div class="statusbar-left">
     <strong>Reporte comercial</strong>
     <span class="sb-sep">&middot;</span>
-    <span class="statusbar-desc">$486.857 de pauta &middot; 301 conversaciones &middot; 16 ONs nuevas &middot; 3 concretadas</span>
+    <span class="statusbar-desc">__SB_DESC__</span>
   </div>
   <div class="statusbar-right">
     <span class="sb-item" id="sb-datos">datos al —</span>
@@ -521,7 +551,7 @@ for _m in _crm['meses'].values():
             del _b['detalle']; _quitados += 1
 assert _quitados >= 4, 'no se quito ningun detalle'
 CRM_JSON = _json.dumps(_crm, ensure_ascii=False, separators=(',', ':'))
-assert CRM_JSON.startswith('{') and '"2026-08"' in CRM_JSON, 'el json del CRM no tiene el mes'
+assert CRM_JSON.startswith('{') and '"%s"' % MES in CRM_JSON, 'el json del CRM no tiene ' + MES
 assert '</script' not in CRM_JSON, 'el json cerraria el script'
 assert CRM_SCRIPT.count('__CRM_JSON__') == 1
 CRM_SCRIPT = CRM_SCRIPT.replace('__CRM_JSON__', CRM_JSON)
@@ -532,7 +562,7 @@ CRM_SCRIPT = CRM_SCRIPT.replace('__CRM_JSON__', CRM_JSON)
 # el mes ya esta cerrado: el reporte no tiene que moverse cuando la cuenta
 # siga gastando.
 _meta = _json.load(open(os.path.join(REPO, 'data', 'meta.json'), encoding='utf-8'))
-MES_REPORTE = '2026-08'
+MES_REPORTE = MES
 _meses = {}
 for _anio, _d in _meta['datos'].items():
     for _m in _d['meses']:
@@ -585,51 +615,138 @@ META_JSON = _json.dumps(META_PAYLOAD, ensure_ascii=False, separators=(',', ':'))
 # y se localiza por marcador y balance de llaves: aquel archivo se edita
 # seguido y los numeros de linea se corren.
 _txt = '\n'.join(src)
-_i = _txt.index('\n        clarity: {')
-_d = 0
-for _n in range(_i, len(_txt)):
-    if _txt[_n] == '{': _d += 1
-    elif _txt[_n] == '}':
-        _d -= 1
-        if _d == 0:
-            _j = _n + 1
-            break
-CLARITY = _txt[_txt.index('{', _i):_j]
-for _m in ['origen:', 'eventos:', 'stats:', 'claves:', 'pie:', 'paginas:']:
-    assert _m in CLARITY, 'al objeto clarity le falta ' + _m
-assert CLARITY.count('{') == CLARITY.count('}'), 'el objeto clarity no cierra'
+
+def _objeto(txt, desde):
+    '''El objeto que abre en la primera llave desde `desde`, por balance.'''
+    i = txt.index('{', desde); d = 0
+    for n in range(i, len(txt)):
+        if txt[n] == '{': d += 1
+        elif txt[n] == '}':
+            d -= 1
+            if d == 0: return txt[i:n + 1]
+    raise AssertionError('objeto sin cerrar')
+
+_RES = _objeto(_txt, _txt.index('const RESUMEN_MES = {'))
+
+def _resumen_de(corto):
+    '''El resumen de un mes en comercial.html, o None si es null o no esta.'''
+    m = re.search(r'\n      %s: (\{|null)' % corto, _RES)
+    if not m or m.group(1) == 'null': return None
+    return _objeto(_RES, m.start(1))
+
+def _clarity_de(corto):
+    r = _resumen_de(corto)
+    if not r or '\n        clarity: {' not in r: return None
+    return _objeto(r, r.index('\n        clarity: {'))
+
+# Antes se tomaba el primer `clarity:` del archivo, que era siempre el de
+# agosto: un reporte de otro mes habria mostrado el sitio de agosto.
+CLARITY = _clarity_de(MES_CORTO)
+if CLARITY:
+    for _m in ['origen:', 'eventos:', 'stats:', 'claves:', 'pie:', 'paginas:']:
+        assert _m in CLARITY, 'al objeto clarity le falta ' + _m
+
+# La serie de sesiones: desde junio 2026, cuando se instalo Clarity, hasta
+# el mes del reporte. Cada mes sale del export de data/clarity/ o, si no
+# hay export, de la cifra de sesiones del resumen de ese mes. Un mes sin
+# ninguna de las dos corta el armado: un hueco en la serie se lee como un
+# mes sin visitas.
+def _sesiones(mes):
+    csv = os.path.join(REPO, 'data', 'clarity', 'clarity-%s.csv' % mes)
+    if os.path.exists(csv):
+        m = re.search(r'"","Total sessions","(\d+)"', open(csv, encoding='utf-8').read())
+        assert m, 'el export de Clarity no trae Total sessions: ' + csv
+        return int(m.group(1))
+    c = _clarity_de(['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][int(mes[5:]) - 1])
+    assert c, 'falta el export de Clarity de %s (data/clarity/clarity-%s.csv)' % (mes, mes)
+    m = re.search(r"\['([\d.]+)', 'sesiones'\]", c)
+    assert m, 'el resumen de %s no trae sesiones' % mes
+    return int(m.group(1).replace('.', ''))
+
+SITIO_SERIE = None
+if CLARITY:
+    _serie, _k = [], '2026-06'
+    while _k <= MES:
+        _serie.append([_k, _sesiones(_k)])
+        _y, _mm = int(_k[:4]), int(_k[5:]) + 1
+        _k = '%04d-%02d' % ((_y, _mm) if _mm <= 12 else (_y + 1, 1))
+    SITIO_SERIE = '[' + ', '.join("['%s', %d]" % (a, b) for a, b in _serie) + ']'
 
 # El brief: markup y nada mas, sin script. Es el unico bloque en prosa del
 # reporte y va arriba de todo.
-BRIEF = open(os.path.join(REPO, 'scripts', 'secciones-brief.html'), encoding='utf-8').read().rstrip()
-BRIEF_SCRIPT = open(os.path.join(REPO, 'scripts', 'secciones-brief-script.html'), encoding='utf-8').read().rstrip()
-assert '<section id="brief"' in BRIEF and '<script' not in BRIEF
-assert 'brief-body' in BRIEF and 'brief-body' in BRIEF_SCRIPT
-# El brief es el unico bloque en prosa: si vuelve a traer una cifra
-# tecleada, deja de corregirse solo al regenerar el reporte.
-_bm = BRIEF.split('</style>')[-1]
-assert not re.search(r'\d[\d.]{2,}', _bm), 'el brief tiene cifras escritas a mano'
+def _frag(pieza):
+    nombre = CONTENIDO.get(pieza)
+    return open(os.path.join(REPO, 'scripts', nombre), encoding='utf-8').read() if nombre else None
+
+BRIEF = BRIEF_SCRIPT = ''
+if _frag('brief'):
+    BRIEF = _frag('brief').rstrip()
+    BRIEF_SCRIPT = _frag('brief_script').rstrip()
+    assert '<section id="brief"' in BRIEF and '<script' not in BRIEF
+    assert 'brief-body' in BRIEF and 'brief-body' in BRIEF_SCRIPT
+    # El brief es el unico bloque en prosa: si vuelve a traer una cifra
+    # tecleada, deja de corregirse solo al regenerar el reporte.
+    _bm = BRIEF.split('</style>')[-1]
+    assert not re.search(r'\d[\d.]{2,}', _bm), 'el brief tiene cifras escritas a mano'
+else:
+    # La fecha de los datos en la barra de estado la escribia el script del
+    # brief. Sin brief, la escribe esta pieza sola.
+    BRIEF_SCRIPT = '''    <script>
+    (function () {
+      const el = document.getElementById('sb-datos');
+      if (!el) return;
+      let f = (typeof META !== 'undefined' && META.generado) ? META.generado.slice(0, 10) : null;
+      if (!f && typeof CRM !== 'undefined') f = CRM.generado;
+      if (!f) return;
+      const p = f.split('-');
+      el.textContent = 'datos al ' + p[2] + '/' + p[1] + '/' + p[0];
+    })();
+    </script>'''
 # .card-reveal nace con opacity:0 y la revela initReveal, que corre sobre
 # el cuerpo que cada seccion dibuja por JS. El brief es markup estatico:
 # nadie lo observaba y quedaba invisible, ocupando su alto en blanco.
 
-FRAG_SITIO = open(os.path.join(REPO, 'scripts', 'secciones-sitio.html'), encoding='utf-8').read()
-_p = FRAG_SITIO.index('    <script>')
-SITIO_MARKUP, SITIO_SCRIPT = FRAG_SITIO[:_p].rstrip(), FRAG_SITIO[_p:].rstrip()
-assert SITIO_SCRIPT.count('__CLARITY__') == 1
-SITIO_SCRIPT = SITIO_SCRIPT.replace('__CLARITY__', CLARITY)
+SITIO_MARKUP = SITIO_SCRIPT = ''
+if CLARITY:
+    FRAG_SITIO = open(os.path.join(REPO, 'scripts', 'secciones-sitio.html'), encoding='utf-8').read()
+    _p = FRAG_SITIO.index('    <script>')
+    SITIO_MARKUP, SITIO_SCRIPT = FRAG_SITIO[:_p].rstrip(), FRAG_SITIO[_p:].rstrip()
+    assert SITIO_SCRIPT.count('__CLARITY__') == 1 and SITIO_SCRIPT.count('__SITIO_SERIE__') == 1
+    SITIO_SCRIPT = SITIO_SCRIPT.replace('__CLARITY__', CLARITY).replace('__SITIO_SERIE__', SITIO_SERIE)
 
-FRAG_RT = open(os.path.join(REPO, 'scripts', 'secciones-retargeting.html'), encoding='utf-8').read()
-_k = FRAG_RT.index('    <script>')
-RT_MARKUP, RT_SCRIPT = FRAG_RT[:_k].rstrip(), FRAG_RT[_k:].rstrip()
-assert '<section id="retargeting"' in RT_MARKUP and 'rtRender();' in RT_SCRIPT
+RT_MARKUP = RT_SCRIPT = ''
+if _frag('retargeting'):
+    FRAG_RT = _frag('retargeting')
+    _k = FRAG_RT.index('    <script>')
+    RT_MARKUP, RT_SCRIPT = FRAG_RT[:_k].rstrip(), FRAG_RT[_k:].rstrip()
+    assert '<section id="retargeting"' in RT_MARKUP and 'rtRender();' in RT_SCRIPT
 
 # La conclusion: prosa de cierre, sin entrada en la nav. Va despues del
 # sitio; su script corre antes que el del brief, que va ultimo.
-FRAG_CC = open(os.path.join(REPO, 'scripts', 'secciones-conclusion.html'), encoding='utf-8').read()
-_c = FRAG_CC.index('    <script>')
-CC_MARKUP, CC_SCRIPT = FRAG_CC[:_c].rstrip(), FRAG_CC[_c:].rstrip()
-assert '<section id="conclusion"' in CC_MARKUP
+CC_MARKUP = CC_SCRIPT = ''
+if _frag('conclusion'):
+    FRAG_CC = _frag('conclusion')
+    _c = FRAG_CC.index('    <script>')
+    CC_MARKUP, CC_SCRIPT = FRAG_CC[:_c].rstrip(), FRAG_CC[_c:].rstrip()
+    assert '<section id="conclusion"' in CC_MARKUP
+
+# Que secciones trae este mes, y con eso la navegacion. «Resumen», en la
+# barra movil, es la pantalla del brief y la conclusion: sin ninguna de las
+# dos no hay destino.
+HAY = {'crm': True, 'meta': True, 'retargeting': bool(RT_MARKUP), 'sitio': bool(CLARITY),
+       'resumen': bool(BRIEF or CC_MARKUP)}
+NAV_LINKS = ''.join(v for k, v in NAV_LINK.items() if HAY[k])[:-1]
+BOTTOMNAV = ''.join(v for k, v in BOTTOMNAV_BTN.items() if HAY[k])
+
+# La barra de estado resume el mes con las mismas cifras de las secciones.
+def _miles(n): return '{:,}'.format(int(round(n))).replace(',', '.')
+_cm = _crm['meses'][MES]
+SB_DESC = ' &middot; '.join([
+    '$%s de pauta' % _miles(_meses[MES]['gasto']),
+    '%s conversaciones' % _miles(_meses[MES]['conv']),
+    '%s ONs nuevas' % _miles(_cm['ons']['total']),
+    '%s concretadas' % _miles(_cm['concretadas']['n']),
+])
 
 FRAG_META = open(os.path.join(REPO, 'scripts', 'secciones-meta.html'), encoding='utf-8').read()
 _j = FRAG_META.index('    <script>')
@@ -653,24 +770,37 @@ out = (PAGINA
     .replace('__CONCL_MARKUP__', CC_MARKUP)
     .replace('__CONCL_SCRIPT__', CC_SCRIPT)
     .replace('__LOGO__', LOGO)
+    .replace('__NAV_LINKS__', NAV_LINKS)
+    .replace('__BOTTOMNAV__', BOTTOMNAV)
+    .replace('__SB_DESC__', SB_DESC)
+    .replace('__MES_NOMBRE__', MES_NOMBRE)
+    .replace('__MES_PREV__', MES_PREV)
+    .replace('__MES__', MES)
     .replace('__NAV_JS__', '(function () {\n' + NAV_JS + '\n})();'))
 
-for m in ['__CSS__','__HELPERS__','__LOGO__','__CRM_MARKUP__','__CRM_SCRIPT__','__CRM_JSON__','__META_MARKUP__','__META_SCRIPT__','__META_JSON__','__NAV_JS__','__RT_MARKUP__','__RT_SCRIPT__','__SITIO_MARKUP__','__SITIO_SCRIPT__','__CLARITY__','__BRIEF__','__BRIEF_SCRIPT__','__CONCL_MARKUP__','__CONCL_SCRIPT__']:
+for m in ['__NAV_LINKS__','__BOTTOMNAV__','__SB_DESC__','__MES_NOMBRE__','__MES_PREV__','__MES__','__SITIO_SERIE__','__CSS__','__HELPERS__','__LOGO__','__CRM_MARKUP__','__CRM_SCRIPT__','__CRM_JSON__','__META_MARKUP__','__META_SCRIPT__','__META_JSON__','__NAV_JS__','__RT_MARKUP__','__RT_SCRIPT__','__SITIO_MARKUP__','__SITIO_SCRIPT__','__CLARITY__','__BRIEF__','__BRIEF_SCRIPT__','__CONCL_MARKUP__','__CONCL_SCRIPT__']:
     assert m not in out, 'marcador sin reemplazar: '+m
-assert out.count('<style>') == 7 and out.count('</style>') == 7, 'estilos: pagina, brief, CRM, Meta, retargeting, sitio y conclusion'
-assert out.count('<section id="brief"') == 1
+_opc = [bool(BRIEF), HAY['retargeting'], HAY['sitio'], bool(CC_MARKUP)]
+_estilos = 3 + sum(_opc)            # pagina, CRM y Meta siempre
+assert out.count('<style>') == _estilos and out.count('</style>') == _estilos, 'estilos: %d' % out.count('<style>')
+assert out.count('<section id="brief"') == int(bool(BRIEF))
 # Jerarquia de encabezados: un h1 y un h2 por seccion de contenido.
 assert out.count('<h1') == 1, 'el documento necesita un solo h1'
-assert out.count('<h2 class="section-title"') == 4, 'un h2 por seccion'
-assert out.count('<section id="sitio"') == 1
-assert out.count('<section id="retargeting"') == 1
+assert out.count('<h2 class="section-title"') == 2 + HAY['retargeting'] + HAY['sitio'], 'un h2 por seccion'
+assert out.count('<section id="sitio"') == int(HAY['sitio'])
+assert out.count('<section id="retargeting"') == int(HAY['retargeting'])
 assert out.count('<section id="meta"') == 1
 assert out.count('<section id="crm"') == 1
-assert out.count('<section id="conclusion"') == 1
+assert out.count('<section id="conclusion"') == int(bool(CC_MARKUP))
+# Ningun mes se cuela en el reporte de otro: el nombre de los demas meses
+# no aparece en el texto visible, salvo en los rotulos de la serie.
+_visible = re.sub(r'<script>.*?</script>|<style>.*?</style>|<!--.*?-->', '', out, flags=re.S)
+assert MES_NOMBRE in _visible
 assert '<section id="mes"' not in out, 'el bloque heredado de comercial.html volvio'
 
-dst = os.path.join(REPO,'YiQi_Reporte_Comercial_202608.html')
+dst = os.path.join(REPO, 'YiQi_Reporte_Comercial_%s.html' % MES_ARCHIVO)
 open(dst,'w',encoding='utf-8').write(out)
+print('mes:', MES, '·', MES_NOMBRE, '· secciones:', ', '.join(k for k, v in HAY.items() if v))
 print('escrito:', dst)
 print('lineas:', out.count('\n')+1, '· bytes:', len(out.encode('utf-8')))
 print('md5:', hashlib.md5(out.encode('utf-8')).hexdigest())

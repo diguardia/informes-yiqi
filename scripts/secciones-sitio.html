@@ -34,7 +34,7 @@
 
     <section id="sitio" aria-label="El sitio por dentro">
       <h2 class="section-title">El sitio</h2>
-      <div class="section-sub">Agosto 2026 · Microsoft Clarity</div>
+      <div class="section-sub">__MES_NOMBRE__ · Microsoft Clarity</div>
       <div id="sitio-body"></div>
     </section>
 
@@ -78,12 +78,12 @@
       setTimeout(sitioChart, 30);
     }
 
-    /* Sesiones por mes, sin bots. Junio y julio salen de los exports del
-       dashboard de Clarity que estan en data/clarity/; agosto es la misma
-       cifra que ya muestra la tarjeta. Clarity no publica la serie en su
-       export, asi que son tres consultas al mismo tablero cambiando el
-       rango, una por mes. */
-    const SITIO_SERIE = [['2026-06', 510], ['2026-07', 1846], ['2026-08', 2839]];
+    /* Sesiones por mes, sin bots, desde junio 2026. La arma el script:
+       cada mes sale de su export en data/clarity/ o, si no lo hay, de la
+       cifra de sesiones del resumen de ese mes en comercial.html. Clarity
+       no publica la serie en su export: es una consulta al tablero por
+       mes, cambiando el rango. */
+    const SITIO_SERIE = __SITIO_SERIE__;
 
     function sitioChart() {
       const cvO = document.getElementById('sitio-origen'), cvP = document.getElementById('sitio-paginas');
