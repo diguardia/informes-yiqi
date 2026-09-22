@@ -5326,6 +5326,14 @@ async function loadMetaJSON() {
 
 /* ─── INIT ──────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  /* Primero en el handler, a proposito: si algo mas abajo (setPeriodo ->
+     renderFunnelChart -> new Chart) tira una excepcion antes de que Chart.js
+     haya cargado, corta el resto del handler y la tabla de apps se queda
+     para siempre en el placeholder "Sin datos todavia." del HTML, aunque
+     apps-data.js este perfecto. La carga de apps no depende de nada de lo
+     que sigue, asi que no tiene que esperar su turno detras de eso. */
+  loadAppsCatalogo();
+
   const stored = localStorage.getItem('yiqi-theme') || 'system';
   applyTheme(stored);
   updateSwitch(stored);
@@ -5346,7 +5354,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearch('search-apps',         'tabla-apps',         'empty-apps');
   loadPlanSheet();
   loadIaReadySheet();
-  loadAppsCatalogo();
   initScrollSpy();
   initReveal();
   initSearchShortcut();
