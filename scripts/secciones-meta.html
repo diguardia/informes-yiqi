@@ -130,7 +130,7 @@
          total, no un ranking. */
       const cs = (META.campanas || []).slice().sort((a, b) => b.gasto - a.gasto);
       const totalC = cs.reduce((t, c) => t + c.gasto, 0) || 1;
-      const escala = ['--cyan', '--green', '--amber', '--blue', '--muted-2'];
+      const escala = ['--cyan', '--green', '--amber', '--violet', '--muted-2'];
       const tramos = cs.map((c, i) => `<div class="meta-tramo" style="width:${(c.gasto / totalC * 100).toFixed(1)}%;background:var(${escala[i % escala.length]})"></div>`).join('');
       const leyenda = cs.map((c, i) => `
         <div class="legend-row"><span class="legend-dot" style="background:var(${escala[i % escala.length]})"></span><span class="legend-label">${esc(c.nombre)}</span><span class="legend-pct">${crmPesos(c.gasto)} · ${crmNum(c.resultado)} ${esc(c.resultadoTipo)} a ${crmPesos(c.costoResultado)}</span></div>`).join('');

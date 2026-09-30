@@ -3679,7 +3679,7 @@ const META_MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'];
 const META_SERIES = {
   conv:    { label: 'Conversaciones',           data: [5,   103,  199,  186,  94,   41,   0],   color: '--green',  right: false },
   inter:   { label: 'Interacciones (page eng)', data: [887, 5212, 2610, 5667, 9159, 9266, 5518],  color: '--blue',   right: false },
-  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4806, 247,  1952],   color: '--purple', right: false },
+  clics:   { label: 'Link clicks',              data: [48,  1408, 2017, 4856, 4806, 247,  1952],   color: '--violet', right: false },
   gasto:   { label: 'Gasto ($k ARS)',           data: [62,  266,  568,  526,  545,  476,  56],   color: '--red',    right: false },
   alcance: { label: 'Alcance',                  data: [3.6, 45.5, 74.1, 129.2, 109.7, 19.3, 21.5], color: '--amber', right: true, suffix: 'k' },
 };
@@ -4957,7 +4957,7 @@ function renderOnsCharts() {
     const _od = sortDonutDesc(
       ONS_ORIGEN_DATA.labels,
       ONS_ORIGEN_DATA.data,
-      [rgbaVar('--cyan', .35), rgbaVar('--green', .35), rgbaVar('--amber', .35), rgbaVar('--purple', .35), rgbaVar('--warm', .35)]
+      [rgbaVar('--cyan', .35), rgbaVar('--green', .35), rgbaVar('--amber', .35), rgbaVar('--violet', .35), rgbaVar('--warm', .35)]
     );
     _charts.onsOrigen = new Chart(ctxO, {
       type: 'doughnut',

@@ -42,9 +42,16 @@
       #crm #crm-leg-origen { max-width: 280px; width: 100%; }
       #crm #crm-leg-origen .legend-row { grid-template-columns: 10px minmax(0, 1fr) auto 3.2em; gap: 8px 12px; }
       #crm #crm-leg-origen .crm-leg-pct { font: 400 12px var(--kpi-num); color: var(--muted-2); text-align: right; font-variant-numeric: tabular-nums; }
-      @media (min-width: 641px) {
-        #crm .crm-par .donut-block { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); }
-        #crm .crm-par .crm-donut { height: 240px; }
+      /* Dona y leyenda lado a lado solo si la TARJETA tiene ancho para las
+         dos: con media query la ventana podia ser ancha y la tarjeta angosta,
+         y la leyenda quedaba en 40px con el texto pisado por las cifras.
+         La leyenda pide ~220px ("Recomendacion" + cantidad + %). */
+      #crm .crm-par > .card { container-type: inline-size; }
+      #crm .crm-par .crm-donut { width: min(220px, 100%); }
+      #crm .crm-par .donut-block { grid-template-columns: 1fr; justify-items: center; gap: var(--s4); }
+      @container (min-width: 440px) {
+        #crm .crm-par .donut-block { grid-template-columns: 200px minmax(0, 1fr); justify-items: stretch; }
+        #crm .crm-par .crm-donut { width: 200px; height: 220px; }
       }
       #crm .crm-histo { position: relative; height: 200px; margin-top: var(--s3); }
       @media (max-width: 640px) { #crm .crm-histo { height: 160px; } }
@@ -341,7 +348,7 @@
                      'Hibernando', 'Rechazada', 'Desestimada', 'Vencida', 'Sin estado'];
       const TOKEN = { 'Concretada': '--green', 'Confirmada': '--green', 'Aprobada': '--green',
                       'Presupuesto enviado': '--cyan', 'Presentación enviada': '--cyan', 'Enviada': '--cyan',
-                      'En Curso': '--blue', 'En preparación': '--blue', 'Esperando presupuesto': '--blue',
+                      'En Curso': '--violet', 'En preparación': '--violet', 'Esperando presupuesto': '--violet',
                       'Versionada': '--muted-2', 'Hibernando': '--muted-2', 'Sin estado': '--muted-2',
                       'Rechazada': '--red', 'Desestimada': '--red', 'Vencida': '--red' };
       /* Una pista partida por estado. La usan las ONs del mes, la cartera
@@ -470,7 +477,17 @@
           ctx.save();
           ctx.font = '600 11px ' + cifra;
           ctx.fillStyle = texto; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-          crmCifraEncima(chart, bar.x, bar.y - 3, fmt(v));
+          /* Si una barra vecina es mas alta, la cifra se montaba sobre ella
+             (249 de septiembre encima de los 301 de agosto): se sube hasta
+             quedar arriba de todas las barras que tiene debajo. */
+          const txt = fmt(v), area = chart.chartArea, mitad = ctx.measureText(txt).width / 2 + 2;
+          const xx = Math.min(Math.max(bar.x, area.left + mitad), area.right - mitad);
+          let tope = bar.y;
+          chart.getDatasetMeta(0).data.forEach(b => {
+            const m = (b.width || 0) / 2;
+            if (b.x + m > xx - mitad && b.x - m < xx + mitad) tope = Math.min(tope, b.y);
+          });
+          crmCifraEncima(chart, bar.x, tope - 3, txt);
           ctx.restore();
         }
       };
@@ -527,7 +544,7 @@
       const cv = document.getElementById(id);
       if (!cv || typeof Chart === 'undefined') return;
       if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
-      const acc = getCSSVar('--cyan'), segunda = getCSSVar('--blue');
+      const acc = getCSSVar('--cyan'), segunda = getCSSVar('--violet');  /* --blue se confundia con el cyan */
       const texto = getCSSVar('--text'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
       const cifra = getCSSVar('--kpi-num'), mono = getCSSVar('--mono');
       const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), fondo = getCSSVar('--bg-elev');
@@ -671,7 +688,7 @@
         .sort((a, b) => (neutro(a) - neutro(b)) || (b[1] - a[1]));
       const total = filas.reduce((s, r) => s + r[1], 0) || 1;
       const pcts = crmPorcientos(filas.map(r => r[1]));
-      const tonos = [getCSSVar('--cyan'), getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--purple'), getCSSVar('--blue')];
+      const tonos = [getCSSVar('--cyan'), getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--violet'), getCSSVar('--magenta')];
       const gris = getCSSVar('--muted-2');
       let _t = 0;
       const escala = filas.map(r => neutro(r) ? gris : tonos[_t++ % tonos.length]);

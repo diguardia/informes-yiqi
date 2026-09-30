@@ -307,9 +307,16 @@ body {
       #crm #crm-leg-origen { max-width: 280px; width: 100%; }
       #crm #crm-leg-origen .legend-row { grid-template-columns: 10px minmax(0, 1fr) auto 3.2em; gap: 8px 12px; }
       #crm #crm-leg-origen .crm-leg-pct { font: 400 12px var(--kpi-num); color: var(--muted-2); text-align: right; font-variant-numeric: tabular-nums; }
-      @media (min-width: 641px) {
-        #crm .crm-par .donut-block { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); }
-        #crm .crm-par .crm-donut { height: 240px; }
+      /* Dona y leyenda lado a lado solo si la TARJETA tiene ancho para las
+         dos: con media query la ventana podia ser ancha y la tarjeta angosta,
+         y la leyenda quedaba en 40px con el texto pisado por las cifras.
+         La leyenda pide ~220px ("Recomendacion" + cantidad + %). */
+      #crm .crm-par > .card { container-type: inline-size; }
+      #crm .crm-par .crm-donut { width: min(220px, 100%); }
+      #crm .crm-par .donut-block { grid-template-columns: 1fr; justify-items: center; gap: var(--s4); }
+      @container (min-width: 440px) {
+        #crm .crm-par .donut-block { grid-template-columns: 200px minmax(0, 1fr); justify-items: stretch; }
+        #crm .crm-par .crm-donut { width: 200px; height: 220px; }
       }
       #crm .crm-histo { position: relative; height: 200px; margin-top: var(--s3); }
       @media (max-width: 640px) { #crm .crm-histo { height: 160px; } }
@@ -509,6 +516,9 @@ body {
       }
       #sitio .st-g { min-width: 0; }
       #sitio .donut-legend { max-width: 220px; }
+      /* El canvas va fuera del flujo, asi que la celda no tiene ancho propio:
+         bajo 640px el DS centra con justify-items y la dona quedaba en 0px. */
+      #sitio .donut-block .donut-chart { width: min(190px, 100%); }
       /* El canvas fuera del flujo: adentro, su ancho vuelve a contar para
          el del contenedor y en cada redibujo crece. */
       #sitio .st-barras, #sitio .donut-chart { position: relative; overflow: hidden; }
@@ -963,7 +973,7 @@ _mqTema.addEventListener('change', function () {
                      'Hibernando', 'Rechazada', 'Desestimada', 'Vencida', 'Sin estado'];
       const TOKEN = { 'Concretada': '--green', 'Confirmada': '--green', 'Aprobada': '--green',
                       'Presupuesto enviado': '--cyan', 'Presentación enviada': '--cyan', 'Enviada': '--cyan',
-                      'En Curso': '--blue', 'En preparación': '--blue', 'Esperando presupuesto': '--blue',
+                      'En Curso': '--violet', 'En preparación': '--violet', 'Esperando presupuesto': '--violet',
                       'Versionada': '--muted-2', 'Hibernando': '--muted-2', 'Sin estado': '--muted-2',
                       'Rechazada': '--red', 'Desestimada': '--red', 'Vencida': '--red' };
       /* Una pista partida por estado. La usan las ONs del mes, la cartera
@@ -1092,7 +1102,17 @@ _mqTema.addEventListener('change', function () {
           ctx.save();
           ctx.font = '600 11px ' + cifra;
           ctx.fillStyle = texto; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-          crmCifraEncima(chart, bar.x, bar.y - 3, fmt(v));
+          /* Si una barra vecina es mas alta, la cifra se montaba sobre ella
+             (249 de septiembre encima de los 301 de agosto): se sube hasta
+             quedar arriba de todas las barras que tiene debajo. */
+          const txt = fmt(v), area = chart.chartArea, mitad = ctx.measureText(txt).width / 2 + 2;
+          const xx = Math.min(Math.max(bar.x, area.left + mitad), area.right - mitad);
+          let tope = bar.y;
+          chart.getDatasetMeta(0).data.forEach(b => {
+            const m = (b.width || 0) / 2;
+            if (b.x + m > xx - mitad && b.x - m < xx + mitad) tope = Math.min(tope, b.y);
+          });
+          crmCifraEncima(chart, bar.x, tope - 3, txt);
           ctx.restore();
         }
       };
@@ -1149,7 +1169,7 @@ _mqTema.addEventListener('change', function () {
       const cv = document.getElementById(id);
       if (!cv || typeof Chart === 'undefined') return;
       if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
-      const acc = getCSSVar('--cyan'), segunda = getCSSVar('--blue');
+      const acc = getCSSVar('--cyan'), segunda = getCSSVar('--violet');  /* --blue se confundia con el cyan */
       const texto = getCSSVar('--text'), muted = getCSSVar('--muted'), muted2 = getCSSVar('--muted-2');
       const cifra = getCSSVar('--kpi-num'), mono = getCSSVar('--mono');
       const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), fondo = getCSSVar('--bg-elev');
@@ -1293,7 +1313,7 @@ _mqTema.addEventListener('change', function () {
         .sort((a, b) => (neutro(a) - neutro(b)) || (b[1] - a[1]));
       const total = filas.reduce((s, r) => s + r[1], 0) || 1;
       const pcts = crmPorcientos(filas.map(r => r[1]));
-      const tonos = [getCSSVar('--cyan'), getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--purple'), getCSSVar('--blue')];
+      const tonos = [getCSSVar('--cyan'), getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--violet'), getCSSVar('--magenta')];
       const gris = getCSSVar('--muted-2');
       let _t = 0;
       const escala = filas.map(r => neutro(r) ? gris : tonos[_t++ % tonos.length]);
@@ -1403,7 +1423,7 @@ _mqTema.addEventListener('change', function () {
          total, no un ranking. */
       const cs = (META.campanas || []).slice().sort((a, b) => b.gasto - a.gasto);
       const totalC = cs.reduce((t, c) => t + c.gasto, 0) || 1;
-      const escala = ['--cyan', '--green', '--amber', '--blue', '--muted-2'];
+      const escala = ['--cyan', '--green', '--amber', '--violet', '--muted-2'];
       const tramos = cs.map((c, i) => `<div class="meta-tramo" style="width:${(c.gasto / totalC * 100).toFixed(1)}%;background:var(${escala[i % escala.length]})"></div>`).join('');
       const leyenda = cs.map((c, i) => `
         <div class="legend-row"><span class="legend-dot" style="background:var(${escala[i % escala.length]})"></span><span class="legend-label">${esc(c.nombre)}</span><span class="legend-pct">${crmPesos(c.gasto)} · ${crmNum(c.resultado)} ${esc(c.resultadoTipo)} a ${crmPesos(c.costoResultado)}</span></div>`).join('');
@@ -1536,12 +1556,19 @@ _mqTema.addEventListener('change', function () {
       const sans = getCSSVar('--sans'), cifra = getCSSVar('--kpi-num');
       const tooltip = { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10 };
 
-      const org = CLARITY.origen.slice().sort((a, b) => b[1] - a[1]);
+      /* Otros al final y en gris, como el origen de las ONs en el CRM. */
+      const esOtro = n => /^(otros|sin origen)$/i.test(n);
+      const org = CLARITY.origen.slice().sort((a, b) => (esOtro(a[0]) - esOtro(b[0])) || (b[1] - a[1]));
       const total = org.reduce((s, r) => s + r[1], 0) || 1;
-      const escala = [acc, getCSSVar('--cyan-soft-2'), getCSSVar('--blue'), getCSSVar('--green'), getCSSVar('--muted-2')];
+      /* Misma paleta que la dona del CRM: tonos bien distintos entre si.
+         Antes Facebook iba en --cyan-soft-2 (casi blanco) y Sitio propio en
+         --blue, que se confundia con el cyan de Instagram. */
+      const PAL = [acc, getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--violet'), getCSSVar('--magenta')];
+      let _k = 0;
+      const escala = org.map(r => esOtro(r[0]) ? getCSSVar('--muted-2') : PAL[_k++ % PAL.length]);
       _charts.sitioOrigen = new Chart(cvO, {
         type: 'doughnut',
-        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: escala, borderWidth: 0, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
@@ -1551,7 +1578,7 @@ _mqTema.addEventListener('change', function () {
       });
       const leg = document.getElementById('sitio-leg');
       if (leg) leg.innerHTML = org.map((r, i) =>
-        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
 
       /* La cifra va al final de la barra: un grafico cuyo dato hay que
          buscar con el mouse no informa. */

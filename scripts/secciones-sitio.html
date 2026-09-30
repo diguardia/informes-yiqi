@@ -19,6 +19,9 @@
       }
       #sitio .st-g { min-width: 0; }
       #sitio .donut-legend { max-width: 220px; }
+      /* El canvas va fuera del flujo, asi que la celda no tiene ancho propio:
+         bajo 640px el DS centra con justify-items y la dona quedaba en 0px. */
+      #sitio .donut-block .donut-chart { width: min(190px, 100%); }
       /* El canvas fuera del flujo: adentro, su ancho vuelve a contar para
          el del contenedor y en cada redibujo crece. */
       #sitio .st-barras, #sitio .donut-chart { position: relative; overflow: hidden; }
@@ -103,12 +106,19 @@
       const sans = getCSSVar('--sans'), cifra = getCSSVar('--kpi-num');
       const tooltip = { backgroundColor: elev, borderColor: linea, borderWidth: 1, titleColor: texto, bodyColor: muted, padding: 10 };
 
-      const org = CLARITY.origen.slice().sort((a, b) => b[1] - a[1]);
+      /* Otros al final y en gris, como el origen de las ONs en el CRM. */
+      const esOtro = n => /^(otros|sin origen)$/i.test(n);
+      const org = CLARITY.origen.slice().sort((a, b) => (esOtro(a[0]) - esOtro(b[0])) || (b[1] - a[1]));
       const total = org.reduce((s, r) => s + r[1], 0) || 1;
-      const escala = [acc, getCSSVar('--cyan-soft-2'), getCSSVar('--blue'), getCSSVar('--green'), getCSSVar('--muted-2')];
+      /* Misma paleta que la dona del CRM: tonos bien distintos entre si.
+         Antes Facebook iba en --cyan-soft-2 (casi blanco) y Sitio propio en
+         --blue, que se confundia con el cyan de Instagram. */
+      const PAL = [acc, getCSSVar('--green'), getCSSVar('--amber'), getCSSVar('--violet'), getCSSVar('--magenta')];
+      let _k = 0;
+      const escala = org.map(r => esOtro(r[0]) ? getCSSVar('--muted-2') : PAL[_k++ % PAL.length]);
       _charts.sitioOrigen = new Chart(cvO, {
         type: 'doughnut',
-        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: escala, borderWidth: 0, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
@@ -118,7 +128,7 @@
       });
       const leg = document.getElementById('sitio-leg');
       if (leg) leg.innerHTML = org.map((r, i) =>
-        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i % escala.length]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
 
       /* La cifra va al final de la barra: un grafico cuyo dato hay que
          buscar con el mouse no informa. */
