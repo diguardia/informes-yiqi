@@ -642,7 +642,99 @@ def _clarity_de(corto):
 
 # Antes se tomaba el primer `clarity:` del archivo, que era siempre el de
 # agosto: un reporte de otro mes habria mostrado el sitio de agosto.
-CLARITY = _clarity_de(MES_CORTO)
+# El export del Dashboard de Clarity (Download > Download CSV) se deja en
+# data/clarity/ tal como se baja: se reconoce por su "Date range", no por el
+# nombre del archivo. Con el mes completo, la tarjeta del sitio sale entera
+# del CSV y no hace falta escribir el objeto `clarity` en comercial.html.
+# Agregado el 30/09/2026.
+import csv as _csv, calendar as _cal, glob as _glob2
+from urllib.parse import urlparse as _urlparse
+
+def _csv_clarity(mes):
+    y, m = int(mes[:4]), int(mes[5:])
+    esperado = '%02d/01/%d 12:00 AM - %02d/%02d/%d 11:59 PM' % (m, y, m, _cal.monthrange(y, m)[1], y)
+    for f in sorted(_glob2.glob(os.path.join(REPO, 'data', 'clarity', '*.csv'))):
+        filas = list(_csv.reader(open(f, encoding='utf-8-sig')))
+        if any(len(r) > 1 and r[0] == 'Date range' and r[1] == esperado for r in filas):
+            b, cur = {}, None
+            for r in filas:
+                if not r or not any(c.strip() for c in r): cur = None
+                elif r[0] == 'Metric': cur = r[1]; b[cur] = []
+                elif cur and r[0] == '' and len(r) > 1: b[cur].append(r[1:])
+            return b
+    return None
+
+def _n_ar(v, dec=0):
+    t = ('{:,.%df}' % dec).format(v)
+    return t.replace(',', '§').replace('.', ',').replace('§', '.')
+
+def _pct_ar(t):
+    v = float(t.strip().rstrip('%') or 0)
+    return (_n_ar(v, 2) if v % 1 else _n_ar(v)) + ' %'
+
+_PAGINAS = {'': 'Home', 'index.html': 'Home', 'ia-ready.html': 'iA Ready', 'api-docs.html': 'API',
+            'app.html': 'Ficha de app', 'novedades.html': 'Novedades', 'contacto.html': 'Contacto',
+            'tiendanube.html': 'Tiendanube', 'marketplace.html': 'Marketplace', 'precotizador.html': 'Precotizador'}
+
+def _clarity_desde_csv(mes):
+    b = _csv_clarity(mes)
+    if not b: return None
+    val = lambda bloque, clave: next(r[1] for r in b[bloque] if r[0] == clave)
+    ses, bots = int(val('Sessions', 'Total sessions')), int(val('Sessions', 'Bot sessions'))
+    usuarios = int(val('Users overview', 'Unique users'))
+    pps = float(val('Pages per session', 'Average'))
+    activo, total = val('Active time spent', 'Active time'), val('Active time spent', 'Total time')
+    ins = {r[0]: r[2] for r in b.get('Insights', []) if len(r) > 2}
+
+    # Origen: mismos grupos que el objeto de agosto (verificados contra su CSV).
+    def grupo(h):
+        h = h.lower()
+        if 'instagram' in h: return 'Instagram'
+        if 'facebook' in h: return 'Facebook'
+        if h in ('yiqi.com.ar', 'www.yiqi.com.ar'): return 'Sitio propio'
+        if h == 'google.com' or h.startswith('www.google.'): return 'Google'
+        return 'Otros'
+    og = {}
+    for r in b.get('Referrer', []):
+        og[grupo(r[0])] = og.get(grupo(r[0]), 0) + int(r[1])
+    origen = sorted(((k, v) for k, v in og.items() if k != 'Otros'), key=lambda x: -x[1]) + ([('Otros', og['Otros'])] if og.get('Otros') else [])
+
+    # Paginas: apex y www son la misma pagina; otros hosts (github.io) afuera.
+    pg = {}
+    for r in b.get('Top pages', []):
+        u = _urlparse(r[0])
+        if u.hostname not in ('yiqi.com.ar', 'www.yiqi.com.ar'): continue
+        k = u.path.strip('/')
+        et = _PAGINAS.get(k, k.replace('.html', '').replace('-', ' ').capitalize())
+        pg[et] = pg.get(et, 0) + int(r[1])
+    paginas = sorted(pg.items(), key=lambda x: -x[1])[:6]
+    eventos = [(r[0], int(r[1])) for r in b.get('Smart events', [])]
+
+    arch = os.path.join(REPO, 'data', 'clarity', 'claves-%s.txt' % mes)
+    if os.path.exists(arch):
+        claves = open(arch, encoding='utf-8').read().strip()
+    else:
+        # Sin texto escrito, una linea con los dos datos que dominan el mes.
+        top = origen[0] if origen else ('—', 0)
+        home = pg.get('Home', 0)
+        # El porcentaje de origen va sobre la misma base que el grafico "De
+        # donde llegan" (las sesiones con referente), para que den igual.
+        base = sum(v for _, v in origen) or 1
+        claves = '%s trae el %d %% de las visitas con origen identificado y la home se lleva %d de cada 10 sesiones.' % (
+            top[0], round(top[1] / base * 100), round(home / ses * 10))
+    pie = 'Rage clicks %s · dead clicks %s · quick backs %s · %s sesiones de bots excluidas · Microsoft Clarity registra cada visita a yiqi.com.ar' % (
+        _pct_ar(ins.get('Rage clicks', '0')), _pct_ar(ins.get('Dead click', '0')).replace(' %', ' %'),
+        _pct_ar(ins.get('Quick back click', '0')), _n_ar(bots))
+    js = lambda xs: '[' + ', '.join('[%s, %d]' % (_json.dumps(a, ensure_ascii=False), n) for a, n in xs) + ']'
+    stats = [[_n_ar(ses), 'sesiones'], [_n_ar(usuarios), 'usuarios'],
+             [_n_ar(pps, 2), 'páginas por sesión'], ['%s s' % activo, 'activos de %s' % total]]
+    return ('{\n          origen: %s,\n          eventos: %s,\n          stats: %s,\n          claves: %s,\n          pie: %s,\n          paginas: %s,\n        }'
+            % (js(origen), js(eventos), _json.dumps(stats, ensure_ascii=False),
+               _json.dumps(claves, ensure_ascii=False), _json.dumps(pie, ensure_ascii=False), js(paginas)))
+
+# El objeto escrito a mano en comercial.html gana si existe (los meses ya
+# publicados no cambian); si no, sale del CSV.
+CLARITY = _clarity_de(MES_CORTO) or _clarity_desde_csv(MES)
 if CLARITY:
     for _m in ['origen:', 'eventos:', 'stats:', 'claves:', 'pie:', 'paginas:']:
         assert _m in CLARITY, 'al objeto clarity le falta ' + _m
@@ -653,6 +745,9 @@ if CLARITY:
 # ninguna de las dos corta el armado: un hueco en la serie se lee como un
 # mes sin visitas.
 def _sesiones(mes):
+    _b = _csv_clarity(mes)
+    if _b:
+        return int(next(r[1] for r in _b['Sessions'] if r[0] == 'Total sessions'))
     csv = os.path.join(REPO, 'data', 'clarity', 'clarity-%s.csv' % mes)
     if os.path.exists(csv):
         m = re.search(r'"","Total sessions","(\d+)"', open(csv, encoding='utf-8').read())
