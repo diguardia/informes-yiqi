@@ -483,6 +483,9 @@
       font: 400 13px var(--sans); color: var(--muted-2);
     }
     .num { font: 500 13px var(--mono); }
+    /* El dato (importes, cantidades, costos) va en la fuente de cifras;
+       las fechas y horas siguen en mono. tabular-nums alinea la columna. */
+    .num.dato { font-family: var(--kpi-num); font-variant-numeric: tabular-nums; }
     /* Fila de indicadores compacta. El .kpi-grid del canonico es
        repeat(4, 1fr): con tres cards se estiran a todo el ancho y una card
        enorme para mostrar "2" es peor que no mostrarlo. Aca las cards toman
@@ -2354,204 +2357,204 @@
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="276120.0"><span class="num">$276.120,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="276120.0"><span class="num dato">$276.120,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260820a"><span class="num">20/08/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="319449.6"><span class="num">$319.449,60</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="319449.6"><span class="num dato">$319.449,60</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260820b"><span class="num">20/08/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Silvestre Blousson</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="7928512.5"><span class="num">$7.928.512,50</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="7928512.5"><span class="num dato">$7.928.512,50</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260807a"><span class="num">07/08/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>LATCAU S.A.</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="360279.36"><span class="num">$360.279,36</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="360279.36"><span class="num dato">$360.279,36</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260730a"><span class="num">30/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Espacio Marketing</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="1305000.0"><span class="num">$1.305.000,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="1305000.0"><span class="num dato">$1.305.000,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260723a"><span class="num">23/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Tienda Shopealo TradeBox SRL</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="968660.0"><span class="num">$968.660,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="968660.0"><span class="num dato">$968.660,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260721a"><span class="num">21/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="419890.8"><span class="num">$419.890,80</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="419890.8"><span class="num dato">$419.890,80</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260716a"><span class="num">16/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="290080.0"><span class="num">$290.080,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="290080.0"><span class="num dato">$290.080,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260716b"><span class="num">16/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="1125000.0"><span class="num">$1.125.000,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="1125000.0"><span class="num dato">$1.125.000,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260708a"><span class="num">08/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="580160.0"><span class="num">$580.160,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="580160.0"><span class="num dato">$580.160,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260708b"><span class="num">08/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Centro de Distribución Sur</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">—</span></td>
-                <td data-num="290080.0"><span class="num">$290.080,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">—</span></td>
+                <td data-num="290080.0"><span class="num dato">$290.080,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">—</span></td>
                 <td data-num="20260708c"><span class="num">08/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>LATCAU S.A.</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="435120.0"><span class="num">$435.120,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="435120.0"><span class="num dato">$435.120,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260706a"><span class="num">06/07/2026</span></td>
               </tr>
               <tr style="background:var(--cyan-soft)">
                 <td><strong>Tienda Shopealo TradeBox SRL</strong> <span class="badge badge-cyan" style="margin-left:4px">Jul–ago</span></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="560593.47"><span class="num">$560.593,47</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="560593.47"><span class="num dato">$560.593,47</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260701a"><span class="num">01/07/2026</span></td>
               </tr>
               <tr>
                 <td><strong>LATCAU S.A.</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="700741.82"><span class="num">$700.741,82</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="700741.82"><span class="num dato">$700.741,82</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260601a"><span class="num">01/06/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Adsmartm</strong></td>
                 <td><span class="badge badge-amber">Recomendación</span></td>
-                <td data-num="2754044.96"><span class="num">$2.754.044,96</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="2754044.96"><span class="num dato">$2.754.044,96</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260429a"><span class="num">29/04/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Centro de Distribución Sur</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="541636.2"><span class="num">$541.636,20</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="541636.2"><span class="num dato">$541.636,20</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260423a"><span class="num">23/04/2026</span></td>
               </tr>
               <tr>
                 <td><strong>TALLERES METALURGICOS CRESPO S.R.L.</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="658251.72"><span class="num">$658.251,72</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="658251.72"><span class="num dato">$658.251,72</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260414a"><span class="num">14/04/2026</span></td>
               </tr>
               <tr>
                 <td><strong>TALLERES METALURGICOS CRESPO S.R.L.</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="477800.51"><span class="num">$477.800,51</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="477800.51"><span class="num dato">$477.800,51</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260414b"><span class="num">14/04/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Centro de Distribución Sur</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="696389.4"><span class="num">$696.389,40</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="696389.4"><span class="num dato">$696.389,40</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260413a"><span class="num">13/04/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Centro de Distribución Sur</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="2018520.0"><span class="num">$2.018.520,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="2018520.0"><span class="num dato">$2.018.520,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260327a"><span class="num">27/03/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Mutis Agencia </strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="2796789.0"><span class="num">$2.796.789,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="2796789.0"><span class="num dato">$2.796.789,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260309a"><span class="num">09/03/2026</span></td>
               </tr>
               <tr>
                 <td><strong>LATCAU S.A.</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="471900.0"><span class="num">$471.900,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="471900.0"><span class="num dato">$471.900,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260304a"><span class="num">04/03/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Centro de Distribución Sur</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="353925.0"><span class="num">$353.925,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="353925.0"><span class="num dato">$353.925,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260226a"><span class="num">26/02/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Silvestre Blousson</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="610091.07"><span class="num">$610.091,07</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="610091.07"><span class="num dato">$610.091,07</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260123a"><span class="num">23/01/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Mutis Agencia </strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="918000.0"><span class="num">$918.000,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="918000.0"><span class="num dato">$918.000,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260120a"><span class="num">20/01/2026</span></td>
               </tr>
               <tr>
                 <td><strong>Centro de Distribución Sur</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="574925.0"><span class="num">$574.925,00</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="574925.0"><span class="num dato">$574.925,00</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260116a"><span class="num">16/01/2026</span></td>
               </tr>
               <tr>
                 <td><strong>DX Electrónica</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="337588.88"><span class="num">$337.588,88</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="337588.88"><span class="num dato">$337.588,88</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260102a"><span class="num">02/01/2026</span></td>
               </tr>
               <tr>
                 <td><strong>DX Electrónica</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="450118.5"><span class="num">$450.118,50</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="450118.5"><span class="num dato">$450.118,50</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260102b"><span class="num">02/01/2026</span></td>
               </tr>
               <tr>
                 <td><strong>ProShop</strong></td>
                 <td><span class="badge badge-muted">Cliente</span></td>
-                <td data-num="225059.25"><span class="num">$225.059,25</span></td>
-                <td data-num="0"><span class="num" style="color:var(--muted-2)">$0,00</span></td>
+                <td data-num="225059.25"><span class="num dato">$225.059,25</span></td>
+                <td data-num="0"><span class="num dato" style="color:var(--muted-2)">$0,00</span></td>
                 <td data-num="20260102c"><span class="num">02/01/2026</span></td>
               </tr>
             </tbody>
@@ -4800,10 +4803,10 @@ function renderAnunciosTable() {
   tb.innerHTML = rows.map(([name, gasto, resultado, costo, vistas]) => `
     <tr>
       <td>${name}</td>
-      <td data-num="${gasto}"><span class="num">$${gasto.toLocaleString('es-AR')}</span></td>
+      <td data-num="${gasto}"><span class="num dato">$${gasto.toLocaleString('es-AR')}</span></td>
       <td>${resultado}</td>
-      <td><span class="num">${costo}</span></td>
-      <td data-num="${vistas}"><span class="num">${vistas.toLocaleString('es-AR')}</span></td>
+      <td><span class="num dato">${costo}</span></td>
+      <td data-num="${vistas}"><span class="num dato">${vistas.toLocaleString('es-AR')}</span></td>
     </tr>`).join('');
   const cnt = document.getElementById('anuncios-count');
   if (cnt) cnt.textContent = `${rows.length} ${rows.length === 1 ? 'campaña' : 'campañas'} con gasto · ${PERIODO_LABEL[_currentMes] || ''}`;
@@ -5668,8 +5671,8 @@ function hydrateCrm(j) {
       return `<tr${esUlt ? ' style="background:var(--cyan-soft)"' : ''}>
                 <td><strong>${_escCrm(d.empresa)}</strong>${esUlt ? ` <span class="badge badge-cyan" style="margin-left:4px">${_MES_CAP[iUlt]}</span>` : ''}</td>
                 <td><span class="badge ${bc}">${bt}</span></td>
-                <td data-num="${d.importe || 0}"><span class="num">${_fArsCrm(d.importe)}</span></td>
-                <td data-num="${ant || 0}"><span class="num"${ant ? '' : ' style="color:var(--muted-2)"'}>${ant ? _fArsCrm(ant) : '—'}</span></td>
+                <td data-num="${d.importe || 0}"><span class="num dato">${_fArsCrm(d.importe)}</span></td>
+                <td data-num="${ant || 0}"><span class="num dato"${ant ? '' : ' style="color:var(--muted-2)"'}>${ant ? _fArsCrm(ant) : '—'}</span></td>
                 <td data-num="${dn}"><span class="num">${fecha}</span></td>
               </tr>`;
     }).join('');

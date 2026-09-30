@@ -316,8 +316,15 @@ body {
          de las tarjetas; donut mas grande para llenar la tarjeta; leyenda con
          cantidad y porcentaje en columnas: "3 · 38 %" se leia como 3,38 %. */
       #crm .crm-par > .kpi-card > * { justify-self: stretch; text-align: left; }
-      #crm .crm-par > .kpi-card .crm-histo { margin-top: var(--s2); }
+      /* La tarjeta se estira al alto del donut de al lado: sin esto el alto
+         extra se repartia entre las filas y abria un hueco sobre las barras.
+         Ahora lo absorbe el grafico. */
+      #crm .crm-par > .kpi-card { grid-template-rows: auto auto auto minmax(200px, 1fr); align-content: stretch; }
+      #crm .crm-par > .kpi-card .crm-histo { margin-top: var(--s2); height: auto; min-height: 200px; }
       #crm .crm-par > .kpi-card .kpi-delta { padding-inline: 0; }
+      /* En celular la cifra de las etapas va a la izquierda (bloque de 640px
+         del armazon); el delta la acompana, no se queda centrado solo. */
+      @media (max-width: 640px) { #crm .crm-etapas .kpi-delta { justify-self: start; padding-inline: 0; } }
       #crm #crm-leg-origen { max-width: 280px; width: 100%; }
       #crm #crm-leg-origen .legend-row { grid-template-columns: 10px minmax(0, 1fr) auto 3.2em; gap: 8px 12px; }
       #crm #crm-leg-origen .crm-leg-pct { font: 400 12px var(--kpi-num); color: var(--muted-2); text-align: right; font-variant-numeric: tabular-nums; }
@@ -1016,7 +1023,7 @@ _mqTema.addEventListener('change', function () {
       const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
       document.getElementById('crm-sub').textContent =
-        crmMesNom(CRM_MES) + ' · calculado desde los exports del CRM · cada etapa contra sus propios meses';
+        crmMesNom(CRM_MES) + ' · calculado desde el CRM · cada etapa contra sus propios meses';
 
       /* La variacion se dice en la unidad de la etapa, no en porcentaje:
          de 2 a 4 cotizaciones no es "+100 %", son dos cotizaciones. */
@@ -1031,7 +1038,7 @@ _mqTema.addEventListener('change', function () {
           kicker: 'Comercial · CRM', titulo: e.rot,
           sub: 'Mes a mes, de enero 2026 a ' + crmMesNom(CRM_MES).toLowerCase(),
           puntos: CRM_MESES(), valor: m => e.valor(CRM.meses[m]), fmt: e.fmt,
-          fuente: 'Exports del CRM · data/crm-2026.json',
+          fuente: 'CRM · data/crm-2026.json',
         });
         return `
         <div class="kpi-card card-reveal crm-etapa" data-detalle="crm:${e.id}" role="button" tabindex="0" aria-label="Ver ${esc(e.rot)} en detalle">
@@ -1135,7 +1142,7 @@ _mqTema.addEventListener('change', function () {
         kicker: 'Comercial · CRM', titulo: 'Importe concretado',
         sub: 'Mes a mes, de enero 2026 a ' + crmMesNom(CRM_MES).toLowerCase(),
         puntos: CRM_MESES(), valor: m => CRM.meses[m].concretadas.importe, fmt: crmPesos,
-        fuente: 'Exports del CRM · data/crm-2026.json',
+        fuente: 'CRM · data/crm-2026.json',
       });
 
       if (typeof initReveal === 'function') initReveal(b);
@@ -1210,7 +1217,10 @@ _mqTema.addEventListener('change', function () {
           scales: {
             x: { grid: { display: false }, border: { display: false },
                  ticks: { color: muted2, font: { family: mono, size: alto === 'mini' ? 9 : 10 }, maxRotation: 0, autoSkip: true } },
-            y: { display: false, beginAtZero: true, grace: '14%' }
+            /* Techo = la barra mas alta (+4 %): con grace y el redondeo de
+               Chart.js el maximo subia a un numero "redondo" y dejaba una franja
+               vacia arriba. La cifra del mes entra en el padding superior. */
+            y: { display: false, beginAtZero: true, max: (Math.max(0, ...ms.map(valores).filter(Number.isFinite)) || 1) * 1.04 }
           }
         },
         plugins: [valorDelMes]
@@ -1471,7 +1481,7 @@ _mqTema.addEventListener('change', function () {
         registrarDetalle('cruce:' + k.id, {
           kicker: 'Meta \u00d7 CRM', titulo: k.rot, sub: k.nota,
           puntos: ps, valor: k.v, fmt: k.fmt,
-          fuente: 'Marketing API y exports del CRM · data/meta.json + data/crm-2026.json',
+          fuente: 'Marketing API y CRM · data/meta.json + data/crm-2026.json',
         });
         return `
         <div class="kpi-card card-reveal meta-kpi" data-detalle="cruce:${k.id}" role="button" tabindex="0" aria-label="Ver ${esc(k.rot)} en detalle">

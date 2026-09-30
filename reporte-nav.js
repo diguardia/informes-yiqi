@@ -6,11 +6,28 @@
    data/reportes.json, que escribe scripts/armar-reporte-comercial.py cada vez
    que arma un mes. Vive en un archivo aparte a proposito: los reportes ya
    cerrados no se rearman para sumarle navegacion, solo cargan este script.
-   Sin JSON, o con un solo reporte, queda la pildora. Pedido de Seba, 30/09/2026. */
+   Sin JSON, o con un solo reporte, queda la pildora. Pedido de Seba, 30/09/2026.
+
+   En celular (<=980px) el DS oculta el centro de la topbar, y con el el
+   selector. Aca se lo vuelve a mostrar solo si existe, en la columna de la
+   derecha —en el reporte el menu y el tema no se ven en celular, el lugar
+   esta libre— y con el mes corto ("Sep 2026") para que entre al lado del
+   titulo. El estilo vive en este archivo por la misma razon que el script:
+   los reportes cerrados no se rearman. */
 (function () {
   var NOM = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
              'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   var nombre = function (mes) { return NOM[Number(mes.slice(5, 7)) - 1] + ' ' + mes.slice(0, 4); };
+  var corto = function (mes) { return NOM[Number(mes.slice(5, 7)) - 1].slice(0, 3) + ' ' + mes.slice(0, 4); };
+  var CSS =
+    '#reporte-mes .rm-corto { display: none; }' +
+    '@media (max-width: 980px) {' +
+    '  .app-topbar > .topbar-c:has(#reporte-mes) { display: flex; grid-column: 3; grid-row: 1; justify-self: end; }' +
+    '  .app-topbar:has(#reporte-mes) > .topbar-r { display: none; }' +
+    '  #reporte-mes .rm-largo { display: none; }' +
+    '  #reporte-mes .rm-corto { display: inline; }' +
+    '  #reporte-mes .ds-picker-menu { left: auto; right: 0; }' +
+    '}';
   var CHEV = '<svg class="ds-picker-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
 
   function armar(lista) {
@@ -38,8 +55,12 @@
       o.dataset.value = r.archivo;
       o.textContent = nombre(r.mes);
       menu.appendChild(o);
-      if (esta) el.querySelector('.ds-picker-value').textContent = nombre(r.mes);
+      if (esta) el.querySelector('.ds-picker-value').innerHTML =
+        '<span class="rm-largo">' + nombre(r.mes) + '</span><span class="rm-corto">' + corto(r.mes) + '</span>';
     });
+    var st = document.createElement('style');
+    st.textContent = CSS;
+    document.head.appendChild(st);
     grupo.replaceWith(el);
     el.addEventListener('ds-picker:change', function (e) {
       var v = e.detail && e.detail.value;
