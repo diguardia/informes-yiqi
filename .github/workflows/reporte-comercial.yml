@@ -54,12 +54,12 @@ jobs:
 
       - name: Commitear
         run: |
-          if [ -z "$(git status --porcelain data/crm-2026.json YiQi_Reporte_Comercial_*.html)" ]; then
+          if [ -z "$(git status --porcelain data/crm-2026.json data/reportes.json YiQi_Reporte_Comercial_*.html)" ]; then
             echo "Sin cambios."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/crm-2026.json YiQi_Reporte_Comercial_*.html
+          git add data/crm-2026.json data/reportes.json YiQi_Reporte_Comercial_*.html
           git commit -m "Reporte comercial: armar el mes cerrado ($(date -u +%Y-%m-%d))"
           git push

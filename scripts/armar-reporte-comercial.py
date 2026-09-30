@@ -804,3 +804,12 @@ print('mes:', MES, '·', MES_NOMBRE, '· secciones:', ', '.join(k for k, v in HA
 print('escrito:', dst)
 print('lineas:', out.count('\n')+1, '· bytes:', len(out.encode('utf-8')))
 print('md5:', hashlib.md5(out.encode('utf-8')).hexdigest())
+
+# Indice de reportes para el boton "Reporte" de comercial.html: lista todos
+# los YiQi_Reporte_Comercial_AAAAMM.html del repo, el mas nuevo primero.
+import glob as _glob
+_rep = sorted((os.path.basename(f) for f in _glob.glob(os.path.join(REPO, 'YiQi_Reporte_Comercial_[0-9]*.html'))), reverse=True)
+_idx = [{'mes': '%s-%s' % (f[23:27], f[27:29]), 'archivo': f} for f in _rep if re.fullmatch(r'YiQi_Reporte_Comercial_\d{6}\.html', f)]
+open(os.path.join(REPO, 'data', 'reportes.json'), 'w', encoding='utf-8').write(
+    _json.dumps({'ultimo': _idx[0] if _idx else None, 'reportes': _idx}, ensure_ascii=False, indent=1))
+print('indice:', ', '.join(r['mes'] for r in _idx))

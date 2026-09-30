@@ -865,6 +865,14 @@
     </a>
   </div>
   <div class="topbar-actions">
+    <!-- Ultimo reporte mensual cerrado. El href y el rotulo los corrige
+         _reporteUltimo() con data/reportes.json, que escribe el armador. -->
+    <a class="topbar-login topbar-nav-link" id="reporte-link" href="YiQi_Reporte_Comercial_202608.html" target="_blank" rel="noopener" aria-label="Último reporte comercial mensual">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><polyline points="14 3 14 8 19 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>
+      </svg>
+      <span id="reporte-link-t">Reporte agosto</span>
+    </a>
     <a class="topbar-login topbar-nav-link" href="YiQi_Ecosistema.html" target="_blank" rel="noopener" aria-label="Ecosistema YiQi">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/>
@@ -4271,6 +4279,24 @@ function setupSearch(inputId, tableId, emptyId) {
    detras del boton, con el rotulo calculado. Asi un asiento nuevo se agrega
    arriba y nada mas: no hay que mover asientos ni reescribir el boton.
    Pedido de Seba, 30/09/2026. */
+/* Boton "Reporte": apunta al ultimo YiQi_Reporte_Comercial_AAAAMM.html.
+   Lo lee de data/reportes.json, que actualiza el armador cada vez que
+   corre (el dia 1, por reporte-comercial.yml). Sin JSON queda el href
+   escrito en el HTML. */
+async function _reporteUltimo() {
+  try {
+    const res = await fetch('data/reportes.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const u = (await res.json()).ultimo;
+    if (!u || !/^YiQi_Reporte_Comercial_\d{6}\.html$/.test(u.archivo)) return;
+    const mes = _MES_NOM[Number(u.mes.slice(5, 7)) - 1].toLowerCase();
+    const a = document.getElementById('reporte-link'), t = document.getElementById('reporte-link-t');
+    if (a) { a.href = u.archivo; a.title = `Reporte comercial de ${mes} ${u.mes.slice(0, 4)}`; }
+    if (t) t.textContent = `Reporte ${mes}`;
+    SITIO_LINKS[0] = [u.archivo, `Reporte ${mes}`];
+  } catch (e) { /* queda el enlace escrito en el HTML */ }
+}
+
 function _bitacoraTres() {
   const viejos = document.getElementById('bitacora-viejos');
   const btn = viejos && viejos.previousElementSibling;
@@ -4497,6 +4523,7 @@ const SEC_GRUPO = Object.fromEntries(
    navMostrarGrupo ni toca layout.dataset.grupo -- solo reusa el mismo
    componente de hoja (#nav-sheet) con contenido estatico. */
 const SITIO_LINKS = [
+  ["YiQi_Reporte_Comercial_202608.html", "Reporte agosto"],
   ["YiQi_Ecosistema.html", "Ecosistema"],
   ["YiQi_Arbol_del_Sitio.html", "Árbol del sitio"],
   ["https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html", "Design System"],
@@ -5706,6 +5733,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderConcretadasChart();
 
   _bitacoraTres();
+  _reporteUltimo();
   loadMetaJSON();   // no bloquea: si falla, quedan los datos embebidos
   loadCrmJSON();    // idem, con data/crm-2026.json
 
