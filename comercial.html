@@ -3482,10 +3482,12 @@ function setPeriodo(key, manual) {
   if (_anioActivo === null || _anioActivo === CRM_ANIO) {
     setFunnelPeriod(key);
     filterOnsByPeriodo(key);
+    if (typeof _crmKpis === 'function') _crmKpis(key);
   } else {
     // Año sin datos de CRM: se muestran completos y se aclara de qué año son.
     setFunnelPeriod('ytd');
     filterOnsByPeriodo('ytd');
+    if (typeof _crmKpis === 'function') _crmKpis('ytd');
     _marcarCrmDeOtroAnio();
   }
 
@@ -5408,6 +5410,86 @@ function _rearmarFunnel() {
   _armarTrimestresCrm();
 }
 
+/* KPI cards de Nuevas ONs y Concretadas segun el periodo elegido (mes,
+   trimestre o anio). Pedido de Seba, 30/09/2026: las tablas ya filtraban
+   por periodo y las tarjetas se quedaban en el acumulado. */
+function _setKpiCard(card, label, value, delta, dir) {
+  if (!card) return;
+  const l = card.querySelector('.kpi-label'), v = card.querySelector('.kpi-value'), d = card.querySelector('.kpi-delta');
+  if (l && label != null) l.textContent = label;
+  if (v) { v._cuGen = (v._cuGen || 0) + 1; v.textContent = value; }
+  if (d) { d.textContent = delta; d.className = 'kpi-delta ' + (dir || 'neutral'); }
+}
+function _crmYms(key) {
+  if (!_crmJSON) return [];
+  const yms = Object.keys(_crmJSON.meses).sort();
+  if (!key || key === 'ytd') return yms;
+  const ks = esTrimestre(key) ? _Q_KEY[key] : [key];
+  return yms.filter(ym => ks.includes(_MES_KEY[Number(ym.slice(5, 7)) - 1]));
+}
+function _crmPrevKey(key) {
+  if (!key || key === 'ytd') return null;
+  if (esTrimestre(key)) { const n = Number(key.slice(1)); return n > 1 ? 'q' + (n - 1) : null; }
+  const i = _MES_KEY.indexOf(key);
+  return i > 0 ? _MES_KEY[i - 1] : null;
+}
+function _crmKpis(key) {
+  if (!_crmJSON) return;
+  const j = _crmJSON, todos = Object.keys(j.meses).sort();
+  const anio = todos[0].slice(0, 4), ultimoYm = todos[todos.length - 1];
+  const nomYm = ym => _MES_NOM[Number(ym.slice(5, 7)) - 1];
+  const etq = k => k === 'ytd' ? `YTD ${anio}`
+                : esTrimestre(k) ? `${k.toUpperCase()} ${anio}`
+                : `${_MES_NOM[_MES_KEY.indexOf(k)].toLowerCase()} ${anio}`;
+  const suma = (ys, f) => ys.reduce((a, ym) => a + (f(j.meses[ym]) || 0), 0);
+  const tot = ys => ({ ons: suma(ys, m => m.ons.total), gan: suma(ys, m => m.concretadas.n), imp: suma(ys, m => m.concretadas.importe) });
+  const genTxt = /^\d{4}-\d{2}-\d{2}/.test(j.generado || '') ? `${j.generado.slice(8, 10)}/${j.generado.slice(5, 7)}` : '';
+
+  const k = key || 'ytd', yms = _crmYms(k), t = tot(yms);
+  const parcial = (yms.includes(ultimoYm) && genTxt) ? ` · al ${genTxt}` : '';
+  const rango = !yms.length ? `sin datos · ${etq(k)}`
+              : yms.length === 1 ? `${nomYm(yms[0]).toLowerCase()} ${anio}`
+              : `${_MES_KEY[Number(yms[0].slice(5, 7)) - 1]}–${_MES_KEY[Number(yms[yms.length - 1].slice(5, 7)) - 1]} ${anio}`;
+
+  /* Comparacion: en el anio, el ultimo mes; en un mes o trimestre, el anterior. */
+  let cLbl, cYms;
+  if (k === 'ytd') { cYms = [ultimoYm]; cLbl = `En período ${nomYm(ultimoYm).toLowerCase()}`; }
+  else { const pk = _crmPrevKey(k); cYms = pk ? _crmYms(pk) : []; cLbl = pk ? `Anterior · ${etq(pk)}` : 'Período anterior'; }
+  const c = tot(cYms);
+  const varTxt = (a, b) => b > 0 ? `${a >= b ? '↑' : '↓'} ${fmtPct(Math.abs((a - b) / b * 100))}` : '';
+
+  /* Nuevas ONs */
+  const g = { cliente: 0, web: 0, recom: 0, meta: 0, otros: 0 };
+  yms.forEach(ym => Object.entries(j.meses[ym].ons.origen || {}).forEach(([o, n]) => { g[_grupoOrigen(o)] += n; }));
+  const pct = n => t.ons ? `${fmtPct(n / t.ons * 100)} del total` : 'sin ONs en el período';
+  const suf = k === 'ytd' ? 'YTD' : etq(k).replace(` ${anio}`, '');
+  const kO = document.querySelectorAll('#nuevas-ons .kpi-card');
+  _setKpiCard(kO[0], `Total ONs ${etq(k)}`, t.ons, rango + parcial);
+  if (k === 'ytd') {
+    _setKpiCard(kO[1], cLbl, c.ons, `${nomYm(ultimoYm).toLowerCase()} ${anio}${parcial}`);
+  } else {
+    _setKpiCard(kO[1], cLbl, cYms.length ? c.ons : '—',
+      cYms.length ? `${t.ons} en ${etq(k)}${varTxt(t.ons, c.ons) ? ' · ' + varTxt(t.ons, c.ons) : ''}` : 'sin período previo',
+      !cYms.length || c.ons === t.ons ? 'neutral' : (t.ons > c.ons ? 'positive' : 'negative'));
+  }
+  _setKpiCard(kO[2], `Origen Cliente ${suf}`, g.cliente, pct(g.cliente));
+  _setKpiCard(kO[3], `Origen Web ${suf}`, g.web, t.ons ? `${pct(g.web)} · yiqi.com.ar` : pct(g.web));
+  _setKpiCard(kO[4], `Origen Meta/IG ${suf}`, g.meta, pct(g.meta));
+
+  /* Concretadas */
+  const kC = document.querySelectorAll('#concretadas .kpi-card');
+  _setKpiCard(kC[0], `Total concretadas ${etq(k)}`, t.gan, rango + parcial);
+  _setKpiCard(kC[1], `Importe total ${etq(k)}`, _fArsCrm(t.imp), `ARS · ${rango}`);
+  _setKpiCard(kC[2], 'Ticket promedio', t.gan ? _fArsCrm(t.imp / t.gan) : '—', t.gan ? 'ARS / ON concretada' : 'sin concretadas en el período');
+  if (k === 'ytd') {
+    _setKpiCard(kC[3], `Concretadas ${nomYm(ultimoYm).toLowerCase()}`, c.gan,
+      c.gan ? `${_fArsCrm(c.imp)} ARS${parcial}` : `ninguna${parcial}`, c.gan ? 'positive' : 'neutral');
+  } else {
+    _setKpiCard(kC[3], cLbl, cYms.length ? c.gan : '—',
+      cYms.length ? `${_fArsCrm(c.imp)} ARS` : 'sin período previo');
+  }
+}
+
 function hydrateCrm(j) {
   _crmJSON = j;
   const anio = Number(Object.keys(j.meses)[0].slice(0, 4)) || CRM_ANIO;
@@ -5458,23 +5540,7 @@ function hydrateCrm(j) {
   /* ── 3. Nuevas ONs: KPI cards, graficos, tabla ───────────── */
   const grupos = { cliente: 0, web: 0, recom: 0, meta: 0, otros: 0 };
   yms.forEach(ym => Object.entries(j.meses[ym].ons.origen || {}).forEach(([o, n]) => { grupos[_grupoOrigen(o)] += n; }));
-  const pct = n => tOns ? fmtPct(n / tOns * 100) : '—';
-  const kpiOns = document.querySelectorAll('#nuevas-ons .kpi-card');
-  const setKpi = (card, label, value, delta, dir) => {
-    if (!card) return;
-    const l = card.querySelector('.kpi-label'), v = card.querySelector('.kpi-value'), d = card.querySelector('.kpi-delta');
-    if (l && label != null) l.textContent = label;
-    if (v) { v._cuGen = (v._cuGen || 0) + 1; v.textContent = value; }
-    if (d) { d.textContent = delta; if (dir) d.className = 'kpi-delta ' + dir; }
-  };
-  const mUlt = j.meses[ultimoYm], iUlt = Number(ultimoYm.slice(5, 7)) - 1;
-  const prevYm = yms[yms.length - 2];
-  setKpi(kpiOns[0], `Total ONs YTD ${anio}`, tOns, `1 ene – ${genTxt || kUlt} ${anio}`, 'neutral');
-  setKpi(kpiOns[1], `En período ${_MES_NOM[iUlt].toLowerCase()}`, mUlt.ons.total,
-         `${kUlt} ${anio}${enCurso(ultimoYm)}` + (prevYm ? ` · ${_MES_KEY[Number(prevYm.slice(5, 7)) - 1]} cerró en ${j.meses[prevYm].ons.total}` : ''), 'neutral');
-  setKpi(kpiOns[2], null, grupos.cliente, `${pct(grupos.cliente)} del total`, 'neutral');
-  setKpi(kpiOns[3], null, grupos.web, `${pct(grupos.web)} del total · yiqi.com.ar`, 'neutral');
-  setKpi(kpiOns[4], null, grupos.meta, `${pct(grupos.meta)} del total`, 'neutral');
+  const iUlt = Number(ultimoYm.slice(5, 7)) - 1;
 
   ONS_ORIGEN_DATA.labels = ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG','Otros'];
   ONS_ORIGEN_DATA.data   = [grupos.cliente, grupos.web, grupos.recom, grupos.meta, grupos.otros];
@@ -5502,14 +5568,6 @@ function hydrateCrm(j) {
   }
 
   /* ── 4. Concretadas: KPI cards, grafico, tabla ───────────── */
-  const kpiC = document.querySelectorAll('#concretadas .kpi-card');
-  const ultTxt = ultimaConc ? `${ultimaConc.slice(8, 10)} ${_MES_KEY[Number(ultimaConc.slice(5, 7)) - 1]}` : kUlt;
-  setKpi(kpiC[0], 'Total concretadas YTD', tGan, `1 ene – ${ultTxt} ${anio}`, 'neutral');
-  setKpi(kpiC[1], 'Importe total YTD', _fArsCrm(tImp), `ARS · ${anio}`, 'neutral');
-  setKpi(kpiC[2], 'Ticket promedio', tGan ? _fArsCrm(tImp / tGan) : '—', 'ARS / ON concretada', 'neutral');
-  setKpi(kpiC[3], `Concretadas ${_MES_NOM[iUlt].toLowerCase()}`, mUlt.concretadas.n || 0,
-         mUlt.concretadas.n ? `${_fArsCrm(mUlt.concretadas.importe)} ARS${enCurso(ultimoYm)}` : `ninguna${enCurso(ultimoYm)} · última el ${ultTxt}`,
-         mUlt.concretadas.n ? 'positive' : 'neutral');
   CONC_MES_DATA.labels = yms.map(ym => _MES_CAP[Number(ym.slice(5, 7)) - 1]);
   CONC_MES_DATA.cant   = yms.map(ym => j.meses[ym].concretadas.n || 0);
   CONC_MES_DATA.monto  = yms.map(ym => Math.round((j.meses[ym].concretadas.importe || 0) / 1000));
