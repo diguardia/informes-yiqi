@@ -9,3 +9,6 @@ Thumbs.db
 
 # scratch de un parche aplicado el 12/08/2026 — borrar a mano
 .tmp-parche/
+
+# Python
+__pycache__/

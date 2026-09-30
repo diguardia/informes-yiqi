@@ -1,0 +1,65 @@
+name: Reporte comercial · armar el mes cerrado
+
+# El día 1 de cada mes arma YiQi_Reporte_Comercial_AAAAMM.html del mes que
+# acaba de cerrar: primero regenera data/crm-2026.json desde la API
+# (scripts/crm-api.py) y después corre scripts/armar-reporte-comercial.py
+# sin argumento, que toma el mes anterior. Meta ya está sincronizado por
+# meta.yml, que corre todos los días a las 06:00.
+#
+# Lo que sale automático: Comercial (CRM), Meta y, si hay datos, El sitio.
+# Brief, retargeting y conclusión son prosa: salen solo si el mes tiene
+# entrada en CONTENIDO_DEL_MES del armador. Un mes sin prosa sale sin esas
+# secciones, y se puede volver a armar a mano cuando se escriban.
+#
+# Secretos: los mismos que crm.yml (YIQI_API_USER, YIQI_API_PASS).
+
+on:
+  schedule:
+    # 10:30 UTC = 07:30 en Buenos Aires, el día 1.
+    - cron: '30 10 1 * *'
+  workflow_dispatch:
+    inputs:
+      mes:
+        description: 'Mes a armar (AAAA-MM). Vacío = el mes anterior.'
+        required: false
+        default: ''
+
+concurrency:
+  group: reporte-comercial
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  armar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install pandas
+
+      - name: Traer datos del CRM
+        env:
+          YIQI_API_USER: ${{ secrets.YIQI_API_USER }}
+          YIQI_API_PASS: ${{ secrets.YIQI_API_PASS }}
+        run: python3 scripts/crm-api.py
+
+      - name: Armar el reporte
+        run: python3 scripts/armar-reporte-comercial.py ${{ github.event.inputs.mes }}
+
+      - name: Commitear
+        run: |
+          if [ -z "$(git status --porcelain data/crm-2026.json YiQi_Reporte_Comercial_*.html)" ]; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/crm-2026.json YiQi_Reporte_Comercial_*.html
+          git commit -m "Reporte comercial: armar el mes cerrado ($(date -u +%Y-%m-%d))"
+          git push

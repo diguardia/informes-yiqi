@@ -1,13 +1,13 @@
 {
- "generado": "2026-09-14",
+ "generado": "2026-09-30",
  "fuentes": [
-  "Consulta_comercial_639247301474559625.xlsx",
-  "Nuevas_ON_mensuales_639249872023278151.xlsx",
-  "ONs_Concretadas_DETALLE_639247234485819268.xlsx",
-  "ONs_Detalle_con_estado_639249969573870225.xlsx",
-  "_Cotiz__Aprobadas_639249810261016332.xlsx",
-  "__Cotiz_enviadas__639249810338249427.xlsx",
-  "default_639249810372437562.xlsx"
+  "API CONSULTA_COMERCIAL",
+  "API COTIZACION_COMERCIAL",
+  "API COTIZACION_COMERCIAL (fecha de aprobacion)",
+  "API COTIZACION_COMERCIAL (fecha de envio)",
+  "API OPORTUNIDAD_DE_NEGOC",
+  "API OPORTUNIDAD_DE_NEGOC (Concretada)",
+  "API OPORTUNIDAD_DE_NEGOC (ONs por mes)"
  ],
  "nota": "Calculado desde los exports del CRM. Emitidas se cuenta por fecha de la cotizacion; enviadas y aprobadas son los agregados del CRM, por fecha de envio y de aprobacion. Son tres fechas distintas.",
  "meses": {
@@ -35,40 +35,58 @@
     },
     "estado": {
      "Desestimada": 3,
-     "Vencida": 1,
+     "Hibernando": 1,
      "Concretada": 1,
-     "Hibernando": 1
+     "Vencida": 1
     },
     "detalle": [
      {
       "f": "22/01",
+      "fecha": "2026-01-22 17:06",
       "empresa": "JEDSOL SRL (CoopArgen)",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 32975 CoopArgen",
+      "id": 37543
      },
      {
       "f": "16/01",
+      "fecha": "2026-01-16 09:43",
       "empresa": "trcparts",
-      "origen": "Web yiqi.com.ar"
+      "origen": "Web yiqi.com.ar",
+      "titulo": "YiQi ERP - trcparts",
+      "id": 37542
      },
      {
       "f": "15/01",
+      "fecha": "2026-01-15 12:39",
       "empresa": "MultiC SRL ",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP",
+      "id": 37541
      },
      {
       "f": "13/01",
+      "fecha": "2026-01-13 09:27",
       "empresa": "Metroblanc",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP",
+      "id": 37540
      },
      {
       "f": "09/01",
+      "fecha": "2026-01-09 14:36",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 32027 CentroDeDistribuciónSur",
+      "id": 37539
      },
      {
       "f": "08/01",
+      "fecha": "2026-01-08 14:00",
       "empresa": "OSPESE",
-      "origen": "Web yiqi.com.ar"
+      "origen": "Web yiqi.com.ar",
+      "titulo": "YiQi ERP",
+      "id": 37538
      }
     ]
    },
@@ -119,13 +137,13 @@
      },
      {
       "f": "09/01",
-      "nro": "1492.1",
-      "estado": "Vencida"
+      "nro": "1491.1",
+      "estado": "Versionada"
      },
      {
       "f": "09/01",
-      "nro": "1491.1",
-      "estado": "Versionada"
+      "nro": "1492.1",
+      "estado": "Vencida"
      },
      {
       "f": "06/01",
@@ -140,39 +158,51 @@
     "detalle": [
      {
       "f": "20/01",
+      "fecha": "2026-01-20 16:07",
       "empresa": "Mutis Agencia ",
       "origen": "CLIENTE",
-      "importe": 918000.0
+      "importe": 918000.0,
+      "anticipo": 0.0
      },
      {
       "f": "23/01",
+      "fecha": "2026-01-23 10:46",
       "empresa": "Silvestre Blousson",
       "origen": "CLIENTE",
-      "importe": 610091.07
+      "importe": 610091.07,
+      "anticipo": 0.0
      },
      {
       "f": "16/01",
+      "fecha": "2026-01-16 14:04",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 574925.0
+      "importe": 574925.0,
+      "anticipo": 0.0
      },
      {
       "f": "02/01",
+      "fecha": "2026-01-02 14:34",
       "empresa": "DX Electrónica",
       "origen": "CLIENTE",
-      "importe": 450118.5
+      "importe": 450118.5,
+      "anticipo": 0.0
      },
      {
       "f": "02/01",
+      "fecha": "2026-01-02 14:34",
       "empresa": "DX Electrónica",
       "origen": "CLIENTE",
-      "importe": 337588.875
+      "importe": 337588.875,
+      "anticipo": 0.0
      },
      {
       "f": "02/01",
+      "fecha": "2026-01-02 13:31",
       "empresa": "ProShop",
       "origen": "CLIENTE",
-      "importe": 225059.25
+      "importe": 225059.25,
+      "anticipo": 0.0
      }
     ]
    }
@@ -203,8 +233,8 @@
     "total": 6,
     "origen": {
      "CLIENTE": 4,
-     "INSTAGRAM - META": 1,
-     "Web yiqi.com.ar": 1
+     "Web yiqi.com.ar": 1,
+     "INSTAGRAM - META": 1
     },
     "estado": {
      "Concretada": 3,
@@ -214,43 +244,61 @@
     "detalle": [
      {
       "f": "27/02",
+      "fecha": "2026-02-27 13:58",
       "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33542 TMC",
+      "id": 37549
      },
      {
       "f": "27/02",
+      "fecha": "2026-02-27 13:57",
       "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33541 TMC",
+      "id": 37548
      },
      {
       "f": "25/02",
+      "fecha": "2026-02-25 10:01",
       "empresa": "Telridan srl",
-      "origen": "INSTAGRAM - META"
+      "origen": "INSTAGRAM - META",
+      "titulo": "YiQi ERP - Telridan srl",
+      "id": 37547
      },
      {
       "f": "24/02",
+      "fecha": "2026-02-24 11:38",
       "empresa": "Kids Land",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Integración MELI",
+      "id": 37546
      },
      {
       "f": "19/02",
+      "fecha": "2026-02-19 14:08",
       "empresa": " www.mtinsumos.com.ar",
-      "origen": "Web yiqi.com.ar"
+      "origen": "Web yiqi.com.ar",
+      "titulo": "YiQi ERP -  www.mtinsumos.com.ar",
+      "id": 37545
      },
      {
       "f": "11/02",
+      "fecha": "2026-02-11 13:47",
       "empresa": "LATCAU S.A.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33256 LATCAU",
+      "id": 37544
      }
     ]
    },
    "cotizaciones": {
     "emitidas": 6,
     "estado": {
-     "Versionada": 2,
      "Aprobada": 2,
-     "Vencida": 1,
-     "En preparación": 1
+     "Versionada": 2,
+     "En preparación": 1,
+     "Vencida": 1
     },
     "enviadas": 2,
     "aprobadas": {
@@ -297,9 +345,11 @@
     "detalle": [
      {
       "f": "26/02",
+      "fecha": "2026-02-26 15:33",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 353925.0
+      "importe": 353925.0,
+      "anticipo": 0.0
      }
     ]
    }
@@ -309,8 +359,8 @@
     "total": 5,
     "origen": {
      "Recomendación": 3,
-     "Web yiqi.com.ar": 1,
-     "INSTAGRAM - META": 1
+     "INSTAGRAM - META": 1,
+     "Web yiqi.com.ar": 1
     },
     "detalle": [
      {
@@ -361,118 +411,187 @@
     "detalle": [
      {
       "f": "30/03",
+      "fecha": "2026-03-30 10:51",
       "empresa": "WIL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - WIL",
+      "id": 37572
      },
      {
       "f": "27/03",
+      "fecha": "2026-03-27 13:17",
       "empresa": "Silvestre Blousson",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33865 LOLL_DESIGNS",
+      "id": 37571
      },
      {
       "f": "20/03",
+      "fecha": "2026-03-20 14:38",
       "empresa": "BRUMAT",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - BRUMAT",
+      "id": 37570
      },
      {
       "f": "13/03",
+      "fecha": "2026-03-13 14:29",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33112 CentroDeDistribuciónSur",
+      "id": 37569
      },
      {
       "f": "11/03",
+      "fecha": "2026-03-11 17:05",
       "empresa": "Oleana - Joyería",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Oleana - Joyería",
+      "id": 37568
      },
      {
       "f": "11/03",
+      "fecha": "2026-03-11 16:56",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - APIS UNILEVER",
+      "id": 37567
      },
      {
       "f": "11/03",
+      "fecha": "2026-03-11 10:42",
       "empresa": "BootikApp SA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33682 Grocery Shopify",
+      "id": 37566
      },
      {
       "f": "10/03",
+      "fecha": "2026-03-10 19:32",
       "empresa": "Uninorte del Pilar SA",
-      "origen": "INSTAGRAM - META"
+      "origen": "INSTAGRAM - META",
+      "titulo": "YiQi ERP - Super Deco",
+      "id": 37565
      },
      {
       "f": "10/03",
+      "fecha": "2026-03-10 14:11",
       "empresa": "INDEPENDENT AGENTS SA (ArphGroup)",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33671 Arphgroup",
+      "id": 37564
      },
      {
       "f": "10/03",
+      "fecha": "2026-03-10 13:43",
       "empresa": "Tienda Shopealo TradeBox SRL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33666 Shopealo - Central TIENDA NUBE",
+      "id": 37563
      },
      {
       "f": "10/03",
+      "fecha": "2026-03-10 10:18",
       "empresa": "Adsmartm",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Adsmartm",
+      "id": 37562
      },
      {
       "f": "10/03",
+      "fecha": "2026-03-10 10:15",
       "empresa": "BootikApp SA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 28392 DentalLab",
+      "id": 37561
      },
      {
       "f": "10/03",
+      "fecha": "2026-03-10 09:50",
       "empresa": "BootikApp SA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33660 Grocery Aper",
+      "id": 37560
      },
      {
       "f": "05/03",
+      "fecha": "2026-03-05 10:43",
       "empresa": "Silvestre Blousson",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33159 LOLL_DESIGNS",
+      "id": 37559
      },
      {
       "f": "05/03",
+      "fecha": "2026-03-05 10:19",
       "empresa": "Sin empresa",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33592 Febo",
+      "id": 37558
      },
      {
       "f": "05/03",
+      "fecha": "2026-03-05 10:19",
       "empresa": "Silvestre Blousson",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33590 LOLL_DESIGNS",
+      "id": 37557
      },
      {
       "f": "04/03",
+      "fecha": "2026-03-04 10:46",
       "empresa": "ESPACIO MARKETING SRL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33564 EspacioMarketing",
+      "id": 37556
      },
      {
       "f": "03/03",
+      "fecha": "2026-03-03 09:43",
       "empresa": "DEL BUEN VIVIR",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33545 DelBuenVivir",
+      "id": 37555
      },
      {
       "f": "03/03",
+      "fecha": "2026-03-03 09:36",
       "empresa": "Mutis Agencia ",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Interbanking",
+      "id": 37554
      },
      {
       "f": "03/03",
+      "fecha": "2026-03-03 09:34",
       "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Interbanking",
+      "id": 37553
      },
      {
       "f": "03/03",
+      "fecha": "2026-03-03 09:33",
       "empresa": "Arph Group",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Interbanking",
+      "id": 37552
      },
      {
       "f": "03/03",
+      "fecha": "2026-03-03 09:26",
       "empresa": "Espacio Marketing",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Interbanking",
+      "id": 37551
      },
      {
       "f": "03/03",
+      "fecha": "2026-03-03 08:53",
       "empresa": "Arph Group",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Arph Group . Interbanking",
+      "id": 37550
      }
     ]
    },
@@ -504,13 +623,13 @@
      },
      {
       "f": "27/03",
-      "nro": "1514.3",
-      "estado": "Versionada"
+      "nro": "1517.1",
+      "estado": "Vencida"
      },
      {
       "f": "27/03",
-      "nro": "1517.1",
-      "estado": "Vencida"
+      "nro": "1514.3",
+      "estado": "Versionada"
      },
      {
       "f": "19/03",
@@ -534,13 +653,13 @@
      },
      {
       "f": "11/03",
-      "nro": "1512.1",
-      "estado": "Aprobada"
+      "nro": "1511.1",
+      "estado": "En preparación"
      },
      {
       "f": "11/03",
-      "nro": "1511.1",
-      "estado": "En preparación"
+      "nro": "1512.1",
+      "estado": "Aprobada"
      },
      {
       "f": "11/03",
@@ -554,17 +673,17 @@
      },
      {
       "f": "10/03",
-      "nro": "1507.1",
-      "estado": "Vencida"
-     },
-     {
-      "f": "10/03",
       "nro": "1509.1",
       "estado": "Vencida"
      },
      {
       "f": "10/03",
       "nro": "1508.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "10/03",
+      "nro": "1507.1",
       "estado": "Vencida"
      },
      {
@@ -610,21 +729,27 @@
     "detalle": [
      {
       "f": "09/03",
+      "fecha": "2026-03-09 16:12",
       "empresa": "Mutis Agencia ",
       "origen": "CLIENTE",
-      "importe": 2796789.0
+      "importe": 2796789.0,
+      "anticipo": 0.0
      },
      {
       "f": "27/03",
+      "fecha": "2026-03-27 15:54",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 2018520.0
+      "importe": 2018520.0,
+      "anticipo": 0.0
      },
      {
       "f": "04/03",
+      "fecha": "2026-03-04 10:09",
       "empresa": "LATCAU S.A.",
       "origen": "CLIENTE",
-      "importe": 471900.0
+      "importe": 471900.0,
+      "anticipo": 0.0
      }
     ]
    }
@@ -633,9 +758,9 @@
    "consultas": {
     "total": 3,
     "origen": {
-     "Sin origen": 1,
      "web": 1,
-     "Web yiqi.com.ar": 1
+     "Web yiqi.com.ar": 1,
+     "Sin origen": 1
     },
     "detalle": [
      {
@@ -669,74 +794,106 @@
      "Desestimada": 4,
      "Concretada": 2,
      "Vencida": 2,
-     "Hibernando": 1,
-     "Confirmada": 1,
-     "En Curso": 1
+     "Confirmada": 2,
+     "Hibernando": 1
     },
     "detalle": [
      {
       "f": "30/04",
+      "fecha": "2026-04-30 15:28",
       "empresa": "Javier Bufarini",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi - Interface Casino Online",
+      "id": 37583
      },
      {
       "f": "24/04",
+      "fecha": "2026-04-24 08:16",
       "empresa": "Metroblanc",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Provincia Compras",
+      "id": 37582
      },
      {
       "f": "22/04",
+      "fecha": "2026-04-22 09:00",
       "empresa": "Nak stuff srl",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - Nak stuff srl",
+      "id": 37581
      },
      {
       "f": "21/04",
+      "fecha": "2026-04-21 17:36",
       "empresa": "TEYT ENVASES",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - TEYT ENVASES",
+      "id": 37580
      },
      {
       "f": "21/04",
+      "fecha": "2026-04-21 15:12",
       "empresa": "Metroblanc",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - On City",
+      "id": 37579
      },
      {
       "f": "17/04",
+      "fecha": "2026-04-17 14:40",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34093 CentroDeDistribuciónSur",
+      "id": 37578
      },
      {
       "f": "16/04",
+      "fecha": "2026-04-16 11:31",
       "empresa": "Zapatería Febo (Tossounian y Boyadjian S.A.)",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34069 Febo",
+      "id": 37577
      },
      {
       "f": "10/04",
+      "fecha": "2026-04-10 16:50",
       "empresa": "Mel City SA",
-      "origen": "Web yiqi.com.ar"
+      "origen": "Web yiqi.com.ar",
+      "titulo": "YiQi ERP",
+      "id": 37576
      },
      {
       "f": "08/04",
+      "fecha": "2026-04-08 17:18",
       "empresa": "Espacio Marketing",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Provincia Compras",
+      "id": 37575
      },
      {
       "f": "08/04",
+      "fecha": "2026-04-08 17:16",
       "empresa": "Espacio Marketing",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Frávega",
+      "id": 37574
      },
      {
       "f": "08/04",
+      "fecha": "2026-04-08 16:06",
       "empresa": "Espacio Marketing",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP Aper",
+      "id": 37573
      }
     ]
    },
    "cotizaciones": {
     "emitidas": 17,
     "estado": {
-     "Vencida": 8,
+     "Vencida": 7,
      "Aprobada": 5,
-     "Versionada": 3,
+     "Versionada": 4,
      "En preparación": 1
     },
     "enviadas": 17,
@@ -764,7 +921,7 @@
      {
       "f": "20/04",
       "nro": "1524.2",
-      "estado": "Vencida"
+      "estado": "Versionada"
      },
      {
       "f": "17/04",
@@ -788,12 +945,17 @@
      },
      {
       "f": "08/04",
-      "nro": "1521.1",
-      "estado": "Versionada"
+      "nro": "1513.2",
+      "estado": "Aprobada"
      },
      {
       "f": "08/04",
       "nro": "1520.1",
+      "estado": "Vencida"
+     },
+     {
+      "f": "08/04",
+      "nro": "1522.1",
       "estado": "Vencida"
      },
      {
@@ -803,22 +965,17 @@
      },
      {
       "f": "08/04",
-      "nro": "1513.2",
-      "estado": "Aprobada"
-     },
-     {
-      "f": "08/04",
-      "nro": "1522.1",
-      "estado": "Vencida"
-     },
-     {
-      "f": "07/04",
-      "nro": "1500.2",
-      "estado": "Aprobada"
+      "nro": "1521.1",
+      "estado": "Versionada"
      },
      {
       "f": "07/04",
       "nro": "1499.2",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "07/04",
+      "nro": "1500.2",
       "estado": "Aprobada"
      },
      {
@@ -839,33 +996,43 @@
     "detalle": [
      {
       "f": "29/04",
+      "fecha": "2026-04-29 13:32",
       "empresa": "Adsmartm",
       "origen": "Recomendación",
-      "importe": 2754044.955
+      "importe": 2754044.955,
+      "anticipo": 0.0
      },
      {
       "f": "13/04",
+      "fecha": "2026-04-13 13:14",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 696389.4
+      "importe": 696389.4,
+      "anticipo": 0.0
      },
      {
       "f": "14/04",
+      "fecha": "2026-04-14 10:49",
       "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
       "origen": "CLIENTE",
-      "importe": 658251.72
+      "importe": 658251.72,
+      "anticipo": 0.0
      },
      {
       "f": "23/04",
+      "fecha": "2026-04-23 10:54",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 541636.2
+      "importe": 541636.2,
+      "anticipo": 0.0
      },
      {
       "f": "14/04",
+      "fecha": "2026-04-14 10:49",
       "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
       "origen": "CLIENTE",
-      "importe": 477800.505
+      "importe": 477800.505,
+      "anticipo": 0.0
      }
     ]
    }
@@ -926,72 +1093,108 @@
      "CACE": 1
     },
     "estado": {
-     "Desestimada": 4,
      "Concretada": 4,
+     "Desestimada": 4,
      "Hibernando": 2,
-     "Vencida": 1,
-     "En Curso": 1
+     "En Curso": 1,
+     "Vencida": 1
     },
     "detalle": [
      {
       "f": "29/05",
+      "fecha": "2026-05-29 16:25",
       "empresa": "DROGUERIA JAVA SRL",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Julián Vazquez Albarracín",
+      "id": 37599
      },
      {
       "f": "29/05",
+      "fecha": "2026-05-29 16:06",
       "empresa": "https://avelia.com.ar/",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - https://avelia.com.ar/",
+      "id": 37598
      },
      {
       "f": "29/05",
+      "fecha": "2026-05-29 13:41",
       "empresa": "Shake Again",
-      "origen": "CACE"
+      "origen": "CACE",
+      "titulo": "YiQi ERP - Shake Again",
+      "id": 37597
      },
      {
       "f": "29/05",
+      "fecha": "2026-05-29 10:37",
       "empresa": "LATCAU S.A.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34580 LATCAU",
+      "id": 37592
      },
      {
       "f": "27/05",
+      "fecha": "2026-05-27 07:15",
       "empresa": "Infynitto",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - Infynitto",
+      "id": 37591
      },
      {
       "f": "26/05",
+      "fecha": "2026-05-26 15:06",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34515 CentroDeDistribuciónSur",
+      "id": 37590
      },
      {
       "f": "26/05",
+      "fecha": "2026-05-26 14:59",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34514 CentroDeDistribuciónSur",
+      "id": 37589
      },
      {
       "f": "22/05",
+      "fecha": "2026-05-22 14:27",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34455 CentroDeDistribuciónSur",
+      "id": 37588
      },
      {
       "f": "21/05",
+      "fecha": "2026-05-21 14:46",
       "empresa": "OSTARA S.A",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - OSTARA S.A",
+      "id": 37587
      },
      {
       "f": "21/05",
+      "fecha": "2026-05-21 11:04",
       "empresa": "Acapuedo",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Acapuedo",
+      "id": 37586
      },
      {
       "f": "13/05",
+      "fecha": "2026-05-13 14:50",
       "empresa": "Adsmartm",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34387 APEX",
+      "id": 37585
      },
      {
       "f": "11/05",
+      "fecha": "2026-05-11 16:54",
       "empresa": "LATCAU S.A.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 33270 LATCAU",
+      "id": 37584
      }
     ]
    },
@@ -1000,8 +1203,8 @@
     "estado": {
      "Versionada": 5,
      "Vencida": 2,
-     "Rechazada": 1,
-     "Aprobada": 1
+     "Aprobada": 1,
+     "Rechazada": 1
     },
     "enviadas": 7,
     "aprobadas": {
@@ -1068,8 +1271,8 @@
     "total": 6,
     "origen": {
      "web": 4,
-     "INSTAGRAM - META": 1,
-     "Sin origen": 1
+     "Sin origen": 1,
+     "INSTAGRAM - META": 1
     },
     "detalle": [
      {
@@ -1111,114 +1314,161 @@
     ]
    },
    "ons": {
-    "total": 19,
+    "total": 18,
     "origen": {
      "CLIENTE": 15,
-     "web": 3,
-     "Recomendación": 1
+     "web": 3
     },
     "estado": {
      "Concretada": 7,
      "En Curso": 5,
      "Desestimada": 4,
-     "Presupuesto enviado": 2,
-     "Vencida": 1
+     "Presupuesto enviado": 2
     },
     "detalle": [
      {
       "f": "28/06",
+      "fecha": "2026-06-28 07:32",
       "empresa": "Sander",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - Sander",
+      "id": 37637
      },
      {
       "f": "26/06",
+      "fecha": "2026-06-26 14:57",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34919 CentroDeDistribuciónSur",
+      "id": 37635
      },
      {
       "f": "26/06",
+      "fecha": "2026-06-26 10:50",
       "empresa": "LATCAU S.A.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34829 LATCAU",
+      "id": 37634
      },
      {
       "f": "24/06",
+      "fecha": "2026-06-24 12:43",
       "empresa": "Denise Schulman",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34861 CoopArgen",
+      "id": 37631
      },
      {
       "f": "24/06",
+      "fecha": "2026-06-24 12:39",
       "empresa": "FUEGUIA S.A.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34867 Fueguia",
+      "id": 37630
      },
      {
       "f": "23/06",
+      "fecha": "2026-06-23 13:14",
       "empresa": "Metroblanc",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34854 Metroblanc",
+      "id": 37629
      },
      {
       "f": "18/06",
+      "fecha": "2026-06-18 15:44",
       "empresa": "Adsmartm",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Compras y otros",
+      "id": 37627
      },
      {
       "f": "12/06",
+      "fecha": "2026-06-12 15:59",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Frontend Proveedores",
+      "id": 37622
      },
      {
       "f": "12/06",
+      "fecha": "2026-06-12 15:11",
       "empresa": "Zapatería Guido GRUPO MAXIMO SA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34711 ZapateriaGuido",
+      "id": 37621
      },
      {
       "f": "12/06",
+      "fecha": "2026-06-12 14:50",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34743 CentroDeDistribuciónSur",
+      "id": 37620
      },
      {
       "f": "12/06",
+      "fecha": "2026-06-12 14:36",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34670 CentroDeDistribuciónSur",
+      "id": 37619
      },
      {
       "f": "08/06",
+      "fecha": "2026-06-08 15:41",
       "empresa": "Silvestre Blousson",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP",
+      "id": 37617
      },
      {
       "f": "08/06",
+      "fecha": "2026-06-08 09:51",
       "empresa": "Tecnogo",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - Tecnogo",
+      "id": 37616
      },
      {
       "f": "05/06",
+      "fecha": "2026-06-05 20:08",
       "empresa": "mt insumos",
-      "origen": "web"
-     },
-     {
-      "f": "05/06",
-      "empresa": "Apolo Outdoor",
-      "origen": "Recomendación"
+      "origen": "web",
+      "titulo": "YiQi ERP - mt insumos",
+      "id": 37615
      },
      {
       "f": "01/06",
+      "fecha": "2026-06-01 15:59",
       "empresa": "Mutis Agencia ",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34594 Mutis",
+      "id": 37610
      },
      {
       "f": "01/06",
+      "fecha": "2026-06-01 11:02",
       "empresa": "Tienda Shopealo TradeBox SRL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34604 Arphgroup",
+      "id": 37602
      },
      {
       "f": "01/06",
+      "fecha": "2026-06-01 11:02",
       "empresa": "INDEPENDENT AGENTS SA (ArphGroup)",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34603 Arphgroup",
+      "id": 37601
      },
      {
       "f": "01/06",
+      "fecha": "2026-06-01 10:53",
       "empresa": "Tienda Shopealo TradeBox SRL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 34602 Shopealo - Central",
+      "id": 37600
      }
     ]
    },
@@ -1361,9 +1611,11 @@
     "detalle": [
      {
       "f": "01/06",
+      "fecha": "2026-06-01 12:32",
       "empresa": "LATCAU S.A.",
       "origen": "CLIENTE",
-      "importe": 700741.825
+      "importe": 700741.825,
+      "anticipo": 0.0
      }
     ]
    }
@@ -1372,9 +1624,9 @@
    "consultas": {
     "total": 3,
     "origen": {
-     "Precotizador web": 1,
      "Recomendación": 1,
-     "web": 1
+     "web": 1,
+     "Precotizador web": 1
     },
     "detalle": [
      {
@@ -1401,45 +1653,63 @@
     "total": 6,
     "origen": {
      "CLIENTE": 4,
-     "web": 1,
-     "Recomendación": 1
+     "Recomendación": 1,
+     "web": 1
     },
     "estado": {
+     "Concretada": 2,
      "En Curso": 2,
-     "Confirmada": 2,
      "Desestimada": 1,
-     "Concretada": 1
+     "Confirmada": 1
     },
     "detalle": [
      {
       "f": "31/07",
+      "fecha": "2026-07-31 14:14",
       "empresa": ".",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - .",
+      "id": 37656
      },
      {
       "f": "27/07",
+      "fecha": "2026-07-27 17:59",
       "empresa": "NINA ALVARADO NATHACHA ALTAGRACIA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35250 NinaMakeup",
+      "id": 37654
      },
      {
       "f": "27/07",
+      "fecha": "2026-07-27 12:42",
       "empresa": "ECOSAN",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35147 Ecosan",
+      "id": 37653
      },
      {
       "f": "22/07",
+      "fecha": "2026-07-22 16:48",
       "empresa": "electrosistem",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - electrosistem",
+      "id": 37650
      },
      {
       "f": "21/07",
+      "fecha": "2026-07-21 16:19",
       "empresa": "Dx Electronica",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Dx Electronica",
+      "id": 37649
      },
      {
       "f": "13/07",
+      "fecha": "2026-07-13 18:20",
       "empresa": "Tienda Shopealo TradeBox SRL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Desarrollos varios",
+      "id": 37648
      }
     ]
    },
@@ -1458,12 +1728,12 @@
     "detalle": [
      {
       "f": "27/07",
-      "nro": "1555.1",
+      "nro": "1554.1",
       "estado": "Aprobada"
      },
      {
       "f": "27/07",
-      "nro": "1554.1",
+      "nro": "1555.1",
       "estado": "Aprobada"
      },
      {
@@ -1499,63 +1769,83 @@
     "detalle": [
      {
       "f": "23/07",
+      "fecha": "2026-07-23 15:32",
       "empresa": "Espacio Marketing",
       "origen": "CLIENTE",
-      "importe": 1305000.0
+      "importe": 1305000.0,
+      "anticipo": 0.0
      },
      {
       "f": "08/07",
+      "fecha": "2026-07-08 19:21",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 1125000.0
+      "importe": 1125000.0,
+      "anticipo": 0.0
      },
      {
       "f": "21/07",
+      "fecha": "2026-07-21 16:38",
       "empresa": "Tienda Shopealo TradeBox SRL",
       "origen": "CLIENTE",
-      "importe": 968660.0
+      "importe": 968660.0,
+      "anticipo": 0.0
      },
      {
       "f": "08/07",
+      "fecha": "2026-07-08 19:21",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 580160.0
+      "importe": 580160.0,
+      "anticipo": 0.0
      },
      {
       "f": "01/07",
+      "fecha": "2026-07-01 09:41",
       "empresa": "Tienda Shopealo TradeBox SRL",
       "origen": "CLIENTE",
-      "importe": 560593.467
+      "importe": 560593.467,
+      "anticipo": 0.0
      },
      {
       "f": "06/07",
+      "fecha": "2026-07-06 11:20",
       "empresa": "LATCAU S.A.",
       "origen": "CLIENTE",
-      "importe": 435120.0
+      "importe": 435120.0,
+      "anticipo": 0.0
      },
      {
       "f": "16/07",
+      "fecha": "2026-07-16 12:27",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 419890.8
+      "importe": 419890.8,
+      "anticipo": 0.0
      },
      {
       "f": "30/07",
+      "fecha": "2026-07-30 16:39",
       "empresa": "LATCAU S.A.",
       "origen": "CLIENTE",
-      "importe": 360279.36
-     },
-     {
-      "f": "16/07",
-      "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE",
-      "importe": 290080.0
+      "importe": 360279.36,
+      "anticipo": 0.0
      },
      {
       "f": "08/07",
+      "fecha": "2026-07-08 19:21",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 290080.0
+      "importe": 290080.0,
+      "anticipo": 0.0
+     },
+     {
+      "f": "16/07",
+      "fecha": "2026-07-16 12:16",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 290080.0,
+      "anticipo": 0.0
      }
     ]
    }
@@ -1603,98 +1893,146 @@
     },
     "estado": {
      "En Curso": 11,
-     "Presupuesto enviado": 4,
+     "Presupuesto enviado": 2,
+     "Desestimada": 2,
      "Concretada": 1
     },
     "detalle": [
      {
       "f": "31/08",
+      "fecha": "2026-08-31 14:59",
       "empresa": "Mutis Agencia ",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Mutis Agencia",
+      "id": 37681
      },
      {
       "f": "25/08",
+      "fecha": "2026-08-25 17:45",
       "empresa": "Laksmi SAS - Agni Home",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP",
+      "id": 37677
      },
      {
       "f": "21/08",
+      "fecha": "2026-08-21 12:52",
       "empresa": "Tienda Shopealo TradeBox SRL",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35467 Shopealo - Central",
+      "id": 37675
      },
      {
       "f": "20/08",
+      "fecha": "2026-08-20 13:37",
       "empresa": "Silvestre Blousson",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35481 LOLL_DESIGNS",
+      "id": 37674
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:26",
       "empresa": "Raptiv",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "iA Ready - General",
+      "id": 37671
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:24",
       "empresa": "Sin empresa",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "iA Ready - General",
+      "id": 37670
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:20",
       "empresa": "Huinoil SA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP Oil&Gas",
+      "id": 37669
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:19",
       "empresa": "Huinoil SA",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP Oil&Gas",
+      "id": 37668
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:16",
       "empresa": "Espacio Marketing",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "iA Ready - General",
+      "id": 37667
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:15",
       "empresa": "TALLERES METALURGICOS CRESPO S.R.L.",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "iA Ready - General",
+      "id": 37666
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:14",
       "empresa": "Pracau",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "iA Ready - General",
+      "id": 37665
      },
      {
       "f": "11/08",
+      "fecha": "2026-08-11 08:13",
       "empresa": "Metroblanc",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "iA Ready - General",
+      "id": 37664
      },
      {
       "f": "10/08",
+      "fecha": "2026-08-10 15:06",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35213 CentroDeDistribuciónSur",
+      "id": 37663
      },
      {
       "f": "10/08",
+      "fecha": "2026-08-10 15:01",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35314 CentroDeDistribuciónSur",
+      "id": 37662
      },
      {
       "f": "02/08",
+      "fecha": "2026-08-02 20:42",
       "empresa": "ferreteria lincoln",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - ferreteria lincoln",
+      "id": 37658
      },
      {
       "f": "02/08",
+      "fecha": "2026-08-02 00:31",
       "empresa": "MAC Propiedades",
-      "origen": "web"
+      "origen": "web",
+      "titulo": "YiQi ERP - MAC Propiedades",
+      "id": 37657
      }
     ]
    },
    "cotizaciones": {
     "emitidas": 7,
     "estado": {
-     "Vencida": 4,
-     "Aprobada": 2,
-     "Enviada": 1
+     "Vencida": 5,
+     "Aprobada": 2
     },
     "enviadas": 7,
     "aprobadas": {
@@ -1706,7 +2044,7 @@
      {
       "f": "25/08",
       "nro": "1560.1",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "21/08",
@@ -1746,33 +2084,64 @@
     "detalle": [
      {
       "f": "07/08",
+      "fecha": "2026-08-07 08:26",
       "empresa": "Silvestre Blousson",
       "origen": "CLIENTE",
-      "importe": 7928512.5
+      "importe": 7928512.5,
+      "anticipo": 0.0
      },
      {
       "f": "20/08",
+      "fecha": "2026-08-20 14:31",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 319449.6
+      "importe": 319449.6,
+      "anticipo": 0.0
      },
      {
       "f": "20/08",
+      "fecha": "2026-08-20 14:31",
       "empresa": "Centro de Distribución Sur",
       "origen": "CLIENTE",
-      "importe": 276120.0
+      "importe": 276120.0,
+      "anticipo": 0.0
      }
     ]
    }
   },
   "2026-09": {
    "consultas": {
-    "total": 3,
+    "total": 7,
     "origen": {
-     "web": 2,
-     "Recomendación": 1
+     "web": 4,
+     "Recomendación": 2,
+     "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "29/09",
+      "cliente": "solucioneschs",
+      "contacto": "Nestor Chierino",
+      "origen": "web"
+     },
+     {
+      "f": "22/09",
+      "cliente": "HD EQUIPAMIENTO 4X4",
+      "contacto": "HERNAN DANIEL GIMENEZ",
+      "origen": "Precotizador web"
+     },
+     {
+      "f": "17/09",
+      "cliente": "COLLINS AUTOMOTORES",
+      "contacto": "Collins Automotores",
+      "origen": "web"
+     },
+     {
+      "f": "15/09",
+      "cliente": "Lucas Faur",
+      "contacto": "Lucas Faur",
+      "origen": "Recomendación"
+     },
      {
       "f": "07/09",
       "cliente": "Franco Demoli",
@@ -1794,53 +2163,123 @@
     ]
    },
    "ons": {
-    "total": 4,
+    "total": 8,
     "origen": {
+     "web": 3,
      "CLIENTE": 2,
-     "web": 1,
-     "Recomendación": 1
+     "Recomendación": 2,
+     "Sin origen": 1
     },
     "estado": {
-     "En Curso": 2,
+     "En Curso": 4,
+     "Vencida": 1,
      "Confirmada": 1,
-     "Presupuesto enviado": 1
+     "Presupuesto enviado": 1,
+     "Esperando contacto inicial": 1
     },
     "detalle": [
      {
-      "f": "07/09",
-      "empresa": "Franco Demoli",
-      "origen": "web"
+      "f": "29/09",
+      "fecha": "2026-09-29 16:18",
+      "empresa": "solucioneschs",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - solucioneschs",
+      "id": 37696
+     },
+     {
+      "f": "22/09",
+      "fecha": "2026-09-22 16:29",
+      "empresa": "HD EQUIPAMIENTO 4X4",
+      "origen": "web",
+      "titulo": "YiQi ERP - HD EQUIPAMIENTO 4X4",
+      "id": 37693
+     },
+     {
+      "f": "17/09",
+      "fecha": "2026-09-17 15:11",
+      "empresa": "COLLINS AUTOMOTORES",
+      "origen": "web",
+      "titulo": "YiQi ERP - COLLINS AUTOMOTORES",
+      "id": 37691
+     },
+     {
+      "f": "15/09",
+      "fecha": "2026-09-15 15:12",
+      "empresa": "Alien Tech",
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Lucas Faur",
+      "id": 37690
      },
      {
       "f": "07/09",
+      "fecha": "2026-09-07 16:50",
+      "empresa": "Franco Demoli",
+      "origen": "web",
+      "titulo": "YiQi ERP - Franco Demoli",
+      "id": 37688
+     },
+     {
+      "f": "07/09",
+      "fecha": "2026-09-07 15:18",
       "empresa": "Transportes Bessone",
-      "origen": "Recomendación"
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Transportes Bessone",
+      "id": 37687
      },
      {
       "f": "04/09",
+      "fecha": "2026-09-04 15:04",
       "empresa": "Centro de Distribución Sur",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 35398 CentroDeDistribuciónSur",
+      "id": 37683
      },
      {
       "f": "03/09",
+      "fecha": "2026-09-03 15:47",
       "empresa": "Espacio Marketing",
-      "origen": "CLIENTE"
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Provincia Compras",
+      "id": 37682
      }
     ]
    },
    "cotizaciones": {
-    "emitidas": 3,
+    "emitidas": 7,
     "estado": {
-     "Enviada": 2,
-     "Aprobada": 1
+     "Vencida": 2,
+     "Aprobada": 2,
+     "Versionada": 1,
+     "Enviada": 1,
+     "En preparación": 1
     },
-    "enviadas": 3,
+    "enviadas": 6,
     "aprobadas": {
-     "n": 1,
-     "neto_impl": 262990.0,
-     "neto_sop": null
+     "n": 2,
+     "neto_impl": 12594590.0,
+     "neto_sop": 2813700.0
     },
     "detalle": [
+     {
+      "f": "29/09",
+      "nro": "1524.4",
+      "estado": "Aprobada"
+     },
+     {
+      "f": "17/09",
+      "nro": "1565.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "16/09",
+      "nro": "1524.3",
+      "estado": "Versionada"
+     },
+     {
+      "f": "15/09",
+      "nro": "1564.1",
+      "estado": "Enviada"
+     },
      {
       "f": "04/09",
       "nro": "1563.1",
@@ -1849,62 +2288,72 @@
      {
       "f": "03/09",
       "nro": "1490.2",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "03/09",
       "nro": "1561.1",
-      "estado": "Enviada"
+      "estado": "Vencida"
      }
     ]
    },
    "concretadas": {
-    "n": 0,
-    "importe": 0.0,
-    "detalle": []
+    "n": 1,
+    "importe": 596025.0,
+    "detalle": [
+     {
+      "f": "29/09",
+      "fecha": "2026-09-29 16:53",
+      "empresa": "NINA ALVARADO NATHACHA ALTAGRACIA",
+      "origen": "CLIENTE",
+      "importe": 596025.0,
+      "anticipo": 0.0
+     }
+    ]
    }
   }
  },
  "historico": {
-  "total": 4436,
+  "total": 4440,
   "desde": "2014-11-28",
   "estado": {
-   "Desestimada": 2481,
-   "En Curso": 1411,
-   "Concretada": 459,
+   "Desestimada": 2483,
+   "En Curso": 1412,
+   "Concretada": 460,
    "Hibernando": 30,
    "Presentación enviada": 19,
    "Confirmada": 14,
-   "Vencida": 11,
-   "Presupuesto enviado": 8,
-   "Esperando presupuesto": 3
+   "Vencida": 13,
+   "Presupuesto enviado": 5,
+   "Esperando presupuesto": 3,
+   "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 26,
-  "enCursoViejas": 1385
+  "enCursoNuevas": 27,
+  "enCursoViejas": 1378
  },
  "series": {
   "on_mensuales": {
    "2025-01": 13,
    "2025-02": 14,
-   "2025-03": 14,
-   "2025-04": 12,
+   "2025-03": 15,
+   "2025-04": 13,
    "2025-05": 18,
-   "2025-06": 13,
-   "2025-07": 8,
-   "2025-08": 12,
-   "2025-09": 14,
-   "2025-10": 8,
-   "2025-11": 9,
-   "2025-12": 10,
+   "2025-06": 14,
+   "2025-07": 10,
+   "2025-08": 15,
+   "2025-09": 16,
+   "2025-10": 12,
+   "2025-11": 10,
+   "2025-12": 13,
    "2026-01": 6,
-   "2026-02": 5,
-   "2026-03": 16,
-   "2026-04": 8,
-   "2026-05": 9,
-   "2026-06": 15,
+   "2026-02": 6,
+   "2026-03": 23,
+   "2026-04": 11,
+   "2026-05": 12,
+   "2026-06": 18,
    "2026-07": 6,
-   "2026-08": 8,
-   "2026-09": 4
+   "2026-08": 16,
+   "2026-09": 8
   },
   "cotiz_enviadas": {
    "2025-07": 10,
@@ -1921,11 +2370,11 @@
    "2026-06": 22,
    "2026-07": 7,
    "2026-08": 7,
-   "2026-09": 3
+   "2026-09": 6
   },
   "cotiz_aprobadas": {
    "2025-07": {
-    "n": 5,
+    "n": 6,
     "neto_impl": 10814429.171999998,
     "neto_sop": 2034782.0
    },
@@ -1995,9 +2444,9 @@
     "neto_sop": 75624.0
    },
    "2026-09": {
-    "n": 1,
-    "neto_impl": 262990.0,
-    "neto_sop": 0.0
+    "n": 2,
+    "neto_impl": 12594590.0,
+    "neto_sop": 2813700.0
    }
   }
  }

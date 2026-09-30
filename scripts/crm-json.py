@@ -85,6 +85,9 @@ def armar(h):
         d['m'] = pd.to_datetime(d[c]).dt.to_period('M').astype(str)
 
     d2 = lambda s: pd.to_datetime(s).strftime('%d/%m')
+    # Fecha completa para comercial.html: ordena y filtra por mes con los
+    # digitos, y muestra la hora. 'f' queda para el reporte mensual.
+    dfull = lambda s: pd.to_datetime(s).strftime('%Y-%m-%d %H:%M')
     txt = lambda v, alt: (v if isinstance(v, str) and v.strip() else alt)
     nn = lambda v: (None if (v is None or (isinstance(v, float) and math.isnan(v))) else v)
     envm = dict(zip(env['Fecha de envío'], env['Nro. Cotización'].astype(int)))
@@ -131,8 +134,11 @@ def armar(h):
                 # En que quedaron las ONs que nacieron en el mes. Se lee hoy:
                 # una ON de agosto puede seguir abierta o cerrar en noviembre.
                 'estado': o['Descripción de estado'].fillna('Sin estado').value_counts().to_dict(),
-                'detalle': [{'f': d2(r['Fecha de creación']), 'empresa': txt(r['Empresa'], 'Sin empresa'),
-                             'origen': txt(r[ORI], 'Sin origen')}
+                'detalle': [{'f': d2(r['Fecha de creación']), 'fecha': dfull(r['Fecha de creación']),
+                             'empresa': txt(r['Empresa'], 'Sin empresa'),
+                             'origen': txt(r[ORI], 'Sin origen'),
+                             'titulo': txt(r.get('Título'), ''),
+                             'id': (int(r['Nro ID']) if 'Nro ID' in o.columns and not pd.isna(r['Nro ID']) else None)}
                             for _, r in o.sort_values('Fecha de creación', ascending=False).iterrows()]},
             'cotizaciones': {
                 'emitidas': int(len(q)),
@@ -147,9 +153,11 @@ def armar(h):
             'concretadas': {
                 'n': int(len(k)),
                 'importe': float(k['Importe total implementación'].sum()),
-                'detalle': [{'f': d2(r['Fecha de concreción']), 'empresa': txt(r['Empresa'], 'Sin empresa'),
+                'detalle': [{'f': d2(r['Fecha de concreción']), 'fecha': dfull(r['Fecha de concreción']),
+                             'empresa': txt(r['Empresa'], 'Sin empresa'),
                              'origen': txt(r[ORI], 'Sin origen'),
-                             'importe': float(r['Importe total implementación'])}
+                             'importe': float(r['Importe total implementación']),
+                             'anticipo': (None if pd.isna(r.get('Anticipo (si es distinto)')) else float(r['Anticipo (si es distinto)']))}
                             for _, r in k.sort_values('Importe total implementación', ascending=False).iterrows()]},
         }
     return out

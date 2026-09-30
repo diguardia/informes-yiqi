@@ -1,0 +1,52 @@
+name: CRM · sincronizar datos del informe comercial
+
+# Regenera data/crm-2026.json leyendo el CRM por la API de YiQi
+# (scripts/crm-api.py). Reemplaza la descarga manual de seis exports.
+#
+# Secretos que tienen que existir en el repo (Settings → Secrets → Actions):
+#   YIQI_API_USER   usuario con "Acceso API", de uso exclusivo para este proceso
+#   YIQI_API_PASS   su contraseña
+# Nada de esto vive en el repo.
+
+on:
+  schedule:
+    # 09:20 UTC = 06:20 en Buenos Aires, veinte minutos después de meta.yml.
+    - cron: '20 9 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: crm-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install pandas
+
+      - name: Traer datos del CRM
+        env:
+          YIQI_API_USER: ${{ secrets.YIQI_API_USER }}
+          YIQI_API_PASS: ${{ secrets.YIQI_API_PASS }}
+        run: python3 scripts/crm-api.py
+
+      - name: Commitear si cambió
+        run: |
+          if [ -z "$(git status --porcelain data/crm-2026.json)" ]; then
+            echo "Sin cambios en data/crm-2026.json."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/crm-2026.json
+          git commit -m "CRM: sincronizar datos del informe ($(date -u +%Y-%m-%d))"
+          git push

@@ -3500,7 +3500,7 @@ function filterOnsByPeriodo(key) {
   // [tabla, índice de columna con la fecha, input de búsqueda, empty, subtítulo, sufijo del subtítulo]
   const tablas = [
     ['tabla-nuevas',      0, 'search-nuevas',      'empty-nuevas',
-     'nuevas-sub',      'Oportunidades de Negocio creadas en el CRM · ene–ago 2026'],
+     'nuevas-sub',      'Oportunidades de Negocio creadas en el CRM'],
     ['tabla-concretadas', 4, 'search-concretadas', 'empty-concretadas',
      'concretadas-sub', 'Oportunidades concretadas en 2026'],
   ];
@@ -4857,14 +4857,19 @@ function renderFunnelChart(key) {
 }
 
 /* ─── GRÁFICOS NUEVAS ONs ───────────────────────────────────── */
+/* Valores embebidos (exports del 14/09). hydrateCrm() los pisa con
+   data/crm-2026.json al cargar; si el JSON no llega, se ven estos. */
+const ONS_ORIGEN_DATA = { labels: ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG','Otros'], data: [74,17,10,2,1] };
+const ONS_MES_DATA    = { labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep'], data: [6,6,23,11,12,19,6,16,4] };
+const CONC_MES_DATA   = { labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul'], cant: [6,1,3,5,0,1,2], monto: [3116,354,5287,5128,0,701,996] };
 function renderOnsCharts() {
   // Donut por origen
   const ctxO = document.getElementById('chart-ons-origen');
   if (ctxO) {
     if (_charts.onsOrigen) { _charts.onsOrigen.destroy(); }
     const _od = sortDonutDesc(
-      ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG','Otros'],
-      [74,17,10,2,1],
+      ONS_ORIGEN_DATA.labels,
+      ONS_ORIGEN_DATA.data,
       [rgbaVar('--cyan', .35), rgbaVar('--green', .35), rgbaVar('--amber', .35), rgbaVar('--purple', .35), rgbaVar('--warm', .35)]
     );
     _charts.onsOrigen = new Chart(ctxO, {
@@ -4895,8 +4900,8 @@ function renderOnsCharts() {
     _charts.onsMes = new Chart(ctxM, {
       type: 'bar',
       data: {
-        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep'],
-        datasets: [{ label: 'ONs nuevas', data: [6,6,23,11,12,19,6,16,4], backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4 }]
+        labels: ONS_MES_DATA.labels,
+        datasets: [{ label: 'ONs nuevas', data: ONS_MES_DATA.data, backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
@@ -4925,10 +4930,10 @@ function renderConcretadasChart() {
   _charts.concretadas = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul'],
+      labels: CONC_MES_DATA.labels,
       datasets: [
-        { label: 'Cantidad', data: [6,1,3,5,0,1,2], backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4, yAxisID: 'y' },
-        { label: 'Monto (miles ARS)', data: [3116,354,5287,5128,0,701,996], backgroundColor: rgbaVar('--green', .30), borderWidth: 0, borderRadius: 4, yAxisID: 'y2' }
+        { label: 'Cantidad', data: CONC_MES_DATA.cant, backgroundColor: rgbaVar('--cyan', .30), borderWidth: 0, borderRadius: 4, yAxisID: 'y' },
+        { label: 'Monto (miles ARS)', data: CONC_MES_DATA.monto, backgroundColor: rgbaVar('--green', .30), borderWidth: 0, borderRadius: 4, yAxisID: 'y2' }
       ]
     },
     options: {
@@ -5282,6 +5287,7 @@ function hydrateMeta(j, anioPedido) {
   if (sub) sub.textContent = `Evolución mensual · ${_cap(keys[0])}–${_cap(ultimo.key)} ${anio}`;
 
   /* ── 5. Repintar ─────────────────────────────────────────── */
+  if (typeof _rearmarFunnel === 'function') _rearmarFunnel();
   _rehacerPills(keys, anio, anios, trimestres);
   /* Por defecto abre el período anual, no el último mes: el anual es la
      lectura de cabecera del informe; el mes es el detalle. */
@@ -5324,6 +5330,230 @@ async function loadMetaJSON() {
   }
 }
 
+/* ─── CRM DESDE data/crm-2026.json ──────────────────────────── */
+/* Mismo patron que Meta: el HTML trae valores embebidos y, al cargar, el
+   JSON del CRM los pisa. Lo que se hidrata: COTIZ_DATA y FUNNEL_DATA (KPI
+   del funnel), las KPI cards y graficos de Nuevas ONs y Concretadas, y las
+   dos tablas de detalle. El JSON lo regenera scripts/crm-api.py todos los
+   dias por GitHub Actions (crm.yml). 30/09/2026. */
+const CRM_DATA_URL = 'data/crm-2026.json';
+let _crmJSON = null;
+
+const _MES_KEY  = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const _MES_CAP  = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const _MES_NOM  = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const _fArsCrm  = v => '$' + Math.round(v || 0).toLocaleString('es-AR');
+const _escCrm   = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const _plural   = n => n === 1 ? '' : 's';
+const _varPct   = (a, b) => (b > 0 && a != null) ? (a - b) / b * 100 : null;
+
+/* Origen del CRM -> badge. Los nombres vienen tal cual del ERP. */
+function _badgeOrigen(o) {
+  const t = String(o || '').trim(), l = t.toLowerCase();
+  if (l === 'cliente')                 return ['badge-muted', 'Cliente'];
+  if (l.includes('precotizador'))      return ['badge-green', 'Precotizador'];
+  if (l.includes('web'))               return ['badge-green', 'Web'];
+  if (l.includes('recomend'))          return ['badge-amber', 'Recom.'];
+  if (l.includes('instagram') || l.includes('meta')) return ['badge-cyan', 'Meta/IG'];
+  if (!t || l === 'sin origen')        return ['badge-muted', '—'];
+  return ['badge-cyan', _escCrm(t)];
+}
+function _grupoOrigen(o) {
+  const l = String(o || '').toLowerCase();
+  if (l === 'cliente') return 'cliente';
+  if (l.includes('web') || l.includes('precotizador')) return 'web';
+  if (l.includes('recomend')) return 'recom';
+  if (l.includes('instagram') || l.includes('meta')) return 'meta';
+  return 'otros';
+}
+
+/* Alcance, clics y conversaciones del mes segun meta.json ya hidratado. */
+function _metaMes(key) {
+  const j = _metaJSON; if (!j) return null;
+  const porAnio = (j.datos && typeof j.datos === 'object') ? j.datos : null;
+  const bloque = porAnio ? porAnio[String(_anioActivo || CRM_ANIO)] : j;
+  if (!bloque) return null;
+  if (key === 'ytd') return bloque.ytd || null;
+  return (bloque.meses || []).find(m => m && m.key === key) || null;
+}
+
+/* Rearma FUNNEL_DATA con lo que haya: CRM para ONs y concretadas, Meta
+   para los tres primeros escalones. Lo que no llego se conserva. */
+function _rearmarFunnel() {
+  const labels = ['Alcance','Clics','Conversaciones','ONs nuevas','Concretadas'];
+  const claves = Object.keys(FUNNEL_DATA).filter(k => !esTrimestre(k));
+  if (_crmJSON) {
+    Object.keys(_crmJSON.meses).forEach(ym => {
+      const k = _MES_KEY[Number(ym.slice(5, 7)) - 1];
+      if (!FUNNEL_DATA[k]) FUNNEL_DATA[k] = { labels: labels.slice(), data: [0, 0, 0, 0, 0] };
+      if (!claves.includes(k)) claves.push(k);
+    });
+  }
+  claves.forEach(k => {
+    const f = FUNNEL_DATA[k]; if (!f) return;
+    const m = _metaMes(k);
+    if (m) { f.data[0] = m.alcance || 0; f.data[1] = m.clics || 0; f.data[2] = m.conv || 0; }
+    if (_crmJSON) {
+      if (k === 'ytd') {
+        const ms = Object.values(_crmJSON.meses);
+        f.data[3] = ms.reduce((a, x) => a + (x.ons.total || 0), 0);
+        f.data[4] = ms.reduce((a, x) => a + (x.concretadas.n || 0), 0);
+      } else {
+        const ym = Object.keys(_crmJSON.meses).find(y => _MES_KEY[Number(y.slice(5, 7)) - 1] === k);
+        if (ym) { f.data[3] = _crmJSON.meses[ym].ons.total || 0; f.data[4] = _crmJSON.meses[ym].concretadas.n || 0; }
+      }
+    }
+  });
+  Object.keys(_Q_KEY).forEach(q => { delete FUNNEL_DATA[q]; delete COTIZ_DATA[q]; });
+  _armarTrimestresCrm();
+}
+
+function hydrateCrm(j) {
+  _crmJSON = j;
+  const anio = Number(Object.keys(j.meses)[0].slice(0, 4)) || CRM_ANIO;
+  const yms = Object.keys(j.meses).sort();
+  const ultimoYm = yms[yms.length - 1];
+  const kUlt = _MES_KEY[Number(ultimoYm.slice(5, 7)) - 1];
+  /* 'AAAA-MM-DD' -> 'DD/MM', a mano: toLocaleDateString depende del ICU del navegador. */
+  const genTxt = /^\d{4}-\d{2}-\d{2}/.test(j.generado || '') ? `${j.generado.slice(8, 10)}/${j.generado.slice(5, 7)}` : '';
+  const enCurso = ym => (ym === ultimoYm && genTxt) ? ` · al ${genTxt}` : '';
+
+  /* ── 1. COTIZ_DATA por mes y acumulado ───────────────────── */
+  Object.keys(COTIZ_DATA).forEach(k => delete COTIZ_DATA[k]);
+  let tOns = 0, tGan = 0, tEnv = 0, tImp = 0, prev = null, ultimaConc = null;
+  yms.forEach(ym => {
+    const m = j.meses[ym], i = Number(ym.slice(5, 7)) - 1, k = _MES_KEY[i];
+    const ons = m.ons.total || 0, gan = m.concretadas.n || 0, env = m.cotizaciones.enviadas || 0, imp = m.concretadas.importe || 0;
+    tOns += ons; tGan += gan; tEnv += env; tImp += imp;
+    m.concretadas.detalle.forEach(d => { if (!ultimaConc || d.fecha > ultimaConc) ultimaConc = d.fecha; });
+    const v = prev ? _varPct(ons, prev.ons) : null;
+    const dOns = !prev ? 'primer mes (sin mes previo)'
+               : v == null ? `${ons} ONs nuevas · sin base en ${prev.k}`
+               : `${v >= 0 ? '↑' : '↓'} ${fmtPct(Math.abs(v))} vs ${prev.k}`;
+    COTIZ_DATA[k] = {
+      period: `${_MES_NOM[i]} ${anio} · ${ons} ONs nuevas · ${gan} concretada${_plural(gan)}${enCurso(ym)}`,
+      ons, enCurso: null, enviadas: env, ganadas: gan, vencidas: null,
+      dOns, dOnsDir: !prev || v == null ? 'neutral' : (v >= 0 ? 'positive' : 'negative'),
+      dEnv:  `${env} cotizaci${env === 1 ? 'ón' : 'ones'} enviada${_plural(env)} · CRM`,
+      dGan:  gan ? `${_fArsCrm(imp)} ARS · ${gan} concretada${_plural(gan)}` : `ninguna en ${_MES_NOM[i].toLowerCase()}`,
+      dGanDir: gan ? 'positive' : 'neutral',
+      dTasa: ons ? `${fmtPct(gan / ons * 100)} conversión (${gan} / ${ons})${ym === ultimoYm ? ' · mes en curso' : ''}` : 'sin ONs nuevas',
+      dTasaDir: (ons && gan / ons >= 0.2) ? 'positive' : 'neutral',
+    };
+    prev = { k, ons };
+  });
+  const rango = `ene–${kUlt}`;
+  COTIZ_DATA.ytd = {
+    period: `1 ene – ${genTxt || kUlt} ${anio} · ${tOns} ONs nuevas · ${tGan} concretada${_plural(tGan)}`,
+    ons: tOns, enCurso: null, enviadas: tEnv, ganadas: tGan, vencidas: null,
+    dOns:  `${tOns} ONs nuevas · acumulado ${rango}`, dOnsDir: 'neutral',
+    dEnv:  `${tEnv} cotizaciones enviadas · acumulado ${rango}`,
+    dGan:  `${_fArsCrm(tImp)} ARS · ${tGan} concretada${_plural(tGan)} (acum.)`, dGanDir: 'positive',
+    dTasa: tOns ? `${fmtPct(tGan / tOns * 100)} conversión (${tGan} / ${tOns})` : 'sin ONs nuevas', dTasaDir: 'positive',
+  };
+
+  /* ── 2. Funnel ───────────────────────────────────────────── */
+  _rearmarFunnel();
+
+  /* ── 3. Nuevas ONs: KPI cards, graficos, tabla ───────────── */
+  const grupos = { cliente: 0, web: 0, recom: 0, meta: 0, otros: 0 };
+  yms.forEach(ym => Object.entries(j.meses[ym].ons.origen || {}).forEach(([o, n]) => { grupos[_grupoOrigen(o)] += n; }));
+  const pct = n => tOns ? fmtPct(n / tOns * 100) : '—';
+  const kpiOns = document.querySelectorAll('#nuevas-ons .kpi-card');
+  const setKpi = (card, label, value, delta, dir) => {
+    if (!card) return;
+    const l = card.querySelector('.kpi-label'), v = card.querySelector('.kpi-value'), d = card.querySelector('.kpi-delta');
+    if (l && label != null) l.textContent = label;
+    if (v) { v._cuGen = (v._cuGen || 0) + 1; v.textContent = value; }
+    if (d) { d.textContent = delta; if (dir) d.className = 'kpi-delta ' + dir; }
+  };
+  const mUlt = j.meses[ultimoYm], iUlt = Number(ultimoYm.slice(5, 7)) - 1;
+  const prevYm = yms[yms.length - 2];
+  setKpi(kpiOns[0], `Total ONs YTD ${anio}`, tOns, `1 ene – ${genTxt || kUlt} ${anio}`, 'neutral');
+  setKpi(kpiOns[1], `En período ${_MES_NOM[iUlt].toLowerCase()}`, mUlt.ons.total,
+         `${kUlt} ${anio}${enCurso(ultimoYm)}` + (prevYm ? ` · ${_MES_KEY[Number(prevYm.slice(5, 7)) - 1]} cerró en ${j.meses[prevYm].ons.total}` : ''), 'neutral');
+  setKpi(kpiOns[2], null, grupos.cliente, `${pct(grupos.cliente)} del total`, 'neutral');
+  setKpi(kpiOns[3], null, grupos.web, `${pct(grupos.web)} del total · yiqi.com.ar`, 'neutral');
+  setKpi(kpiOns[4], null, grupos.meta, `${pct(grupos.meta)} del total`, 'neutral');
+
+  ONS_ORIGEN_DATA.labels = ['Cliente','Web / yiqi.com.ar','Recomendación','Meta / IG','Otros'];
+  ONS_ORIGEN_DATA.data   = [grupos.cliente, grupos.web, grupos.recom, grupos.meta, grupos.otros];
+  ONS_MES_DATA.labels = yms.map(ym => _MES_CAP[Number(ym.slice(5, 7)) - 1]);
+  ONS_MES_DATA.data   = yms.map(ym => j.meses[ym].ons.total || 0);
+
+  const tbN = document.querySelector('#tabla-nuevas tbody');
+  if (tbN) {
+    const filas = [];
+    yms.forEach(ym => j.meses[ym].ons.detalle.forEach(d => filas.push({ ...d, ym })));
+    filas.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+    tbN.innerHTML = filas.map(d => {
+      const f = d.fecha || '', dn = f.replace(/\D/g, '');
+      const fecha = f ? `${f.slice(8, 10)}/${f.slice(5, 7)}/${f.slice(0, 4)}` : d.f;
+      const hora = f.length >= 16 ? f.slice(11, 16) : '';
+      const [bc, bt] = _badgeOrigen(d.origen);
+      const esUlt = d.ym === ultimoYm;
+      return `<tr${esUlt ? ' style="background:var(--cyan-soft)"' : ''}>
+                <td data-num="${dn}"><span class="num">${fecha}</span>${hora ? ` <span style="font:400 11px var(--mono);color:var(--muted-2)">${hora}</span>` : ''}</td>
+                <td><span class="badge ${bc}">${bt}</span></td>
+                <td><strong>${_escCrm(d.empresa)}</strong>${esUlt ? ` <span class="badge badge-cyan" style="margin-left:4px">${_MES_CAP[iUlt]}</span>` : ''}</td>
+                <td style="color:var(--muted);font-size:12px">${_escCrm(d.titulo || '')}</td>
+              </tr>`;
+    }).join('');
+  }
+
+  /* ── 4. Concretadas: KPI cards, grafico, tabla ───────────── */
+  const kpiC = document.querySelectorAll('#concretadas .kpi-card');
+  const ultTxt = ultimaConc ? `${ultimaConc.slice(8, 10)} ${_MES_KEY[Number(ultimaConc.slice(5, 7)) - 1]}` : kUlt;
+  setKpi(kpiC[0], 'Total concretadas YTD', tGan, `1 ene – ${ultTxt} ${anio}`, 'neutral');
+  setKpi(kpiC[1], 'Importe total YTD', _fArsCrm(tImp), `ARS · ${anio}`, 'neutral');
+  setKpi(kpiC[2], 'Ticket promedio', tGan ? _fArsCrm(tImp / tGan) : '—', 'ARS / ON concretada', 'neutral');
+  setKpi(kpiC[3], `Concretadas ${_MES_NOM[iUlt].toLowerCase()}`, mUlt.concretadas.n || 0,
+         mUlt.concretadas.n ? `${_fArsCrm(mUlt.concretadas.importe)} ARS${enCurso(ultimoYm)}` : `ninguna${enCurso(ultimoYm)} · última el ${ultTxt}`,
+         mUlt.concretadas.n ? 'positive' : 'neutral');
+  CONC_MES_DATA.labels = yms.map(ym => _MES_CAP[Number(ym.slice(5, 7)) - 1]);
+  CONC_MES_DATA.cant   = yms.map(ym => j.meses[ym].concretadas.n || 0);
+  CONC_MES_DATA.monto  = yms.map(ym => Math.round((j.meses[ym].concretadas.importe || 0) / 1000));
+
+  const tbC = document.querySelector('#tabla-concretadas tbody');
+  if (tbC) {
+    const filas = [];
+    yms.forEach(ym => j.meses[ym].concretadas.detalle.forEach(d => filas.push({ ...d, ym })));
+    filas.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+    tbC.innerHTML = filas.map(d => {
+      const f = d.fecha || '', dn = f.replace(/\D/g, '').slice(0, 8);
+      const fecha = f ? `${f.slice(8, 10)}/${f.slice(5, 7)}/${f.slice(0, 4)}` : d.f;
+      const [bc, bt] = _badgeOrigen(d.origen);
+      const esUlt = d.ym === ultimoYm;
+      const ant = d.anticipo;
+      return `<tr${esUlt ? ' style="background:var(--cyan-soft)"' : ''}>
+                <td><strong>${_escCrm(d.empresa)}</strong>${esUlt ? ` <span class="badge badge-cyan" style="margin-left:4px">${_MES_CAP[iUlt]}</span>` : ''}</td>
+                <td><span class="badge ${bc}">${bt}</span></td>
+                <td data-num="${d.importe || 0}"><span class="num">${_fArsCrm(d.importe)}</span></td>
+                <td data-num="${ant || 0}"><span class="num"${ant ? '' : ' style="color:var(--muted-2)"'}>${ant ? _fArsCrm(ant) : '—'}</span></td>
+                <td data-num="${dn}"><span class="num">${fecha}</span></td>
+              </tr>`;
+    }).join('');
+  }
+
+  /* ── 5. Repintar ─────────────────────────────────────────── */
+  renderOnsCharts();
+  renderConcretadasChart();
+  setPeriodo(_periodoManual && COTIZ_DATA[_currentMes] ? _currentMes : 'ytd');
+}
+
+async function loadCrmJSON() {
+  try {
+    const res = await fetch(CRM_DATA_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    if (!j || !j.meses || !Object.keys(j.meses).length) throw new Error('JSON sin meses');
+    hydrateCrm(j);
+  } catch (e) {
+    /* Sin JSON quedan los valores embebidos, igual que con Meta. */
+    console.warn('crm-2026.json no disponible:', e.message);
+  }
+}
+
 /* ─── INIT ──────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   /* Primero en el handler, a proposito: si algo mas abajo (setPeriodo ->
@@ -5363,6 +5593,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderConcretadasChart();
 
   loadMetaJSON();   // no bloquea: si falla, quedan los datos embebidos
+  loadCrmJSON();    // idem, con data/crm-2026.json
 
   /* Reloj de la statusbar. Cada 15s alcanza: solo muestra hora y minutos. */
   (function () {
