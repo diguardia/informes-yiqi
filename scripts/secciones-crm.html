@@ -695,7 +695,7 @@
       const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), texto = getCSSVar('--text'), muted = getCSSVar('--muted');
       _charts.crmOrigen = new Chart(cv, {
         type: 'doughnut',
-        data: { labels: filas.map(r => r[0]), datasets: [{ data: filas.map(r => r[1]), backgroundColor: escala, borderWidth: 0, hoverOffset: 6 }] },
+        data: { labels: filas.map(r => r[0]), datasets: [{ data: filas.map(r => r[1]), backgroundColor: escala, borderWidth: 0, spacing: 3, borderRadius: 4, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },

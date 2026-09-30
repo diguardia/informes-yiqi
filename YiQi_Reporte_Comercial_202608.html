@@ -576,7 +576,9 @@ body {
         #sitio .st-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
       #sitio .st-g { min-width: 0; }
-      #sitio .donut-legend { max-width: 220px; }
+      #sitio .donut-legend { max-width: 280px; width: 100%; }
+      #sitio #sitio-leg .legend-row { grid-template-columns: 10px minmax(0, 1fr) auto 3.2em; gap: 8px 12px; }
+      #sitio #sitio-leg .crm-leg-pct { font: 400 12px var(--kpi-num); color: var(--muted-2); text-align: right; font-variant-numeric: tabular-nums; }
       /* El canvas va fuera del flujo, asi que la celda no tiene ancho propio:
          bajo 640px el DS centra con justify-items y la dona quedaba en 0px. */
       #sitio .donut-block .donut-chart { width: min(190px, 100%); }
@@ -1414,7 +1416,7 @@ _mqTema.addEventListener('change', function () {
       const elev = getCSSVar('--bg-elev-2'), linea = getCSSVar('--line'), texto = getCSSVar('--text'), muted = getCSSVar('--muted');
       _charts.crmOrigen = new Chart(cv, {
         type: 'doughnut',
-        data: { labels: filas.map(r => r[0]), datasets: [{ data: filas.map(r => r[1]), backgroundColor: escala, borderWidth: 0, hoverOffset: 6 }] },
+        data: { labels: filas.map(r => r[0]), datasets: [{ data: filas.map(r => r[1]), backgroundColor: escala, borderWidth: 0, spacing: 3, borderRadius: 4, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
@@ -1764,7 +1766,7 @@ _mqTema.addEventListener('change', function () {
       const escala = org.map(r => esOtro(r[0]) ? getCSSVar('--muted-2') : PAL[_k++ % PAL.length]);
       _charts.sitioOrigen = new Chart(cvO, {
         type: 'doughnut',
-        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: escala, borderWidth: 0, hoverOffset: 6 }] },
+        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: escala, borderWidth: 0, spacing: 3, borderRadius: 4, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           animation: { duration: 400, easing: 'easeOutCubic', animateRotate: true, animateScale: false },
@@ -1773,8 +1775,13 @@ _mqTema.addEventListener('change', function () {
         }
       });
       const leg = document.getElementById('sitio-leg');
+      /* Misma leyenda que la dona del CRM: nombre, cantidad y porcentaje en
+         columnas, con el mismo redondeo (suma 100). */
+      const pcts = typeof crmPorcientos === 'function'
+        ? crmPorcientos(org.map(r => r[1]))
+        : org.map(r => Math.round(r[1] / total * 100));
       if (leg) leg.innerHTML = org.map((r, i) =>
-        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${(r[1] / total * 100).toFixed(0)} %</span></div>`).join('');
+        `<div class="legend-row"><span class="legend-dot" style="background:${escala[i]}"></span><span class="legend-label">${r[0]}</span><span class="legend-pct">${Number(r[1]).toLocaleString('es-AR')}</span><span class="crm-leg-pct">${pcts[i]} %</span></div>`).join('');
 
       /* La cifra va al final de la barra: un grafico cuyo dato hay que
          buscar con el mouse no informa. */

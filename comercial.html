@@ -3140,7 +3140,7 @@
       const escala = [acc, getCSSVar('--violet-soft-2'), getCSSVar('--blue'), getCSSVar('--green'), getCSSVar('--muted-2')];
       _charts.mesOrigen = new Chart(cvO, {
         type: 'doughnut',
-        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, hoverOffset: 6 }] },
+        data: { labels: org.map(r => r[0]), datasets: [{ data: org.map(r => r[1]), backgroundColor: org.map((_, i) => escala[i % escala.length]), borderWidth: 0, spacing: 3, borderRadius: 4, hoverOffset: 6 }] },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '68%',
           /* Misma duracion y misma curva que runCountUp: la seccion entra
@@ -4965,7 +4965,7 @@ function renderOnsCharts() {
         labels: _od.labels,
         datasets: [{ data: _od.data,
           backgroundColor: _od.colors,
-          borderWidth: 0, hoverOffset: 6 }]
+          borderWidth: 0, spacing: 3, borderRadius: 4, hoverOffset: 6 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
