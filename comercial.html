@@ -3941,6 +3941,27 @@ function _planApply() {
   document.querySelectorAll('#tabla-plan [data-mes]').forEach(el => {
     el.style.display = (all || _planMeses.has(el.dataset.mes)) ? '' : 'none';
   });
+  _planIrASemana();
+}
+/* Deja la semana en curso pegada a la columna fija de la izquierda. La
+   semana en curso es la ultima columna visible cuya fecha (lunes, dd/mm/aa)
+   ya llego. Si el filtro deja solo semanas futuras, vuelve al principio.
+   Pedido de Seba, 30/09/2026. */
+function _planIrASemana() {
+  const tabla = document.getElementById('tabla-plan');
+  const wrap = tabla && tabla.closest('.table-wrap');
+  if (!wrap) return;
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  let objetivo = null;
+  tabla.querySelectorAll('thead .plan-week-h').forEach(th => {
+    if (th.style.display === 'none') return;
+    const m = th.textContent.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if (!m) return;
+    const y = Number(m[3]) < 100 ? 2000 + Number(m[3]) : Number(m[3]);
+    if (new Date(y, Number(m[2]) - 1, Number(m[1])) <= hoy) objetivo = th;
+  });
+  const fija = tabla.querySelector('thead .plan-col0');
+  wrap.scrollLeft = objetivo ? Math.max(0, objetivo.offsetLeft - (fija ? fija.offsetWidth : 0)) : 0;
 }
 function planSet(v) {
   _planMeses = new Set(
