@@ -1287,6 +1287,20 @@
         <div style="display:flex;flex-direction:column;gap:14px">
 
           <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">25 sep</div>
+            <div>
+              <div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:3px">Entra Tiendanube: campaña nueva con el reel de costo por producto</div>
+              <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Campaña de tráfico a tiendanube.html, <strong style="color:var(--text)">$1.550 diarios</strong>, optimizada a visitas a la página: en julio solo el 23 % de los clics la cargaba. Público amplio, Argentina 18–65 con Advantage+; el filtro lo hace el anuncio. Se lee el 02/10: costo por visita contra Costos.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">25 sep</div>
+            <div>
+              <div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:3px">Se pausa el retargeting chico: el techo era el público</div>
+              <div style="font-size:12px;color:var(--muted-2);line-height:1.6">Retargeting · canales cerró su última semana con <strong style="color:var(--text)">2 conversaciones a $5.283</strong> y frecuencia 3,43 sobre 959 personas, contra $1.257 de Mensajes IG. El creativo ya se había cambiado el 17/09 y siguió empeorando. Sus $1.550 pasan a Tiendanube y el gasto diario de la cuenta sigue en $17.700. El retargeting continúa por Retargeting IG.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:start">
             <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding-top:2px">21 sep</div>
             <div>
               <div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:3px">Conjunto nuevo: el reel de Costos, al público de Instagram</div>
@@ -4253,6 +4267,26 @@ function setupSearch(inputId, tableId, emptyId) {
 /* Muestra u oculta un bloque, o el resto de las filas de una tabla. En
    tablas el corte se guarda en data-corte: buscar y ordenar lo respetan
    mientras no haya texto en el buscador. */
+/* Bitacora: quedan a la vista los tres asientos mas nuevos y el resto pasa
+   detras del boton, con el rotulo calculado. Asi un asiento nuevo se agrega
+   arriba y nada mas: no hay que mover asientos ni reescribir el boton.
+   Pedido de Seba, 30/09/2026. */
+function _bitacoraTres() {
+  const viejos = document.getElementById('bitacora-viejos');
+  const btn = viejos && viejos.previousElementSibling;
+  const lista = viejos && viejos.parentElement;
+  if (!btn || !lista || !btn.classList.contains('ver-mas')) return;
+  const esAsiento = el => el.tagName === 'DIV' && el !== viejos && el.style.display === 'grid';
+  const visibles = [...lista.children].filter(esAsiento);
+  visibles.slice(3).reverse().forEach(el => viejos.prepend(el));
+  const ocultos = [...viejos.children].filter(el => el.style.display === 'grid');
+  if (!ocultos.length) { btn.hidden = true; return; }
+  const fecha = el => (el.firstElementChild ? el.firstElementChild.textContent.trim() : '');
+  const n = ocultos.length;
+  btn.dataset.mas = `Ver ${n === 1 ? 'el asiento anterior' : 'los ' + n + ' asientos anteriores'} · ${fecha(ocultos[n - 1])} – ${fecha(ocultos[0])}`;
+  if (btn.getAttribute('aria-expanded') !== 'true') btn.textContent = btn.dataset.mas;
+}
+
 function verMas(btn, id) {
   const abierto = btn.getAttribute('aria-expanded') === 'true';
   btn.setAttribute('aria-expanded', String(!abierto));
@@ -5671,6 +5705,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOnsCharts();
   renderConcretadasChart();
 
+  _bitacoraTres();
   loadMetaJSON();   // no bloquea: si falla, quedan los datos embebidos
   loadCrmJSON();    // idem, con data/crm-2026.json
 
