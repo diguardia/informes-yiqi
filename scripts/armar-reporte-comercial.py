@@ -42,6 +42,12 @@ _NOMBRES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
             'Septiembre','Octubre','Noviembre','Diciembre']
 MES_SOLO = _NOMBRES[_m - 1]                       # Agosto
 MES_NOMBRE = '%s %d' % (MES_SOLO, _a)             # Agosto 2026
+# Adelanto de un mes que todavia no cerro: REPORTE_PARCIAL=1 acepta el mes a
+# medio correr de meta.json y lo rotula "parcial" en todo el reporte. El dia
+# 1 el workflow lo vuelve a armar completo y pisa este archivo.
+PARCIAL = os.environ.get('REPORTE_PARCIAL') == '1'
+if PARCIAL:
+    MES_NOMBRE += ' · parcial al %s' % datetime.date.today().strftime('%d/%m')
 MES_CORTO = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][_m - 1]
 MES_ARCHIVO = MES.replace('-', '')                # 202608
 
@@ -567,7 +573,7 @@ MES_REPORTE = MES
 _meses = {}
 for _anio, _d in _meta['datos'].items():
     for _m in _d['meses']:
-        if _m.get('parcial'):
+        if _m.get('parcial') and not (PARCIAL and '%s-%02d' % (_anio, _m['mes']) == MES):
             continue   # un mes a medio correr, al lado de meses cerrados, se lee como una caida
         _meses['%s-%02d' % (_anio, _m['mes'])] = {k: _m[k] for k in ('gasto', 'alcance', 'impresiones', 'conv', 'inter', 'clics')}
 assert MES_REPORTE in _meses, 'meta.json no trae el mes del reporte'
@@ -650,12 +656,30 @@ def _clarity_de(corto):
 import csv as _csv, calendar as _cal, glob as _glob2
 from urllib.parse import urlparse as _urlparse
 
+def _bajado(f):
+    '''Cuando se bajo el export, segun el nombre que le pone Clarity:
+    Clarity_YiQi_Dashboard_MM-DD-AAAA HH MM AM.csv. Sin ese patron, None.'''
+    m = re.search(r'(\d{2})-(\d{2})-(\d{4}) (\d{2}) (\d{2}) (AM|PM)', os.path.basename(f))
+    if not m: return None
+    h = int(m.group(4)) % 12 + (12 if m.group(6) == 'PM' else 0)
+    return datetime.datetime(int(m.group(3)), int(m.group(1)), int(m.group(2)), h, int(m.group(5)))
+
 def _csv_clarity(mes):
     y, m = int(mes[:4]), int(mes[5:])
-    esperado = '%02d/01/%d 12:00 AM - %02d/%02d/%d 11:59 PM' % (m, y, m, _cal.monthrange(y, m)[1], y)
-    for f in sorted(_glob2.glob(os.path.join(REPO, 'data', 'clarity', '*.csv'))):
+    ult = _cal.monthrange(y, m)[1]
+    esperado = '%02d/01/%d 12:00 AM - %02d/%02d/%d 11:59 PM' % (m, y, m, ult, y)
+    fin = datetime.datetime(y, m, ult, 23, 59)
+    cand = []
+    for f in _glob2.glob(os.path.join(REPO, 'data', 'clarity', '*.csv')):
         filas = list(_csv.reader(open(f, encoding='utf-8-sig')))
         if any(len(r) > 1 and r[0] == 'Date range' and r[1] == esperado for r in filas):
+            cand.append((_bajado(f) or datetime.datetime.min, f, filas))
+    # El export bajado antes de que termine el mes dice igual "01 al 30":
+    # Clarity rotula el rango pedido, no el cubierto. Solo el adelanto
+    # (REPORTE_PARCIAL=1) lo acepta; el reporte cerrado espera el completo.
+    if not PARCIAL:
+        cand = [c for c in cand if c[0] == datetime.datetime.min or c[0] > fin]
+    for _, f, filas in sorted(cand, key=lambda c: c[0], reverse=True)[:1]:
             b, cur = {}, None
             for r in filas:
                 if not r or not any(c.strip() for c in r): cur = None
