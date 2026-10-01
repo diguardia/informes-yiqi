@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-30",
+ "generado": "2026-10-01",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -9,7 +9,7 @@
   "API OPORTUNIDAD_DE_NEGOC (Concretada)",
   "API OPORTUNIDAD_DE_NEGOC (ONs por mes)"
  ],
- "nota": "Calculado desde los exports del CRM. Emitidas se cuenta por fecha de la cotizacion; enviadas y aprobadas son los agregados del CRM, por fecha de envio y de aprobacion. Son tres fechas distintas.",
+ "nota": "Calculado desde la API de YiQi (Comercial/CRM). Emitidas se cuenta por fecha de la cotizacion; enviadas por fecha de envio y aprobadas por fecha de aprobacion. Son tres fechas distintas. Aprobadas son las que siguen en estado Aprobada. Nuevas ON mensuales cuenta ONs por mes, igual que el titular.",
  "meses": {
   "2026-01": {
    "consultas": {
@@ -2111,13 +2111,19 @@
   },
   "2026-09": {
    "consultas": {
-    "total": 7,
+    "total": 8,
     "origen": {
-     "web": 4,
+     "web": 5,
      "Recomendación": 2,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "30/09",
+      "cliente": "Youtube",
+      "contacto": "Neithan Velazquez",
+      "origen": "web"
+     },
      {
       "f": "29/09",
       "cliente": "solucioneschs",
@@ -2163,21 +2169,28 @@
     ]
    },
    "ons": {
-    "total": 8,
+    "total": 9,
     "origen": {
      "web": 3,
      "CLIENTE": 2,
      "Recomendación": 2,
-     "Sin origen": 1
+     "Sin origen": 2
     },
     "estado": {
-     "En Curso": 4,
-     "Vencida": 1,
+     "En Curso": 5,
+     "Esperando contacto inicial": 2,
      "Confirmada": 1,
-     "Presupuesto enviado": 1,
-     "Esperando contacto inicial": 1
+     "Presupuesto enviado": 1
     },
     "detalle": [
+     {
+      "f": "30/09",
+      "fecha": "2026-09-30 20:52",
+      "empresa": "Youtube",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - Youtube",
+      "id": 37697
+     },
      {
       "f": "29/09",
       "fecha": "2026-09-29 16:18",
@@ -2245,21 +2258,25 @@
     ]
    },
    "cotizaciones": {
-    "emitidas": 7,
+    "emitidas": 8,
     "estado": {
-     "Vencida": 2,
+     "Enviada": 3,
+     "Versionada": 2,
      "Aprobada": 2,
-     "Versionada": 1,
-     "Enviada": 1,
-     "En preparación": 1
+     "Vencida": 1
     },
-    "enviadas": 6,
+    "enviadas": 8,
     "aprobadas": {
      "n": 2,
      "neto_impl": 12594590.0,
      "neto_sop": 2813700.0
     },
     "detalle": [
+     {
+      "f": "30/09",
+      "nro": "1561.2",
+      "estado": "Enviada"
+     },
      {
       "f": "29/09",
       "nro": "1524.4",
@@ -2268,7 +2285,7 @@
      {
       "f": "17/09",
       "nro": "1565.1",
-      "estado": "En preparación"
+      "estado": "Enviada"
      },
      {
       "f": "16/09",
@@ -2293,7 +2310,7 @@
      {
       "f": "03/09",
       "nro": "1561.1",
-      "estado": "Vencida"
+      "estado": "Versionada"
      }
     ]
    },
@@ -2311,24 +2328,75 @@
      }
     ]
    }
+  },
+  "2026-10": {
+   "consultas": {
+    "total": 1,
+    "origen": {
+     "Recomendación": 1
+    },
+    "detalle": [
+     {
+      "f": "01/10",
+      "cliente": "Importadora Jorge",
+      "contacto": "Fernando Agoff",
+      "origen": "Recomendación"
+     }
+    ]
+   },
+   "ons": {
+    "total": 1,
+    "origen": {
+     "Recomendación": 1
+    },
+    "estado": {
+     "En Curso": 1
+    },
+    "detalle": [
+     {
+      "f": "01/10",
+      "fecha": "2026-10-01 07:36",
+      "empresa": "Importadora Jorge",
+      "origen": "Recomendación",
+      "titulo": "YiQi ERP - Importadora Jorge",
+      "id": 37698
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 0,
+    "estado": {},
+    "enviadas": 0,
+    "aprobadas": {
+     "n": 0,
+     "neto_impl": 0.0,
+     "neto_sop": null
+    },
+    "detalle": []
+   },
+   "concretadas": {
+    "n": 0,
+    "importe": 0.0,
+    "detalle": []
+   }
   }
  },
  "historico": {
-  "total": 4440,
+  "total": 4442,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
-   "En Curso": 1412,
+   "En Curso": 1414,
    "Concretada": 460,
    "Hibernando": 30,
    "Presentación enviada": 19,
    "Confirmada": 14,
-   "Vencida": 13,
+   "Vencida": 12,
    "Presupuesto enviado": 5,
    "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 1
+   "Esperando contacto inicial": 2
   },
-  "enCursoNuevas": 27,
+  "enCursoNuevas": 29,
   "enCursoViejas": 1378
  },
  "series": {
@@ -2353,7 +2421,8 @@
    "2026-06": 18,
    "2026-07": 6,
    "2026-08": 16,
-   "2026-09": 8
+   "2026-09": 9,
+   "2026-10": 1
   },
   "cotiz_enviadas": {
    "2025-07": 10,
@@ -2370,7 +2439,7 @@
    "2026-06": 22,
    "2026-07": 7,
    "2026-08": 7,
-   "2026-09": 6
+   "2026-09": 8
   },
   "cotiz_aprobadas": {
    "2025-07": {
