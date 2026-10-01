@@ -10,8 +10,9 @@ name: CRM · sincronizar datos del informe comercial
 
 on:
   schedule:
-    # 09:20 UTC = 06:20 en Buenos Aires, veinte minutos después de meta.yml.
-    - cron: '20 9 * * *'
+    # 09:37 UTC = 06:37 en Buenos Aires, veinte minutos después de meta.yml.
+    # Minuto suelto a propósito: ver el comentario de meta.yml.
+    - cron: '37 9 * * *'
   workflow_dispatch:
 
 concurrency:

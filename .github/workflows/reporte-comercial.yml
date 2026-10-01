@@ -3,8 +3,15 @@ name: Reporte comercial · armar el mes cerrado
 # El día 1 de cada mes arma YiQi_Reporte_Comercial_AAAAMM.html del mes que
 # acaba de cerrar: primero regenera data/crm-2026.json desde la API
 # (scripts/crm-api.py) y después corre scripts/armar-reporte-comercial.py
-# sin argumento, que toma el mes anterior. Meta ya está sincronizado por
-# meta.yml, que corre todos los días a las 06:00.
+# sin argumento, que toma el mes anterior.
+#
+# Arranca cuando TERMINA meta.yml, no a una hora fija (01/10/2026): GitHub
+# demora las corridas programadas hasta horas, y con un cron propio el
+# reporte podía armarse antes de que Meta hubiera sincronizado el mes.
+# workflow_run lo encadena; el primer paso descarta los días que no son 1.
+# Si la corrida de Meta del día 1 nunca sale, queda el cron de respaldo de
+# la tarde. Armar dos veces el mismo mes no rompe nada: solo commitea si
+# algo cambió.
 #
 # Lo que sale automático: Comercial (CRM), Meta y, si hay datos, El sitio.
 # Brief, retargeting y conclusión son prosa: salen solo si el mes tiene
@@ -14,9 +21,12 @@ name: Reporte comercial · armar el mes cerrado
 # Secretos: los mismos que crm.yml (YIQI_API_USER, YIQI_API_PASS).
 
 on:
+  workflow_run:
+    workflows: ['Meta · sincronizar informe comercial']
+    types: [completed]
   schedule:
-    # 10:30 UTC = 07:30 en Buenos Aires, el día 1.
-    - cron: '30 10 1 * *'
+    # Respaldo: 20:43 UTC = 17:43 en Buenos Aires, el día 1.
+    - cron: '43 20 1 * *'
   workflow_dispatch:
     inputs:
       mes:
@@ -33,26 +43,44 @@ permissions:
 
 jobs:
   armar:
+    # Si Meta falló, no se arma con datos de Meta viejos: queda el respaldo.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
+      - name: ¿Toca armar hoy?
+        id: toca
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ] && [ "$(date -u +%d)" != "01" ]; then
+            echo "si=no" >> "$GITHUB_OUTPUT"
+            echo "Hoy no es día 1: nada que armar."
+          else
+            echo "si=si" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.toca.outputs.si == 'si'
 
       - uses: actions/setup-python@v5
+        if: steps.toca.outputs.si == 'si'
         with:
           python-version: '3.12'
 
       - run: pip install pandas
+        if: steps.toca.outputs.si == 'si'
 
       - name: Traer datos del CRM
+        if: steps.toca.outputs.si == 'si'
         env:
           YIQI_API_USER: ${{ secrets.YIQI_API_USER }}
           YIQI_API_PASS: ${{ secrets.YIQI_API_PASS }}
         run: python3 scripts/crm-api.py
 
       - name: Armar el reporte
+        if: steps.toca.outputs.si == 'si'
         run: python3 scripts/armar-reporte-comercial.py ${{ github.event.inputs.mes }}
 
       - name: Commitear
+        if: steps.toca.outputs.si == 'si'
         run: |
           if [ -z "$(git status --porcelain data/crm-2026.json data/reportes.json YiQi_Reporte_Comercial_*.html)" ]; then
             echo "Sin cambios."

@@ -11,9 +11,13 @@ name: Meta · sincronizar informe comercial
 
 on:
   schedule:
-    # 09:00 UTC = 06:00 en Buenos Aires. El cron de GitHub siempre es UTC.
-    # Para más frecuencia: '0 */6 * * *' (cada 6 horas).
-    - cron: '0 9 * * *'
+    # 09:17 UTC = 06:17 en Buenos Aires. El cron de GitHub siempre es UTC.
+    # Minuto suelto a propósito: GitHub demora las corridas programadas
+    # cuando tiene carga, y la hora en punto es la más cargada. Con '0 9'
+    # la del 30/09 salió a las 12:30 y la del 01/10 no había salido a las
+    # 09:15. Para más frecuencia: '17 */6 * * *' (cada 6 horas).
+    # Esta corrida además dispara reporte-comercial.yml el día 1.
+    - cron: '17 9 * * *'
   workflow_dispatch:        # botón "Run workflow" en la pestaña Actions
 
 concurrency:
