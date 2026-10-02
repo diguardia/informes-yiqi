@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-01",
+ "generado": "2026-10-02",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2345,14 +2345,23 @@
     ]
    },
    "ons": {
-    "total": 1,
+    "total": 2,
     "origen": {
-     "Recomendación": 1
+     "Recomendación": 1,
+     "CLIENTE": 1
     },
     "estado": {
-     "En Curso": 1
+     "En Curso": 2
     },
     "detalle": [
+     {
+      "f": "01/10",
+      "fecha": "2026-10-01 17:19",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Catch & Release (lanzamiento Nov 2026)",
+      "id": 37699
+     },
      {
       "f": "01/10",
       "fecha": "2026-10-01 07:36",
@@ -2382,11 +2391,11 @@
   }
  },
  "historico": {
-  "total": 4442,
+  "total": 4443,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
-   "En Curso": 1414,
+   "En Curso": 1415,
    "Concretada": 460,
    "Hibernando": 30,
    "Presentación enviada": 19,
@@ -2396,7 +2405,7 @@
    "Esperando presupuesto": 3,
    "Esperando contacto inicial": 2
   },
-  "enCursoNuevas": 29,
+  "enCursoNuevas": 30,
   "enCursoViejas": 1378
  },
  "series": {
@@ -2422,7 +2431,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 9,
-   "2026-10": 1
+   "2026-10": 2
   },
   "cotiz_enviadas": {
    "2025-07": 10,
