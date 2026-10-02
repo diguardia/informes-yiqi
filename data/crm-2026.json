@@ -2111,19 +2111,13 @@
   },
   "2026-09": {
    "consultas": {
-    "total": 8,
+    "total": 7,
     "origen": {
-     "web": 5,
+     "web": 4,
      "Recomendación": 2,
      "Precotizador web": 1
     },
     "detalle": [
-     {
-      "f": "30/09",
-      "cliente": "Youtube",
-      "contacto": "Neithan Velazquez",
-      "origen": "web"
-     },
      {
       "f": "29/09",
       "cliente": "solucioneschs",
@@ -2139,7 +2133,7 @@
      {
       "f": "17/09",
       "cliente": "COLLINS AUTOMOTORES",
-      "contacto": "Collins Automotores",
+      "contacto": "Melanie Arévalo",
       "origen": "web"
      },
      {
@@ -2169,33 +2163,25 @@
     ]
    },
    "ons": {
-    "total": 9,
+    "total": 8,
     "origen": {
      "web": 3,
      "CLIENTE": 2,
      "Recomendación": 2,
-     "Sin origen": 2
+     "WhatsApp": 1
     },
     "estado": {
      "En Curso": 5,
-     "Esperando contacto inicial": 2,
      "Confirmada": 1,
-     "Presupuesto enviado": 1
+     "Presupuesto enviado": 1,
+     "Hibernando": 1
     },
     "detalle": [
-     {
-      "f": "30/09",
-      "fecha": "2026-09-30 20:52",
-      "empresa": "Youtube",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - Youtube",
-      "id": 37697
-     },
      {
       "f": "29/09",
       "fecha": "2026-09-29 16:18",
       "empresa": "solucioneschs",
-      "origen": "Sin origen",
+      "origen": "WhatsApp",
       "titulo": "YiQi ERP - solucioneschs",
       "id": 37696
      },
@@ -2391,19 +2377,18 @@
   }
  },
  "historico": {
-  "total": 4443,
+  "total": 4442,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
    "En Curso": 1415,
    "Concretada": 460,
-   "Hibernando": 30,
+   "Hibernando": 31,
    "Presentación enviada": 19,
    "Confirmada": 14,
    "Vencida": 12,
    "Presupuesto enviado": 5,
-   "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 2
+   "Esperando presupuesto": 3
   },
   "enCursoNuevas": 30,
   "enCursoViejas": 1378
@@ -2430,7 +2415,7 @@
    "2026-06": 18,
    "2026-07": 6,
    "2026-08": 16,
-   "2026-09": 9,
+   "2026-09": 8,
    "2026-10": 2
   },
   "cotiz_enviadas": {
