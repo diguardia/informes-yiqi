@@ -1,5 +1,5 @@
 {
-  "generado": "2026-10-02T15:49:22.579Z",
+  "generado": "2026-10-03T14:19:01.426Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,22 +377,22 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-10-02",
+      "hasta": "2026-10-03",
       "ytd": {
-        "alcance": 581388,
-        "gasto": 3685744,
-        "impresiones": 1457497,
-        "conv": 1273,
-        "inter": 93127,
-        "clics": 31363,
+        "alcance": 587859,
+        "gasto": 3700228,
+        "impresiones": 1465032,
+        "conv": 1279,
+        "inter": 93899,
+        "clics": 31696,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 711533,
-            "impresiones": 363394,
+            "gasto": 719886,
+            "impresiones": 367136,
             "resultadoTipo": "clics",
-            "resultado": 13782,
-            "costoResultado": 52
+            "resultado": 14048,
+            "costoResultado": 51
           },
           {
             "nombre": "Publicación de Instagram: @interbanking  ahora...",
@@ -404,10 +404,10 @@
           },
           {
             "nombre": "Mensajes IG · placas · Julio–Agosto",
-            "gasto": 514029,
-            "impresiones": 264576,
+            "gasto": 519043,
+            "impresiones": 266921,
             "resultadoTipo": "conversaciones",
-            "resultado": 637,
+            "resultado": 643,
             "costoResultado": 807
           },
           {
@@ -540,11 +540,11 @@
           },
           {
             "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 10808,
-            "impresiones": 14670,
+            "gasto": 11925,
+            "impresiones": 16118,
             "resultadoTipo": "clics",
-            "resultado": 226,
-            "costoResultado": 48
+            "resultado": 244,
+            "costoResultado": 49
           }
         ]
       },
@@ -1000,38 +1000,38 @@
           "key": "oct",
           "mes": 10,
           "desde": "2026-10-01",
-          "hasta": "2026-10-02",
+          "hasta": "2026-10-03",
           "parcial": true,
-          "alcance": 12108,
-          "gasto": 23623,
-          "impresiones": 13707,
-          "conv": 9,
-          "inter": 1111,
-          "clics": 482,
+          "alcance": 17795,
+          "gasto": 38107,
+          "impresiones": 21242,
+          "conv": 15,
+          "inter": 1883,
+          "clics": 815,
           "campanas": [
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 11144,
-              "impresiones": 4981,
+              "gasto": 19497,
+              "impresiones": 8723,
               "resultadoTipo": "clics",
-              "resultado": 334,
-              "costoResultado": 33
+              "resultado": 600,
+              "costoResultado": 32
             },
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
-              "gasto": 9936,
-              "impresiones": 5231,
+              "gasto": 14950,
+              "impresiones": 7576,
               "resultadoTipo": "conversaciones",
-              "resultado": 9,
-              "costoResultado": 1104
+              "resultado": 15,
+              "costoResultado": 997
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 2543,
-              "impresiones": 3495,
+              "gasto": 3660,
+              "impresiones": 4943,
               "resultadoTipo": "clics",
-              "resultado": 51,
-              "costoResultado": 50
+              "resultado": 69,
+              "costoResultado": 53
             }
           ]
         }
@@ -1039,22 +1039,22 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-10-02",
+  "hasta": "2026-10-03",
   "ytd": {
-    "alcance": 581388,
-    "gasto": 3685744,
-    "impresiones": 1457497,
-    "conv": 1273,
-    "inter": 93127,
-    "clics": 31363,
+    "alcance": 587859,
+    "gasto": 3700228,
+    "impresiones": 1465032,
+    "conv": 1279,
+    "inter": 93899,
+    "clics": 31696,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 711533,
-        "impresiones": 363394,
+        "gasto": 719886,
+        "impresiones": 367136,
         "resultadoTipo": "clics",
-        "resultado": 13782,
-        "costoResultado": 52
+        "resultado": 14048,
+        "costoResultado": 51
       },
       {
         "nombre": "Publicación de Instagram: @interbanking  ahora...",
@@ -1066,10 +1066,10 @@
       },
       {
         "nombre": "Mensajes IG · placas · Julio–Agosto",
-        "gasto": 514029,
-        "impresiones": 264576,
+        "gasto": 519043,
+        "impresiones": 266921,
         "resultadoTipo": "conversaciones",
-        "resultado": 637,
+        "resultado": 643,
         "costoResultado": 807
       },
       {
@@ -1202,11 +1202,11 @@
       },
       {
         "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 10808,
-        "impresiones": 14670,
+        "gasto": 11925,
+        "impresiones": 16118,
         "resultadoTipo": "clics",
-        "resultado": 226,
-        "costoResultado": 48
+        "resultado": 244,
+        "costoResultado": 49
       }
     ]
   },
@@ -1662,38 +1662,38 @@
       "key": "oct",
       "mes": 10,
       "desde": "2026-10-01",
-      "hasta": "2026-10-02",
+      "hasta": "2026-10-03",
       "parcial": true,
-      "alcance": 12108,
-      "gasto": 23623,
-      "impresiones": 13707,
-      "conv": 9,
-      "inter": 1111,
-      "clics": 482,
+      "alcance": 17795,
+      "gasto": 38107,
+      "impresiones": 21242,
+      "conv": 15,
+      "inter": 1883,
+      "clics": 815,
       "campanas": [
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 11144,
-          "impresiones": 4981,
+          "gasto": 19497,
+          "impresiones": 8723,
           "resultadoTipo": "clics",
-          "resultado": 334,
-          "costoResultado": 33
+          "resultado": 600,
+          "costoResultado": 32
         },
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
-          "gasto": 9936,
-          "impresiones": 5231,
+          "gasto": 14950,
+          "impresiones": 7576,
           "resultadoTipo": "conversaciones",
-          "resultado": 9,
-          "costoResultado": 1104
+          "resultado": 15,
+          "costoResultado": 997
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 2543,
-          "impresiones": 3495,
+          "gasto": 3660,
+          "impresiones": 4943,
           "resultadoTipo": "clics",
-          "resultado": 51,
-          "costoResultado": 50
+          "resultado": 69,
+          "costoResultado": 53
         }
       ]
     }
