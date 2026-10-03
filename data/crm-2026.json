@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-02",
+ "generado": "2026-10-03",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -404,9 +404,10 @@
     },
     "estado": {
      "Desestimada": 12,
-     "En Curso": 4,
      "Vencida": 4,
-     "Concretada": 3
+     "En Curso": 3,
+     "Concretada": 3,
+     "Hibernando": 1
     },
     "detalle": [
      {
@@ -2172,7 +2173,7 @@
     },
     "estado": {
      "En Curso": 5,
-     "Confirmada": 1,
+     "Concretada": 1,
      "Presupuesto enviado": 1,
      "Hibernando": 1
     },
@@ -2317,11 +2318,18 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 1,
+    "total": 2,
     "origen": {
-     "Recomendación": 1
+     "Recomendación": 1,
+     "web": 1
     },
     "detalle": [
+     {
+      "f": "03/10",
+      "cliente": "grLhrMERUbmVNKrWzrIqWcHI",
+      "contacto": "xxTjQqarKdUtoXsyybnRn tQjZpkoxKVFUkoBztQ",
+      "origen": "web"
+     },
      {
       "f": "01/10",
       "cliente": "Importadora Jorge",
@@ -2331,15 +2339,25 @@
     ]
    },
    "ons": {
-    "total": 2,
+    "total": 3,
     "origen": {
      "Recomendación": 1,
-     "CLIENTE": 1
+     "CLIENTE": 1,
+     "Sin origen": 1
     },
     "estado": {
-     "En Curso": 2
+     "En Curso": 2,
+     "Esperando contacto inicial": 1
     },
     "detalle": [
+     {
+      "f": "03/10",
+      "fecha": "2026-10-03 01:51",
+      "empresa": "grLhrMERUbmVNKrWzrIqWcHI",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - grLhrMERUbmVNKrWzrIqWcHI",
+      "id": 37700
+     },
      {
       "f": "01/10",
       "fecha": "2026-10-01 17:19",
@@ -2370,27 +2388,37 @@
     "detalle": []
    },
    "concretadas": {
-    "n": 0,
-    "importe": 0.0,
-    "detalle": []
+    "n": 1,
+    "importe": 262990.0,
+    "detalle": [
+     {
+      "f": "02/10",
+      "fecha": "2026-10-02 14:13",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 262990.0,
+      "anticipo": 0.0
+     }
+    ]
    }
   }
  },
  "historico": {
-  "total": 4442,
+  "total": 4443,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
-   "En Curso": 1415,
-   "Concretada": 460,
-   "Hibernando": 31,
+   "En Curso": 1414,
+   "Concretada": 461,
+   "Hibernando": 32,
    "Presentación enviada": 19,
-   "Confirmada": 14,
+   "Confirmada": 13,
    "Vencida": 12,
    "Presupuesto enviado": 5,
-   "Esperando presupuesto": 3
+   "Esperando presupuesto": 3,
+   "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 30,
+  "enCursoNuevas": 29,
   "enCursoViejas": 1378
  },
  "series": {
@@ -2416,7 +2444,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 2
+   "2026-10": 3
   },
   "cotiz_enviadas": {
    "2025-07": 10,
