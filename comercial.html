@@ -223,6 +223,7 @@
     .nav-link:hover  { background: var(--bg-soft); color: var(--text); }
     .nav-link.active { background: var(--cyan-soft); color: var(--text-cyan-muted); }
     /* El resumen del mes es violeta: su item del menu acompaña. */
+    #mes[hidden] { display: none !important; }
     .nav-link[href="#mes"].active { background: var(--violet-soft); color: var(--violet); }
     .nav-icon {
       width: 16px; height: 16px; flex-shrink: 0;
@@ -1009,16 +1010,7 @@
       <span>Apps</span>
     </a>
 
-     <div class="nav-section-label">Cierre</div>
-
-    <a class="nav-link" href="#mes" title="Resumen del mes">
-      <span class="nav-icon" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 15 11 17 15 13"/>
-        </svg>
-      </span>
-      <span>Resumen del mes</span>
-    </a>
+     <!-- "Resumen del mes" oculto del informe el 06/10/2026 (pedido de Seba). Los datos de RESUMEN_MES siguen abajo: los usa scripts/resumen-mes-md.mjs. Para volver a mostrarlo, restaurar este link y quitar hidden de section#mes. -->
 
     <!-- DS 1.2.7.3 — theme switch al pie del sidebar (modelo .sb-theme-switch) -->
     <div class="sidebar-footer sidebar-theme">
@@ -2663,7 +2655,7 @@
       </div>
     </section>
 
-    <section id="mes" aria-label="Resumen del mes">
+    <section id="mes" aria-label="Resumen del mes" hidden>
       <div class="section-title">Resumen del mes</div>
       <div class="mes-head">
         <div class="section-sub" style="margin:0">Un mes en una pantalla · cada línea enlaza a su fuente</div>
@@ -4512,7 +4504,7 @@ function toggleLock() {
    El activo lo marca el mismo scroll-spy que el sidebar, para que las
    dos navegaciones no se contradigan. */
 const NAV_GRUPOS = {
-  plan:    { titulo: "Planificación", secs: [["mes","Resumen del mes"], ["planificacion","Planificación"]] },
+  plan:    { titulo: "Planificación", secs: [["planificacion","Planificación"]] },
   meta:    { titulo: "Meta",  secs: [["resumen","Resumen Meta"], ["anuncios","Anuncios"]] },
   funnel:  { titulo: "Funnel", secs: [["funnel","Funnel CRM"]] },
   ons:     { titulo: "ONs",    secs: [["nuevas-ons","Nuevas ONs"], ["concretadas","ONs concretadas"]] },
