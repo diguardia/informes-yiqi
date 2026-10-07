@@ -1,5 +1,5 @@
 {
-  "generado": "2026-10-06T15:57:22.682Z",
+  "generado": "2026-10-07T16:28:26.122Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-10-06",
+      "hasta": "2026-10-07",
       "ytd": {
-        "alcance": 604624,
-        "gasto": 3754385,
-        "impresiones": 1500644,
-        "conv": 1325,
-        "inter": 96988,
-        "clics": 32965,
+        "alcance": 608504,
+        "gasto": 3773930,
+        "impresiones": 1510882,
+        "conv": 1336,
+        "inter": 98437,
+        "clics": 33266,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 745387,
-            "impresiones": 384196,
+            "gasto": 756328,
+            "impresiones": 389571,
             "resultadoTipo": "clics",
-            "resultado": 14944,
+            "resultado": 15143,
             "costoResultado": 50
           },
           {
@@ -404,11 +404,11 @@
           },
           {
             "nombre": "Mensajes IG · placas · Julio–Agosto",
-            "gasto": 542370,
-            "impresiones": 277764,
+            "gasto": 549671,
+            "impresiones": 280929,
             "resultadoTipo": "conversaciones",
-            "resultado": 689,
-            "costoResultado": 787
+            "resultado": 700,
+            "costoResultado": 785
           },
           {
             "nombre": "Instagram Post",
@@ -523,20 +523,20 @@
             "costoResultado": 3272
           },
           {
+            "nombre": "Tiendanube · integración · Sep 2026",
+            "gasto": 18556,
+            "impresiones": 25522,
+            "resultadoTipo": "clics",
+            "resultado": 428,
+            "costoResultado": 43
+          },
+          {
             "nombre": "Publicación de Instagram: Mercado Libre, Frávega,...",
             "gasto": 17785,
             "impresiones": 3567,
             "resultadoTipo": "conversaciones",
             "resultado": 5,
             "costoResultado": 3557
-          },
-          {
-            "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 17252,
-            "impresiones": 23825,
-            "resultadoTipo": "clics",
-            "resultado": 391,
-            "costoResultado": 44
           },
           {
             "nombre": "Publicación de Instagram: Mitos vs realidad...",
@@ -1000,38 +1000,38 @@
           "key": "oct",
           "mes": 10,
           "desde": "2026-10-01",
-          "hasta": "2026-10-06",
+          "hasta": "2026-10-07",
           "parcial": true,
-          "alcance": 39283,
-          "gasto": 92264,
-          "impresiones": 56854,
-          "conv": 61,
-          "inter": 4972,
-          "clics": 2084,
+          "alcance": 44823,
+          "gasto": 111809,
+          "impresiones": 67092,
+          "conv": 72,
+          "inter": 6421,
+          "clics": 2385,
           "campanas": [
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 44998,
-              "impresiones": 25783,
+              "gasto": 55939,
+              "impresiones": 31158,
               "resultadoTipo": "clics",
-              "resultado": 1496,
-              "costoResultado": 30
+              "resultado": 1695,
+              "costoResultado": 33
             },
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
-              "gasto": 38277,
-              "impresiones": 18419,
+              "gasto": 45578,
+              "impresiones": 21584,
               "resultadoTipo": "conversaciones",
-              "resultado": 61,
-              "costoResultado": 627
+              "resultado": 72,
+              "costoResultado": 633
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 8987,
-              "impresiones": 12650,
+              "gasto": 10291,
+              "impresiones": 14347,
               "resultadoTipo": "clics",
-              "resultado": 216,
-              "costoResultado": 42
+              "resultado": 253,
+              "costoResultado": 41
             }
           ]
         }
@@ -1039,21 +1039,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-10-06",
+  "hasta": "2026-10-07",
   "ytd": {
-    "alcance": 604624,
-    "gasto": 3754385,
-    "impresiones": 1500644,
-    "conv": 1325,
-    "inter": 96988,
-    "clics": 32965,
+    "alcance": 608504,
+    "gasto": 3773930,
+    "impresiones": 1510882,
+    "conv": 1336,
+    "inter": 98437,
+    "clics": 33266,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 745387,
-        "impresiones": 384196,
+        "gasto": 756328,
+        "impresiones": 389571,
         "resultadoTipo": "clics",
-        "resultado": 14944,
+        "resultado": 15143,
         "costoResultado": 50
       },
       {
@@ -1066,11 +1066,11 @@
       },
       {
         "nombre": "Mensajes IG · placas · Julio–Agosto",
-        "gasto": 542370,
-        "impresiones": 277764,
+        "gasto": 549671,
+        "impresiones": 280929,
         "resultadoTipo": "conversaciones",
-        "resultado": 689,
-        "costoResultado": 787
+        "resultado": 700,
+        "costoResultado": 785
       },
       {
         "nombre": "Instagram Post",
@@ -1185,20 +1185,20 @@
         "costoResultado": 3272
       },
       {
+        "nombre": "Tiendanube · integración · Sep 2026",
+        "gasto": 18556,
+        "impresiones": 25522,
+        "resultadoTipo": "clics",
+        "resultado": 428,
+        "costoResultado": 43
+      },
+      {
         "nombre": "Publicación de Instagram: Mercado Libre, Frávega,...",
         "gasto": 17785,
         "impresiones": 3567,
         "resultadoTipo": "conversaciones",
         "resultado": 5,
         "costoResultado": 3557
-      },
-      {
-        "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 17252,
-        "impresiones": 23825,
-        "resultadoTipo": "clics",
-        "resultado": 391,
-        "costoResultado": 44
       },
       {
         "nombre": "Publicación de Instagram: Mitos vs realidad...",
@@ -1662,38 +1662,38 @@
       "key": "oct",
       "mes": 10,
       "desde": "2026-10-01",
-      "hasta": "2026-10-06",
+      "hasta": "2026-10-07",
       "parcial": true,
-      "alcance": 39283,
-      "gasto": 92264,
-      "impresiones": 56854,
-      "conv": 61,
-      "inter": 4972,
-      "clics": 2084,
+      "alcance": 44823,
+      "gasto": 111809,
+      "impresiones": 67092,
+      "conv": 72,
+      "inter": 6421,
+      "clics": 2385,
       "campanas": [
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 44998,
-          "impresiones": 25783,
+          "gasto": 55939,
+          "impresiones": 31158,
           "resultadoTipo": "clics",
-          "resultado": 1496,
-          "costoResultado": 30
+          "resultado": 1695,
+          "costoResultado": 33
         },
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
-          "gasto": 38277,
-          "impresiones": 18419,
+          "gasto": 45578,
+          "impresiones": 21584,
           "resultadoTipo": "conversaciones",
-          "resultado": 61,
-          "costoResultado": 627
+          "resultado": 72,
+          "costoResultado": 633
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 8987,
-          "impresiones": 12650,
+          "gasto": 10291,
+          "impresiones": 14347,
           "resultadoTipo": "clics",
-          "resultado": 216,
-          "costoResultado": 42
+          "resultado": 253,
+          "costoResultado": 41
         }
       ]
     }
