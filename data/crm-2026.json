@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-06",
+ "generado": "2026-10-07",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2247,10 +2247,10 @@
    "cotizaciones": {
     "emitidas": 8,
     "estado": {
-     "Vencida": 2,
-     "Versionada": 2,
+     "Versionada": 3,
      "Aprobada": 2,
-     "Enviada": 2
+     "Enviada": 2,
+     "Vencida": 1
     },
     "enviadas": 8,
     "aprobadas": {
@@ -2282,7 +2282,7 @@
      {
       "f": "15/09",
       "nro": "1564.1",
-      "estado": "Vencida"
+      "estado": "Versionada"
      },
      {
       "f": "04/09",
@@ -2318,18 +2318,11 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 2,
+    "total": 1,
     "origen": {
-     "Recomendación": 1,
-     "web": 1
+     "Recomendación": 1
     },
     "detalle": [
-     {
-      "f": "03/10",
-      "cliente": "grLhrMERUbmVNKrWzrIqWcHI",
-      "contacto": "xxTjQqarKdUtoXsyybnRn tQjZpkoxKVFUkoBztQ",
-      "origen": "web"
-     },
      {
       "f": "01/10",
       "cliente": "Importadora Jorge",
@@ -2345,7 +2338,8 @@
      "CLIENTE": 1
     },
     "estado": {
-     "En Curso": 2
+     "Presupuesto enviado": 1,
+     "En Curso": 1
     },
     "detalle": [
      {
@@ -2367,15 +2361,29 @@
     ]
    },
    "cotizaciones": {
-    "emitidas": 0,
-    "estado": {},
-    "enviadas": 0,
+    "emitidas": 2,
+    "estado": {
+     "En preparación": 1,
+     "Enviada": 1
+    },
+    "enviadas": 1,
     "aprobadas": {
      "n": 0,
      "neto_impl": 0.0,
      "neto_sop": null
     },
-    "detalle": []
+    "detalle": [
+     {
+      "f": "06/10",
+      "nro": "1564.2",
+      "estado": "En preparación"
+     },
+     {
+      "f": "06/10",
+      "nro": "1566.1",
+      "estado": "Enviada"
+     }
+    ]
    },
    "concretadas": {
     "n": 1,
@@ -2398,16 +2406,16 @@
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
-   "En Curso": 1414,
+   "En Curso": 1413,
    "Concretada": 461,
    "Hibernando": 32,
    "Presentación enviada": 19,
    "Confirmada": 13,
    "Vencida": 12,
-   "Presupuesto enviado": 5,
+   "Presupuesto enviado": 6,
    "Esperando presupuesto": 3
   },
-  "enCursoNuevas": 29,
+  "enCursoNuevas": 28,
   "enCursoViejas": 1378
  },
  "series": {
@@ -2450,7 +2458,8 @@
    "2026-06": 22,
    "2026-07": 7,
    "2026-08": 7,
-   "2026-09": 8
+   "2026-09": 8,
+   "2026-10": 1
   },
   "cotiz_aprobadas": {
    "2025-07": {
