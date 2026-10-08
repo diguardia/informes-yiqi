@@ -1,5 +1,5 @@
 {
-  "generado": "2026-10-07T16:28:26.122Z",
+  "generado": "2026-10-08T16:28:31.139Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-10-07",
+      "hasta": "2026-10-08",
       "ytd": {
-        "alcance": 608504,
-        "gasto": 3773930,
-        "impresiones": 1510882,
-        "conv": 1336,
-        "inter": 98437,
-        "clics": 33266,
+        "alcance": 610875,
+        "gasto": 3790845,
+        "impresiones": 1519759,
+        "conv": 1343,
+        "inter": 99966,
+        "clics": 33512,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 756328,
-            "impresiones": 389571,
+            "gasto": 765059,
+            "impresiones": 393336,
             "resultadoTipo": "clics",
-            "resultado": 15143,
+            "resultado": 15295,
             "costoResultado": 50
           },
           {
@@ -404,11 +404,11 @@
           },
           {
             "nombre": "Mensajes IG · placas · Julio–Agosto",
-            "gasto": 549671,
-            "impresiones": 280929,
+            "gasto": 556122,
+            "impresiones": 283660,
             "resultadoTipo": "conversaciones",
-            "resultado": 700,
-            "costoResultado": 785
+            "resultado": 707,
+            "costoResultado": 787
           },
           {
             "nombre": "Instagram Post",
@@ -515,20 +515,20 @@
             "costoResultado": 2081
           },
           {
+            "nombre": "Tiendanube · integración · Sep 2026",
+            "gasto": 20290,
+            "impresiones": 27906,
+            "resultadoTipo": "clics",
+            "resultado": 470,
+            "costoResultado": 43
+          },
+          {
             "nombre": "Publicación de Instagram: YiQi ERP tiene algo que...",
             "gasto": 19631,
             "impresiones": 3739,
             "resultadoTipo": "conversaciones",
             "resultado": 6,
             "costoResultado": 3272
-          },
-          {
-            "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 18556,
-            "impresiones": 25522,
-            "resultadoTipo": "clics",
-            "resultado": 428,
-            "costoResultado": 43
           },
           {
             "nombre": "Publicación de Instagram: Mercado Libre, Frávega,...",
@@ -1000,37 +1000,37 @@
           "key": "oct",
           "mes": 10,
           "desde": "2026-10-01",
-          "hasta": "2026-10-07",
+          "hasta": "2026-10-08",
           "parcial": true,
-          "alcance": 44823,
-          "gasto": 111809,
-          "impresiones": 67092,
-          "conv": 72,
-          "inter": 6421,
-          "clics": 2385,
+          "alcance": 49683,
+          "gasto": 128724,
+          "impresiones": 75969,
+          "conv": 79,
+          "inter": 7950,
+          "clics": 2631,
           "campanas": [
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 55939,
-              "impresiones": 31158,
+              "gasto": 64670,
+              "impresiones": 34923,
               "resultadoTipo": "clics",
-              "resultado": 1695,
-              "costoResultado": 33
+              "resultado": 1847,
+              "costoResultado": 35
             },
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
-              "gasto": 45578,
-              "impresiones": 21584,
+              "gasto": 52029,
+              "impresiones": 24315,
               "resultadoTipo": "conversaciones",
-              "resultado": 72,
-              "costoResultado": 633
+              "resultado": 79,
+              "costoResultado": 659
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 10291,
-              "impresiones": 14347,
+              "gasto": 12025,
+              "impresiones": 16731,
               "resultadoTipo": "clics",
-              "resultado": 253,
+              "resultado": 295,
               "costoResultado": 41
             }
           ]
@@ -1039,21 +1039,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-10-07",
+  "hasta": "2026-10-08",
   "ytd": {
-    "alcance": 608504,
-    "gasto": 3773930,
-    "impresiones": 1510882,
-    "conv": 1336,
-    "inter": 98437,
-    "clics": 33266,
+    "alcance": 610875,
+    "gasto": 3790845,
+    "impresiones": 1519759,
+    "conv": 1343,
+    "inter": 99966,
+    "clics": 33512,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 756328,
-        "impresiones": 389571,
+        "gasto": 765059,
+        "impresiones": 393336,
         "resultadoTipo": "clics",
-        "resultado": 15143,
+        "resultado": 15295,
         "costoResultado": 50
       },
       {
@@ -1066,11 +1066,11 @@
       },
       {
         "nombre": "Mensajes IG · placas · Julio–Agosto",
-        "gasto": 549671,
-        "impresiones": 280929,
+        "gasto": 556122,
+        "impresiones": 283660,
         "resultadoTipo": "conversaciones",
-        "resultado": 700,
-        "costoResultado": 785
+        "resultado": 707,
+        "costoResultado": 787
       },
       {
         "nombre": "Instagram Post",
@@ -1177,20 +1177,20 @@
         "costoResultado": 2081
       },
       {
+        "nombre": "Tiendanube · integración · Sep 2026",
+        "gasto": 20290,
+        "impresiones": 27906,
+        "resultadoTipo": "clics",
+        "resultado": 470,
+        "costoResultado": 43
+      },
+      {
         "nombre": "Publicación de Instagram: YiQi ERP tiene algo que...",
         "gasto": 19631,
         "impresiones": 3739,
         "resultadoTipo": "conversaciones",
         "resultado": 6,
         "costoResultado": 3272
-      },
-      {
-        "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 18556,
-        "impresiones": 25522,
-        "resultadoTipo": "clics",
-        "resultado": 428,
-        "costoResultado": 43
       },
       {
         "nombre": "Publicación de Instagram: Mercado Libre, Frávega,...",
@@ -1662,37 +1662,37 @@
       "key": "oct",
       "mes": 10,
       "desde": "2026-10-01",
-      "hasta": "2026-10-07",
+      "hasta": "2026-10-08",
       "parcial": true,
-      "alcance": 44823,
-      "gasto": 111809,
-      "impresiones": 67092,
-      "conv": 72,
-      "inter": 6421,
-      "clics": 2385,
+      "alcance": 49683,
+      "gasto": 128724,
+      "impresiones": 75969,
+      "conv": 79,
+      "inter": 7950,
+      "clics": 2631,
       "campanas": [
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 55939,
-          "impresiones": 31158,
+          "gasto": 64670,
+          "impresiones": 34923,
           "resultadoTipo": "clics",
-          "resultado": 1695,
-          "costoResultado": 33
+          "resultado": 1847,
+          "costoResultado": 35
         },
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
-          "gasto": 45578,
-          "impresiones": 21584,
+          "gasto": 52029,
+          "impresiones": 24315,
           "resultadoTipo": "conversaciones",
-          "resultado": 72,
-          "costoResultado": 633
+          "resultado": 79,
+          "costoResultado": 659
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 10291,
-          "impresiones": 14347,
+          "gasto": 12025,
+          "impresiones": 16731,
           "resultadoTipo": "clics",
-          "resultado": 253,
+          "resultado": 295,
           "costoResultado": 41
         }
       ]
