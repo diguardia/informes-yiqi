@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-08",
+ "generado": "2026-10-09",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2318,11 +2318,18 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 1,
+    "total": 2,
     "origen": {
-     "Recomendación": 1
+     "Recomendación": 1,
+     "web": 1
     },
     "detalle": [
+     {
+      "f": "08/10",
+      "cliente": "LfHfnFgZSQfmTuvgEV",
+      "contacto": "KqElOyemvzsNLNlQfcy nYDQQtAQjUUzsxjUGV",
+      "origen": "web"
+     },
      {
       "f": "01/10",
       "cliente": "Importadora Jorge",
