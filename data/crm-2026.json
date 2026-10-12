@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-09",
+ "generado": "2026-10-12",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2318,12 +2318,31 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 2,
+    "total": 5,
     "origen": {
+     "web": 3,
      "Recomendación": 1,
-     "web": 1
+     "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "11/10",
+      "cliente": "yYLqYoKEkSwRhBGOln",
+      "contacto": "hIlUHTVTBVxjahQfbPUiYd qIeWpBcBfvUiXgwIiWwJsACZ",
+      "origen": "web"
+     },
+     {
+      "f": "10/10",
+      "cliente": "EFzmmFHYXbZvuBzBgBmq",
+      "contacto": "FdKawNqZoGdgGVDdQlaftO IPBBXdMQDMDCVIXEHKDPstsD",
+      "origen": "web"
+     },
+     {
+      "f": "09/10",
+      "cliente": "Batos sas",
+      "contacto": "Matias Meisen",
+      "origen": "Precotizador web"
+     },
      {
       "f": "08/10",
       "cliente": "LfHfnFgZSQfmTuvgEV",
@@ -2339,16 +2358,42 @@
     ]
    },
    "ons": {
-    "total": 2,
+    "total": 5,
     "origen": {
+     "Sin origen": 3,
      "Recomendación": 1,
      "CLIENTE": 1
     },
     "estado": {
+     "Esperando contacto inicial": 3,
      "Presupuesto enviado": 1,
      "En Curso": 1
     },
     "detalle": [
+     {
+      "f": "11/10",
+      "fecha": "2026-10-11 03:50",
+      "empresa": "yYLqYoKEkSwRhBGOln",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - yYLqYoKEkSwRhBGOln",
+      "id": 37704
+     },
+     {
+      "f": "10/10",
+      "fecha": "2026-10-10 10:36",
+      "empresa": "EFzmmFHYXbZvuBzBgBmq",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - EFzmmFHYXbZvuBzBgBmq",
+      "id": 37703
+     },
+     {
+      "f": "09/10",
+      "fecha": "2026-10-09 20:15",
+      "empresa": "Batos sas",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - Batos sas",
+      "id": 37702
+     },
      {
       "f": "01/10",
       "fecha": "2026-10-01 17:19",
@@ -2409,7 +2454,7 @@
   }
  },
  "historico": {
-  "total": 4442,
+  "total": 4445,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
@@ -2420,7 +2465,8 @@
    "Confirmada": 13,
    "Vencida": 12,
    "Presupuesto enviado": 6,
-   "Esperando presupuesto": 3
+   "Esperando presupuesto": 3,
+   "Esperando contacto inicial": 3
   },
   "enCursoNuevas": 28,
   "enCursoViejas": 1378
@@ -2448,7 +2494,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 2
+   "2026-10": 5
   },
   "cotiz_enviadas": {
    "2025-07": 10,
