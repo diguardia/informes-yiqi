@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-12",
+ "generado": "2026-10-13",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2318,13 +2318,19 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 5,
+    "total": 6,
     "origen": {
-     "web": 3,
+     "web": 4,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "13/10",
+      "cliente": "WldOSJQQORarDqElRC",
+      "contacto": "pBsZklJBZFpMBGLnjnytZ ImAbppxvsYHNaVkAFpxWuQN",
+      "origen": "web"
+     },
      {
       "f": "11/10",
       "cliente": "yYLqYoKEkSwRhBGOln",
@@ -2358,39 +2364,32 @@
     ]
    },
    "ons": {
-    "total": 5,
+    "total": 4,
     "origen": {
-     "Sin origen": 3,
      "Recomendación": 1,
-     "CLIENTE": 1
+     "CLIENTE": 1,
+     "Precotizador web": 1,
+     "Sin origen": 1
     },
     "estado": {
-     "Esperando contacto inicial": 3,
+     "En Curso": 2,
      "Presupuesto enviado": 1,
-     "En Curso": 1
+     "Esperando contacto inicial": 1
     },
     "detalle": [
      {
-      "f": "11/10",
-      "fecha": "2026-10-11 03:50",
-      "empresa": "yYLqYoKEkSwRhBGOln",
+      "f": "13/10",
+      "fecha": "2026-10-13 10:33",
+      "empresa": "WldOSJQQORarDqElRC",
       "origen": "Sin origen",
-      "titulo": "YiQi ERP - yYLqYoKEkSwRhBGOln",
-      "id": 37704
-     },
-     {
-      "f": "10/10",
-      "fecha": "2026-10-10 10:36",
-      "empresa": "EFzmmFHYXbZvuBzBgBmq",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - EFzmmFHYXbZvuBzBgBmq",
-      "id": 37703
+      "titulo": "YiQi ERP - WldOSJQQORarDqElRC",
+      "id": 37705
      },
      {
       "f": "09/10",
       "fecha": "2026-10-09 20:15",
       "empresa": "Batos sas",
-      "origen": "Sin origen",
+      "origen": "Precotizador web",
       "titulo": "YiQi ERP - Batos sas",
       "id": 37702
      },
@@ -2454,11 +2453,11 @@
   }
  },
  "historico": {
-  "total": 4445,
+  "total": 4444,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2483,
-   "En Curso": 1413,
+   "En Curso": 1414,
    "Concretada": 461,
    "Hibernando": 32,
    "Presentación enviada": 19,
@@ -2466,9 +2465,9 @@
    "Vencida": 12,
    "Presupuesto enviado": 6,
    "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 3
+   "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 28,
+  "enCursoNuevas": 29,
   "enCursoViejas": 1378
  },
  "series": {
@@ -2494,7 +2493,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 5
+   "2026-10": 4
   },
   "cotiz_enviadas": {
    "2025-07": 10,
