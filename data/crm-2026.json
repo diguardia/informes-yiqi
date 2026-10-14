@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-13",
+ "generado": "2026-10-14",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2318,13 +2318,25 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 6,
+    "total": 8,
     "origen": {
-     "web": 4,
+     "web": 6,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "14/10",
+      "cliente": "cFiyHPlhieVUWMul",
+      "contacto": "UJOYkrcKejBSgjtJb MhGkOmsBKZdzCheG",
+      "origen": "web"
+     },
+     {
+      "f": "14/10",
+      "cliente": "ikrrjCXIkkWPaKJLwycE",
+      "contacto": "FmYpCLwracvxlOdIK PqfkZLUrTQVmbuuyAPqXyj",
+      "origen": "web"
+     },
      {
       "f": "13/10",
       "cliente": "WldOSJQQORarDqElRC",
@@ -2364,19 +2376,36 @@
     ]
    },
    "ons": {
-    "total": 4,
+    "total": 6,
     "origen": {
+     "Sin origen": 3,
      "Recomendación": 1,
      "CLIENTE": 1,
-     "Precotizador web": 1,
-     "Sin origen": 1
+     "Precotizador web": 1
     },
     "estado": {
      "En Curso": 2,
+     "Desestimada": 2,
      "Presupuesto enviado": 1,
      "Esperando contacto inicial": 1
     },
     "detalle": [
+     {
+      "f": "14/10",
+      "fecha": "2026-10-14 10:34",
+      "empresa": "cFiyHPlhieVUWMul",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - cFiyHPlhieVUWMul",
+      "id": 37707
+     },
+     {
+      "f": "14/10",
+      "fecha": "2026-10-14 05:42",
+      "empresa": "ikrrjCXIkkWPaKJLwycE",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - ikrrjCXIkkWPaKJLwycE",
+      "id": 37706
+     },
      {
       "f": "13/10",
       "fecha": "2026-10-13 10:33",
@@ -2453,10 +2482,10 @@
   }
  },
  "historico": {
-  "total": 4444,
+  "total": 4446,
   "desde": "2014-11-28",
   "estado": {
-   "Desestimada": 2483,
+   "Desestimada": 2485,
    "En Curso": 1414,
    "Concretada": 461,
    "Hibernando": 32,
@@ -2493,7 +2522,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 4
+   "2026-10": 6
   },
   "cotiz_enviadas": {
    "2025-07": 10,
