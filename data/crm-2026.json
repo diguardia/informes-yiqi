@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-14",
+ "generado": "2026-10-15",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -793,9 +793,9 @@
     },
     "estado": {
      "Desestimada": 4,
-     "Concretada": 2,
+     "Concretada": 3,
      "Vencida": 2,
-     "Confirmada": 2,
+     "Confirmada": 1,
      "Hibernando": 1
     },
     "detalle": [
@@ -2318,13 +2318,25 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 8,
+    "total": 10,
     "origen": {
-     "web": 6,
+     "web": 8,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "15/10",
+      "cliente": "MEDIC TOOLS SRL",
+      "contacto": "JAVIER Chiappetta",
+      "origen": "web"
+     },
+     {
+      "f": "14/10",
+      "cliente": "uoVIMLhZyPytgFiMVVJXQhgi",
+      "contacto": "WqIbJNwPOUNmvoAG bkuHvIRcsIJvqcLklANeNMTP",
+      "origen": "web"
+     },
      {
       "f": "14/10",
       "cliente": "cFiyHPlhieVUWMul",
@@ -2376,43 +2388,35 @@
     ]
    },
    "ons": {
-    "total": 6,
+    "total": 5,
     "origen": {
-     "Sin origen": 3,
+     "CLIENTE": 2,
      "Recomendación": 1,
-     "CLIENTE": 1,
-     "Precotizador web": 1
+     "Precotizador web": 1,
+     "Sin origen": 1
     },
     "estado": {
      "En Curso": 2,
-     "Desestimada": 2,
      "Presupuesto enviado": 1,
+     "Confirmada": 1,
      "Esperando contacto inicial": 1
     },
     "detalle": [
      {
-      "f": "14/10",
-      "fecha": "2026-10-14 10:34",
-      "empresa": "cFiyHPlhieVUWMul",
+      "f": "15/10",
+      "fecha": "2026-10-15 11:12",
+      "empresa": "MEDIC TOOLS SRL",
       "origen": "Sin origen",
-      "titulo": "YiQi ERP - cFiyHPlhieVUWMul",
-      "id": 37707
+      "titulo": "YiQi ERP - MEDIC TOOLS SRL",
+      "id": 37710
      },
      {
       "f": "14/10",
-      "fecha": "2026-10-14 05:42",
-      "empresa": "ikrrjCXIkkWPaKJLwycE",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - ikrrjCXIkkWPaKJLwycE",
-      "id": 37706
-     },
-     {
-      "f": "13/10",
-      "fecha": "2026-10-13 10:33",
-      "empresa": "WldOSJQQORarDqElRC",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - WldOSJQQORarDqElRC",
-      "id": 37705
+      "fecha": "2026-10-14 12:29",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 36030 Shopealo - Central",
+      "id": 37709
      },
      {
       "f": "09/10",
@@ -2441,22 +2445,27 @@
     ]
    },
    "cotizaciones": {
-    "emitidas": 2,
+    "emitidas": 3,
     "estado": {
-     "En preparación": 1,
-     "Enviada": 1
+     "Enviada": 2,
+     "Aprobada": 1
     },
-    "enviadas": 1,
+    "enviadas": 3,
     "aprobadas": {
-     "n": 0,
-     "neto_impl": 0.0,
-     "neto_sop": null
+     "n": 1,
+     "neto_impl": 415450.0,
+     "neto_sop": 64500.0
     },
     "detalle": [
      {
+      "f": "14/10",
+      "nro": "1567.1",
+      "estado": "Aprobada"
+     },
+     {
       "f": "06/10",
       "nro": "1564.2",
-      "estado": "En preparación"
+      "estado": "Enviada"
      },
      {
       "f": "06/10",
@@ -2466,9 +2475,17 @@
     ]
    },
    "concretadas": {
-    "n": 1,
-    "importe": 262990.0,
+    "n": 2,
+    "importe": 12594590.0,
     "detalle": [
+     {
+      "f": "15/10",
+      "fecha": "2026-10-15 10:48",
+      "empresa": "Mel City SA",
+      "origen": "Web yiqi.com.ar",
+      "importe": 12331600.0,
+      "anticipo": 0.0
+     },
      {
       "f": "02/10",
       "fecha": "2026-10-02 14:13",
@@ -2482,12 +2499,12 @@
   }
  },
  "historico": {
-  "total": 4446,
+  "total": 4445,
   "desde": "2014-11-28",
   "estado": {
-   "Desestimada": 2485,
+   "Desestimada": 2483,
    "En Curso": 1414,
-   "Concretada": 461,
+   "Concretada": 462,
    "Hibernando": 32,
    "Presentación enviada": 19,
    "Confirmada": 13,
@@ -2522,7 +2539,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 6
+   "2026-10": 5
   },
   "cotiz_enviadas": {
    "2025-07": 10,
@@ -2540,7 +2557,7 @@
    "2026-07": 7,
    "2026-08": 7,
    "2026-09": 8,
-   "2026-10": 1
+   "2026-10": 3
   },
   "cotiz_aprobadas": {
    "2025-07": {
@@ -2617,6 +2634,11 @@
     "n": 2,
     "neto_impl": 12594590.0,
     "neto_sop": 2813700.0
+   },
+   "2026-10": {
+    "n": 1,
+    "neto_impl": 415450.0,
+    "neto_sop": 64500.0
    }
   }
  }
