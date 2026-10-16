@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-15",
+ "generado": "2026-10-16",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -403,10 +403,10 @@
      "INSTAGRAM - META": 1
     },
     "estado": {
-     "Desestimada": 12,
+     "Desestimada": 13,
      "Vencida": 4,
-     "En Curso": 3,
      "Concretada": 3,
+     "En Curso": 2,
      "Hibernando": 1
     },
     "detalle": [
@@ -1323,8 +1323,8 @@
     "estado": {
      "Concretada": 7,
      "En Curso": 5,
-     "Desestimada": 4,
-     "Presupuesto enviado": 2
+     "Desestimada": 5,
+     "Presupuesto enviado": 1
     },
     "detalle": [
      {
@@ -1894,9 +1894,9 @@
     },
     "estado": {
      "En Curso": 11,
-     "Presupuesto enviado": 2,
-     "Desestimada": 2,
-     "Concretada": 1
+     "Desestimada": 3,
+     "Concretada": 1,
+     "Presupuesto enviado": 1
     },
     "detalle": [
      {
@@ -2032,8 +2032,9 @@
    "cotizaciones": {
     "emitidas": 7,
     "estado": {
-     "Vencida": 5,
-     "Aprobada": 2
+     "Vencida": 4,
+     "Aprobada": 2,
+     "Rechazada": 1
     },
     "enviadas": 7,
     "aprobadas": {
@@ -2050,7 +2051,7 @@
      {
       "f": "21/08",
       "nro": "1559.1",
-      "estado": "Vencida"
+      "estado": "Rechazada"
      },
      {
       "f": "20/08",
@@ -2393,20 +2394,19 @@
      "CLIENTE": 2,
      "Recomendación": 1,
      "Precotizador web": 1,
-     "Sin origen": 1
+     "web": 1
     },
     "estado": {
-     "En Curso": 2,
+     "En Curso": 3,
      "Presupuesto enviado": 1,
-     "Confirmada": 1,
-     "Esperando contacto inicial": 1
+     "Confirmada": 1
     },
     "detalle": [
      {
       "f": "15/10",
       "fecha": "2026-10-15 11:12",
       "empresa": "MEDIC TOOLS SRL",
-      "origen": "Sin origen",
+      "origen": "web",
       "titulo": "YiQi ERP - MEDIC TOOLS SRL",
       "id": 37710
      },
@@ -2502,16 +2502,15 @@
   "total": 4445,
   "desde": "2014-11-28",
   "estado": {
-   "Desestimada": 2483,
+   "Desestimada": 2486,
    "En Curso": 1414,
    "Concretada": 462,
    "Hibernando": 32,
    "Presentación enviada": 19,
    "Confirmada": 13,
    "Vencida": 12,
-   "Presupuesto enviado": 6,
-   "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 1
+   "Presupuesto enviado": 4,
+   "Esperando presupuesto": 3
   },
   "enCursoNuevas": 29,
   "enCursoViejas": 1378
