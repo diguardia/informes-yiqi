@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-16",
+ "generado": "2026-10-17",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2319,13 +2319,19 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 10,
+    "total": 11,
     "origen": {
-     "web": 8,
+     "web": 9,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "17/10",
+      "cliente": "CHZFjoAdYJiQXBwVu",
+      "contacto": "fdaMOHOpYmdHrMpzNQV nvaIegfkWshDRbXOCLU",
+      "origen": "web"
+     },
      {
       "f": "15/10",
       "cliente": "MEDIC TOOLS SRL",
@@ -2389,19 +2395,29 @@
     ]
    },
    "ons": {
-    "total": 5,
+    "total": 6,
     "origen": {
      "CLIENTE": 2,
      "Recomendación": 1,
      "Precotizador web": 1,
-     "web": 1
+     "web": 1,
+     "Sin origen": 1
     },
     "estado": {
      "En Curso": 3,
      "Presupuesto enviado": 1,
-     "Confirmada": 1
+     "Confirmada": 1,
+     "Esperando contacto inicial": 1
     },
     "detalle": [
+     {
+      "f": "17/10",
+      "fecha": "2026-10-17 07:32",
+      "empresa": "CHZFjoAdYJiQXBwVu",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - CHZFjoAdYJiQXBwVu",
+      "id": 37711
+     },
      {
       "f": "15/10",
       "fecha": "2026-10-15 11:12",
@@ -2499,7 +2515,7 @@
   }
  },
  "historico": {
-  "total": 4445,
+  "total": 4446,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2486,
@@ -2510,7 +2526,8 @@
    "Confirmada": 13,
    "Vencida": 12,
    "Presupuesto enviado": 4,
-   "Esperando presupuesto": 3
+   "Esperando presupuesto": 3,
+   "Esperando contacto inicial": 1
   },
   "enCursoNuevas": 29,
   "enCursoViejas": 1378
@@ -2538,7 +2555,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 5
+   "2026-10": 6
   },
   "cotiz_enviadas": {
    "2025-07": 10,
