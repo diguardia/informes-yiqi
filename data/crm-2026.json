@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-18",
+ "generado": "2026-10-19",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2319,13 +2319,19 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 11,
+    "total": 12,
     "origen": {
-     "web": 9,
+     "web": 10,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "18/10",
+      "cliente": "DAvid",
+      "contacto": "David Lin LIN",
+      "origen": "web"
+     },
      {
       "f": "17/10",
       "cliente": "CHZFjoAdYJiQXBwVu",
@@ -2398,25 +2404,23 @@
     "total": 6,
     "origen": {
      "CLIENTE": 2,
+     "web": 2,
      "Recomendación": 1,
-     "Precotizador web": 1,
-     "web": 1,
-     "Sin origen": 1
+     "Precotizador web": 1
     },
     "estado": {
-     "En Curso": 3,
+     "En Curso": 4,
      "Presupuesto enviado": 1,
-     "Confirmada": 1,
-     "Esperando contacto inicial": 1
+     "Confirmada": 1
     },
     "detalle": [
      {
-      "f": "17/10",
-      "fecha": "2026-10-17 07:32",
-      "empresa": "CHZFjoAdYJiQXBwVu",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - CHZFjoAdYJiQXBwVu",
-      "id": 37711
+      "f": "18/10",
+      "fecha": "2026-10-18 23:50",
+      "empresa": "DAvid",
+      "origen": "web",
+      "titulo": "YiQi ERP - DAvid",
+      "id": 37712
      },
      {
       "f": "15/10",
@@ -2519,17 +2523,16 @@
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2486,
-   "En Curso": 1414,
+   "En Curso": 1415,
    "Concretada": 462,
    "Hibernando": 32,
    "Presentación enviada": 19,
    "Confirmada": 13,
    "Vencida": 12,
    "Presupuesto enviado": 4,
-   "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 1
+   "Esperando presupuesto": 3
   },
-  "enCursoNuevas": 29,
+  "enCursoNuevas": 30,
   "enCursoViejas": 1378
  },
  "series": {
