@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-19",
+ "generado": "2026-10-20",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2175,7 +2175,7 @@
     "estado": {
      "En Curso": 5,
      "Concretada": 1,
-     "Presupuesto enviado": 1,
+     "Vencida": 1,
      "Hibernando": 1
     },
     "detalle": [
@@ -2248,10 +2248,9 @@
    "cotizaciones": {
     "emitidas": 8,
     "estado": {
+     "Vencida": 3,
      "Versionada": 3,
-     "Aprobada": 2,
-     "Enviada": 2,
-     "Vencida": 1
+     "Aprobada": 2
     },
     "enviadas": 8,
     "aprobadas": {
@@ -2263,7 +2262,7 @@
      {
       "f": "30/09",
       "nro": "1561.2",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "29/09",
@@ -2273,7 +2272,7 @@
      {
       "f": "17/09",
       "nro": "1565.1",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "16/09",
@@ -2528,9 +2527,9 @@
    "Hibernando": 32,
    "Presentación enviada": 19,
    "Confirmada": 13,
-   "Vencida": 12,
-   "Presupuesto enviado": 4,
-   "Esperando presupuesto": 3
+   "Vencida": 13,
+   "Esperando presupuesto": 3,
+   "Presupuesto enviado": 3
   },
   "enCursoNuevas": 30,
   "enCursoViejas": 1378
