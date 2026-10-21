@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-20",
+ "generado": "2026-10-21",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2318,13 +2318,19 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 12,
+    "total": 13,
     "origen": {
-     "web": 10,
+     "web": 11,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "20/10",
+      "cliente": "test",
+      "contacto": "Test Test",
+      "origen": "web"
+     },
      {
       "f": "18/10",
       "cliente": "DAvid",
@@ -2400,19 +2406,27 @@
     ]
    },
    "ons": {
-    "total": 6,
+    "total": 7,
     "origen": {
-     "CLIENTE": 2,
+     "CLIENTE": 3,
      "web": 2,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "estado": {
      "En Curso": 4,
-     "Presupuesto enviado": 1,
+     "Presupuesto enviado": 2,
      "Confirmada": 1
     },
     "detalle": [
+     {
+      "f": "21/10",
+      "fecha": "2026-10-21 09:01",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 36064 CentroDeDistribuciónSur",
+      "id": 37714
+     },
      {
       "f": "18/10",
       "fecha": "2026-10-18 23:50",
@@ -2464,18 +2478,23 @@
     ]
    },
    "cotizaciones": {
-    "emitidas": 3,
+    "emitidas": 4,
     "estado": {
-     "Enviada": 2,
+     "Enviada": 3,
      "Aprobada": 1
     },
-    "enviadas": 3,
+    "enviadas": 4,
     "aprobadas": {
      "n": 1,
      "neto_impl": 415450.0,
      "neto_sop": 64500.0
     },
     "detalle": [
+     {
+      "f": "21/10",
+      "nro": "1568.1",
+      "estado": "Enviada"
+     },
      {
       "f": "14/10",
       "nro": "1567.1",
@@ -2518,7 +2537,7 @@
   }
  },
  "historico": {
-  "total": 4446,
+  "total": 4447,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2486,
@@ -2528,8 +2547,8 @@
    "Presentación enviada": 19,
    "Confirmada": 13,
    "Vencida": 13,
-   "Esperando presupuesto": 3,
-   "Presupuesto enviado": 3
+   "Presupuesto enviado": 4,
+   "Esperando presupuesto": 3
   },
   "enCursoNuevas": 30,
   "enCursoViejas": 1378
@@ -2557,7 +2576,7 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 6
+   "2026-10": 7
   },
   "cotiz_enviadas": {
    "2025-07": 10,
@@ -2575,7 +2594,7 @@
    "2026-07": 7,
    "2026-08": 7,
    "2026-09": 8,
-   "2026-10": 3
+   "2026-10": 4
   },
   "cotiz_aprobadas": {
    "2025-07": {
