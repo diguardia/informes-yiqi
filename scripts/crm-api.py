@@ -98,7 +98,7 @@ def query(h, schema_id, entidad, columnas, filtros=None):
 
 def traer(h, sid):
     ons = pd.DataFrame(query(h, sid, 'OPORTUNIDAD_DE_NEGOC', [
-        'OPDN_NRO_ID', 'CONT_NOMBRE', 'OPDN_EMPRESA', 'OPDN_TITULO', 'ORCO_ORIGENCONTACTO',
+        'OPDN_NRO_ID', 'OPDN_EMPRESA', 'OPDN_TITULO', 'ORCO_ORIGENCONTACTO',
         'CAMP_NOMBRE', 'AUDI_FECHA_ALTA', 'DESC_ESTADO',
         'OPDN_IMPORTE_TOTAL_IMPLEM', 'OPDN_ANTICIPO', 'OPDN_FECHA_DE_CONCRECION']))
     cc = pd.DataFrame(query(h, sid, 'CONSULTA_COMERCIAL', [
@@ -117,7 +117,7 @@ def a_exports(ons, cc, cot):
     mes = lambda s: fecha(s).dt.to_period('M').astype(str)
 
     ons_x = pd.DataFrame({
-        'Nro ID': ons['OPDN_NRO_ID'], 'Contacto - Nombre': ons['CONT_NOMBRE'],
+        'Nro ID': ons['OPDN_NRO_ID'], 'Contacto - Nombre': None,  # CONT_NOMBRE dejó de existir en la API (27/10/2026); no se usa en el informe
         'Empresa': ons['OPDN_EMPRESA'], 'Título': ons['OPDN_TITULO'],
         ORI: ons['ORCO_ORIGENCONTACTO'], 'Campaña - Nombre ': ons['CAMP_NOMBRE'],
         'Fecha de creación': fecha(ons['AUDI_FECHA_ALTA']),
