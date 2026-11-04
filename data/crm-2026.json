@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-26",
+ "generado": "2026-11-04",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -238,8 +238,9 @@
     },
     "estado": {
      "Concretada": 3,
-     "Desestimada": 2,
-     "Hibernando": 1
+     "Hibernando": 1,
+     "En Curso": 1,
+     "Desestimada": 1
     },
     "detalle": [
      {
@@ -295,10 +296,9 @@
    "cotizaciones": {
     "emitidas": 6,
     "estado": {
+     "Versionada": 3,
      "Aprobada": 2,
-     "Versionada": 2,
-     "En preparación": 1,
-     "Vencida": 1
+     "En preparación": 1
     },
     "enviadas": 2,
     "aprobadas": {
@@ -320,7 +320,7 @@
      {
       "f": "24/02",
       "nro": "1498.1",
-      "estado": "Vencida"
+      "estado": "Versionada"
      },
      {
       "f": "20/02",
@@ -1096,9 +1096,8 @@
     "estado": {
      "Concretada": 4,
      "Desestimada": 4,
-     "Hibernando": 2,
-     "En Curso": 1,
-     "Vencida": 1
+     "En Curso": 2,
+     "Hibernando": 2
     },
     "detalle": [
      {
@@ -2174,9 +2173,8 @@
     },
     "estado": {
      "En Curso": 5,
-     "Concretada": 1,
-     "Vencida": 1,
-     "Hibernando": 1
+     "Hibernando": 2,
+     "Concretada": 1
     },
     "detalle": [
      {
@@ -2318,13 +2316,25 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 16,
+    "total": 18,
     "origen": {
-     "web": 14,
+     "web": 16,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
+     {
+      "f": "27/10",
+      "cliente": "WRXthdIvBTfbCKBu",
+      "contacto": "MMUSRsuHfyhFSGZMwBI zRJOpbnIdOMZGLUx",
+      "origen": "web"
+     },
+     {
+      "f": "27/10",
+      "cliente": "fcJKbrhWvLGCrgaOnrh",
+      "contacto": "EctSWYsFBRIUAZpBWissvB edkgXlYZpCHmPLNthkp",
+      "origen": "web"
+     },
      {
       "f": "26/10",
       "cliente": "susy marroquineria",
@@ -2424,9 +2434,9 @@
     ]
    },
    "ons": {
-    "total": 10,
+    "total": 11,
     "origen": {
-     "CLIENTE": 4,
+     "CLIENTE": 5,
      "web": 3,
      "Recomendación": 1,
      "Precotizador web": 1,
@@ -2434,12 +2444,20 @@
     },
     "estado": {
      "En Curso": 4,
-     "Confirmada": 2,
+     "Desestimada": 3,
      "Esperando contacto inicial": 2,
-     "Vencida": 1,
-     "Desestimada": 1
+     "Concretada": 1,
+     "Confirmada": 1
     },
     "detalle": [
+     {
+      "f": "30/10",
+      "fecha": "2026-10-30 10:13",
+      "empresa": "Sin empresa",
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 36213 GrupoRoft",
+      "id": 37721
+     },
      {
       "f": "26/10",
       "fecha": "2026-10-26 11:36",
@@ -2523,12 +2541,11 @@
     ]
    },
    "cotizaciones": {
-    "emitidas": 5,
+    "emitidas": 6,
     "estado": {
+     "Vencida": 2,
      "Aprobada": 2,
-     "Enviada": 1,
-     "Vencida": 1,
-     "En preparación": 1
+     "En preparación": 2
     },
     "enviadas": 4,
     "aprobadas": {
@@ -2537,6 +2554,11 @@
      "neto_sop": 64500.0
     },
     "detalle": [
+     {
+      "f": "30/10",
+      "nro": "1570.1",
+      "estado": "En preparación"
+     },
      {
       "f": "23/10",
       "nro": "1569.1",
@@ -2555,7 +2577,7 @@
      {
       "f": "06/10",
       "nro": "1564.2",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "06/10",
@@ -2565,8 +2587,8 @@
     ]
    },
    "concretadas": {
-    "n": 2,
-    "importe": 12594590.0,
+    "n": 3,
+    "importe": 13010040.0,
     "detalle": [
      {
       "f": "15/10",
@@ -2574,6 +2596,14 @@
       "empresa": "Mel City SA",
       "origen": "Web yiqi.com.ar",
       "importe": 12331600.0,
+      "anticipo": 0.0
+     },
+     {
+      "f": "26/10",
+      "fecha": "2026-10-26 17:30",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "CLIENTE",
+      "importe": 415450.0,
       "anticipo": 0.0
      },
      {
@@ -2586,24 +2616,104 @@
      }
     ]
    }
+  },
+  "2026-11": {
+   "consultas": {
+    "total": 1,
+    "origen": {
+     "Precotizador web": 1
+    },
+    "detalle": [
+     {
+      "f": "03/11",
+      "cliente": "Test",
+      "contacto": "Sebastián Test",
+      "origen": "Precotizador web"
+     }
+    ]
+   },
+   "ons": {
+    "total": 2,
+    "origen": {
+     "Sin origen": 1,
+     "CLIENTE": 1
+    },
+    "estado": {
+     "Esperando contacto inicial": 1,
+     "En Curso": 1
+    },
+    "detalle": [
+     {
+      "f": "03/11",
+      "fecha": "2026-11-03 10:45",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Curso de IA aplicada a la gestión (4 encuentros)",
+      "id": 37723
+     },
+     {
+      "f": "03/11",
+      "fecha": "2026-11-03 07:21",
+      "empresa": "TEST",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - Test",
+      "id": 37722
+     }
+    ]
+   },
+   "cotizaciones": {
+    "emitidas": 3,
+    "estado": {
+     "En preparación": 2,
+     "Enviada": 1
+    },
+    "enviadas": 1,
+    "aprobadas": {
+     "n": 0,
+     "neto_impl": 0.0,
+     "neto_sop": null
+    },
+    "detalle": [
+     {
+      "f": "03/11",
+      "nro": "1498.2",
+      "estado": "Enviada"
+     },
+     {
+      "f": "03/11",
+      "nro": "1571.1",
+      "estado": "En preparación"
+     },
+     {
+      "f": "03/11",
+      "nro": "1572.1",
+      "estado": "En preparación"
+     }
+    ]
+   },
+   "concretadas": {
+    "n": 0,
+    "importe": 0.0,
+    "detalle": []
+   }
   }
  },
  "historico": {
-  "total": 4450,
+  "total": 4453,
   "desde": "2014-11-28",
   "estado": {
-   "Desestimada": 2487,
-   "En Curso": 1415,
-   "Concretada": 462,
-   "Hibernando": 32,
+   "Desestimada": 2488,
+   "En Curso": 1421,
+   "Concretada": 463,
+   "Hibernando": 33,
    "Presentación enviada": 19,
-   "Confirmada": 14,
-   "Vencida": 14,
+   "Confirmada": 13,
+   "Vencida": 8,
    "Esperando presupuesto": 3,
-   "Presupuesto enviado": 2,
-   "Esperando contacto inicial": 2
+   "Esperando contacto inicial": 3,
+   "Presupuesto enviado": 2
   },
-  "enCursoNuevas": 30,
+  "enCursoNuevas": 35,
   "enCursoViejas": 1378
  },
  "series": {
@@ -2629,7 +2739,8 @@
    "2026-07": 6,
    "2026-08": 16,
    "2026-09": 8,
-   "2026-10": 10
+   "2026-10": 11,
+   "2026-11": 2
   },
   "cotiz_enviadas": {
    "2025-07": 10,
@@ -2647,7 +2758,8 @@
    "2026-07": 7,
    "2026-08": 7,
    "2026-09": 8,
-   "2026-10": 4
+   "2026-10": 4,
+   "2026-11": 1
   },
   "cotiz_aprobadas": {
    "2025-07": {
