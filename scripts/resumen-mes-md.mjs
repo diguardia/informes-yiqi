@@ -128,11 +128,14 @@ const FUENTES = {
     ],
     'Comercial': [
       'Detalle de las 11 ONs, su estado y su origen, de las 3 concretadas y de las 6 cotizaciones: `claude/Reporte-comercial-octubre-2026-datos.md` (consultado el 03/11 contra el conector YiQi).',
-      'Descuento del 50 % a Mel City: lo dijo Seba el 05/10. No está en el CRM ni en ninguna fuente que lean los informes.',
+      'Cobros del mes, leads y reuniones: planilla de comisiones (Google Sheet, hoja «2026 OCTUBRE»), leída el 04/11. 276 leads, 3 reuniones, cobros por campaña $0,00. Los importes van con IVA por la nota del 20/10 de la propia planilla: dividir por 1,21 da el neto.',
+      'Mel City: cobro del 15/10 por $14.921.236 con IVA = $12.331.600 netos, el neto exacto de la cotización 1524.4. El descuento del 50 % lo mencionó Seba el 05/10 y no se puede ubicar en ninguna fuente: queda por confirmar si estaba dentro de ese neto.',
+      'Reuniones de octubre: cruce de calendario, Gmail y el resumen de Discord hecho el 04/11. Confirmadas con leads: Importadora Jorge el 06/10 (mail de Javier del 06/10 con la cotización; el 15/10 queda «atento para coordinar una demo») y Transportes Bessone el 14/10 (doc «YiQi ERP - Bessone» compartido el 15/10 y mail del 14/10, de donde sale la cotización 1564.2). Sin fuente: Medic Tools el 23/10 y Bessone el 07/10. No cuentan como demo con lead: Antualia (desarrollador de iA Ready), Tornado, Raptiv e Interbanking (alianzas; la del 13/10 no se hizo). [Probable] la tercera reunión que cuenta la planilla está en el calendario de Javier.',
     ],
     'El sitio por dentro': [
       'Sesiones, páginas, eventos y origen de referencia: `data/clarity/clarity-2026-10.csv`. 4.394 sesiones (732 de bot aparte), 1,1914 páginas por sesión, 15,76 % de scroll, 17 s activos de 79, «Clic de salida» 70 y «Póngase en contacto con nosotros» 8.',
-      'Las 16 consultas del formulario y su origen: `data/crm-2026.json`, mes 2026-10. Nueve con nombre y contacto de cadenas al azar (21/10, 17/10, 14/10 ×3, 13/10, 11/10, 10/10, 08/10) y una de prueba el 20/10.',
+      'Las 18 consultas de octubre, una por una: conector YiQi, entidad CONSULTA_COMERCIAL, consultado el 04/11 (ids 29309 a 29327). Once posteos automaticos (08, 10, 11, 13, 14 ×3, 17, 21 y 27/10 ×2), la prueba propia del 20/10, el spam comercial del 18/10, y cinco reales: Importadora Jorge 01/10, Batos sas 09/10 por el precotizador, Medic Tools 15/10 y Susy Marroquineria 22 y 26/10. El `data/crm-2026.json` del repo es del 26/10 y solo ve 16.',
+      'Que los posteos automaticos no pasan por el formulario: su campo COCO_CONSULTA trae solo una cadena al azar, sin las lineas «Rubros», «Modulos» ni «Empleados» que si traen las consultas reales y la propia prueba del 20/10. Los posteriores al 20/10 agregan «Origen de la visita: directo · entro por /».',
       'Agosto para comparar: objeto `clarity` de `RESUMEN_MES.ago` en `comercial.html` (Instagram 1.975, Facebook 116).',
     ],
     'Lo que hay que decidir': [

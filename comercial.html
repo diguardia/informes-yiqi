@@ -2950,7 +2950,7 @@
           { l: 'Concretadas',         v: '3',        d: 'Centro de Distribución Sur, Mel City y Shopealo' },
         ],
         claves: [
-          'Octubre fue el mes de más pauta del año, $43.593 por encima del tope de $500.000 que se había fijado, y ninguna de las 11 oportunidades nuevas vino de Instagram ni de Meta. Es el tercer mes seguido sin una sola.',
+          'Octubre fue el mes de más pauta del año, $43.593 por encima del tope de $500.000 que se había fijado, y ninguna de las 11 oportunidades nuevas vino de Instagram ni de Meta: es el tercer mes seguido sin una sola. La planilla de comisiones cuenta 276 leads y 3 reuniones en el mes, y su columna de cobros por campaña está en cero, igual que todos los meses de 2026.',
           'No es un problema de precio: la conversación bajó de $907 a $855 en Mensajes IG. El tráfico también llega —4.394 sesiones, 3.696 de Facebook e Instagram— y se muere en la home: 1,19 páginas por sesión, 15,8 % de scroll, 17 segundos activos y 8 sesiones con clic en Contacto.',
           'La mitad de la pauta, $274.082, está en «Puedes vender más / costos», que compra clics: 5.842 a $46,92, y aportó una sola de las 260 conversaciones del mes. Las otras 259 son de Mensajes IG.',
         ],
@@ -2965,11 +2965,14 @@
           { n: 'Comercial', href: '#funnel', items: [
             { t: '**11 ONs nuevas:** 5 de cliente actual, 3 de la web, 1 de recomendación, 1 del precotizador y 1 sin origen. Entre las 11 hay una de spam descartada y dos de susy marroquinería' },
             { t: '**3 concretadas:** Centro de Distribución Sur el 02/10 por $262.990, Mel City el 15/10 y Shopealo el 26/10 por $415.450' },
-            { t: '**Mel City llevó 50 % de descuento** y el neto de su última cotización no lo refleja: el importe que sale del CRM está inflado y no hay fuente de datos que lo corrija. Hay que decidir si se arregla a mano o se carga en la cotización del ERP' },
+            { t: '**Mel City se cobró el 15/10 por $14.921.236 con IVA**, que son exactamente los $12.331.600 netos de la cotización 1524.4 (planilla de comisiones, hoja «2026 OCTUBRE»): lo facturado coincide con la cotización. El descuento del 50 % que se mencionó el 05/10 o ya estaba dentro de ese neto o no se aplicó al importe; sin confirmarlo, la cifra no se puede leer como descuento' },
             { t: '**6 cotizaciones emitidas**, 4 enviadas y 2 aprobadas en el mes (ON 37709 por $415.450 de implementación más $64.500 de soporte, y ON 37714 por $424.515)' },
+            { t: '**Cobrado en octubre: $15.239.453,90 con IVA**, que son los $12.594.590 netos de las concretadas del mes (Centro de Distribución Sur el 02/10 y Mel City el 15/10). La hoja de octubre de la planilla suma $17.539.694,15 porque arrastra dos cobros de otros meses: NINA Alvarado del 29/09 y Espacio Marketing del 23/07' },
+            { t: '**Shopealo no tiene cobro cargado:** la ON se concretó el 26/10 por $415.450 y no figura en la planilla de octubre' },
+            { t: '**Reuniones: la planilla cuenta 3 y el cruce de calendario, Gmail y Discord confirma 2 con leads** —Importadora Jorge el 06/10 y Transportes Bessone el 14/10—, ninguna de ellas una demo. Falta la lista de octubre de Javier para saber cuál es la tercera. Contra la meta de 5 demos por semana, el mes cierra en cero demos confirmadas' },
           ] },
           { n: 'El sitio por dentro', c: '4.394', items: [
-            { t: '**El formulario entra sin filtro:** de las 16 consultas de octubre, 10 tienen nombre y contacto generados al azar o son pruebas. Las reales son Susy Marroquinería, Medic Tools, Batos sas por el precotizador e Importadora Jorge por recomendación' },
+            { t: '**El formulario de contacto de la home entra sin validar:** de las 18 consultas de octubre, 13 no son consultas. Once son posteos automáticos —cadena al azar en el nombre y en el mensaje, casi todos de madrugada— y no traen Rubros, Módulos ni Empleados, los campos que el formulario sí manda: no lo están completando, postean directo al endpoint. Las otras dos son una prueba propia del 20/10 y un spam comercial de relojes del 18/10. Las reales son cinco: Importadora Jorge, Batos sas por el precotizador, Medic Tools y dos de Susy Marroquinería' },
             { t: '**Se dio vuelta el origen del tráfico:** Facebook pasó de 116 sesiones en agosto a 2.957 en octubre e Instagram bajó de 1.975 a 739. Las dos juntas son el 93 % del origen identificado' },
             { t: '**42 sesiones contra `wp-includes/sitemaps/class-ugw.php`** son sondeos de un escáner buscando WordPress, no una página del sitio' },
           ] },
@@ -3013,13 +3016,14 @@
           { t: 'Documentación', d: 'proyecto, convenciones, referencias, estado de avance' },
         ],
         decidir: [
-          { t: '**Qué se hace con el descuento del 50 % a Mel City:** corregirlo a mano en cada informe o cargarlo en la cotización del ERP para que salga solo. Hoy el importe que sale del CRM está inflado y ningún informe lo puede detectar.', href: '#concretadas' },
+          { t: '**Confirmar qué pasó con el descuento del 50 % a Mel City:** la planilla de comisiones registra el cobro completo de la cotización, así que o el descuento ya estaba dentro de ese neto o no se aplicó. Mientras no se sepa, ningún informe puede decir si la cifra está bien.', href: '#concretadas' },
           { t: '**Qué se hace con «Puedes vender más / costos»:** se lleva la mitad del presupuesto y aportó una conversación en el mes. Cortarla, rehacerla, o aceptarla como campaña de tráfico y medirla por visitas a la página.', href: '#anuncios' },
           { t: '**Las 1.415 oportunidades «En curso» con más de dos años:** la propuesta de desestimarlas espera la aprobación de Javier.', href: '#funnel' },
         ],
         sigue: [
-          'Poner un filtro anti-spam en el formulario del sitio: 10 de las 16 consultas de octubre no son personas.',
+          'Validar las consultas del lado del servidor, no con un captcha en el formulario: los once posteos automáticos de octubre no pasan por el formulario, así que lo que los corta es exigir en el endpoint los campos que el form siempre manda (Rubros, Módulos, Empleados), más token de formulario y límite por IP.',
           'Llevar la pauta a las páginas por integración en vez de la home. Tiendanube ya mostró que funciona: 910 sesiones en su página contra 8 sesiones con clic en Contacto en todo el sitio.',
+          'Pedirle a Javier su lista de reuniones de octubre: la planilla cuenta 3 y solo 2 tienen fuente. Si agendó demos por Calendly sin copiar a comercial@, no aparecen en ningún registro propio.',
           'Medir la campaña nueva al precotizador («Tu pyme está lista») aparte desde su primer día; al 03/11 todavía no salió.',
           'Actualizar las 4 oportunidades vencidas y cargar abono e implementación en las oportunidades abiertas: hoy solo Centro de Distribución Sur los tiene.',
         ],
