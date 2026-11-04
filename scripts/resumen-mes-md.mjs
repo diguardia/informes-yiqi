@@ -124,7 +124,9 @@ const FUENTES = {
     'Pauta': [
       'Las tres campañas y su resultado, conector de Meta: «Puedes vender más / costos» $274.081,88 · 83.803 impresiones · 5.842 clics en el enlace a $46,92; «Mensajes IG · placas» $221.324,58 · 80.410 impresiones · 259 conversaciones a $854,54; «Tiendanube · integración» $48.186,19 · 64.045 impresiones · 856 visitas a la página a $56,29.',
       'Septiembre para comparar, `data/meta.json` mes `sep`: Mensajes IG $242.199 / 267 conversaciones / $907 y Tiendanube $8.265 / 175 clics.',
-      'Cambio de facturación a visita real desde el 13/10 y origen de la visita en el CRM desde el 20/10 (commit 7295e11): `claude/Prompt-chat-informes.md`.',
+      'Cambio a visita real: registro de actividad de la cuenta 370211010327709 (`ads_account_get_activity_logs`, 26/09–31/10), leido el 04/11. El 06/10 los conjuntos «Costos · Argentina» y «Retargeting IG · interaccion 365 d» cambian optimization_goal de Link Clicks a Landing Page Views. `claude/Prompt-chat-informes.md` dice 13/10: la fuente es el registro, y hay que corregir el doc.',
+      'Asientos de octubre de la bitacora (06, 10, 20 y 26/10): mismo registro de actividad. 06/10 cambio de objetivo, alta del Reel · Costos y pausa de las tres placas; 10/10 dos lookalikes del publico de interaccion de IG y ajuste de edad del conjunto Retargeting IG; 20/10 cambio de creativo en los cuatro anuncios al aire y de segmentacion en Tiendanube; 26/10 alta de «Visitantes Tiendanube · 180 dias», «Visitantes iA Ready · 180 dias» y «Video 50 % · 365 dias».',
+      'Origen de la visita en el CRM desde el 20/10 (commit 7295e11): `claude/Prompt-chat-informes.md`.',
     ],
     'Comercial': [
       'Detalle de las 11 ONs, su estado y su origen, de las 3 concretadas y de las 6 cotizaciones: `claude/Reporte-comercial-octubre-2026-datos.md` (consultado el 03/11 contra el conector YiQi).',
