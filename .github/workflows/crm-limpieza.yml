@@ -1,0 +1,68 @@
+name: CRM · desestimar las ON viejas
+
+# Solo a mano. No tiene cron a proposito: cambia datos del ERP.
+#
+# Dos fases separadas:
+#   listar   no toca nada. Cuenta las «En Curso» con mas de dos anios y deja
+#            el listado como artifact para revisarlo antes de aplicar.
+#   aplicar  pasa a «Desestimada» con razon «Vencimiento», de a una, porque
+#            la transicion exige la razon y ChangeStateMultiple no acepta
+#            body. Con limite 1 la primera vez, para ver que el usuario de la
+#            API tenga permiso de escritura antes de soltar las 1.378.
+#
+# El listado y el log NO se commitean: son nombres de clientes y este repo es
+# publico. Quedan como artifact de la corrida.
+#
+# Secretos: los mismos que crm.yml (YIQI_API_USER, YIQI_API_PASS).
+
+on:
+  workflow_dispatch:
+    inputs:
+      fase:
+        description: 'listar (no toca nada) o aplicar'
+        required: true
+        default: 'listar'
+        type: choice
+        options: [listar, aplicar]
+      limite:
+        description: 'Cuantas procesar en aplicar. 1 para la prueba, 0 para todas.'
+        required: false
+        default: '1'
+
+concurrency:
+  group: crm-limpieza
+  cancel-in-progress: false
+
+jobs:
+  limpieza:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Listar
+        env:
+          YIQI_API_USER: ${{ secrets.YIQI_API_USER }}
+          YIQI_API_PASS: ${{ secrets.YIQI_API_PASS }}
+          CRM_LIMPIEZA_DIR: ${{ github.workspace }}/crm-limpieza
+        run: python3 scripts/crm-limpieza.py listar
+
+      - name: Aplicar
+        if: inputs.fase == 'aplicar'
+        env:
+          YIQI_API_USER: ${{ secrets.YIQI_API_USER }}
+          YIQI_API_PASS: ${{ secrets.YIQI_API_PASS }}
+          CRM_LIMPIEZA_DIR: ${{ github.workspace }}/crm-limpieza
+        run: python3 scripts/crm-limpieza.py aplicar --limite ${{ inputs.limite }}
+
+      - name: Guardar listado y log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crm-limpieza
+          path: crm-limpieza/
+          retention-days: 7
+          if-no-files-found: warn

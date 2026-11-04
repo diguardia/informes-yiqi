@@ -12,3 +12,6 @@ Thumbs.db
 
 # Python
 __pycache__/
+
+# listado y log de la limpieza del CRM: nombres de clientes, repo publico
+crm-limpieza/
