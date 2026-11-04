@@ -2675,11 +2675,12 @@
         </button>
         <div class="ds-picker period-picker" id="mes-picker" data-ds-picker>
           <button type="button" class="ds-picker-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Mes del resumen">
-            <span class="ds-picker-value">Agosto 2026</span><svg class="ds-picker-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="ds-picker-value">Octubre 2026</span><svg class="ds-picker-chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="ds-picker-menu" role="listbox" aria-label="Mes del resumen" hidden>
+            <button type="button" class="ds-picker-option is-active" role="option" data-value="oct" aria-selected="true">Octubre 2026</button>
             <button type="button" class="ds-picker-option" role="option" data-value="sep" aria-selected="false">Septiembre 2026</button>
-            <button type="button" class="ds-picker-option is-active" role="option" data-value="ago" aria-selected="true">Agosto 2026</button>
+            <button type="button" class="ds-picker-option" role="option" data-value="ago" aria-selected="false">Agosto 2026</button>
           </div>
         </div>
         </div>
@@ -2932,6 +2933,97 @@
           'Mirar la frecuencia del retargeting cada lunes y cambiar la pieza cuando pase de 3: es el control que evita que un conjunto se agote con el mismo creativo.',
         ],
       },
+      oct: {
+        /* Mes cerrado. Cada cifra sale de una fuente consultada el 03/11:
+           Meta del conector de la cuenta 370211010327709 y de data/meta.json
+           (corte 01–31/10), el CRM del conector YiQi (11 ONs por fecha de
+           creación, 3 concretadas por fecha de concreción) y el sitio del
+           export de Clarity data/clarity/clarity-2026-10.csv. Los frentes de
+           Piezas, Campaña, Alianzas, Marketplace, Design System y Ayuda no
+           están: salen de la grilla y la bitácora, que no se consultaron en
+           esta sesión. Lo que no tiene fuente no entra. */
+        kpis: [
+          { l: 'Invertido en pauta',  v: '$543.593', d: 'el máximo del año · $43.593 sobre el tope de $500.000',   href: '#resumen' },
+          { l: 'Alcance',             v: '126.263',  d: '228.258 impresiones · 8.910 clics',                       href: '#resumen' },
+          { l: 'Conversaciones',      v: '260',      d: '$855 cada una en Mensajes IG, contra $907 en septiembre', href: '#resumen' },
+          { l: 'ONs nuevas',          v: '11',       d: 'ninguna de Instagram ni de Meta, por tercer mes seguido', href: '#funnel' },
+          { l: 'Concretadas',         v: '3',        d: 'Centro de Distribución Sur, Mel City y Shopealo' },
+        ],
+        claves: [
+          'Octubre fue el mes de más pauta del año, $43.593 por encima del tope de $500.000 que se había fijado, y ninguna de las 11 oportunidades nuevas vino de Instagram ni de Meta. Es el tercer mes seguido sin una sola.',
+          'No es un problema de precio: la conversación bajó de $907 a $855 en Mensajes IG. El tráfico también llega —4.394 sesiones, 3.696 de Facebook e Instagram— y se muere en la home: 1,19 páginas por sesión, 15,8 % de scroll, 17 segundos activos y 8 sesiones con clic en Contacto.',
+          'La mitad de la pauta, $274.082, está en «Puedes vender más / costos», que compra clics: 5.842 a $46,92, y aportó una sola de las 260 conversaciones del mes. Las otras 259 son de Mensajes IG.',
+        ],
+        frentes: [
+          { n: 'Pauta', href: '#resumen', items: [
+            { t: '**$543.593 invertidos**, el máximo del año y $43.593 arriba del tope mensual de $500.000. Tres campañas: «Puedes vender más / costos» $274.082, «Mensajes IG · placas» $221.325 y «Tiendanube · integración» $48.186' },
+            { t: '**La conversación se abarató:** Mensajes IG pasó de $907 en septiembre a $855 en octubre, con 259 conversaciones de las 260 del mes' },
+            { t: '**Tiendanube escaló de $8.265 a $48.186** y trajo 856 visitas a la página a $56,29 cada una. Es la única campaña que lleva a una página que no es la home: tiendanube.html fue la segunda página del mes con 910 sesiones', href: '#anuncios' },
+            { t: '**Desde el 13/10 los anuncios pagan por visita real a la página**, no por clic, así que el costo por resultado de octubre no es comparable con el de los meses anteriores en las campañas de tráfico' },
+            { t: '**Desde el 20/10 el origen de la visita llega al CRM** en el texto de la consulta (commit 7295e11). Los anuncios viejos no llevan UTM, así que el origen «Meta» solo va a ser confiable en los anuncios nuevos que lo tengan' },
+          ] },
+          { n: 'Comercial', href: '#funnel', items: [
+            { t: '**11 ONs nuevas:** 5 de cliente actual, 3 de la web, 1 de recomendación, 1 del precotizador y 1 sin origen. Entre las 11 hay una de spam descartada y dos de susy marroquinería' },
+            { t: '**3 concretadas:** Centro de Distribución Sur el 02/10 por $262.990, Mel City el 15/10 y Shopealo el 26/10 por $415.450' },
+            { t: '**Mel City llevó 50 % de descuento** y el neto de su última cotización no lo refleja: el importe que sale del CRM está inflado y no hay fuente de datos que lo corrija. Hay que decidir si se arregla a mano o se carga en la cotización del ERP' },
+            { t: '**6 cotizaciones emitidas**, 4 enviadas y 2 aprobadas en el mes (ON 37709 por $415.450 de implementación más $64.500 de soporte, y ON 37714 por $424.515)' },
+          ] },
+          { n: 'El sitio por dentro', c: '4.394', items: [
+            { t: '**El formulario entra sin filtro:** de las 16 consultas de octubre, 10 tienen nombre y contacto generados al azar o son pruebas. Las reales son Susy Marroquinería, Medic Tools, Batos sas por el precotizador e Importadora Jorge por recomendación' },
+            { t: '**Se dio vuelta el origen del tráfico:** Facebook pasó de 116 sesiones en agosto a 2.957 en octubre e Instagram bajó de 1.975 a 739. Las dos juntas son el 93 % del origen identificado' },
+            { t: '**42 sesiones contra `wp-includes/sitemaps/class-ugw.php`** son sondeos de un escáner buscando WordPress, no una página del sitio' },
+          ] },
+        ],
+        clarity: {
+          /* Export del Dashboard de Clarity, 01–31/10/2026, en
+             data/clarity/clarity-2026-10.csv. Los referrers suman 3.961 de
+             4.394 sesiones: el resto entra sin referente. Facebook junta
+             l.facebook.com 1.894, m.facebook.com 1.058 y facebook.com 5;
+             Instagram, instagram.com 727 y www.instagram.com 12. */
+          origen: [
+            ['Facebook', 2957], ['Instagram', 739], ['Sitio propio', 155],
+            ['Google', 107], ['Otros', 3],
+          ],
+          eventos: [
+            ['Outbound click', 70], ['Login', 43], ['Contact us', 8],
+            ['Order success', 1],
+          ],
+          stats: [
+            ['4.394', 'sesiones'], ['3.614', 'usuarios'],
+            ['1,19', 'páginas por sesión'], ['17 s', 'activos de 79'],
+          ],
+          claves: 'Facebook trae 3 de cada 4 sesiones con origen identificado y la home se lleva 7 de cada 10 vistas, pero de las 3.696 sesiones de Facebook e Instagram solo 8 llegan a tocar Contacto.',
+          pie: 'Rage clicks 0,02 % · dead clicks 0,64 % · quick backs 0,96 % · 732 sesiones de bots excluidas · Microsoft Clarity registra cada visita a yiqi.com.ar',
+          /* Apex y www son la misma página servida por dos hosts, así que se
+             suman: home = 3.120 + 60 + 32 (index.html); iA Ready = 99 + 17. */
+          paginas: [
+            ['Home', 3212], ['Tiendanube', 910], ['iA Ready', 116],
+            ['Novedades', 36], ['API', 35], ['Capacitaciones', 32],
+          ],
+        },
+        recurrente: [
+          { t: 'Pauta', d: 'leer la cuenta todos los días; decidir qué se pausa, qué se escala y cuándo' },
+          { t: 'Mensajes', d: 'atender Instagram y Facebook: responder, calificar, derivar o cerrar' },
+          { t: 'Consultoría', d: 'convocatoria, recordatorio, resumen y minuta cada quince días' },
+          { t: 'Desarrolladores externos', d: 'quién está en qué punto, qué le falta, quién le debe una respuesta' },
+          { t: 'Leads', d: 'informe de preventa y landing por lead; respuesta a consultas con template' },
+          { t: 'Sitio', d: 'SEO, Open Graph, sitemap, redirecciones, fichas de apps y partners' },
+          { t: 'Design System', d: 'cada versión, changelog, catálogo, showcase; avisar a quien lo consume' },
+          { t: 'Informes', d: 'comercial.html vivo, panel gerencial, competencia' },
+          { t: 'Documentación', d: 'proyecto, convenciones, referencias, estado de avance' },
+        ],
+        decidir: [
+          { t: '**Qué se hace con el descuento del 50 % a Mel City:** corregirlo a mano en cada informe o cargarlo en la cotización del ERP para que salga solo. Hoy el importe que sale del CRM está inflado y ningún informe lo puede detectar.', href: '#concretadas' },
+          { t: '**Qué se hace con «Puedes vender más / costos»:** se lleva la mitad del presupuesto y aportó una conversación en el mes. Cortarla, rehacerla, o aceptarla como campaña de tráfico y medirla por visitas a la página.', href: '#anuncios' },
+          { t: '**Las 1.415 oportunidades «En curso» con más de dos años:** la propuesta de desestimarlas espera la aprobación de Javier.', href: '#funnel' },
+        ],
+        sigue: [
+          'Poner un filtro anti-spam en el formulario del sitio: 10 de las 16 consultas de octubre no son personas.',
+          'Llevar la pauta a las páginas por integración en vez de la home. Tiendanube ya mostró que funciona: 910 sesiones en su página contra 8 sesiones con clic en Contacto en todo el sitio.',
+          'Medir la campaña nueva al precotizador («Tu pyme está lista») aparte desde su primer día; al 03/11 todavía no salió.',
+          'Actualizar las 4 oportunidades vencidas y cargar abono e implementación en las oportunidades abiertas: hoy solo Centro de Distribución Sur los tiene.',
+        ],
+      },
     };
 
     const MES_ICONOS = {
@@ -3053,7 +3145,7 @@
        llamadas no dibujan: si dibujaran, la animacion ya habria corrido
        cuando el lector llega y ademas se veria redibujar al pasar. */
     let MES_GRAF_VISTO = false;
-    let MES_ACTIVO = 'ago';
+    let MES_ACTIVO = 'oct';
     const MES_NOMBRE = { ene:'Enero', feb:'Febrero', mar:'Marzo', abr:'Abril', may:'Mayo', jun:'Junio', jul:'Julio', ago:'Agosto', sep:'Septiembre', oct:'Octubre', nov:'Noviembre', dic:'Diciembre' };
 
     /* Texto plano del mes, en markdown, con la misma estructura que
@@ -3205,7 +3297,7 @@
 
     }
 
-    mesRender('ago');
+    mesRender('oct');
     (function () {
       const pk = document.getElementById('mes-picker');
       if (pk) pk.addEventListener('ds-picker:change', e => { MES_ACTIVO = e.detail.value; mesRender(e.detail.value); });

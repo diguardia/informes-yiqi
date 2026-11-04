@@ -114,6 +114,31 @@ const FUENTES = {
       'Firmar antes de publicar: `www.yiqi/components/apps-data.js` (`vantig-ai` prov Vantig, `rentabilidad-ml` prov metroblanc); grilla de Planificación del 07/09 "Ver nda y acuerdo comercial - JP"; respuesta de Federico Vara del 10/09: "la gente de Dentalab está haciendo pruebas ya".',
     ],
   },
+  oct: {
+    'Cifras': [
+      'Gasto, alcance, impresiones, clics y conversaciones: conector de Meta, cuenta 370211010327709, corte 01–31/10, y `data/meta.json` mes `oct` (generado el 03/11/2026 17:02 UTC). Gasto ARS 543.592,65 · alcance 126.263 · impresiones 228.258 · clics 8.910 · 260 conversaciones.',
+      'Tope de pauta de $500.000 por mes: decisión propia registrada; octubre lo pasó por $43.593.',
+      'ONs y concretadas: conector YiQi, esquema 23, consultado el 03/11. 11 ONs por fecha de creación y 3 concretadas por fecha de concreción. El `data/crm-2026.json` del repo es del 26/10 y da 10 ONs: le falta la última.',
+      'Sitio: `data/clarity/clarity-2026-10.csv`, export manual del panel de Clarity, 01–31/10.',
+    ],
+    'Pauta': [
+      'Las tres campañas y su resultado, conector de Meta: «Puedes vender más / costos» $274.081,88 · 83.803 impresiones · 5.842 clics en el enlace a $46,92; «Mensajes IG · placas» $221.324,58 · 80.410 impresiones · 259 conversaciones a $854,54; «Tiendanube · integración» $48.186,19 · 64.045 impresiones · 856 visitas a la página a $56,29.',
+      'Septiembre para comparar, `data/meta.json` mes `sep`: Mensajes IG $242.199 / 267 conversaciones / $907 y Tiendanube $8.265 / 175 clics.',
+      'Cambio de facturación a visita real desde el 13/10 y origen de la visita en el CRM desde el 20/10 (commit 7295e11): `claude/Prompt-chat-informes.md`.',
+    ],
+    'Comercial': [
+      'Detalle de las 11 ONs, su estado y su origen, de las 3 concretadas y de las 6 cotizaciones: `claude/Reporte-comercial-octubre-2026-datos.md` (consultado el 03/11 contra el conector YiQi).',
+      'Descuento del 50 % a Mel City: lo dijo Seba el 05/10. No está en el CRM ni en ninguna fuente que lean los informes.',
+    ],
+    'El sitio por dentro': [
+      'Sesiones, páginas, eventos y origen de referencia: `data/clarity/clarity-2026-10.csv`. 4.394 sesiones (732 de bot aparte), 1,1914 páginas por sesión, 15,76 % de scroll, 17 s activos de 79, «Clic de salida» 70 y «Póngase en contacto con nosotros» 8.',
+      'Las 16 consultas del formulario y su origen: `data/crm-2026.json`, mes 2026-10. Nueve con nombre y contacto de cadenas al azar (21/10, 17/10, 14/10 ×3, 13/10, 11/10, 10/10, 08/10) y una de prueba el 20/10.',
+      'Agosto para comparar: objeto `clarity` de `RESUMEN_MES.ago` en `comercial.html` (Instagram 1.975, Facebook 116).',
+    ],
+    'Lo que hay que decidir': [
+      'Las 1.415 oportunidades «En curso» con más de dos años y los cuatro desvíos del mes: `claude/Prompt-chat-informes.md`, sección de pendientes al 03/11.',
+    ],
+  },
 };
 
 const key = process.argv[2] || 'ago';

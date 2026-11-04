@@ -88,11 +88,33 @@ def check(txt, must):
 # De comercial.html se trae solo lo que este reporte aplica. Las variantes
 # de color de KPI, las dos grillas densas y los tres .chart-wrap quedaron
 # sin un solo uso cuando salio el bloque heredado: no se extraen mas.
-CSS_1   = check(sl(336,347),  ['.section-title {', '.section-sub {'])
-CSS_2   = check(sl(382,390),  ['.kpi-delta.positive'])
-CSS_3   = check(sl(391,398),  ['.card {'])
-CSS_4   = check(sl(607,617),  ['.card-reveal { opacity: 0; }'])
-CSS_5   = check(sl(665,672),  ['@media (max-width: 640px) {']) + '\n    }'
+# Por marcador, no por numero de linea. comercial.html se edita seguido y
+# cada edicion corria los rangos: el armado se cayo por eso en septiembre y
+# otra vez el 03/11. `tramo` devuelve desde la linea `desde` hasta la linea
+# `hasta`, las dos enteras y las dos incluidas, y la ultima tiene que ser
+# unica a partir de la primera.
+_css = '\n'.join(src)
+
+def tramo(desde, hasta, must):
+    i = _css.index('\n' + desde + '\n') + 1
+    j = _css.index('\n' + hasta + '\n', i) + 1 + len(hasta)
+    return check(_css[i:j], must)
+
+CSS_1 = tramo('    section { margin-bottom: 44px; }',
+              '      color: var(--muted-2); margin-bottom: 18px;\n    }',
+              ['section { margin-bottom: 44px; }', '.section-title {', '.section-sub {'])
+CSS_2 = tramo('    /* .kpi-label, .kpi-value y .kpi-delta salen del DS. Lo unico propio es',
+              '    .kpi-delta.neutral  { color: var(--muted-2); }',
+              ['.kpi-delta.positive', '.kpi-delta.neutral'])
+CSS_3 = tramo('    /* ── BORDERLESS CARDS ────────────────────────────────────── */',
+              '    .card:hover {\n      box-shadow: var(--shadow-md);\n    }',
+              ['.card {', '.card:hover {'])
+CSS_4 = tramo('    /* ── ANIMATIONS ──────────────────────────────────────────── */',
+              '    .card-reveal:nth-child(5) { transition-delay: .24s; }',
+              ['.card-reveal { opacity: 0; }', '.card-reveal.visible'])
+CSS_5 = tramo('    /* ── MOBILE · KPIs y graficos compactos ──────────────────',
+              '      .chart-wrap-meta { height: 180px; }\n    }',
+              ['@media (max-width: 640px) {', '.kpi-value { font-size: 19px;'])
 
 # Cuatro funciones que comercial.html tiene repartidas por el archivo y que
 # el render de este reporte necesita. Se extraen por nombre y balance de
@@ -664,15 +686,36 @@ def _bajado(f):
     h = int(m.group(4)) % 12 + (12 if m.group(6) == 'PM' else 0)
     return datetime.datetime(int(m.group(3)), int(m.group(1)), int(m.group(2)), h, int(m.group(5)))
 
+# El panel exporta en el idioma de la sesion de quien lo baja: los de junio,
+# julio y septiembre salieron en ingles y el de octubre en espanol. Se traduce
+# al leer, asi el resto de la funcion sigue trabajando con una sola clave.
+_ES_EN = {
+    'Sesiones': 'Sessions', 'Páginas por sesión': 'Pages per session',
+    'Profundidad de desplazamiento': 'Scroll depth', 'Tiempo activo empleado': 'Active time spent',
+    'Información general de los usuarios': 'Users overview', 'Ideas': 'Insights',
+    'Exploradores': 'Browsers', 'Páginas principales': 'Top pages',
+    'Eventos inteligentes': 'Smart events', 'Origen de referencia': 'Referrer',
+    'Total de sesiones': 'Total sessions', 'Sesiones de bot': 'Bot sessions',
+    'Promedio': 'Average', 'Tiempo activo': 'Active time', 'Tiempo total': 'Total time',
+    'Usuarios únicos': 'Unique users', 'Clics continuos': 'Rage clicks',
+    'Clic inactivo': 'Dead click', 'Clic atrás rápido': 'Quick back click',
+    'Desplazamiento excesivo': 'Excessive scrolling',
+    'Clic de salida': 'Outbound click', 'Iniciar sesión': 'Login',
+    'Póngase en contacto con nosotros': 'Contact us', 'Pedido correcto': 'Order success',
+    'Enviar formulario': 'Submit form', 'Reservar': 'Book',
+}
+
 def _csv_clarity(mes):
     y, m = int(mes[:4]), int(mes[5:])
     ult = _cal.monthrange(y, m)[1]
     esperado = '%02d/01/%d 12:00 AM - %02d/%02d/%d 11:59 PM' % (m, y, m, ult, y)
+    esperado_es = '%02d/01/%d 00:00 - %02d/%02d/%d 23:59' % (m, y, m, ult, y)
     fin = datetime.datetime(y, m, ult, 23, 59)
     cand = []
     for f in _glob2.glob(os.path.join(REPO, 'data', 'clarity', '*.csv')):
         filas = list(_csv.reader(open(f, encoding='utf-8-sig')))
-        if any(len(r) > 1 and r[0] == 'Date range' and r[1] == esperado for r in filas):
+        if any(len(r) > 1 and r[0] in ('Date range', 'Intervalo de fechas')
+               and r[1] in (esperado, esperado_es) for r in filas):
             cand.append((_bajado(f) or datetime.datetime.min, f, filas))
     # El export bajado antes de que termine el mes dice igual "01 al 30":
     # Clarity rotula el rango pedido, no el cubierto. Solo el adelanto
@@ -683,8 +726,9 @@ def _csv_clarity(mes):
             b, cur = {}, None
             for r in filas:
                 if not r or not any(c.strip() for c in r): cur = None
-                elif r[0] == 'Metric': cur = r[1]; b[cur] = []
-                elif cur and r[0] == '' and len(r) > 1: b[cur].append(r[1:])
+                elif r[0] in ('Metric', 'Métricas'): cur = _ES_EN.get(r[1], r[1]); b[cur] = []
+                elif cur and r[0] == '' and len(r) > 1:
+                    b[cur].append([_ES_EN.get(r[1], r[1])] + list(r[2:]))
             return b
     return None
 
@@ -693,7 +737,8 @@ def _n_ar(v, dec=0):
     return t.replace(',', '§').replace('.', ',').replace('§', '.')
 
 def _pct_ar(t):
-    v = float(t.strip().rstrip('%') or 0)
+    # El export en espanol escribe los porcentajes con coma.
+    v = float(t.strip().rstrip('%').replace(',', '.') or 0)
     return (_n_ar(v, 2) if v % 1 else _n_ar(v)) + ' %'
 
 _PAGINAS = {'': 'Home', 'index.html': 'Home', 'ia-ready.html': 'iA Ready', 'api-docs.html': 'API',
@@ -774,8 +819,11 @@ def _sesiones(mes):
         return int(next(r[1] for r in _b['Sessions'] if r[0] == 'Total sessions'))
     csv = os.path.join(REPO, 'data', 'clarity', 'clarity-%s.csv' % mes)
     if os.path.exists(csv):
-        m = re.search(r'"","Total sessions","(\d+)"', open(csv, encoding='utf-8').read())
-        assert m, 'el export de Clarity no trae Total sessions: ' + csv
+        # El panel de Clarity exporta en el idioma de la sesion: los de
+        # junio y julio salieron en ingles, el de octubre en espanol.
+        txt = open(csv, encoding='utf-8-sig').read()
+        m = re.search(r'"","(?:Total sessions|Total de sesiones)","(\d+)"', txt)
+        assert m, 'el export de Clarity no trae el total de sesiones: ' + csv
         return int(m.group(1))
     c = _clarity_de(['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][int(mes[5:]) - 1])
     assert c, 'falta el export de Clarity de %s (data/clarity/clarity-%s.csv)' % (mes, mes)
@@ -875,7 +923,7 @@ assert META_SCRIPT.count('__META_JSON__') == 1
 META_SCRIPT = META_SCRIPT.replace('__META_JSON__', META_JSON)
 
 out = (PAGINA
-    .replace('__CSS__', '\n'.join([CSS_1, CSS_2, CSS_3, CSS_4, CSS_5]))
+    .replace('__CSS__', '\n\n'.join([CSS_1, CSS_2, CSS_3, CSS_4, CSS_5]))
     .replace('__HELPERS__', HELPERS)
     .replace('__CRM_MARKUP__', CRM_MARKUP)
     .replace('__CRM_SCRIPT__', CRM_SCRIPT)
