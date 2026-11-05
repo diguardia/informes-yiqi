@@ -515,6 +515,19 @@
     /* Fila unica de la tabla de iAready cuando todavia no hay casos. */
     .iaready-placeholder { text-align: center; color: var(--muted-2); }
 
+    /* 05/11/2026 (Seba): en la tabla de casos de iAready cada celda muestra hasta
+       4 lineas. Si una fila tiene texto que no entra, se abre con un clic (o
+       Enter) para leerla entera. Una fila abierta se vuelve a cerrar sola cuando
+       sale de la pantalla al hacer scroll, para que la tabla no quede llena de
+       filas altas. */
+    #tabla-iaready .cell-clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
+    #tabla-iaready tr.is-open .cell-clamp { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
+    #tabla-iaready tr.is-clampable { cursor: pointer; }
+    #tabla-iaready tr.is-clampable:not(.is-open) .cell-clamp.is-cut {
+      -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent);
+              mask-image: linear-gradient(180deg, #000 62%, transparent); }
+    #tabla-iaready tr.is-clampable:focus-visible { outline: 2px solid var(--cyan-night); outline-offset: -2px; }
+
     /* DS — Planificación timeline */
     .plan-table th, .plan-table td { white-space: nowrap; vertical-align: top; }
     .plan-table .plan-detalle { white-space: normal; min-width: 230px; max-width: 340px; color: var(--muted); font-size: 12px; }
@@ -4345,6 +4358,55 @@ function loadAppsCatalogo() {
   document.head.appendChild(sc);
 }
 
+/* Filas de 4 lineas que se abren con un clic. Ver el CSS de #tabla-iaready. */
+function _iaClamp(tbl) {
+  const marcar = () => tbl.querySelectorAll('tbody tr').forEach(tr => {
+    if (tr.classList.contains('is-open')) return;
+    let corta = false;
+    tr.querySelectorAll('.cell-clamp').forEach(c => {
+      const cut = c.scrollHeight > c.clientHeight + 1;
+      c.classList.toggle('is-cut', cut);
+      corta = corta || cut;
+    });
+    tr.classList.toggle('is-clampable', corta);
+    if (corta) { tr.tabIndex = 0; tr.setAttribute('aria-expanded', 'false'); tr.title = 'Clic para ver completo'; }
+    else { tr.removeAttribute('tabindex'); tr.removeAttribute('aria-expanded'); tr.removeAttribute('title'); }
+  });
+  const cerrar = tr => {
+    const r = tr.getBoundingClientRect(), alto = r.height;
+    tr.classList.remove('is-open'); tr.setAttribute('aria-expanded', 'false');
+    // Si la fila quedo arriba de la pantalla, compensar para que el contenido no salte.
+    if (r.bottom < 0) window.scrollBy(0, tr.getBoundingClientRect().height - alto);
+  };
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting && e.target.classList.contains('is-open')) { cerrar(e.target); io.unobserve(e.target); }
+  })) : null;
+  const abrir = tr => {
+    if (!tr.classList.contains('is-clampable')) return;
+    if (tr.classList.contains('is-open')) { cerrar(tr); if (io) io.unobserve(tr); return; }
+    tr.classList.add('is-open'); tr.setAttribute('aria-expanded', 'true');
+    if (io) io.observe(tr);
+  };
+  if (!tbl._iaClampWired) {
+    tbl._iaClampWired = true;
+    tbl.addEventListener('click', e => {
+      if (e.target.closest('a, button, input')) return;
+      if (String(window.getSelection && window.getSelection()).length) return; // estaba seleccionando texto
+      const tr = e.target.closest('tbody tr'); if (tr) abrir(tr);
+    });
+    tbl.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const tr = e.target.closest('tbody tr.is-clampable'); if (!tr) return;
+      e.preventDefault(); abrir(tr);
+    });
+    // Remarcar cuando cambia el ancho o cuando la seccion pasa de oculta a visible
+    // (oculta, las celdas miden 0 y no se puede saber cuales se cortan).
+    let t; const re = () => { clearTimeout(t); t = setTimeout(marcar, 120); };
+    if ('ResizeObserver' in window) new ResizeObserver(re).observe(tbl); else window.addEventListener('resize', re);
+  }
+  marcar();
+}
+
 async function loadIaReadySheet() {
   const tbl = document.getElementById('tabla-iaready');
   if (!tbl || !IAREADY_SHEET_CSV) { _iaFallo('sin planilla configurada'); return; }
@@ -4367,8 +4429,9 @@ async function loadIaReadySheet() {
   const tb  = tbl.querySelector('tbody');
   thr.innerHTML = head.map(h => '<th>' + _iaEsc(h) + '</th>').join('');
   tb.innerHTML = body.length
-    ? body.map(r => '<tr>' + head.map((_, i) => '<td>' + _iaEsc((r[i] || '').trim()) + '</td>').join('') + '</tr>').join('')
+    ? body.map(r => '<tr>' + head.map((_, i) => '<td><div class="cell-clamp">' + _iaEsc((r[i] || '').trim()) + '</div></td>').join('') + '</tr>').join('')
     : '<tr><td class="iaready-placeholder" colspan="' + head.length + '">Todavía no hay casos cargados.</td></tr>';
+  _iaClamp(tbl);
 
   /* ── Indicadores ── */
   const kpis = document.getElementById('iaready-kpis');
@@ -4521,7 +4584,10 @@ function aplicarCorte(tableId) {
 /* Instala el corte en una tabla y le pone su boton debajo. Se vuelve a
    llamar cuando la tabla se repuebla —Anuncios se rearma con cada
    periodo— para que el total del boton siga siendo cierto. */
-const CORTES = { 'tabla-anuncios': 8, 'tabla-nuevas': 12, 'tabla-concretadas': 10 };
+/* 05/11/2026 (Seba): Concretadas muestra las ultimas 5 (la tabla viene
+   ordenada por fecha, de la mas nueva a la mas vieja) y se abre desde ahi. */
+const CORTES = { 'tabla-anuncios': 8, 'tabla-nuevas': 12, 'tabla-concretadas': 5 };
+const CORTES_MENOS = { 'tabla-concretadas': n => `Ver solo las últimas ${n}` };
 function instalarCorte(id) {
   const t = document.getElementById(id);
   const lim = CORTES[id];
@@ -4541,7 +4607,7 @@ function instalarCorte(id) {
   }
   b.setAttribute('aria-expanded', String(abierto));
   b.dataset.mas = `Ver las ${total} filas`;
-  b.dataset.menos = `Ver solo las primeras ${lim}`;
+  b.dataset.menos = CORTES_MENOS[id] ? CORTES_MENOS[id](lim) : `Ver solo las primeras ${lim}`;
   b.textContent = abierto ? b.dataset.menos : b.dataset.mas;
 }
 Object.keys(CORTES).forEach(instalarCorte);
@@ -5859,6 +5925,9 @@ function hydrateCrm(j) {
   }
 
   /* ── 5. Repintar ─────────────────────────────────────────── */
+  /* Las dos tablas se acaban de rearmar desde el CRM: el corte y el total del
+     boton se instalaron con las filas viejas y hay que volver a ponerlos. */
+  if (typeof instalarCorte === 'function') { instalarCorte('tabla-nuevas'); instalarCorte('tabla-concretadas'); }
   renderOnsCharts();
   renderConcretadasChart();
   setPeriodo(_periodoManual && COTIZ_DATA[_currentMes] ? _currentMes : 'ytd');
