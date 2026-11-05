@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-04",
+ "generado": "2026-11-05",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2445,9 +2445,8 @@
     "estado": {
      "En Curso": 4,
      "Desestimada": 3,
-     "Esperando contacto inicial": 2,
-     "Concretada": 1,
-     "Confirmada": 1
+     "Concretada": 2,
+     "Esperando contacto inicial": 2
     },
     "detalle": [
      {
@@ -2692,9 +2691,18 @@
     ]
    },
    "concretadas": {
-    "n": 0,
-    "importe": 0.0,
-    "detalle": []
+    "n": 1,
+    "importe": 424515.0,
+    "detalle": [
+     {
+      "f": "04/11",
+      "fecha": "2026-11-04 16:28",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "importe": 424515.0,
+      "anticipo": 0.0
+     }
+    ]
    }
   }
  },
@@ -2703,18 +2711,18 @@
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2488,
-   "En Curso": 1421,
-   "Concretada": 463,
-   "Hibernando": 33,
+   "Hibernando": 1418,
+   "Concretada": 464,
+   "En Curso": 36,
    "Presentación enviada": 19,
-   "Confirmada": 13,
+   "Confirmada": 12,
    "Vencida": 8,
    "Esperando presupuesto": 3,
    "Esperando contacto inicial": 3,
    "Presupuesto enviado": 2
   },
   "enCursoNuevas": 35,
-  "enCursoViejas": 1378
+  "enCursoViejas": 0
  },
  "series": {
   "on_mensuales": {
