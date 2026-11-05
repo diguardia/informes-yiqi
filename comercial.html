@@ -2664,29 +2664,49 @@
         </div>
         <div class="table-wrap">
           <table class="ds-table" id="tabla-apps">
-            <thead><tr><th>App</th><th>Estado</th><th>Categoría</th><th>Autor</th><th>Versión</th></tr></thead>
-            <tbody><tr><td class="iaready-placeholder" colspan="5">Sin datos todavía.</td></tr></tbody>
+            <thead><tr><th>App</th><th>Estado</th><th>Dominio</th><th>Categoría</th><th>Autor</th><th>Versión</th></tr></thead>
+            <tbody><tr><td class="iaready-placeholder" colspan="6">Sin datos todavía.</td></tr></tbody>
           </table>
           <div class="table-empty" id="empty-apps" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
         </div>
       </div>
 
-      <!-- En preparacion. NO sale de apps-data.js: son ideas de la reunion de
-           iAready del 10/09 y todavia no existen como app. Se escriben aca a
-           proposito, para no publicarlas en el sitio. Cuando haya una planilla
-           propia, esto pasa a leerse de ahi como el resto. -->
+      <!-- En preparacion. NO sale de apps-data.js: no se publican en el sitio
+           hasta que tengan ficha. Es el tablero para seguir las apps que todavia
+           no estan en el Marketplace. Fuentes: reunion de iAready del 10/09,
+           #ia-ready (26/10 y 29/10) y formulario web (Medic Tools, 15/10).
+           05/11/2026: Contadores y Talles salieron de aca porque ya estan en
+           apps-data.js como "En desarrollo" (aparecen en el catalogo de arriba).
+           Actualizar "Que hay" cada vez que alguna avance. -->
       <div class="card card-reveal" style="margin-top:24px">
         <div class="section-title" style="margin-top:0">En preparación</div>
-        <p class="section-sub" style="margin-bottom:18px">Salieron de la reunión de iAready del 10/09. Todavía no existen como app: falta definir nombre, alcance y quién la desarrolla.</p>
+        <p class="section-sub" style="margin-bottom:18px">Apps que todavía no están en el Marketplace, de la más avanzada a la menos. Contadores y Talles ya pasaron al catálogo. Actualizado el 05/11/2026.</p>
         <div class="table-wrap">
           <table class="ds-table" id="tabla-apps-futuras">
-            <thead><tr><th>Idea</th><th>Nombre · A (descriptivo)</th><th>Nombre · B (corto)</th><th>Estado</th></tr></thead>
+            <thead><tr><th>App</th><th>Nombre</th><th>Estado</th><th>Qué hay</th><th>Quién</th></tr></thead>
             <tbody>
-              <tr><td>YiQi para contadores</td><td>Panel para Contadores</td><td>YiQi Contadores</td><td>Idea</td></tr>
-              <tr><td>Talles y colores</td><td>Gestión de Talles y Colores</td><td>Curva</td><td>Idea</td></tr>
-              <tr><td>Toma de pedidos en la calle</td><td>Toma de Pedidos</td><td>Preventa</td><td>Idea</td></tr>
-              <tr><td>Carga rápida de gastos</td><td>Registro de Gastos</td><td>YiQi Gastos</td><td>Idea</td></tr>
-              <tr><td>Forecasting de caja</td><td>Proyección de Caja</td><td>Cashflow</td><td>Idea</td></tr>
+              <tr><td>Forecasting de caja</td><td>YiQi Cashflow <span style="color:var(--muted)">(así la llama Javier)</span></td><td><span class="badge badge-amber">Borrador</span></td><td style="font-size:13px;line-height:1.45">Christian maquetó la pantalla principal (26/10, #ia-ready): carga proyecciones en varios escenarios, todavía sin forecasting automático. Javier tiene un forecasting avanzado para sumarle (29/10). Ojo: el nombre choca con el reporte Cashflow que ya tiene el ERP.</td><td>Christian · Javier</td></tr>
+              <tr><td>Control administrativo</td><td>YiQi A&amp;F Control</td><td><span class="badge badge-amber">En construcción</span></td><td style="font-size:13px;line-height:1.45">Herramienta de Javier para controlar la documentación y los procesos administrativos; ordena la data que después muestra Cashflow. Javier propuso terminarla, homologarla y pasarla a Ingeniería (29/10).</td><td>Javier</td></tr>
+              <tr><td>Toma de pedidos en la calle</td><td>Toma de Pedidos · Preventa</td><td><span class="badge badge-muted">Idea</span></td><td style="font-size:13px;line-height:1.45">Sin avance registrado. Hay demanda: Medic Tools pidió el 15/10 una app para que sus clientes hagan pedidos directos. YiQi Pedidos no lo cubre: es de consulta, no toma pedidos.</td><td>Sin asignar</td></tr>
+              <tr><td>Carga rápida de gastos</td><td>Registro de Gastos · YiQi Gastos</td><td><span class="badge badge-muted">Idea</span></td><td style="font-size:13px;line-height:1.45">Sin avance registrado.</td><td>Sin asignar</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Apps internas. Dominios de la lista de Christian en #general (02/11/2026);
+           Javier y Christian confirmaron el 05/11 que estas tres son internas. No
+           van a apps-data.js porque no se publican. Falta nombre y funcion. -->
+      <div class="card card-reveal" style="margin-top:24px">
+        <div class="section-title" style="margin-top:0">Apps internas</div>
+        <p class="section-sub" style="margin-bottom:18px">Herramientas de uso interno, fuera del Marketplace. Falta que Christian confirme nombre y para qué sirve cada una.</p>
+        <div class="table-wrap">
+          <table class="ds-table" id="tabla-apps-internas">
+            <thead><tr><th>App</th><th>Dominio</th><th>Estado</th></tr></thead>
+            <tbody>
+              <tr><td>—</td><td style="font-family:var(--mono);font-size:12px"><a href="https://dedicaciones.yiqi.com.ar/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">dedicaciones.yiqi.com.ar</a></td><td>Uso interno</td></tr>
+              <tr><td>—</td><td style="font-family:var(--mono);font-size:12px"><a href="https://performance.yiqi.com.ar/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">performance.yiqi.com.ar</a></td><td>Uso interno</td></tr>
+              <tr><td>—</td><td style="font-family:var(--mono);font-size:12px"><a href="https://pulse.yiqi.com.ar/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">pulse.yiqi.com.ar</a></td><td>Uso interno</td></tr>
             </tbody>
           </table>
         </div>
@@ -4245,6 +4265,26 @@ function _iaVigilarVisita(total) {
    ia-ready.html — publica "6 apps" contra las once que hay cargadas. */
 const APPS_DATA_URL = 'https://www.yiqi.com.ar/components/apps-data.js';
 
+/* Dominio propio de cada app. Fuente: lista de Christian en #general del
+   02/11/2026 (subdominios automatizados); POS sale del tryUrl de apps-data.js.
+   Va aca y no en apps-data.js porque es dato interno: apps-data.js alimenta el
+   sitio publico. Las apps de terceros llevan su dominio externo cuando lo
+   tienen: vantig.ai sale del tryUrl de su ficha en apps-data.js. */
+const APPS_DOMINIO = {
+  'yiqi-analytics-pro': 'analytics.yiqi.com.ar',
+  'front-de-proveedores-ocr': 'proveedores.yiqi.com.ar',
+  'inventariado-mobile': 'inventario.yiqi.com.ar',
+  'yiqi-pos': 'pos.yiqi.com.ar',
+  'picking-list': 'picking.yiqi.com.ar',
+  'consulta-de-pedidos': 'pedidos.yiqi.com.ar',
+  'generador-factura-resumen': 'resumen.yiqi.com.ar',
+  'yiqi-recepcion-de-facturas': 'recepcion.yiqi.com.ar',
+  'yiqi-supply': 'supply.yiqi.com.ar',
+  'yiqi-contadores': 'contable.yiqi.com.ar',
+  'yiqi-talles-y-colores': 'stocktalle.yiqi.com.ar',
+  'vantig-ai': 'app.vantig.ai'
+};
+
 function _appsFallo(motivo) {
   const v = document.getElementById('v-apps-total');
   const d = document.getElementById('d-apps-total');
@@ -4280,6 +4320,9 @@ function loadAppsCatalogo() {
       /* Estado con el badge del DS y los colores de la web: en
          www.yiqi/apps-grid.css live es verde, dev ambar y homolog cyan. */
       + '<td><span class="badge ' + ({ live: 'badge-green', dev: 'badge-amber', homolog: 'badge-cyan', soon: 'badge-blue' }[a.state] || 'badge-muted') + '">' + _iaEsc(a.stateLabel || '') + '</span></td>'
+      + '<td style="font-family:var(--mono);font-size:12px">' + (APPS_DOMINIO[a.id]
+          ? '<a href="https://' + APPS_DOMINIO[a.id] + '/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">' + APPS_DOMINIO[a.id] + '</a>'
+          : '—') + '</td>'
       + '<td>' + _iaEsc(a.cat || '') + '</td>'
       + '<td>' + _iaEsc(a.prov || '') + '</td>'
       + '<td style="font-family:var(--mono);font-size:12px">' + _iaEsc(version(a)) + '</td>'
