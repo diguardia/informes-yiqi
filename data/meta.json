@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-05T17:24:03.677Z",
+  "generado": "2026-11-06T16:45:39.408Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-05",
+      "hasta": "2026-11-06",
       "ytd": {
-        "alcance": 699458,
-        "gasto": 4284739,
-        "impresiones": 1712305,
+        "alcance": 708642,
+        "gasto": 4301915,
+        "impresiones": 1725730,
         "conv": 1538,
-        "inter": 133708,
-        "clics": 41718,
+        "inter": 134671,
+        "clics": 42333,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1000042,
-            "impresiones": 462160,
+            "gasto": 1001511,
+            "impresiones": 470275,
             "resultadoTipo": "clics",
-            "resultado": 19669,
+            "resultado": 19713,
             "costoResultado": 51
           },
           {
@@ -483,20 +483,20 @@
             "costoResultado": 8646
           },
           {
+            "nombre": "Tiendanube · integración · Sep 2026",
+            "gasto": 65120,
+            "impresiones": 84625,
+            "resultadoTipo": "clics",
+            "resultado": 1475,
+            "costoResultado": 44
+          },
+          {
             "nombre": "[15/5/2026] Promoción de https://facebook.com/yiqi.com.ar",
             "gasto": 63984,
             "impresiones": 17687,
             "resultadoTipo": "conversaciones",
             "resultado": 24,
             "costoResultado": 2666
-          },
-          {
-            "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 63422,
-            "impresiones": 82892,
-            "resultadoTipo": "clics",
-            "resultado": 1444,
-            "costoResultado": 44
           },
           {
             "nombre": "Publicación: \"Reserva tu demo. Link en bio. #erp #importaciones\"",
@@ -507,20 +507,20 @@
             "costoResultado": 2411
           },
           {
+            "nombre": "Precotizador · nov 2026",
+            "gasto": 49472,
+            "impresiones": 11874,
+            "resultadoTipo": "clics",
+            "resultado": 1849,
+            "costoResultado": 27
+          },
+          {
             "nombre": "Publicación de Instagram: Construye con IA,...",
             "gasto": 45974,
             "impresiones": 5988,
             "resultadoTipo": "conversaciones",
             "resultado": 14,
             "costoResultado": 3284
-          },
-          {
-            "nombre": "Precotizador · nov 2026",
-            "gasto": 35464,
-            "impresiones": 8297,
-            "resultadoTipo": "clics",
-            "resultado": 1312,
-            "costoResultado": 27
           },
           {
             "nombre": "Publicación de Instagram: Gestiona tu empresa con...",
@@ -1047,30 +1047,30 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-05",
+          "hasta": "2026-11-06",
           "parcial": true,
-          "alcance": 25956,
-          "gasto": 79025,
-          "impresiones": 40257,
+          "alcance": 33564,
+          "gasto": 96201,
+          "impresiones": 53682,
           "conv": 14,
-          "inter": 5186,
-          "clics": 1912,
+          "inter": 6149,
+          "clics": 2527,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 35464,
-              "impresiones": 8297,
+              "gasto": 49472,
+              "impresiones": 11874,
               "resultadoTipo": "clics",
-              "resultado": 1312,
+              "resultado": 1849,
               "costoResultado": 27
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 25571,
-              "impresiones": 19944,
+              "gasto": 27040,
+              "impresiones": 28059,
               "resultadoTipo": "clics",
-              "resultado": 379,
-              "costoResultado": 67
+              "resultado": 423,
+              "costoResultado": 64
             },
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
@@ -1082,11 +1082,11 @@
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 6971,
-              "impresiones": 7672,
+              "gasto": 8669,
+              "impresiones": 9405,
               "resultadoTipo": "clics",
-              "resultado": 142,
-              "costoResultado": 49
+              "resultado": 173,
+              "costoResultado": 50
             }
           ]
         }
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-05",
+  "hasta": "2026-11-06",
   "ytd": {
-    "alcance": 699458,
-    "gasto": 4284739,
-    "impresiones": 1712305,
+    "alcance": 708642,
+    "gasto": 4301915,
+    "impresiones": 1725730,
     "conv": 1538,
-    "inter": 133708,
-    "clics": 41718,
+    "inter": 134671,
+    "clics": 42333,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1000042,
-        "impresiones": 462160,
+        "gasto": 1001511,
+        "impresiones": 470275,
         "resultadoTipo": "clics",
-        "resultado": 19669,
+        "resultado": 19713,
         "costoResultado": 51
       },
       {
@@ -1200,20 +1200,20 @@
         "costoResultado": 8646
       },
       {
+        "nombre": "Tiendanube · integración · Sep 2026",
+        "gasto": 65120,
+        "impresiones": 84625,
+        "resultadoTipo": "clics",
+        "resultado": 1475,
+        "costoResultado": 44
+      },
+      {
         "nombre": "[15/5/2026] Promoción de https://facebook.com/yiqi.com.ar",
         "gasto": 63984,
         "impresiones": 17687,
         "resultadoTipo": "conversaciones",
         "resultado": 24,
         "costoResultado": 2666
-      },
-      {
-        "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 63422,
-        "impresiones": 82892,
-        "resultadoTipo": "clics",
-        "resultado": 1444,
-        "costoResultado": 44
       },
       {
         "nombre": "Publicación: \"Reserva tu demo. Link en bio. #erp #importaciones\"",
@@ -1224,20 +1224,20 @@
         "costoResultado": 2411
       },
       {
+        "nombre": "Precotizador · nov 2026",
+        "gasto": 49472,
+        "impresiones": 11874,
+        "resultadoTipo": "clics",
+        "resultado": 1849,
+        "costoResultado": 27
+      },
+      {
         "nombre": "Publicación de Instagram: Construye con IA,...",
         "gasto": 45974,
         "impresiones": 5988,
         "resultadoTipo": "conversaciones",
         "resultado": 14,
         "costoResultado": 3284
-      },
-      {
-        "nombre": "Precotizador · nov 2026",
-        "gasto": 35464,
-        "impresiones": 8297,
-        "resultadoTipo": "clics",
-        "resultado": 1312,
-        "costoResultado": 27
       },
       {
         "nombre": "Publicación de Instagram: Gestiona tu empresa con...",
@@ -1764,30 +1764,30 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-05",
+      "hasta": "2026-11-06",
       "parcial": true,
-      "alcance": 25956,
-      "gasto": 79025,
-      "impresiones": 40257,
+      "alcance": 33564,
+      "gasto": 96201,
+      "impresiones": 53682,
       "conv": 14,
-      "inter": 5186,
-      "clics": 1912,
+      "inter": 6149,
+      "clics": 2527,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 35464,
-          "impresiones": 8297,
+          "gasto": 49472,
+          "impresiones": 11874,
           "resultadoTipo": "clics",
-          "resultado": 1312,
+          "resultado": 1849,
           "costoResultado": 27
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 25571,
-          "impresiones": 19944,
+          "gasto": 27040,
+          "impresiones": 28059,
           "resultadoTipo": "clics",
-          "resultado": 379,
-          "costoResultado": 67
+          "resultado": 423,
+          "costoResultado": 64
         },
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
@@ -1799,11 +1799,11 @@
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 6971,
-          "impresiones": 7672,
+          "gasto": 8669,
+          "impresiones": 9405,
           "resultadoTipo": "clics",
-          "resultado": 142,
-          "costoResultado": 49
+          "resultado": 173,
+          "costoResultado": 50
         }
       ]
     }
