@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-05",
+ "generado": "2026-11-06",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -1852,19 +1852,12 @@
   },
   "2026-08": {
    "consultas": {
-    "total": 4,
+    "total": 3,
     "origen": {
      "Precotizador web": 2,
-     "Sin origen": 1,
      "web": 1
     },
     "detalle": [
-     {
-      "f": "31/08",
-      "cliente": "Mutis Agencia",
-      "contacto": "Felipe Stafforini",
-      "origen": "Sin origen"
-     },
      {
       "f": "05/08",
       "cliente": "Raptiv",
@@ -2112,9 +2105,9 @@
   },
   "2026-09": {
    "consultas": {
-    "total": 7,
+    "total": 6,
     "origen": {
-     "web": 4,
+     "web": 3,
      "Recomendación": 2,
      "Precotizador web": 1
     },
@@ -2154,12 +2147,6 @@
       "cliente": "Transportes Bessone",
       "contacto": "Luis Bessone",
       "origen": "Recomendación"
-     },
-     {
-      "f": "07/09",
-      "cliente": "test",
-      "contacto": "Test Test",
-      "origen": "web"
      }
     ]
    },
@@ -2316,25 +2303,13 @@
   },
   "2026-10": {
    "consultas": {
-    "total": 18,
+    "total": 6,
     "origen": {
-     "web": 16,
+     "web": 4,
      "Recomendación": 1,
      "Precotizador web": 1
     },
     "detalle": [
-     {
-      "f": "27/10",
-      "cliente": "WRXthdIvBTfbCKBu",
-      "contacto": "MMUSRsuHfyhFSGZMwBI zRJOpbnIdOMZGLUx",
-      "origen": "web"
-     },
-     {
-      "f": "27/10",
-      "cliente": "fcJKbrhWvLGCrgaOnrh",
-      "contacto": "EctSWYsFBRIUAZpBWissvB edkgXlYZpCHmPLNthkp",
-      "origen": "web"
-     },
      {
       "f": "26/10",
       "cliente": "susy marroquineria",
@@ -2348,27 +2323,9 @@
       "origen": "web"
      },
      {
-      "f": "21/10",
-      "cliente": "RuQduOhgBJdyntAAWDf",
-      "contacto": "ucdOgFymYWrEHQsoXiBTft GkcjjIuVFnwQltqJsdbb",
-      "origen": "web"
-     },
-     {
-      "f": "20/10",
-      "cliente": "test",
-      "contacto": "Test Test",
-      "origen": "web"
-     },
-     {
       "f": "18/10",
       "cliente": "DAvid",
       "contacto": "David Lin LIN",
-      "origen": "web"
-     },
-     {
-      "f": "17/10",
-      "cliente": "CHZFjoAdYJiQXBwVu",
-      "contacto": "fdaMOHOpYmdHrMpzNQV nvaIegfkWshDRbXOCLU",
       "origen": "web"
      },
      {
@@ -2378,52 +2335,10 @@
       "origen": "web"
      },
      {
-      "f": "14/10",
-      "cliente": "uoVIMLhZyPytgFiMVVJXQhgi",
-      "contacto": "WqIbJNwPOUNmvoAG bkuHvIRcsIJvqcLklANeNMTP",
-      "origen": "web"
-     },
-     {
-      "f": "14/10",
-      "cliente": "cFiyHPlhieVUWMul",
-      "contacto": "UJOYkrcKejBSgjtJb MhGkOmsBKZdzCheG",
-      "origen": "web"
-     },
-     {
-      "f": "14/10",
-      "cliente": "ikrrjCXIkkWPaKJLwycE",
-      "contacto": "FmYpCLwracvxlOdIK PqfkZLUrTQVmbuuyAPqXyj",
-      "origen": "web"
-     },
-     {
-      "f": "13/10",
-      "cliente": "WldOSJQQORarDqElRC",
-      "contacto": "pBsZklJBZFpMBGLnjnytZ ImAbppxvsYHNaVkAFpxWuQN",
-      "origen": "web"
-     },
-     {
-      "f": "11/10",
-      "cliente": "yYLqYoKEkSwRhBGOln",
-      "contacto": "hIlUHTVTBVxjahQfbPUiYd qIeWpBcBfvUiXgwIiWwJsACZ",
-      "origen": "web"
-     },
-     {
-      "f": "10/10",
-      "cliente": "EFzmmFHYXbZvuBzBgBmq",
-      "contacto": "FdKawNqZoGdgGVDdQlaftO IPBBXdMQDMDCVIXEHKDPstsD",
-      "origen": "web"
-     },
-     {
       "f": "09/10",
       "cliente": "Batos sas",
       "contacto": "Matias Meisen",
       "origen": "Precotizador web"
-     },
-     {
-      "f": "08/10",
-      "cliente": "LfHfnFgZSQfmTuvgEV",
-      "contacto": "KqElOyemvzsNLNlQfcy nYDQQtAQjUUzsxjUGV",
-      "origen": "web"
      },
      {
       "f": "01/10",
@@ -2443,10 +2358,11 @@
      "Sin origen": 1
     },
     "estado": {
-     "En Curso": 4,
      "Desestimada": 3,
+     "En Curso": 3,
      "Concretada": 2,
-     "Esperando contacto inicial": 2
+     "Presupuesto enviado": 2,
+     "Esperando contacto inicial": 1
     },
     "detalle": [
      {
@@ -2544,7 +2460,8 @@
     "estado": {
      "Vencida": 2,
      "Aprobada": 2,
-     "En preparación": 2
+     "Enviada": 1,
+     "En preparación": 1
     },
     "enviadas": 4,
     "aprobadas": {
@@ -2561,7 +2478,7 @@
      {
       "f": "23/10",
       "nro": "1569.1",
-      "estado": "En preparación"
+      "estado": "Enviada"
      },
      {
       "f": "21/10",
@@ -2618,28 +2535,17 @@
   },
   "2026-11": {
    "consultas": {
-    "total": 1,
-    "origen": {
-     "Precotizador web": 1
-    },
-    "detalle": [
-     {
-      "f": "03/11",
-      "cliente": "Test",
-      "contacto": "Sebastián Test",
-      "origen": "Precotizador web"
-     }
-    ]
+    "total": 0,
+    "origen": {},
+    "detalle": []
    },
    "ons": {
-    "total": 2,
+    "total": 1,
     "origen": {
-     "Sin origen": 1,
      "CLIENTE": 1
     },
     "estado": {
-     "Esperando contacto inicial": 1,
-     "En Curso": 1
+     "Presupuesto enviado": 1
     },
     "detalle": [
      {
@@ -2649,30 +2555,26 @@
       "origen": "CLIENTE",
       "titulo": "YiQi ERP - Curso de IA aplicada a la gestión (4 encuentros)",
       "id": 37723
-     },
-     {
-      "f": "03/11",
-      "fecha": "2026-11-03 07:21",
-      "empresa": "TEST",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - Test",
-      "id": 37722
      }
     ]
    },
    "cotizaciones": {
-    "emitidas": 3,
+    "emitidas": 4,
     "estado": {
-     "En preparación": 2,
-     "Enviada": 1
+     "Enviada": 4
     },
-    "enviadas": 1,
+    "enviadas": 5,
     "aprobadas": {
      "n": 0,
      "neto_impl": 0.0,
      "neto_sop": null
     },
     "detalle": [
+     {
+      "f": "05/11",
+      "nro": "1573.1",
+      "estado": "Enviada"
+     },
      {
       "f": "03/11",
       "nro": "1498.2",
@@ -2681,12 +2583,12 @@
      {
       "f": "03/11",
       "nro": "1571.1",
-      "estado": "En preparación"
+      "estado": "Enviada"
      },
      {
       "f": "03/11",
       "nro": "1572.1",
-      "estado": "En preparación"
+      "estado": "Enviada"
      }
     ]
    },
@@ -2707,21 +2609,21 @@
   }
  },
  "historico": {
-  "total": 4453,
+  "total": 4452,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2488,
    "Hibernando": 1418,
    "Concretada": 464,
-   "En Curso": 36,
+   "En Curso": 34,
    "Presentación enviada": 19,
    "Confirmada": 12,
    "Vencida": 8,
+   "Presupuesto enviado": 5,
    "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 3,
-   "Presupuesto enviado": 2
+   "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 35,
+  "enCursoNuevas": 33,
   "enCursoViejas": 0
  },
  "series": {
@@ -2748,7 +2650,7 @@
    "2026-08": 16,
    "2026-09": 8,
    "2026-10": 11,
-   "2026-11": 2
+   "2026-11": 1
   },
   "cotiz_enviadas": {
    "2025-07": 10,
@@ -2767,7 +2669,7 @@
    "2026-08": 7,
    "2026-09": 8,
    "2026-10": 4,
-   "2026-11": 1
+   "2026-11": 5
   },
   "cotiz_aprobadas": {
    "2025-07": {
