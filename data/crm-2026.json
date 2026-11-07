@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-06",
+ "generado": "2026-11-07",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2359,9 +2359,9 @@
     },
     "estado": {
      "Desestimada": 3,
-     "En Curso": 3,
+     "Presupuesto enviado": 3,
+     "En Curso": 2,
      "Concretada": 2,
-     "Presupuesto enviado": 2,
      "Esperando contacto inicial": 1
     },
     "detalle": [
@@ -2615,15 +2615,15 @@
    "Desestimada": 2488,
    "Hibernando": 1418,
    "Concretada": 464,
-   "En Curso": 34,
+   "En Curso": 33,
    "Presentación enviada": 19,
    "Confirmada": 12,
    "Vencida": 8,
-   "Presupuesto enviado": 5,
+   "Presupuesto enviado": 6,
    "Esperando presupuesto": 3,
    "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 33,
+  "enCursoNuevas": 32,
   "enCursoViejas": 0
  },
  "series": {
