@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-07T15:39:35.772Z",
+  "generado": "2026-11-08T15:58:12.632Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-07",
+      "hasta": "2026-11-08",
       "ytd": {
-        "alcance": 712925,
-        "gasto": 4317694,
-        "impresiones": 1732323,
+        "alcance": 713701,
+        "gasto": 4335792,
+        "impresiones": 1740203,
         "conv": 1538,
-        "inter": 135844,
-        "clics": 42865,
+        "inter": 137305,
+        "clics": 43521,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1005374,
-            "impresiones": 472301,
+            "gasto": 1009334,
+            "impresiones": 474518,
             "resultadoTipo": "clics",
-            "resultado": 19779,
+            "resultado": 19867,
             "costoResultado": 51
           },
           {
@@ -475,6 +475,14 @@
             "costoResultado": 116
           },
           {
+            "nombre": "Precotizador · nov 2026",
+            "gasto": 72587,
+            "impresiones": 18341,
+            "resultadoTipo": "clics",
+            "resultado": 2813,
+            "costoResultado": 26
+          },
+          {
             "nombre": "Publicación de Instagram: Menos tareas manuales....",
             "gasto": 69165,
             "impresiones": 10055,
@@ -484,10 +492,10 @@
           },
           {
             "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 66468,
-            "impresiones": 86241,
+            "gasto": 68059,
+            "impresiones": 88388,
             "resultadoTipo": "clics",
-            "resultado": 1510,
+            "resultado": 1548,
             "costoResultado": 44
           },
           {
@@ -497,14 +505,6 @@
             "resultadoTipo": "conversaciones",
             "resultado": 24,
             "costoResultado": 2666
-          },
-          {
-            "nombre": "Precotizador · nov 2026",
-            "gasto": 60041,
-            "impresiones": 14825,
-            "resultadoTipo": "clics",
-            "resultado": 2283,
-            "costoResultado": 26
           },
           {
             "nombre": "Publicación: \"Reserva tu demo. Link en bio. #erp #importaciones\"",
@@ -1047,30 +1047,38 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-07",
+          "hasta": "2026-11-08",
           "parcial": true,
-          "alcance": 37965,
-          "gasto": 111980,
-          "impresiones": 60275,
+          "alcance": 42385,
+          "gasto": 130078,
+          "impresiones": 68155,
           "conv": 14,
-          "inter": 7322,
-          "clics": 3059,
+          "inter": 8783,
+          "clics": 3715,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 60041,
-              "impresiones": 14825,
+              "gasto": 72587,
+              "impresiones": 18341,
               "resultadoTipo": "clics",
-              "resultado": 2283,
+              "resultado": 2813,
               "costoResultado": 26
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 30903,
-              "impresiones": 30085,
+              "gasto": 34863,
+              "impresiones": 32302,
               "resultadoTipo": "clics",
-              "resultado": 489,
-              "costoResultado": 63
+              "resultado": 577,
+              "costoResultado": 60
+            },
+            {
+              "nombre": "Tiendanube · integración · Sep 2026",
+              "gasto": 11608,
+              "impresiones": 13168,
+              "resultadoTipo": "clics",
+              "resultado": 246,
+              "costoResultado": 47
             },
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
@@ -1079,14 +1087,6 @@
               "resultadoTipo": "conversaciones",
               "resultado": 14,
               "costoResultado": 787
-            },
-            {
-              "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 10017,
-              "impresiones": 11021,
-              "resultadoTipo": "clics",
-              "resultado": 208,
-              "costoResultado": 48
             }
           ]
         }
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-07",
+  "hasta": "2026-11-08",
   "ytd": {
-    "alcance": 712925,
-    "gasto": 4317694,
-    "impresiones": 1732323,
+    "alcance": 713701,
+    "gasto": 4335792,
+    "impresiones": 1740203,
     "conv": 1538,
-    "inter": 135844,
-    "clics": 42865,
+    "inter": 137305,
+    "clics": 43521,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1005374,
-        "impresiones": 472301,
+        "gasto": 1009334,
+        "impresiones": 474518,
         "resultadoTipo": "clics",
-        "resultado": 19779,
+        "resultado": 19867,
         "costoResultado": 51
       },
       {
@@ -1192,6 +1192,14 @@
         "costoResultado": 116
       },
       {
+        "nombre": "Precotizador · nov 2026",
+        "gasto": 72587,
+        "impresiones": 18341,
+        "resultadoTipo": "clics",
+        "resultado": 2813,
+        "costoResultado": 26
+      },
+      {
         "nombre": "Publicación de Instagram: Menos tareas manuales....",
         "gasto": 69165,
         "impresiones": 10055,
@@ -1201,10 +1209,10 @@
       },
       {
         "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 66468,
-        "impresiones": 86241,
+        "gasto": 68059,
+        "impresiones": 88388,
         "resultadoTipo": "clics",
-        "resultado": 1510,
+        "resultado": 1548,
         "costoResultado": 44
       },
       {
@@ -1214,14 +1222,6 @@
         "resultadoTipo": "conversaciones",
         "resultado": 24,
         "costoResultado": 2666
-      },
-      {
-        "nombre": "Precotizador · nov 2026",
-        "gasto": 60041,
-        "impresiones": 14825,
-        "resultadoTipo": "clics",
-        "resultado": 2283,
-        "costoResultado": 26
       },
       {
         "nombre": "Publicación: \"Reserva tu demo. Link en bio. #erp #importaciones\"",
@@ -1764,30 +1764,38 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-07",
+      "hasta": "2026-11-08",
       "parcial": true,
-      "alcance": 37965,
-      "gasto": 111980,
-      "impresiones": 60275,
+      "alcance": 42385,
+      "gasto": 130078,
+      "impresiones": 68155,
       "conv": 14,
-      "inter": 7322,
-      "clics": 3059,
+      "inter": 8783,
+      "clics": 3715,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 60041,
-          "impresiones": 14825,
+          "gasto": 72587,
+          "impresiones": 18341,
           "resultadoTipo": "clics",
-          "resultado": 2283,
+          "resultado": 2813,
           "costoResultado": 26
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 30903,
-          "impresiones": 30085,
+          "gasto": 34863,
+          "impresiones": 32302,
           "resultadoTipo": "clics",
-          "resultado": 489,
-          "costoResultado": 63
+          "resultado": 577,
+          "costoResultado": 60
+        },
+        {
+          "nombre": "Tiendanube · integración · Sep 2026",
+          "gasto": 11608,
+          "impresiones": 13168,
+          "resultadoTipo": "clics",
+          "resultado": 246,
+          "costoResultado": 47
         },
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
@@ -1796,14 +1804,6 @@
           "resultadoTipo": "conversaciones",
           "resultado": 14,
           "costoResultado": 787
-        },
-        {
-          "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 10017,
-          "impresiones": 11021,
-          "resultadoTipo": "clics",
-          "resultado": 208,
-          "costoResultado": 48
         }
       ]
     }
