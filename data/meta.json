@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-08T15:58:12.632Z",
+  "generado": "2026-11-09T19:49:05.682Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-08",
+      "hasta": "2026-11-09",
       "ytd": {
-        "alcance": 713701,
-        "gasto": 4335792,
-        "impresiones": 1740203,
+        "alcance": 716384,
+        "gasto": 4356645,
+        "impresiones": 1749403,
         "conv": 1538,
-        "inter": 137305,
-        "clics": 43521,
+        "inter": 139054,
+        "clics": 44254,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1009334,
-            "impresiones": 474518,
+            "gasto": 1015272,
+            "impresiones": 477051,
             "resultadoTipo": "clics",
-            "resultado": 19867,
+            "resultado": 19986,
             "costoResultado": 51
           },
           {
@@ -451,6 +451,14 @@
             "costoResultado": 12486
           },
           {
+            "nombre": "Precotizador · nov 2026",
+            "gasto": 85432,
+            "impresiones": 22223,
+            "resultadoTipo": "clics",
+            "resultado": 3358,
+            "costoResultado": 25
+          },
+          {
             "nombre": "Publicación de Instagram: Interbanking en YiQi....",
             "gasto": 79835,
             "impresiones": 12617,
@@ -475,12 +483,12 @@
             "costoResultado": 116
           },
           {
-            "nombre": "Precotizador · nov 2026",
-            "gasto": 72587,
-            "impresiones": 18341,
+            "nombre": "Tiendanube · integración · Sep 2026",
+            "gasto": 70130,
+            "impresiones": 91173,
             "resultadoTipo": "clics",
-            "resultado": 2813,
-            "costoResultado": 26
+            "resultado": 1617,
+            "costoResultado": 43
           },
           {
             "nombre": "Publicación de Instagram: Menos tareas manuales....",
@@ -489,14 +497,6 @@
             "resultadoTipo": "conversaciones",
             "resultado": 8,
             "costoResultado": 8646
-          },
-          {
-            "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 68059,
-            "impresiones": 88388,
-            "resultadoTipo": "clics",
-            "resultado": 1548,
-            "costoResultado": 44
           },
           {
             "nombre": "[15/5/2026] Promoción de https://facebook.com/yiqi.com.ar",
@@ -1047,38 +1047,38 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-08",
+          "hasta": "2026-11-09",
           "parcial": true,
-          "alcance": 42385,
-          "gasto": 130078,
-          "impresiones": 68155,
+          "alcance": 47608,
+          "gasto": 150931,
+          "impresiones": 77355,
           "conv": 14,
-          "inter": 8783,
-          "clics": 3715,
+          "inter": 10532,
+          "clics": 4448,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 72587,
-              "impresiones": 18341,
+              "gasto": 85432,
+              "impresiones": 22223,
               "resultadoTipo": "clics",
-              "resultado": 2813,
-              "costoResultado": 26
+              "resultado": 3358,
+              "costoResultado": 25
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 34863,
-              "impresiones": 32302,
+              "gasto": 40801,
+              "impresiones": 34835,
               "resultadoTipo": "clics",
-              "resultado": 577,
-              "costoResultado": 60
+              "resultado": 696,
+              "costoResultado": 59
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 11608,
-              "impresiones": 13168,
+              "gasto": 13679,
+              "impresiones": 15953,
               "resultadoTipo": "clics",
-              "resultado": 246,
-              "costoResultado": 47
+              "resultado": 315,
+              "costoResultado": 43
             },
             {
               "nombre": "Mensajes IG · placas · Julio–Agosto",
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-08",
+  "hasta": "2026-11-09",
   "ytd": {
-    "alcance": 713701,
-    "gasto": 4335792,
-    "impresiones": 1740203,
+    "alcance": 716384,
+    "gasto": 4356645,
+    "impresiones": 1749403,
     "conv": 1538,
-    "inter": 137305,
-    "clics": 43521,
+    "inter": 139054,
+    "clics": 44254,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1009334,
-        "impresiones": 474518,
+        "gasto": 1015272,
+        "impresiones": 477051,
         "resultadoTipo": "clics",
-        "resultado": 19867,
+        "resultado": 19986,
         "costoResultado": 51
       },
       {
@@ -1168,6 +1168,14 @@
         "costoResultado": 12486
       },
       {
+        "nombre": "Precotizador · nov 2026",
+        "gasto": 85432,
+        "impresiones": 22223,
+        "resultadoTipo": "clics",
+        "resultado": 3358,
+        "costoResultado": 25
+      },
+      {
         "nombre": "Publicación de Instagram: Interbanking en YiQi....",
         "gasto": 79835,
         "impresiones": 12617,
@@ -1192,12 +1200,12 @@
         "costoResultado": 116
       },
       {
-        "nombre": "Precotizador · nov 2026",
-        "gasto": 72587,
-        "impresiones": 18341,
+        "nombre": "Tiendanube · integración · Sep 2026",
+        "gasto": 70130,
+        "impresiones": 91173,
         "resultadoTipo": "clics",
-        "resultado": 2813,
-        "costoResultado": 26
+        "resultado": 1617,
+        "costoResultado": 43
       },
       {
         "nombre": "Publicación de Instagram: Menos tareas manuales....",
@@ -1206,14 +1214,6 @@
         "resultadoTipo": "conversaciones",
         "resultado": 8,
         "costoResultado": 8646
-      },
-      {
-        "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 68059,
-        "impresiones": 88388,
-        "resultadoTipo": "clics",
-        "resultado": 1548,
-        "costoResultado": 44
       },
       {
         "nombre": "[15/5/2026] Promoción de https://facebook.com/yiqi.com.ar",
@@ -1764,38 +1764,38 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-08",
+      "hasta": "2026-11-09",
       "parcial": true,
-      "alcance": 42385,
-      "gasto": 130078,
-      "impresiones": 68155,
+      "alcance": 47608,
+      "gasto": 150931,
+      "impresiones": 77355,
       "conv": 14,
-      "inter": 8783,
-      "clics": 3715,
+      "inter": 10532,
+      "clics": 4448,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 72587,
-          "impresiones": 18341,
+          "gasto": 85432,
+          "impresiones": 22223,
           "resultadoTipo": "clics",
-          "resultado": 2813,
-          "costoResultado": 26
+          "resultado": 3358,
+          "costoResultado": 25
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 34863,
-          "impresiones": 32302,
+          "gasto": 40801,
+          "impresiones": 34835,
           "resultadoTipo": "clics",
-          "resultado": 577,
-          "costoResultado": 60
+          "resultado": 696,
+          "costoResultado": 59
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 11608,
-          "impresiones": 13168,
+          "gasto": 13679,
+          "impresiones": 15953,
           "resultadoTipo": "clics",
-          "resultado": 246,
-          "costoResultado": 47
+          "resultado": 315,
+          "costoResultado": 43
         },
         {
           "nombre": "Mensajes IG · placas · Julio–Agosto",
