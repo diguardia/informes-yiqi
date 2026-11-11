@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-11T12:19:51.628Z",
+  "generado": "2026-11-11T17:07:38.416Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -379,19 +379,19 @@
       "desde": "2026-01-01",
       "hasta": "2026-11-11",
       "ytd": {
-        "alcance": 721559,
-        "gasto": 4386557,
-        "impresiones": 1762819,
+        "alcance": 721580,
+        "gasto": 4388300,
+        "impresiones": 1763971,
         "conv": 1538,
-        "inter": 141350,
-        "clics": 45468,
+        "inter": 141524,
+        "clics": 45542,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1023244,
-            "impresiones": 480872,
+            "gasto": 1023518,
+            "impresiones": 481217,
             "resultadoTipo": "clics",
-            "resultado": 20216,
+            "resultado": 20221,
             "costoResultado": 51
           },
           {
@@ -452,10 +452,10 @@
           },
           {
             "nombre": "Precotizador · nov 2026",
-            "gasto": 105008,
-            "impresiones": 28592,
+            "gasto": 106166,
+            "impresiones": 28974,
             "resultadoTipo": "clics",
-            "resultado": 4288,
+            "resultado": 4349,
             "costoResultado": 24
           },
           {
@@ -484,10 +484,10 @@
           },
           {
             "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 72494,
-            "impresiones": 94399,
+            "gasto": 72805,
+            "impresiones": 94824,
             "resultadoTipo": "clics",
-            "resultado": 1671,
+            "resultado": 1679,
             "costoResultado": 43
           },
           {
@@ -1049,35 +1049,35 @@
           "desde": "2026-11-01",
           "hasta": "2026-11-11",
           "parcial": true,
-          "alcance": 55401,
-          "gasto": 180843,
-          "impresiones": 90771,
+          "alcance": 55899,
+          "gasto": 182586,
+          "impresiones": 91923,
           "conv": 14,
-          "inter": 12828,
-          "clics": 5662,
+          "inter": 13002,
+          "clics": 5736,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 105008,
-              "impresiones": 28592,
+              "gasto": 106166,
+              "impresiones": 28974,
               "resultadoTipo": "clics",
-              "resultado": 4288,
+              "resultado": 4349,
               "costoResultado": 24
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 48773,
-              "impresiones": 38656,
+              "gasto": 49047,
+              "impresiones": 39001,
               "resultadoTipo": "clics",
-              "resultado": 926,
+              "resultado": 931,
               "costoResultado": 53
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 16043,
-              "impresiones": 19179,
+              "gasto": 16354,
+              "impresiones": 19604,
               "resultadoTipo": "clics",
-              "resultado": 369,
+              "resultado": 377,
               "costoResultado": 43
             },
             {
@@ -1096,19 +1096,19 @@
   "desde": "2026-01-01",
   "hasta": "2026-11-11",
   "ytd": {
-    "alcance": 721559,
-    "gasto": 4386557,
-    "impresiones": 1762819,
+    "alcance": 721580,
+    "gasto": 4388300,
+    "impresiones": 1763971,
     "conv": 1538,
-    "inter": 141350,
-    "clics": 45468,
+    "inter": 141524,
+    "clics": 45542,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1023244,
-        "impresiones": 480872,
+        "gasto": 1023518,
+        "impresiones": 481217,
         "resultadoTipo": "clics",
-        "resultado": 20216,
+        "resultado": 20221,
         "costoResultado": 51
       },
       {
@@ -1169,10 +1169,10 @@
       },
       {
         "nombre": "Precotizador · nov 2026",
-        "gasto": 105008,
-        "impresiones": 28592,
+        "gasto": 106166,
+        "impresiones": 28974,
         "resultadoTipo": "clics",
-        "resultado": 4288,
+        "resultado": 4349,
         "costoResultado": 24
       },
       {
@@ -1201,10 +1201,10 @@
       },
       {
         "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 72494,
-        "impresiones": 94399,
+        "gasto": 72805,
+        "impresiones": 94824,
         "resultadoTipo": "clics",
-        "resultado": 1671,
+        "resultado": 1679,
         "costoResultado": 43
       },
       {
@@ -1766,35 +1766,35 @@
       "desde": "2026-11-01",
       "hasta": "2026-11-11",
       "parcial": true,
-      "alcance": 55401,
-      "gasto": 180843,
-      "impresiones": 90771,
+      "alcance": 55899,
+      "gasto": 182586,
+      "impresiones": 91923,
       "conv": 14,
-      "inter": 12828,
-      "clics": 5662,
+      "inter": 13002,
+      "clics": 5736,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 105008,
-          "impresiones": 28592,
+          "gasto": 106166,
+          "impresiones": 28974,
           "resultadoTipo": "clics",
-          "resultado": 4288,
+          "resultado": 4349,
           "costoResultado": 24
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 48773,
-          "impresiones": 38656,
+          "gasto": 49047,
+          "impresiones": 39001,
           "resultadoTipo": "clics",
-          "resultado": 926,
+          "resultado": 931,
           "costoResultado": 53
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 16043,
-          "impresiones": 19179,
+          "gasto": 16354,
+          "impresiones": 19604,
           "resultadoTipo": "clics",
-          "resultado": 369,
+          "resultado": 377,
           "costoResultado": 43
         },
         {
