@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-14",
+ "generado": "2026-11-15",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2535,11 +2535,17 @@
   },
   "2026-11": {
    "consultas": {
-    "total": 2,
+    "total": 3,
     "origen": {
-     "web": 2
+     "web": 3
     },
     "detalle": [
+     {
+      "f": "14/11",
+      "cliente": "QqBlrjtDbigecFbTMZBt",
+      "contacto": "EWJMuthEVGKBVRzRZoqanrQY nRicrIdNyVapdJCtIi",
+      "origen": "web"
+     },
      {
       "f": "14/11",
       "cliente": "mYQLiKdlgddBMuXQexEsEsAL",
@@ -2555,17 +2561,25 @@
     ]
    },
    "ons": {
-    "total": 4,
+    "total": 5,
     "origen": {
-     "CLIENTE": 2,
-     "Sin origen": 2
+     "Sin origen": 3,
+     "CLIENTE": 2
     },
     "estado": {
-     "Esperando contacto inicial": 2,
+     "Esperando contacto inicial": 3,
      "Confirmada": 1,
      "En Curso": 1
     },
     "detalle": [
+     {
+      "f": "14/11",
+      "fecha": "2026-11-14 17:38",
+      "empresa": "QqBlrjtDbigecFbTMZBt",
+      "origen": "Sin origen",
+      "titulo": "YiQi ERP - QqBlrjtDbigecFbTMZBt",
+      "id": 37768
+     },
      {
       "f": "14/11",
       "fecha": "2026-11-14 03:48",
@@ -2652,7 +2666,7 @@
   }
  },
  "historico": {
-  "total": 4455,
+  "total": 4456,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2488,
@@ -2663,8 +2677,8 @@
    "Confirmada": 14,
    "Vencida": 8,
    "Presupuesto enviado": 5,
-   "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 3
+   "Esperando contacto inicial": 4,
+   "Esperando presupuesto": 3
   },
   "enCursoNuevas": 32,
   "enCursoViejas": 0
@@ -2693,7 +2707,7 @@
    "2026-08": 16,
    "2026-09": 8,
    "2026-10": 11,
-   "2026-11": 4
+   "2026-11": 5
   },
   "cotiz_enviadas": {
    "2025-07": 10,
