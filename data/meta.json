@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-15T16:21:34.804Z",
+  "generado": "2026-11-16T19:36:09.704Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-15",
+      "hasta": "2026-11-16",
       "ytd": {
-        "alcance": 747755,
-        "gasto": 4450194,
-        "impresiones": 1813015,
+        "alcance": 752205,
+        "gasto": 4469281,
+        "impresiones": 1822608,
         "conv": 1538,
-        "inter": 146691,
-        "clics": 48036,
+        "inter": 148526,
+        "clics": 48824,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1037555,
-            "impresiones": 509311,
+            "gasto": 1042163,
+            "impresiones": 512108,
             "resultadoTipo": "clics",
-            "resultado": 20562,
+            "resultado": 20683,
             "costoResultado": 50
           },
           {
@@ -443,6 +443,14 @@
             "costoResultado": 14528
           },
           {
+            "nombre": "Precotizador · nov 2026",
+            "gasto": 160511,
+            "impresiones": 45067,
+            "resultadoTipo": "clics",
+            "resultado": 6956,
+            "costoResultado": 23
+          },
+          {
             "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
             "gasto": 149830,
             "impresiones": 8737,
@@ -451,12 +459,12 @@
             "costoResultado": 12486
           },
           {
-            "nombre": "Precotizador · nov 2026",
-            "gasto": 147989,
-            "impresiones": 41184,
+            "nombre": "Tiendanube · integración · Sep 2026",
+            "gasto": 80796,
+            "impresiones": 106477,
             "resultadoTipo": "clics",
-            "resultado": 6334,
-            "costoResultado": 23
+            "resultado": 1892,
+            "costoResultado": 43
           },
           {
             "nombre": "Publicación de Instagram: Interbanking en YiQi....",
@@ -473,14 +481,6 @@
             "resultadoTipo": "conversaciones",
             "resultado": 11,
             "costoResultado": 7235
-          },
-          {
-            "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 78839,
-            "impresiones": 103564,
-            "resultadoTipo": "clics",
-            "resultado": 1847,
-            "costoResultado": 43
           },
           {
             "nombre": "Publicación de Instagram: La automatización...",
@@ -1047,37 +1047,37 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-15",
+          "hasta": "2026-11-16",
           "parcial": true,
-          "alcance": 79342,
-          "gasto": 244480,
-          "impresiones": 140967,
+          "alcance": 84171,
+          "gasto": 263567,
+          "impresiones": 150560,
           "conv": 14,
-          "inter": 18169,
-          "clics": 8230,
+          "inter": 20004,
+          "clics": 9018,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 147989,
-              "impresiones": 41184,
+              "gasto": 160511,
+              "impresiones": 45067,
               "resultadoTipo": "clics",
-              "resultado": 6334,
+              "resultado": 6956,
               "costoResultado": 23
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 63084,
-              "impresiones": 67095,
+              "gasto": 67692,
+              "impresiones": 69892,
               "resultadoTipo": "clics",
-              "resultado": 1272,
-              "costoResultado": 50
+              "resultado": 1393,
+              "costoResultado": 49
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 22388,
-              "impresiones": 28344,
+              "gasto": 24345,
+              "impresiones": 31257,
               "resultadoTipo": "clics",
-              "resultado": 545,
+              "resultado": 590,
               "costoResultado": 41
             },
             {
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-15",
+  "hasta": "2026-11-16",
   "ytd": {
-    "alcance": 747755,
-    "gasto": 4450194,
-    "impresiones": 1813015,
+    "alcance": 752205,
+    "gasto": 4469281,
+    "impresiones": 1822608,
     "conv": 1538,
-    "inter": 146691,
-    "clics": 48036,
+    "inter": 148526,
+    "clics": 48824,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1037555,
-        "impresiones": 509311,
+        "gasto": 1042163,
+        "impresiones": 512108,
         "resultadoTipo": "clics",
-        "resultado": 20562,
+        "resultado": 20683,
         "costoResultado": 50
       },
       {
@@ -1160,6 +1160,14 @@
         "costoResultado": 14528
       },
       {
+        "nombre": "Precotizador · nov 2026",
+        "gasto": 160511,
+        "impresiones": 45067,
+        "resultadoTipo": "clics",
+        "resultado": 6956,
+        "costoResultado": 23
+      },
+      {
         "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
         "gasto": 149830,
         "impresiones": 8737,
@@ -1168,12 +1176,12 @@
         "costoResultado": 12486
       },
       {
-        "nombre": "Precotizador · nov 2026",
-        "gasto": 147989,
-        "impresiones": 41184,
+        "nombre": "Tiendanube · integración · Sep 2026",
+        "gasto": 80796,
+        "impresiones": 106477,
         "resultadoTipo": "clics",
-        "resultado": 6334,
-        "costoResultado": 23
+        "resultado": 1892,
+        "costoResultado": 43
       },
       {
         "nombre": "Publicación de Instagram: Interbanking en YiQi....",
@@ -1190,14 +1198,6 @@
         "resultadoTipo": "conversaciones",
         "resultado": 11,
         "costoResultado": 7235
-      },
-      {
-        "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 78839,
-        "impresiones": 103564,
-        "resultadoTipo": "clics",
-        "resultado": 1847,
-        "costoResultado": 43
       },
       {
         "nombre": "Publicación de Instagram: La automatización...",
@@ -1764,37 +1764,37 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-15",
+      "hasta": "2026-11-16",
       "parcial": true,
-      "alcance": 79342,
-      "gasto": 244480,
-      "impresiones": 140967,
+      "alcance": 84171,
+      "gasto": 263567,
+      "impresiones": 150560,
       "conv": 14,
-      "inter": 18169,
-      "clics": 8230,
+      "inter": 20004,
+      "clics": 9018,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 147989,
-          "impresiones": 41184,
+          "gasto": 160511,
+          "impresiones": 45067,
           "resultadoTipo": "clics",
-          "resultado": 6334,
+          "resultado": 6956,
           "costoResultado": 23
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 63084,
-          "impresiones": 67095,
+          "gasto": 67692,
+          "impresiones": 69892,
           "resultadoTipo": "clics",
-          "resultado": 1272,
-          "costoResultado": 50
+          "resultado": 1393,
+          "costoResultado": 49
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 22388,
-          "impresiones": 28344,
+          "gasto": 24345,
+          "impresiones": 31257,
           "resultadoTipo": "clics",
-          "resultado": 545,
+          "resultado": 590,
           "costoResultado": 41
         },
         {
