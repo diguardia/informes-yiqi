@@ -2719,8 +2719,8 @@
         </div>
         <div class="table-wrap">
           <table class="ds-table" id="tabla-apps">
-            <thead><tr><th>App</th><th>Estado</th><th>Dominio</th><th>Categoría</th><th>Autor</th><th>Versión</th></tr></thead>
-            <tbody><tr><td class="iaready-placeholder" colspan="6">Sin datos todavía.</td></tr></tbody>
+            <thead><tr><th>App</th><th>Estado</th><th>Dominio</th><th>Categoría</th><th>Autor</th><th>Precio</th><th>Versión</th></tr></thead>
+            <tbody><tr><td class="iaready-placeholder" colspan="7">Sin datos todavía.</td></tr></tbody>
           </table>
           <div class="table-empty" id="empty-apps" style="display:none" aria-live="polite">Sin resultados para esa búsqueda</div>
         </div>
@@ -4367,6 +4367,12 @@ function loadAppsCatalogo() {
       return d ? d[1] : '—';
     };
 
+    /* Precio: el mismo campo `price` que muestra la ficha publica (app.html).
+       Numero = abono mensual neto + IVA; "quote" = se cotiza; sin campo = sin
+       precio cargado. Se lee en vivo de apps-data.js, asi que se actualiza solo. */
+    const precio = a => a.price === 'quote' ? 'A cotizar'
+      : (typeof a.price === 'number' ? '$ ' + a.price.toLocaleString('es-AR') + '/mes' : '—');
+
     tbl.querySelector('tbody').innerHTML = filas.map(a =>
       '<tr>'
       /* El nombre abre la ficha publica de la app: app.html?id=<id>, el
@@ -4380,6 +4386,7 @@ function loadAppsCatalogo() {
           : '—') + '</td>'
       + '<td>' + _iaEsc(a.cat || '') + '</td>'
       + '<td>' + _iaEsc(a.prov || '') + '</td>'
+      + '<td style="font-family:var(--mono);font-size:12px;white-space:nowrap">' + _iaEsc(precio(a)) + '</td>'
       + '<td style="font-family:var(--mono);font-size:12px">' + _iaEsc(version(a)) + '</td>'
       + '</tr>').join('');
 
