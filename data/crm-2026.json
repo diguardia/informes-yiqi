@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-15",
+ "generado": "2026-11-16",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2535,66 +2535,38 @@
   },
   "2026-11": {
    "consultas": {
-    "total": 3,
+    "total": 1,
     "origen": {
-     "web": 3
+     "Mailing,Mailing": 1
     },
     "detalle": [
      {
-      "f": "14/11",
-      "cliente": "QqBlrjtDbigecFbTMZBt",
-      "contacto": "EWJMuthEVGKBVRzRZoqanrQY nRicrIdNyVapdJCtIi",
-      "origen": "web"
-     },
-     {
-      "f": "14/11",
-      "cliente": "mYQLiKdlgddBMuXQexEsEsAL",
-      "contacto": "QrdSeXghYgMJJrJBEDXxV CMUDYUQiscNdqOYIeEbKakP",
-      "origen": "web"
-     },
-     {
-      "f": "13/11",
-      "cliente": "FsGjTVbmZiFQfHSNtlV",
-      "contacto": "hgGvtmFaaLLBHsiZuACyUfZh qVUFbQGeuawIMusf",
-      "origen": "web"
+      "f": "16/11",
+      "cliente": "Trade Box SRL",
+      "contacto": "Gastón",
+      "origen": "Mailing,Mailing"
      }
     ]
    },
    "ons": {
-    "total": 5,
+    "total": 3,
     "origen": {
-     "Sin origen": 3,
-     "CLIENTE": 2
+     "CLIENTE": 2,
+     "Mailing,Mailing": 1
     },
     "estado": {
-     "Esperando contacto inicial": 3,
      "Confirmada": 1,
-     "En Curso": 1
+     "En Curso": 1,
+     "Esperando contacto inicial": 1
     },
     "detalle": [
      {
-      "f": "14/11",
-      "fecha": "2026-11-14 17:38",
-      "empresa": "QqBlrjtDbigecFbTMZBt",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - QqBlrjtDbigecFbTMZBt",
-      "id": 37768
-     },
-     {
-      "f": "14/11",
-      "fecha": "2026-11-14 03:48",
-      "empresa": "mYQLiKdlgddBMuXQexEsEsAL",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - mYQLiKdlgddBMuXQexEsEsAL",
-      "id": 37767
-     },
-     {
-      "f": "13/11",
-      "fecha": "2026-11-13 16:49",
-      "empresa": "FsGjTVbmZiFQfHSNtlV",
-      "origen": "Sin origen",
-      "titulo": "YiQi ERP - FsGjTVbmZiFQfHSNtlV",
-      "id": 37766
+      "f": "16/11",
+      "fecha": "2026-11-16 09:41",
+      "empresa": "Tienda Shopealo TradeBox SRL",
+      "origen": "Mailing,Mailing",
+      "titulo": "Trade Box SRL · demo vantig.ai",
+      "id": 37771
      },
      {
       "f": "11/11",
@@ -2666,7 +2638,7 @@
   }
  },
  "historico": {
-  "total": 4456,
+  "total": 4454,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2488,
@@ -2677,8 +2649,8 @@
    "Confirmada": 14,
    "Vencida": 8,
    "Presupuesto enviado": 5,
-   "Esperando contacto inicial": 4,
-   "Esperando presupuesto": 3
+   "Esperando presupuesto": 3,
+   "Esperando contacto inicial": 2
   },
   "enCursoNuevas": 32,
   "enCursoViejas": 0
@@ -2707,7 +2679,7 @@
    "2026-08": 16,
    "2026-09": 8,
    "2026-10": 11,
-   "2026-11": 5
+   "2026-11": 3
   },
   "cotiz_enviadas": {
    "2025-07": 10,
