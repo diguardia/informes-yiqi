@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-16T19:36:09.704Z",
+  "generado": "2026-11-17T18:34:04.320Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-16",
+      "hasta": "2026-11-17",
       "ytd": {
-        "alcance": 752205,
-        "gasto": 4469281,
-        "impresiones": 1822608,
+        "alcance": 753624,
+        "gasto": 4487494,
+        "impresiones": 1830115,
         "conv": 1538,
-        "inter": 148526,
-        "clics": 48824,
+        "inter": 149991,
+        "clics": 49546,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1042163,
-            "impresiones": 512108,
+            "gasto": 1046085,
+            "impresiones": 514410,
             "resultadoTipo": "clics",
-            "resultado": 20683,
+            "resultado": 20773,
             "costoResultado": 50
           },
           {
@@ -444,10 +444,10 @@
           },
           {
             "nombre": "Precotizador · nov 2026",
-            "gasto": 160511,
-            "impresiones": 45067,
+            "gasto": 173410,
+            "impresiones": 48517,
             "resultadoTipo": "clics",
-            "resultado": 6956,
+            "resultado": 7551,
             "costoResultado": 23
           },
           {
@@ -460,10 +460,10 @@
           },
           {
             "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 80796,
-            "impresiones": 106477,
+            "gasto": 82187,
+            "impresiones": 108232,
             "resultadoTipo": "clics",
-            "resultado": 1892,
+            "resultado": 1929,
             "costoResultado": 43
           },
           {
@@ -1047,37 +1047,37 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-16",
+          "hasta": "2026-11-17",
           "parcial": true,
-          "alcance": 84171,
-          "gasto": 263567,
-          "impresiones": 150560,
+          "alcance": 87826,
+          "gasto": 281780,
+          "impresiones": 158067,
           "conv": 14,
-          "inter": 20004,
-          "clics": 9018,
+          "inter": 21469,
+          "clics": 9740,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 160511,
-              "impresiones": 45067,
+              "gasto": 173410,
+              "impresiones": 48517,
               "resultadoTipo": "clics",
-              "resultado": 6956,
+              "resultado": 7551,
               "costoResultado": 23
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 67692,
-              "impresiones": 69892,
+              "gasto": 71614,
+              "impresiones": 72194,
               "resultadoTipo": "clics",
-              "resultado": 1393,
-              "costoResultado": 49
+              "resultado": 1483,
+              "costoResultado": 48
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 24345,
-              "impresiones": 31257,
+              "gasto": 25736,
+              "impresiones": 33012,
               "resultadoTipo": "clics",
-              "resultado": 590,
+              "resultado": 627,
               "costoResultado": 41
             },
             {
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-16",
+  "hasta": "2026-11-17",
   "ytd": {
-    "alcance": 752205,
-    "gasto": 4469281,
-    "impresiones": 1822608,
+    "alcance": 753624,
+    "gasto": 4487494,
+    "impresiones": 1830115,
     "conv": 1538,
-    "inter": 148526,
-    "clics": 48824,
+    "inter": 149991,
+    "clics": 49546,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1042163,
-        "impresiones": 512108,
+        "gasto": 1046085,
+        "impresiones": 514410,
         "resultadoTipo": "clics",
-        "resultado": 20683,
+        "resultado": 20773,
         "costoResultado": 50
       },
       {
@@ -1161,10 +1161,10 @@
       },
       {
         "nombre": "Precotizador · nov 2026",
-        "gasto": 160511,
-        "impresiones": 45067,
+        "gasto": 173410,
+        "impresiones": 48517,
         "resultadoTipo": "clics",
-        "resultado": 6956,
+        "resultado": 7551,
         "costoResultado": 23
       },
       {
@@ -1177,10 +1177,10 @@
       },
       {
         "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 80796,
-        "impresiones": 106477,
+        "gasto": 82187,
+        "impresiones": 108232,
         "resultadoTipo": "clics",
-        "resultado": 1892,
+        "resultado": 1929,
         "costoResultado": 43
       },
       {
@@ -1764,37 +1764,37 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-16",
+      "hasta": "2026-11-17",
       "parcial": true,
-      "alcance": 84171,
-      "gasto": 263567,
-      "impresiones": 150560,
+      "alcance": 87826,
+      "gasto": 281780,
+      "impresiones": 158067,
       "conv": 14,
-      "inter": 20004,
-      "clics": 9018,
+      "inter": 21469,
+      "clics": 9740,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 160511,
-          "impresiones": 45067,
+          "gasto": 173410,
+          "impresiones": 48517,
           "resultadoTipo": "clics",
-          "resultado": 6956,
+          "resultado": 7551,
           "costoResultado": 23
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 67692,
-          "impresiones": 69892,
+          "gasto": 71614,
+          "impresiones": 72194,
           "resultadoTipo": "clics",
-          "resultado": 1393,
-          "costoResultado": 49
+          "resultado": 1483,
+          "costoResultado": 48
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 24345,
-          "impresiones": 31257,
+          "gasto": 25736,
+          "impresiones": 33012,
           "resultadoTipo": "clics",
-          "resultado": 590,
+          "resultado": 627,
           "costoResultado": 41
         },
         {
