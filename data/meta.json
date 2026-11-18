@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-17T18:34:04.320Z",
+  "generado": "2026-11-18T18:03:58.151Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-17",
+      "hasta": "2026-11-18",
       "ytd": {
-        "alcance": 753624,
-        "gasto": 4487494,
-        "impresiones": 1830115,
+        "alcance": 757357,
+        "gasto": 4501159,
+        "impresiones": 1837041,
         "conv": 1538,
-        "inter": 149991,
-        "clics": 49546,
+        "inter": 151195,
+        "clics": 50038,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1046085,
-            "impresiones": 514410,
+            "gasto": 1049660,
+            "impresiones": 516849,
             "resultadoTipo": "clics",
-            "resultado": 20773,
+            "resultado": 20858,
             "costoResultado": 50
           },
           {
@@ -427,6 +427,14 @@
             "costoResultado": 13587
           },
           {
+            "nombre": "Precotizador · nov 2026",
+            "gasto": 182104,
+            "impresiones": 51222,
+            "resultadoTipo": "clics",
+            "resultado": 7924,
+            "costoResultado": 23
+          },
+          {
             "nombre": "Publicación de Instagram: El sistema que opera...",
             "gasto": 177464,
             "impresiones": 21275,
@@ -443,14 +451,6 @@
             "costoResultado": 14528
           },
           {
-            "nombre": "Precotizador · nov 2026",
-            "gasto": 173410,
-            "impresiones": 48517,
-            "resultadoTipo": "clics",
-            "resultado": 7551,
-            "costoResultado": 23
-          },
-          {
             "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
             "gasto": 149830,
             "impresiones": 8737,
@@ -460,10 +460,10 @@
           },
           {
             "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 82187,
-            "impresiones": 108232,
+            "gasto": 83584,
+            "impresiones": 110014,
             "resultadoTipo": "clics",
-            "resultado": 1929,
+            "resultado": 1963,
             "costoResultado": 43
           },
           {
@@ -1047,37 +1047,37 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-17",
+          "hasta": "2026-11-18",
           "parcial": true,
-          "alcance": 87826,
-          "gasto": 281780,
-          "impresiones": 158067,
+          "alcance": 89993,
+          "gasto": 295445,
+          "impresiones": 164993,
           "conv": 14,
-          "inter": 21469,
-          "clics": 9740,
+          "inter": 22673,
+          "clics": 10232,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 173410,
-              "impresiones": 48517,
+              "gasto": 182104,
+              "impresiones": 51222,
               "resultadoTipo": "clics",
-              "resultado": 7551,
+              "resultado": 7924,
               "costoResultado": 23
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 71614,
-              "impresiones": 72194,
+              "gasto": 75189,
+              "impresiones": 74633,
               "resultadoTipo": "clics",
-              "resultado": 1483,
+              "resultado": 1568,
               "costoResultado": 48
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 25736,
-              "impresiones": 33012,
+              "gasto": 27133,
+              "impresiones": 34794,
               "resultadoTipo": "clics",
-              "resultado": 627,
+              "resultado": 661,
               "costoResultado": 41
             },
             {
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-17",
+  "hasta": "2026-11-18",
   "ytd": {
-    "alcance": 753624,
-    "gasto": 4487494,
-    "impresiones": 1830115,
+    "alcance": 757357,
+    "gasto": 4501159,
+    "impresiones": 1837041,
     "conv": 1538,
-    "inter": 149991,
-    "clics": 49546,
+    "inter": 151195,
+    "clics": 50038,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1046085,
-        "impresiones": 514410,
+        "gasto": 1049660,
+        "impresiones": 516849,
         "resultadoTipo": "clics",
-        "resultado": 20773,
+        "resultado": 20858,
         "costoResultado": 50
       },
       {
@@ -1144,6 +1144,14 @@
         "costoResultado": 13587
       },
       {
+        "nombre": "Precotizador · nov 2026",
+        "gasto": 182104,
+        "impresiones": 51222,
+        "resultadoTipo": "clics",
+        "resultado": 7924,
+        "costoResultado": 23
+      },
+      {
         "nombre": "Publicación de Instagram: El sistema que opera...",
         "gasto": 177464,
         "impresiones": 21275,
@@ -1160,14 +1168,6 @@
         "costoResultado": 14528
       },
       {
-        "nombre": "Precotizador · nov 2026",
-        "gasto": 173410,
-        "impresiones": 48517,
-        "resultadoTipo": "clics",
-        "resultado": 7551,
-        "costoResultado": 23
-      },
-      {
         "nombre": "[27/5/2026] Promoción de Formulario de YiQi - mayo de 2026 15:20",
         "gasto": 149830,
         "impresiones": 8737,
@@ -1177,10 +1177,10 @@
       },
       {
         "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 82187,
-        "impresiones": 108232,
+        "gasto": 83584,
+        "impresiones": 110014,
         "resultadoTipo": "clics",
-        "resultado": 1929,
+        "resultado": 1963,
         "costoResultado": 43
       },
       {
@@ -1764,37 +1764,37 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-17",
+      "hasta": "2026-11-18",
       "parcial": true,
-      "alcance": 87826,
-      "gasto": 281780,
-      "impresiones": 158067,
+      "alcance": 89993,
+      "gasto": 295445,
+      "impresiones": 164993,
       "conv": 14,
-      "inter": 21469,
-      "clics": 9740,
+      "inter": 22673,
+      "clics": 10232,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 173410,
-          "impresiones": 48517,
+          "gasto": 182104,
+          "impresiones": 51222,
           "resultadoTipo": "clics",
-          "resultado": 7551,
+          "resultado": 7924,
           "costoResultado": 23
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 71614,
-          "impresiones": 72194,
+          "gasto": 75189,
+          "impresiones": 74633,
           "resultadoTipo": "clics",
-          "resultado": 1483,
+          "resultado": 1568,
           "costoResultado": 48
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 25736,
-          "impresiones": 33012,
+          "gasto": 27133,
+          "impresiones": 34794,
           "resultadoTipo": "clics",
-          "resultado": 627,
+          "resultado": 661,
           "costoResultado": 41
         },
         {
