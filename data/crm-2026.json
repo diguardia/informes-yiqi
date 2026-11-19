@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-18",
+ "generado": "2026-11-19",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2358,11 +2358,10 @@
      "Sin origen": 1
     },
     "estado": {
-     "Desestimada": 3,
+     "Desestimada": 4,
      "Presupuesto enviado": 3,
      "En Curso": 2,
-     "Concretada": 2,
-     "Esperando contacto inicial": 1
+     "Concretada": 2
     },
     "detalle": [
      {
@@ -2555,9 +2554,8 @@
      "Mailing,Mailing": 1
     },
     "estado": {
-     "Confirmada": 1,
-     "En Curso": 1,
-     "Esperando contacto inicial": 1
+     "En Curso": 2,
+     "Confirmada": 1
     },
     "detalle": [
      {
@@ -2641,18 +2639,17 @@
   "total": 4454,
   "desde": "2014-11-28",
   "estado": {
-   "Desestimada": 2488,
+   "Desestimada": 2489,
    "Hibernando": 1418,
    "Concretada": 464,
-   "En Curso": 33,
+   "En Curso": 34,
    "Presentación enviada": 19,
    "Confirmada": 14,
    "Vencida": 8,
    "Presupuesto enviado": 5,
-   "Esperando presupuesto": 3,
-   "Esperando contacto inicial": 2
+   "Esperando presupuesto": 3
   },
-  "enCursoNuevas": 32,
+  "enCursoNuevas": 33,
   "enCursoViejas": 0
  },
  "series": {
