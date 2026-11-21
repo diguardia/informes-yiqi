@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-20",
+ "generado": "2026-11-21",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2548,16 +2548,25 @@
     ]
    },
    "ons": {
-    "total": 3,
+    "total": 4,
     "origen": {
-     "CLIENTE": 2,
+     "CLIENTE": 3,
      "Mailing,Mailing": 1
     },
     "estado": {
      "En Curso": 2,
-     "Confirmada": 1
+     "Confirmada": 1,
+     "Esperando contacto inicial": 1
     },
     "detalle": [
+     {
+      "f": "20/11",
+      "fecha": "2026-11-20 15:29",
+      "empresa": "Centro de Distribución Sur",
+      "origen": "CLIENTE",
+      "titulo": "YiQi ERP - Ticket - 36414 CentroDeDistribuciónSur",
+      "id": 37772
+     },
      {
       "f": "16/11",
       "fecha": "2026-11-16 09:41",
@@ -2585,10 +2594,11 @@
     ]
    },
    "cotizaciones": {
-    "emitidas": 4,
+    "emitidas": 5,
     "estado": {
      "Aprobada": 2,
-     "Enviada": 2
+     "Enviada": 2,
+     "En preparación": 1
     },
     "enviadas": 5,
     "aprobadas": {
@@ -2597,6 +2607,11 @@
      "neto_sop": 84272.0
     },
     "detalle": [
+     {
+      "f": "20/11",
+      "nro": "1574.1",
+      "estado": "En preparación"
+     },
      {
       "f": "05/11",
       "nro": "1573.1",
@@ -2636,7 +2651,7 @@
   }
  },
  "historico": {
-  "total": 4454,
+  "total": 4455,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2489,
@@ -2647,7 +2662,8 @@
    "Confirmada": 14,
    "Vencida": 8,
    "Presupuesto enviado": 5,
-   "Esperando presupuesto": 3
+   "Esperando presupuesto": 3,
+   "Esperando contacto inicial": 1
   },
   "enCursoNuevas": 33,
   "enCursoViejas": 0
@@ -2676,7 +2692,7 @@
    "2026-08": 16,
    "2026-09": 8,
    "2026-10": 11,
-   "2026-11": 3
+   "2026-11": 4
   },
   "cotiz_enviadas": {
    "2025-07": 10,
