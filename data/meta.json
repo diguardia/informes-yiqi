@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-23T21:24:11.506Z",
+  "generado": "2026-11-24T20:09:36.587Z",
   "cuenta": "370211010327709",
   "version": "v25.0",
   "anio": 2026,
@@ -377,21 +377,21 @@
     },
     "2026": {
       "desde": "2026-01-01",
-      "hasta": "2026-11-23",
+      "hasta": "2026-11-24",
       "ytd": {
-        "alcance": 803356,
-        "gasto": 4592644,
-        "impresiones": 1920374,
+        "alcance": 804348,
+        "gasto": 4607622,
+        "impresiones": 1932549,
         "conv": 1538,
-        "inter": 157579,
-        "clics": 52127,
+        "inter": 159115,
+        "clics": 52762,
         "campanas": [
           {
             "nombre": "Puedes vender más / costos · Julio–Agosto",
-            "gasto": 1071100,
-            "impresiones": 531189,
+            "gasto": 1075425,
+            "impresiones": 534213,
             "resultadoTipo": "clics",
-            "resultado": 21328,
+            "resultado": 21430,
             "costoResultado": 50
           },
           {
@@ -419,20 +419,20 @@
             "costoResultado": 64
           },
           {
+            "nombre": "Precotizador · nov 2026",
+            "gasto": 253407,
+            "impresiones": 118811,
+            "resultadoTipo": "clics",
+            "resultado": 9850,
+            "costoResultado": 26
+          },
+          {
             "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
             "gasto": 244563,
             "impresiones": 16745,
             "resultadoTipo": "clics",
             "resultado": 18,
             "costoResultado": 13587
-          },
-          {
-            "nombre": "Precotizador · nov 2026",
-            "gasto": 244106,
-            "impresiones": 111453,
-            "resultadoTipo": "clics",
-            "resultado": 9342,
-            "costoResultado": 26
           },
           {
             "nombre": "Publicación de Instagram: El sistema que opera...",
@@ -460,10 +460,10 @@
           },
           {
             "nombre": "Tiendanube · integración · Sep 2026",
-            "gasto": 91617,
-            "impresiones": 118767,
+            "gasto": 92978,
+            "impresiones": 120569,
             "resultadoTipo": "clics",
-            "resultado": 2164,
+            "resultado": 2190,
             "costoResultado": 42
           },
           {
@@ -1047,37 +1047,37 @@
           "key": "nov",
           "mes": 11,
           "desde": "2026-11-01",
-          "hasta": "2026-11-23",
+          "hasta": "2026-11-24",
           "parcial": true,
-          "alcance": 134418,
-          "gasto": 386930,
-          "impresiones": 248326,
+          "alcance": 139390,
+          "gasto": 401908,
+          "impresiones": 260501,
           "conv": 14,
-          "inter": 29057,
-          "clics": 12321,
+          "inter": 30593,
+          "clics": 12956,
           "campanas": [
             {
               "nombre": "Precotizador · nov 2026",
-              "gasto": 244106,
-              "impresiones": 111453,
+              "gasto": 253407,
+              "impresiones": 118811,
               "resultadoTipo": "clics",
-              "resultado": 9342,
+              "resultado": 9850,
               "costoResultado": 26
             },
             {
               "nombre": "Puedes vender más / costos · Julio–Agosto",
-              "gasto": 96629,
-              "impresiones": 88973,
+              "gasto": 100954,
+              "impresiones": 91997,
               "resultadoTipo": "clics",
-              "resultado": 2038,
+              "resultado": 2140,
               "costoResultado": 47
             },
             {
               "nombre": "Tiendanube · integración · Sep 2026",
-              "gasto": 35166,
-              "impresiones": 43547,
+              "gasto": 36527,
+              "impresiones": 45349,
               "resultadoTipo": "clics",
-              "resultado": 862,
+              "resultado": 888,
               "costoResultado": 41
             },
             {
@@ -1094,21 +1094,21 @@
     }
   },
   "desde": "2026-01-01",
-  "hasta": "2026-11-23",
+  "hasta": "2026-11-24",
   "ytd": {
-    "alcance": 803356,
-    "gasto": 4592644,
-    "impresiones": 1920374,
+    "alcance": 804348,
+    "gasto": 4607622,
+    "impresiones": 1932549,
     "conv": 1538,
-    "inter": 157579,
-    "clics": 52127,
+    "inter": 159115,
+    "clics": 52762,
     "campanas": [
       {
         "nombre": "Puedes vender más / costos · Julio–Agosto",
-        "gasto": 1071100,
-        "impresiones": 531189,
+        "gasto": 1075425,
+        "impresiones": 534213,
         "resultadoTipo": "clics",
-        "resultado": 21328,
+        "resultado": 21430,
         "costoResultado": 50
       },
       {
@@ -1136,20 +1136,20 @@
         "costoResultado": 64
       },
       {
+        "nombre": "Precotizador · nov 2026",
+        "gasto": 253407,
+        "impresiones": 118811,
+        "resultadoTipo": "clics",
+        "resultado": 9850,
+        "costoResultado": 26
+      },
+      {
         "nombre": "Publicación: \"Puedes vender más, suma canales en minutos\"",
         "gasto": 244563,
         "impresiones": 16745,
         "resultadoTipo": "clics",
         "resultado": 18,
         "costoResultado": 13587
-      },
-      {
-        "nombre": "Precotizador · nov 2026",
-        "gasto": 244106,
-        "impresiones": 111453,
-        "resultadoTipo": "clics",
-        "resultado": 9342,
-        "costoResultado": 26
       },
       {
         "nombre": "Publicación de Instagram: El sistema que opera...",
@@ -1177,10 +1177,10 @@
       },
       {
         "nombre": "Tiendanube · integración · Sep 2026",
-        "gasto": 91617,
-        "impresiones": 118767,
+        "gasto": 92978,
+        "impresiones": 120569,
         "resultadoTipo": "clics",
-        "resultado": 2164,
+        "resultado": 2190,
         "costoResultado": 42
       },
       {
@@ -1764,37 +1764,37 @@
       "key": "nov",
       "mes": 11,
       "desde": "2026-11-01",
-      "hasta": "2026-11-23",
+      "hasta": "2026-11-24",
       "parcial": true,
-      "alcance": 134418,
-      "gasto": 386930,
-      "impresiones": 248326,
+      "alcance": 139390,
+      "gasto": 401908,
+      "impresiones": 260501,
       "conv": 14,
-      "inter": 29057,
-      "clics": 12321,
+      "inter": 30593,
+      "clics": 12956,
       "campanas": [
         {
           "nombre": "Precotizador · nov 2026",
-          "gasto": 244106,
-          "impresiones": 111453,
+          "gasto": 253407,
+          "impresiones": 118811,
           "resultadoTipo": "clics",
-          "resultado": 9342,
+          "resultado": 9850,
           "costoResultado": 26
         },
         {
           "nombre": "Puedes vender más / costos · Julio–Agosto",
-          "gasto": 96629,
-          "impresiones": 88973,
+          "gasto": 100954,
+          "impresiones": 91997,
           "resultadoTipo": "clics",
-          "resultado": 2038,
+          "resultado": 2140,
           "costoResultado": 47
         },
         {
           "nombre": "Tiendanube · integración · Sep 2026",
-          "gasto": 35166,
-          "impresiones": 43547,
+          "gasto": 36527,
+          "impresiones": 45349,
           "resultadoTipo": "clics",
-          "resultado": 862,
+          "resultado": 888,
           "costoResultado": 41
         },
         {
