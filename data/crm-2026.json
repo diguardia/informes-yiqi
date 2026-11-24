@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-23",
+ "generado": "2026-11-24",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2534,11 +2534,18 @@
   },
   "2026-11": {
    "consultas": {
-    "total": 1,
+    "total": 2,
     "origen": {
+     "Precotizador web": 1,
      "Mailing,Mailing": 1
     },
     "detalle": [
+     {
+      "f": "24/11",
+      "cliente": "No tengo",
+      "contacto": "Agustina Barrios",
+      "origen": "Precotizador web"
+     },
      {
       "f": "16/11",
       "cliente": "Trade Box SRL",
@@ -2548,17 +2555,26 @@
     ]
    },
    "ons": {
-    "total": 4,
+    "total": 5,
     "origen": {
      "CLIENTE": 3,
-     "Mailing,Mailing": 1
+     "Mailing,Mailing": 1,
+     "Precotizador web": 1
     },
     "estado": {
-     "En Curso": 2,
-     "Confirmada": 1,
+     "En Curso": 3,
+     "Concretada": 1,
      "Esperando contacto inicial": 1
     },
     "detalle": [
+     {
+      "f": "24/11",
+      "fecha": "2026-11-24 00:02",
+      "empresa": "no tengo",
+      "origen": "Precotizador web",
+      "titulo": "YiQi ERP - No tengo",
+      "id": 37773
+     },
      {
       "f": "20/11",
       "fecha": "2026-11-20 15:29",
@@ -2635,9 +2651,17 @@
     ]
    },
    "concretadas": {
-    "n": 1,
-    "importe": 424515.0,
+    "n": 2,
+    "importe": 1397235.0,
     "detalle": [
+     {
+      "f": "24/11",
+      "fecha": "2026-11-24 12:33",
+      "empresa": "Silvestre Blousson",
+      "origen": "CLIENTE",
+      "importe": 972720.0,
+      "anticipo": 0.0
+     },
      {
       "f": "04/11",
       "fecha": "2026-11-04 16:28",
@@ -2651,21 +2675,21 @@
   }
  },
  "historico": {
-  "total": 4455,
+  "total": 4456,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2489,
    "Hibernando": 1418,
-   "Concretada": 464,
-   "En Curso": 34,
+   "Concretada": 465,
+   "En Curso": 35,
    "Presentación enviada": 19,
-   "Confirmada": 14,
+   "Confirmada": 13,
    "Vencida": 8,
    "Presupuesto enviado": 5,
    "Esperando presupuesto": 3,
    "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 33,
+  "enCursoNuevas": 34,
   "enCursoViejas": 0
  },
  "series": {
@@ -2692,7 +2716,7 @@
    "2026-08": 16,
    "2026-09": 8,
    "2026-10": 11,
-   "2026-11": 4
+   "2026-11": 5
   },
   "cotiz_enviadas": {
    "2025-07": 10,
