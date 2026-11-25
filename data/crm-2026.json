@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-24",
+ "generado": "2026-11-25",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2359,9 +2359,10 @@
     },
     "estado": {
      "Desestimada": 4,
-     "Presupuesto enviado": 3,
      "En Curso": 2,
-     "Concretada": 2
+     "Concretada": 2,
+     "Vencida": 2,
+     "Presupuesto enviado": 1
     },
     "detalle": [
      {
@@ -2457,9 +2458,8 @@
    "cotizaciones": {
     "emitidas": 6,
     "estado": {
-     "Vencida": 2,
+     "Vencida": 3,
      "Aprobada": 2,
-     "Enviada": 1,
      "En preparación": 1
     },
     "enviadas": 4,
@@ -2477,7 +2477,7 @@
      {
       "f": "23/10",
       "nro": "1569.1",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "21/10",
@@ -2534,12 +2534,19 @@
   },
   "2026-11": {
    "consultas": {
-    "total": 2,
+    "total": 3,
     "origen": {
      "Precotizador web": 1,
+     "web": 1,
      "Mailing,Mailing": 1
     },
     "detalle": [
+     {
+      "f": "25/11",
+      "cliente": "TU MEJOR SOMMIER",
+      "contacto": "Gabriela Sardón",
+      "origen": "web"
+     },
      {
       "f": "24/11",
       "cliente": "No tengo",
@@ -2555,18 +2562,27 @@
     ]
    },
    "ons": {
-    "total": 5,
+    "total": 6,
     "origen": {
      "CLIENTE": 3,
      "Mailing,Mailing": 1,
-     "Precotizador web": 1
+     "Precotizador web": 1,
+     "ChatGPT / IA": 1
     },
     "estado": {
-     "En Curso": 3,
+     "En Curso": 4,
      "Concretada": 1,
      "Esperando contacto inicial": 1
     },
     "detalle": [
+     {
+      "f": "25/11",
+      "fecha": "2026-11-25 09:06",
+      "empresa": "TU MEJOR SOMMIER",
+      "origen": "ChatGPT / IA",
+      "titulo": "YiQi ERP - TU MEJOR SOMMIER",
+      "id": 37774
+     },
      {
       "f": "24/11",
       "fecha": "2026-11-24 00:02",
@@ -2613,7 +2629,7 @@
     "emitidas": 5,
     "estado": {
      "Aprobada": 2,
-     "Enviada": 2,
+     "Vencida": 2,
      "En preparación": 1
     },
     "enviadas": 5,
@@ -2641,12 +2657,12 @@
      {
       "f": "03/11",
       "nro": "1571.1",
-      "estado": "Enviada"
+      "estado": "Vencida"
      },
      {
       "f": "03/11",
       "nro": "1572.1",
-      "estado": "Enviada"
+      "estado": "Vencida"
      }
     ]
    },
@@ -2675,21 +2691,21 @@
   }
  },
  "historico": {
-  "total": 4456,
+  "total": 4457,
   "desde": "2014-11-28",
   "estado": {
    "Desestimada": 2489,
    "Hibernando": 1418,
    "Concretada": 465,
-   "En Curso": 35,
+   "En Curso": 36,
    "Presentación enviada": 19,
    "Confirmada": 13,
-   "Vencida": 8,
-   "Presupuesto enviado": 5,
+   "Vencida": 10,
    "Esperando presupuesto": 3,
+   "Presupuesto enviado": 3,
    "Esperando contacto inicial": 1
   },
-  "enCursoNuevas": 34,
+  "enCursoNuevas": 35,
   "enCursoViejas": 0
  },
  "series": {
@@ -2716,7 +2732,7 @@
    "2026-08": 16,
    "2026-09": 8,
    "2026-10": 11,
-   "2026-11": 5
+   "2026-11": 6
   },
   "cotiz_enviadas": {
    "2025-07": 10,
