@@ -138,7 +138,7 @@ html{color-scheme:dark} html[data-theme="light"]{color-scheme:light}
     </div>
   </div>
 
-  <div class="foot">Documento interno — no publicar. DS consumido de yiqi-imagen (CDN). Actualizado el 09/09/2026.</div>
+  <div class="foot">Documento interno — no publicar. DS consumido de yiqi-imagen (CDN). Actualizado el 26/11/2026.</div>
 </div>
 
   <div class="sc-modal" id="preview" aria-hidden="true">
@@ -158,49 +158,72 @@ const CAT='https://diguardia.github.io/yiqi-imagen/yiqi-design-system.html';
 
 /* ── Datos: SITIO ── */
 const ROOT_SITE={label:'Home',sub:'/',url:BASE+'/',st:'root',children:[
- {label:'Navegación',desc:'menú de site-header.js · 08/09/2026',st:'grp',children:[
-  {label:'Módulos',sub:'/#modulos',desc:'ancla en la home',st:'pub'},
-  {label:'iAready',sub:'/ia-ready.html',st:'pub'},
+ {label:'Navegación',desc:'menú de site-header.js · 26/11/2026',st:'grp',children:[
+  {label:'Módulos',sub:'/#modulos',desc:'ancla en la home · 11 módulos en el desplegable',st:'pub'},
+  {label:'Partners',desc:'desplegable del menú',st:'grp',children:[
+   {label:'Tiendanube',sub:'/tiendanube.html',st:'pub'},
+   {label:'Enviopack',sub:'/enviopack.html',desc:'noindex · en construcción · en el menú sin enlace',st:'draft'},
+   {label:'Interbanking',sub:'/interbanking.html',st:'pub'},
+   {label:'Sell2Ship',sub:'/sell2ship.html',st:'pub'},
+   {label:'Drubbit',sub:'/drubbit.html',st:'pub'},
+   {label:'TornadoStore',sub:'/tornadostore.html',desc:'tornado.html redirige acá desde el 13/10',st:'pub'},
+   {label:'Shopify',sub:'/shopify.html',desc:'fuera del menú · en el sitemap',st:'pub'}]},
+  {label:'Apps · iAready',sub:'/ia-ready.html',desc:'fichas en app.html?id=',st:'pub',children:[
+   {label:'YiQi Contable',sub:'/app.html?id=yiqi-contable',desc:'disponible',st:'pub'},
+   {label:'YiQi Analytics Pro',sub:'/app.html?id=yiqi-analytics-pro',desc:'disponible',st:'pub'},
+   {label:'YiQi Proveedores',sub:'/app.html?id=front-de-proveedores-ocr',desc:'disponible',st:'pub'},
+   {label:'YiQi POS',sub:'/app.html?id=yiqi-pos',desc:'disponible',st:'pub'},
+   {label:'YiQi Picking',sub:'/app.html?id=picking-list',desc:'disponible',st:'pub'},
+   {label:'YiQi Pedidos',sub:'/app.html?id=consulta-de-pedidos',desc:'disponible',st:'pub'},
+   {label:'YiQi Recepción de Facturas',sub:'/app.html?id=yiqi-recepcion-de-facturas',desc:'disponible',st:'pub'},
+   {label:'YiQi Abastecimiento',sub:'/app.html?id=yiqi-supply',desc:'disponible',st:'pub'},
+   {label:'vantig.ai',sub:'/app.html?id=vantig-ai',desc:'app de partner · disponible',st:'pub'},
+   {label:'MCP de YiQi',sub:'/app.html?id=mcp-yiqi',desc:'disponible · fuera del catálogo, enlazada desde el pie y iAready',st:'pub'},
+   {label:'Rentabilidad ML',sub:'/app.html?id=rentabilidad-ml',desc:'app de partner · en homologación',st:'pre'},
+   {label:'YiQi Inventario',sub:'/app.html?id=inventariado-mobile',desc:'en desarrollo',st:'pre'},
+   {label:'YiQi Resumen de Tarjeta',sub:'/app.html?id=generador-factura-resumen',desc:'en desarrollo',st:'pre'},
+   {label:'YiQi A&F Control',sub:'/app.html?id=yiqi-af-control',desc:'en desarrollo',st:'pre'},
+   {label:'YiQi Talles y Colores',sub:'/app.html?id=yiqi-talles-y-colores',desc:'en desarrollo',st:'pre'},
+   {label:'Antualia',sub:'/app.html?id=antualia',desc:'app de partner · en desarrollo',st:'pre'}]},
   {label:'API',sub:'/api-docs.html',st:'pub'},
   {label:'Recursos',desc:'grupo del menú',st:'grp',children:[
    {label:'Novedades de producto',sub:'/novedades.html',st:'pub'},
    {label:'Capacitaciones',sub:'/capacitaciones.html',st:'pub'},
    {label:'FAQ',sub:'/faq.html',desc:'proxy de faq.yiqi.com.ar',st:'pub'},
    {label:'Ayuda ERP',sub:'ayudaerp.yiqi.com.ar',url:'https://ayudaerp.yiqi.com.ar/',st:'ext'}]},
-  {label:'Acerca de',sub:'/acerca-de.html',desc:'fuera del menú, en el sitemap',st:'pub'},
-  {label:'Contacto',sub:'/contacto.html',st:'pub'},
-  {label:'Ayuda ERP (página)',sub:'/ayuda-erp.html',desc:'el menú apunta al subdominio',st:'pub'}]},
- {label:'Showcase',desc:'embebidas en Home',st:'grp',children:[
+  {label:'Contacto',sub:'/contacto.html',st:'pub'}]},
+ {label:'Páginas para buscadores',desc:'en el sitemap, fuera del menú',st:'grp',children:[
+  {label:'ERP para Mercado Libre',sub:'/erp-mercado-libre.html',st:'pub'},
+  {label:'Sistema de stock y facturación',sub:'/sistema-de-stock-y-facturacion.html',st:'pub'},
+  {label:'Sistema de gestión para distribuidoras',sub:'/sistema-de-gestion-para-distribuidoras.html',st:'pub'},
+  {label:'ERP para pymes',sub:'/erp-para-pymes.html',st:'pub'},
+  {label:'Qué es un ERP',sub:'/que-es-un-erp.html',st:'pub'}]},
+ {label:'Pie de página',desc:'fuera del menú, enlazadas desde el pie',st:'grp',children:[
+  {label:'Precotizador',sub:'/precotizador.html',desc:'en el sitemap',st:'pub'},
+  {label:'Acerca de',sub:'/acerca-de.html',desc:'en el sitemap',st:'pub'},
+  {label:'Política de privacidad',sub:'/privacidad.html',st:'pub'},
+  {label:'Ayuda ERP (página)',sub:'/ayuda-erp.html',desc:'en el sitemap · el menú apunta al subdominio',st:'pub'}]},
+ {label:'Showcase',desc:'embebidas en Home · noindex',st:'grp',children:[
   {label:'Panel ERP',sub:'/erp-panel.html',st:'pub'},
   {label:'Panel ERP · claro',sub:'/erp-panel-claro.html',st:'pub'},
   {label:'Panel mobile',sub:'/erp-mobile.html',st:'pub'},
   {label:'Panel mobile · claro',sub:'/erp-mobile-claro.html',st:'pub'}]},
- {label:'Partners',desc:'6 con landing propia · Enviopack sin enlace en el menú',st:'grp',children:[
-  {label:'Tiendanube',sub:'/tiendanube.html',st:'pub'},
-  {label:'Shopify',sub:'/shopify.html',st:'pub'},
-  {label:'Interbanking',sub:'/interbanking.html',st:'pub'},
-  {label:'Sell2Ship',sub:'/sell2ship.html',st:'pub'},
-  {label:'Drubbit',sub:'/drubbit.html',st:'pub'},
-  {label:'TornadoStore',sub:'/tornado.html',st:'pub'},
-  {label:'Enviopack',sub:'/enviopack.html',desc:'noindex · en construcción, sin enlace en el menú',st:'draft'},
+ {label:'Fuera del sitemap',st:'grp',children:[
+  {label:'Marketplace',sub:'/marketplace.html',desc:'enlazado desde la home',st:'pre'},
   {label:'Tiendanube · próximos pasos',sub:'/app-tiendanube.html',desc:'noindex,follow · destino del onboarding de la app',st:'pre'}]},
- {label:'Pre-lanzamiento',desc:'fuera del sitemap',st:'grp',children:[
-  {label:'Marketplace',sub:'/marketplace.html',st:'pre',children:[
-   {label:'YiQi Analytics Pro',sub:'/app.html?id=yiqi-analytics-pro',desc:'disponible',st:'pub'},
-   {label:'Front de Proveedores OCR',sub:'/app.html?id=front-de-proveedores-ocr',desc:'disponible',st:'pub'},
-   {label:'YiQi POS',sub:'/app.html?id=yiqi-pos',desc:'disponible',st:'pub'},
-   {label:'Picking List',sub:'/app.html?id=picking-list',desc:'disponible',st:'pub'},
-   {label:'Consulta de pedidos',sub:'/app.html?id=consulta-de-pedidos',desc:'disponible',st:'pub'},
-   {label:'Rentabilidad ML',sub:'/app.html?id=rentabilidad-ml',desc:'en homologación',st:'pre'},
-   {label:'Inventariado Mobile',sub:'/app.html?id=inventariado-mobile',desc:'en desarrollo',st:'pre'},
-   {label:'Generador de Factura Resumen',sub:'/app.html?id=generador-factura-resumen',desc:'en desarrollo',st:'pre'},
-   {label:'YiQi Recepción de Facturas',sub:'/app.html?id=yiqi-recepcion-de-facturas',desc:'en desarrollo',st:'pre'},
-   {label:'YiQi Supply',sub:'/app.html?id=yiqi-supply',desc:'en desarrollo',st:'pre'},
-   {label:'vantig.ai',sub:'/app.html?id=vantig-ai',desc:'app de partner · en desarrollo',st:'pre'}]},
-  {label:'Precotizador',sub:'/precotizador.html',st:'pre'}]},
+ {label:'Landings por token',desc:'se sirven en /p/<token> · noindex',st:'grp',children:[
+  {label:'Captación',sub:'captacion/',desc:'37 landings',st:'pre'},
+  {label:'Previas',sub:'previas/',desc:'3 landings',st:'pre'},
+  {label:'Propuestas',sub:'propuestas/',desc:'8 landings',st:'pre'}]},
  {label:'Borradores',st:'grp',children:[
-  {label:'SplitText',sub:'/efecto-splittext.html',st:'draft'},
-  {label:'Staging',sub:'/staging.html',st:'draft'},
+  {label:'Home v2',sub:'/home-v2.html',desc:'noindex',st:'draft'},
+  {label:'iAready · abstractos',sub:'/ia-ready-abstractos.html',desc:'sin noindex',st:'draft'},
+  {label:'Ficha de app · abstractos',sub:'/app-abstractos.html',desc:'sin noindex',st:'draft'},
+  {label:'Video iAready',sub:'/_video-ia-ready.html',desc:'noindex',st:'draft'},
+  {label:'Animación del MCP',sub:'/mcp-animacion.html',desc:'noindex',st:'draft'},
+  {label:'Test del precotizador',sub:'/test-precotizador-ui.html',desc:'noindex',st:'draft'},
+  {label:'SplitText',sub:'/efecto-splittext.html',desc:'noindex',st:'draft'},
+  {label:'Staging',sub:'/staging.html',desc:'noindex',st:'draft'},
   {label:'Staging · landings de partners',sub:'/staging-partners.html',desc:'noindex',st:'draft'},
   {label:'Alcance del ecosistema',sub:'/eco-alcance.html',desc:'noindex',st:'draft'}]},
  {label:'Sistema',st:'grp',children:[
@@ -213,93 +236,123 @@ const ROOT_SITE={label:'Home',sub:'/',url:BASE+'/',st:'root',children:[
   {label:'POS',sub:'pos.yiqi.com.ar',url:'https://pos.yiqi.com.ar/publish.htm',st:'ext'},
   {label:'Informes',sub:'informes.yiqi.com.ar',url:'https://informes.yiqi.com.ar/',desc:'acá vive este árbol',st:'ext'},
   {label:'Design System',sub:'diguardia.github.io',url:CAT,desc:'catálogo del DS',st:'ext'}]},
- {label:'Externos',st:'grp',children:[
+ {label:'Externos',desc:'enlaces del menú y del pie',st:'grp',children:[
   {label:'Login',sub:'me.yiqi.com.ar',url:'https://me.yiqi.com.ar',st:'ext'},
   {label:'Demo',sub:'calendly',url:'https://calendly.com/javierperez/meet-30-demo',st:'ext'},
-  {label:'WhatsApp',sub:'wa.me',url:'https://wa.me/5491123727422',st:'ext'},
+  {label:'WhatsApp',sub:'wa.me',url:'https://wa.me/5491138531655',st:'ext'},
   {label:'LinkedIn',sub:'linkedin',url:'https://www.linkedin.com/company/yiqi-sa',st:'ext'},
   {label:'Instagram',sub:'instagram',url:'https://instagram.com/yiqisa',st:'ext'},
+  {label:'Facebook',sub:'facebook',url:'https://facebook.com/yiqi.com.ar',st:'ext'},
   {label:'YouTube',sub:'youtube',url:'https://youtube.com/@yiqi3369',st:'ext'}]}
 ]};
 
 /* ── Datos: DESIGN SYSTEM (catálogo) ── */
-const ROOT_DS={label:'Catálogo DS',sub:'v1.2.8.36',url:CAT,st:'root',children:[
+const ROOT_DS={label:'Catálogo DS',sub:'v1.2.8.105',url:CAT,st:'root',children:[
  {label:'Inicio',st:'grp',children:[
   {label:'00 Novedades',a:'release-notes',st:'comp'}]},
+ {label:'Reglas',st:'grp',children:[
+  {label:'01 Reglas del sistema',a:'reglas',st:'comp'}]},
+ {label:'Marca',st:'grp',children:[
+  {label:'02 Logo & marca',a:'brand',st:'comp'}]},
  {label:'Fundamentos',st:'grp',children:[
-  {label:'01 Reglas del sistema',a:'reglas',st:'comp'},
-  {label:'02 Logo & Marca',a:'brand',st:'comp'},
-  {label:'03 Paleta de colores',a:'colors',st:'comp'},
-  {label:'04 Escala tipográfica',a:'typography',st:'comp'},
-  {label:'05 Escala de espaciado',a:'spacing',st:'comp'},
-  {label:'06 Sistema de radios',a:'radius',st:'comp'},
-  {label:'07 Sombras y foco',a:'effects',st:'comp'},
-  {label:'08 Animaciones & Transiciones',a:'motion',st:'comp'},
-  {label:'09 Iconografía · Phosphor',a:'icons',st:'comp'}]},
+  {label:'03 Colores',a:'colors',st:'comp'},
+  {label:'04 Tipografía',a:'typography',st:'comp'},
+  {label:'05 Espaciado',a:'spacing',st:'comp'},
+  {label:'06 Border radius',a:'radius',st:'comp'},
+  {label:'07 Efectos & sombras',a:'effects',st:'comp'},
+  {label:'08 Motion',a:'motion',st:'comp'},
+  {label:'09 Iconografía Phosphor',a:'icons',st:'comp'}]},
  {label:'Componentes',st:'grp',children:[
   {label:'10 Botones',a:'buttons',st:'comp'},
-  {label:'11 Badges, Tags & Pills',a:'badges',st:'comp'},
-  {label:'12 Inputs & Formularios',a:'inputs',st:'comp'},
+  {label:'11 Badges & tags',a:'badges',st:'comp'},
+  {label:'12 Inputs & formularios',a:'inputs',st:'comp'},
   {label:'13 Cards & KPIs',a:'cards',st:'comp'},
-  {label:'14 Trust / Stats',a:'trust',st:'comp'},
-  {label:'15 Sidebar & Nav items',a:'navigation',st:'comp'},
-  {label:'16 Sortable data tables',a:'tables',st:'comp'},
+  {label:'15 Navegación',a:'navigation',st:'comp'},
+  {label:'16 Tablas',a:'tables',st:'comp'},
   {label:'17 Elementos varios',a:'misc',st:'comp'},
-  {label:'21 Slider · rango',a:'prim-slider',st:'comp'},
-  {label:'22 Tabs · conmutador de paneles',a:'prim-tabs',st:'comp'},
-  {label:'23 Dialog · modal',a:'prim-dialog',st:'comp'},
-  {label:'24 Dropdown · menú',a:'prim-dropdown',st:'comp'},
-  {label:'25 Popover · flotante',a:'prim-popover',st:'comp'},
-  {label:'26 Toast · notificación',a:'prim-toast',st:'comp'},
-  {label:'63 LLM FAB',a:'llm-fab',st:'comp'},
-  {label:'64 Nota / callout',a:'ds-note',st:'comp'},
-  {label:'65 Copiar al portapapeles · ds-copy',a:'ds-copy',st:'comp'},
-  {label:'66 Desplegable de selección · ds-picker',a:'ds-picker',st:'comp'}]},
- {label:'Base y estados',st:'grp',children:[
   {label:'18 Scrollbars',a:'scrollbars',st:'comp'},
-  {label:'19 Estado vacio',a:'empty-state',st:'comp'},
-  {label:'20 Toggle de tema — 3 pasos',a:'theme-toggle',st:'comp'}]},
- {label:'Patrones',st:'grp',children:[
+  {label:'19 Estado vacío',a:'empty-state',st:'comp'},
+  {label:'20 Toggle de tema',a:'theme-toggle',st:'comp'}]},
+ {label:'Primitivos',st:'grp',children:[
+  {label:'21 Slider',a:'prim-slider',st:'comp'},
+  {label:'22 Tabs',a:'prim-tabs',st:'comp'},
+  {label:'23 Dialog',a:'prim-dialog',st:'comp'},
+  {label:'24 Dropdown',a:'prim-dropdown',st:'comp'},
+  {label:'25 Popover',a:'prim-popover',st:'comp'},
+  {label:'26 Toast',a:'prim-toast',st:'comp'},
   {label:'27 Contador animado',a:'counter',st:'comp'},
-  {label:'28 Animación de gráficos',a:'chart-anim',st:'comp'},
-  {label:'31 Depth stack NEW v1.2.6',a:'depth-stack',st:'comp'},
-  {label:'32 Demo Form — Formulario multi-paso',a:'demo-form',st:'comp'},
-  {label:'61 Tabla de implementación',a:'implementacion',st:'comp'},
-  {label:'62 Enlace cruzado · ds-xref',a:'ds-xref',st:'comp'},
-  {label:'68 Bloque destacado · spotlight',a:'ds-spotlight',st:'comp'}]},
- {label:'Layout',st:'grp',children:[
-  {label:'29 Grid & Layout system',a:'grid',st:'comp'},
-  {label:'30 Grilla cuadriculada',a:'bg-grid',st:'comp'}]},
- {label:'Aplicaciones',st:'grp',children:[
-  {label:'33 Apps del marketplace',a:'app-overview',st:'comp'},
-  {label:'34 Shell de app',a:'app-shell',st:'comp'},
-  {label:'35 Shell de app en celular',a:'shell-mobile',st:'comp'},
-  {label:'36 Pantalla de acceso',a:'login',st:'comp'},
-  {label:'37 Panel Gerencial · Componentes',a:'panel-gerencial',st:'comp'},
-  {label:'38 Picking · primitivos (propuesta)',a:'apps-picking',st:'comp'},
-  {label:'67 Navegación móvil',a:'nav-movil',st:'comp'}]},
- {label:'Web',st:'grp',children:[
+  {label:'28 Animación de gráficos',a:'chart-anim',st:'comp'}]},
+ {label:'Patrones',st:'grp',children:[
+  {label:'29 Grid & layout',a:'grid',st:'comp'},
+  {label:'30 Grilla cuadriculada',a:'bg-grid',st:'comp'},
+  {label:'31 Depth stack v1.2.6',a:'depth-stack',st:'comp'},
+  {label:'32 Demo form',a:'demo-form',st:'comp'}]},
+ {label:'Kit de app',st:'grp',children:[
+  {label:'33 Overview',a:'app-overview',st:'comp'},
+  {label:'34 Shell',a:'app-shell',st:'comp'},
+  {label:'35 Shell celular',a:'shell-mobile',st:'comp'},
+  {label:'36 Login',a:'login',st:'comp'}]},
+ {label:'En producción',st:'grp',children:[
+  {label:'37 Panel Gerencial',a:'panel-gerencial',st:'comp'},
+  {label:'38 Picking',a:'apps-picking',st:'comp'},
   {label:'39 Mockup de la web',a:'web-banner',st:'comp'}]},
  {label:'Marketplace',st:'grp',children:[
   {label:'40 Banners de apps',a:'app-banners',st:'comp'},
   {label:'41 Header de ficha',a:'mb-fhead',st:'comp'},
-  {label:'42 Card de pricing + estimador',a:'mb-price',st:'comp'},
+  {label:'42 Card de precio',a:'mb-price',st:'comp'},
   {label:'43 Card de detalles',a:'mb-details',st:'comp'},
   {label:'44 Card de desarrollador',a:'mb-dev',st:'comp'},
   {label:'45 Menú de compartir',a:'mb-share',st:'comp'},
   {label:'46 Card de catálogo',a:'mb-appcard',st:'comp'},
   {label:'47 Reseñas',a:'mb-reviews',st:'comp'},
-  {label:'48 Bloque de homologación',a:'mb-homo',st:'comp'}]},
+  {label:'48 Homologación',a:'mb-homo',st:'comp'}]},
+ {label:'Sitio',st:'grp',children:[
+  {label:'87 Píldora del hero v1.2.8.97',a:'web-hero-pill',st:'comp'},
+  {label:'88 Solapas de bifurcación v1.2.8.97',a:'web-bif',st:'comp'},
+  {label:'89 Barra de producto v1.2.8.97',a:'web-px-bar',st:'comp'},
+  {label:'90 Formulario en ventana v1.2.8.97',a:'web-form-modal',st:'comp'},
+  {label:'91 Animación del MCP v1.2.8.97',a:'web-mcp-anim',st:'comp'},
+  {label:'92 Apilado de apps v1.2.8.97',a:'web-apilado',st:'comp'}]},
  {label:'Kit de panel',st:'grp',children:[
-  {label:'52 Statusbar',a:'statusbar',st:'comp'},
-  {label:'53 Herramientas del sidebar',a:'sidebar-tools',st:'comp'},
-  {label:'54 Navegacion en tabs',a:'tab-nav',st:'comp'},
-  {label:'55 Fuente de datos',a:'src-card',st:'comp'},
-  {label:'56 Ranking con barra',a:'branch-list',st:'comp'},
-  {label:'57 Watchlist tonal',a:'watchlist-tonal',st:'comp'},
-  {label:'58 Card clickeable',a:'card-clickable',st:'comp'},
-  {label:'59 Sin dato',a:'sin-dato',st:'comp'},
-  {label:'60 Carrusel de KPIs',a:'more-kpis',st:'comp'}]}
+  {label:'52 Statusbar v1.2.7.6',a:'statusbar',st:'comp'},
+  {label:'53 Herramientas del sidebar v1.2.7.6',a:'sidebar-tools',st:'comp'},
+  {label:'54 Navegación en tabs v1.2.7.6',a:'tab-nav',st:'comp'},
+  {label:'55 Fuente de datos v1.2.7.6',a:'src-card',st:'comp'},
+  {label:'56 Ranking con barra v1.2.7.6',a:'branch-list',st:'comp'},
+  {label:'57 Watchlist tonal v1.2.7.6',a:'watchlist-tonal',st:'comp'},
+  {label:'58 Card clickeable v1.2.7.6',a:'card-clickable',st:'comp'},
+  {label:'59 Sin dato v1.2.7.6',a:'sin-dato',st:'comp'},
+  {label:'60 Carrusel de KPIs v1.2.7.6',a:'more-kpis',st:'comp'}]},
+ {label:'Documento',st:'grp',children:[
+  {label:'61 Tabla de implementación',a:'implementacion',st:'comp'},
+  {label:'62 Enlace cruzado',a:'ds-xref',st:'comp'},
+  {label:'63 LLM FAB',a:'llm-fab',st:'comp'},
+  {label:'64 Nota / callout',a:'ds-note',st:'comp'},
+  {label:'65 Copiar al portapapeles v1.2.7.9',a:'ds-copy',st:'comp'},
+  {label:'66 Desplegable de selección v1.2.7.9',a:'ds-picker',st:'comp'},
+  {label:'67 Navegación móvil v1.2.7.11',a:'nav-movil',st:'comp'},
+  {label:'68 Bloque destacado v1.2.8.35',a:'ds-spotlight',st:'comp'},
+  {label:'69 Densidad compacta v1.2.8.43',a:'ds-densidad',st:'comp'},
+  {label:'71 Pestañas de documento',a:'ds-doc-tabs',st:'comp'},
+  {label:'72 Selector de archivo',a:'ds-dropzone',st:'comp'},
+  {label:'73 Tarjeta dentro de un panel',a:'ds-tile-bg',st:'comp'},
+  {label:'74 Sombra de scroll',a:'ds-scroll-shadow',st:'comp'},
+  {label:'75 Fila seleccionada',a:'ds-row-selected',st:'comp'},
+  {label:'76 Input con acción al final',a:'ds-input-action',st:'comp'},
+  {label:'77 Íconos por módulo',a:'ds-module-icons',st:'comp'},
+  {label:'78 Submenú y scroll del menú',a:'ds-sidebar-sub',st:'comp'},
+  {label:'79 Cola de decisión',a:'cola-decision',st:'comp'},
+  {label:'80 Barra de acciones del formulario',a:'ds-form-actions',st:'comp'},
+  {label:'81 Lista de datos de la ficha',a:'ds-dl',st:'comp'},
+  {label:'93 Campo de solo lectura v1.2.8.98',a:'ds-field-static',st:'comp'},
+  {label:'94 Campo numérico v1.2.8.100',a:'ds-input-step',st:'comp'},
+  {label:'82 Lista en tarjetas (celular)',a:'ds-cardlist',st:'comp'},
+  {label:'83 Paginación',a:'ds-pagination',st:'comp'},
+  {label:'84 Gráfico ampliado',a:'ds-chart-detail',st:'comp'},
+  {label:'85 Color de un dato',a:'ds-swatch',st:'comp'},
+  {label:'86 Atajos de teclado v1.2.8.89',a:'ds-atajos',st:'comp'},
+  {label:'95 Chat de producto v1.2.8.101',a:'ds-chat',st:'comp'},
+  {label:'70 Modal y confirmación',a:'ds-confirm',st:'comp'}]}
 ]};
 
 const ROOT_INF={label:'Informes',sub:'carpeta /Informes',st:'root',children:[
@@ -311,7 +364,10 @@ const ROOT_INF={label:'Informes',sub:'carpeta /Informes',st:'root',children:[
   {label:'MelCity',sub:'YiQi_MelCity_ERP_v1.8.html',url:'YiQi_MelCity_ERP_v1.8.html',st:'pub'},
   {label:'Template (lead)',sub:'YiQi_TEMPLATE_ERP_Lead_v1.0.html',url:'YiQi_TEMPLATE_ERP_Lead_v1.0.html',st:'pub'}]},
  {label:'Informes mensuales',st:'grp',children:[
+  {label:'Comercial · Oct 2026',sub:'YiQi_Reporte_Comercial_202610.html',url:'YiQi_Reporte_Comercial_202610.html',st:'pub'},
+  {label:'Comercial · Sep 2026',sub:'YiQi_Reporte_Comercial_202609.html',url:'YiQi_Reporte_Comercial_202609.html',st:'pub'},
   {label:'Comercial · Ago 2026',sub:'YiQi_Reporte_Comercial_202608.html',url:'YiQi_Reporte_Comercial_202608.html',st:'pub'},
+  {label:'Comercial · Jul 2026',sub:'YiQi_Reporte_Comercial_202607.html',url:'YiQi_Reporte_Comercial_202607.html',st:'pub'},
   {label:'Ingeniería y Producto · Ago 2026',sub:'YiQi_Informe_Ingenieria_202608.html',url:'YiQi_Informe_Ingenieria_202608.html',st:'pub'},
   {label:'ATC · Abril 2026',sub:'YiQi_Informe_ATC_202604.html',url:'YiQi_Informe_ATC_202604.html',st:'draft'},
   {label:'ATC Operacional · Abr 2026',sub:'YiQi_Informe_ATC_Operacional_202604.html',url:'YiQi_Informe_ATC_Operacional_202604.html',st:'draft'}]},
@@ -333,11 +389,11 @@ const ROOT_INF={label:'Informes',sub:'carpeta /Informes',st:'root',children:[
 ]};
 
 const SUBJ={
- site:{root:ROOT_SITE,kind:'site',title:'Árbol del sitio — yiqi.com.ar',sub:'30 páginas del repo · 16 en el menú o el sitemap · 11 apps del marketplace · 4 borradores · 3 de sistema',
+ site:{root:ROOT_SITE,kind:'site',title:'Árbol del sitio — yiqi.com.ar',sub:'42 páginas del repo · 21 en el sitemap · 16 apps en el marketplace · 48 landings por token · 10 borradores · 3 de sistema',
    legend:'<span class="badge badge-green">Pública</span><span class="badge badge-amber">Pre-lanzamiento</span><span class="badge badge-cyan">Borrador</span><span class="badge">Sistema</span><span class="badge badge-blue">Externo</span>'},
- ds:{root:ROOT_DS,kind:'ds',title:'Árbol del Design System — catálogo v1.2.8.36',sub:'10 grupos · 66 secciones documentadas · fuente: yiqi-imagen',
+ ds:{root:ROOT_DS,kind:'ds',title:'Árbol del Design System — catálogo v1.2.8.105',sub:'13 grupos · 92 secciones documentadas · fuente: yiqi-imagen',
    legend:'<span class="badge badge-cyan">Grupo</span><span class="badge">Componente</span><span class="badge badge-blue">Sub-componente</span>'},
- inf:{root:ROOT_INF,kind:'inf',title:'Árbol de Informes — carpeta /Informes',sub:'22 documentos · 6 propuestas ERP · 4 mensuales · 2 templates · 3 ECOSAN · 7 otros',
+ inf:{root:ROOT_INF,kind:'inf',title:'Árbol de Informes — carpeta /Informes',sub:'25 documentos · 6 propuestas ERP · 7 mensuales · 2 templates · 3 ECOSAN · 7 otros',
    legend:'<span class="badge badge-green">Propuesta ERP</span><span class="badge badge-cyan">ATC</span><span class="badge badge-amber">ECOSAN</span><span class="badge badge-blue">Otro</span>'}
 };
 
