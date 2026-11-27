@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-26",
+ "generado": "2026-11-27",
  "fuentes": [
   "API CONSULTA_COMERCIAL",
   "API COTIZACION_COMERCIAL",
@@ -2572,7 +2572,7 @@
     "estado": {
      "En Curso": 4,
      "Concretada": 1,
-     "Esperando contacto inicial": 1
+     "Confirmada": 1
     },
     "detalle": [
      {
@@ -2628,21 +2628,20 @@
    "cotizaciones": {
     "emitidas": 5,
     "estado": {
-     "Aprobada": 2,
-     "Vencida": 2,
-     "En preparación": 1
+     "Aprobada": 3,
+     "Vencida": 2
     },
-    "enviadas": 5,
+    "enviadas": 6,
     "aprobadas": {
-     "n": 2,
-     "neto_impl": 1496940.0,
+     "n": 3,
+     "neto_impl": 1752390.0,
      "neto_sop": 84272.0
     },
     "detalle": [
      {
       "f": "20/11",
       "nro": "1574.1",
-      "estado": "En preparación"
+      "estado": "Aprobada"
      },
      {
       "f": "05/11",
@@ -2699,11 +2698,10 @@
    "Concretada": 465,
    "En Curso": 36,
    "Presentación enviada": 19,
-   "Confirmada": 13,
+   "Confirmada": 14,
    "Vencida": 10,
    "Esperando presupuesto": 3,
-   "Presupuesto enviado": 3,
-   "Esperando contacto inicial": 1
+   "Presupuesto enviado": 3
   },
   "enCursoNuevas": 35,
   "enCursoViejas": 0
@@ -2751,7 +2749,7 @@
    "2026-08": 7,
    "2026-09": 8,
    "2026-10": 4,
-   "2026-11": 5
+   "2026-11": 6
   },
   "cotiz_aprobadas": {
    "2025-07": {
@@ -2835,8 +2833,8 @@
     "neto_sop": 64500.0
    },
    "2026-11": {
-    "n": 2,
-    "neto_impl": 1496940.0,
+    "n": 3,
+    "neto_impl": 1752390.0,
     "neto_sop": 84272.0
    }
   }
